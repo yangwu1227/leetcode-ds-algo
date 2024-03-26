@@ -38,6 +38,8 @@ def main() -> int:
     
     print(f"The string {palindrome} is a palindrome: {check_if_palindrome(palindrome)}")
     print(f"The string {not_palindrome} is a palindrome: {check_if_palindrome(not_palindrome)}")
+    
+    return 0
 
 if __name__ == "__main__":
     
