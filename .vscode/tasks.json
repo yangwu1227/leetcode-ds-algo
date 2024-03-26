@@ -9,7 +9,7 @@
                 "${fileDirname}/*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-                "-std=c++11"
+                "-std=c++17"
             ],
             "options": {
                 "cwd": "${fileDirname}"
