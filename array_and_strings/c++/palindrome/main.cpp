@@ -4,19 +4,24 @@
 #include <vector>
 #include "palindrome.h"
 
-int main() {
+int main()
+{
     std::vector<std::string> testStrings = {"racecar", "soccer"}; // Vector of strings to test
 
-    // Pass by reference, immutable 
-    for (const std::string& testString : testStrings) {
+    // Pass by reference, immutable
+    for (const std::string &testString : testStrings)
+    {
         bool isPalindrome = checkIfPalindrome(testString);
-        
-        if (isPalindrome) {
+
+        if (isPalindrome)
+        {
             std::cout << testString << " is a palindrome." << std::endl;
-        } else {
+        }
+        else
+        {
             std::cout << testString << " is not a palindrome." << std::endl;
         }
     }
-    
+
     return 0;
 }
