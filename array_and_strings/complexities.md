@@ -91,3 +91,21 @@ The time complexity is $O(n+m)$ because the while loop iterations cost $O(1)$ ea
 ### Space Complexity
 
 The space complexity is $O(n+m)$ because we are creating a new array of size $n+m$ to store the output. If we don't count the output as extra space, then the space complexity is $O(1)$.
+
+---
+
+## Is Subsequence
+
+Given two strings `s` and `t`, return `true` if `s` is a subsequence of `t`, or `false` otherwise.
+
+A subsequence of a string is a sequence of characters that can be obtained by deleting some (or none) of the characters from the original string, while maintaining the relative order of the remaining characters. For example, "ace" is a subsequence of "abcde" while "aec" is not.
+
+### Time Complexity
+
+The number of iterations needed is dependent on the length of `t` primarily, as `t_index` is incremented in every loop until the end of `t` is reached. The length of `s` affects the number of iterations only insofar as matches are found (which moves `s_index`), but since `t_index` marches to the end of `t`, the length of `t` is the primary driver of time complexity.
+
+The exact nature of the linear relationship depends on the interplay between `s` and `t` but is bounded by the length of `t` in the worst case, hence the linear time complexity, or $O(n)$, where $n$ is the length of `t` in this context.
+
+### Space Complexity
+
+The function only uses a fixed number of variables (`s_index`, `t_index`), irrespective of how large the input strings are. 
