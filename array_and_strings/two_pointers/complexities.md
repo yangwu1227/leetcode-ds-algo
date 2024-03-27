@@ -109,3 +109,23 @@ The exact nature of the linear relationship depends on the interplay between `s`
 ### Space Complexity
 
 The function only uses a fixed number of variables (`s_index`, `t_index`), irrespective of how large the input strings are. 
+
+---
+
+## Reverse String
+
+Write a function that reverses a string. The input string is given as an array of characters s.
+
+You must do this by modifying the input array in-place with O(1) extra memory.
+
+<div style="text-align: center;">
+    <img src="diagrams/reverse_string.png" alt="Alt text for the image" width="550" height="350">
+</div>
+
+### Time Complexity
+
+Both pointers traverse the string from opposite ends until they merge. So every character is processed once in this process. Swapping two characters takes constant amount of time. So the overall time complexity is $O(n)$.
+
+### Space Complexity
+
+A character array is used to store the characters of the string. So the space complexity is $O(n)$. If the input to the function is a character array itself or the language supports string mutability, then the space complexity would be $O(1)$, because the algorithm does an in-place reversal of the character array.
