@@ -80,7 +80,7 @@ No matter how big the input is, we always only use two integer variables. Theref
 
 Given two sorted integer arrays `arr1` and `arr2`, return a new array that combines both of them and is also sorted.
 
-The trivial approach would be to first combine both input arrays and then perform a sort. If we have $n=$ arr1. length $+\operatorname{arr} 2$. length, then this gives a time complexity of $O(n \cdot \log n)$ (the cost of sorting). This would be a good approach if the input arrays were not sorted, but because they are sorted, we can take advantage of the two pointers technique to improve to $O(n)$.
+The trivial approach would be to first combine both input arrays and then perform a sort. If we have $n=$ arr1.length + arr2.length, then this gives a time complexity of $O(n \cdot \log n)$ (the cost of sorting). This would be a good approach if the input arrays were not sorted, but because they are sorted, we can take advantage of the two pointers technique to improve to $O(n)$.
 
 If we declared $n=$ arr1 length and $m=$ arr2 length, the time complexity of the sorting approach would be $O((n+m) \cdot \log (m+n))$ and the time complexity of combine algorithm would be $O(n+m)$.
 
