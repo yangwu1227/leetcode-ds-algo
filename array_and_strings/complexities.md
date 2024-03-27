@@ -1,3 +1,39 @@
+# Psuedocode For Two Pointers
+
+```
+function fn(arr):
+    left = 0
+    right = arr.length - 1
+
+    while left < right:
+        Do some logic here depending on the problem
+        Do some more logic here to decide on one of the following:
+            1. left++
+            2. right--
+            3. Both left++ and right--
+```
+
+```
+function fn(arr1, arr2):
+    i = j = 0
+    while i < arr1.length AND j < arr2.length:
+        Do some logic here depending on the problem
+        Do some more logic here to decide on one of the following:
+            1. i++
+            2. j++
+            3. Both i++ and j++
+
+    // Step 4: make sure both iterables are exhausted
+    // Note that only one of these loops would run
+    while i < arr1.length:
+        Do some logic here depending on the problem
+        i++
+
+    while j < arr2.length:
+        Do some logic here depending on the problem
+        j++
+```
+
 ## Palindrome
 
 A palindrome is a word, phrase, number, or other sequence of characters that reads the same forward and backward (ignoring spaces, punctuation, and capitalization). 
@@ -37,3 +73,21 @@ The time complexity is $O(n)$ because the while loop iterations cost $O(1)$ each
 ### Space Complexity
 
 No matter how big the input is, we always only use two integer variables. Therefore, the space complexity is $O(1)$.
+
+---
+
+## Combine and Sort
+
+Given two sorted integer arrays `arr1` and `arr2`, return a new array that combines both of them and is also sorted.
+
+The trivial approach would be to first combine both input arrays and then perform a sort. If we have $n=$ arr1. length $+\operatorname{arr} 2$. length, then this gives a time complexity of $O(n \cdot \log n)$ (the cost of sorting). This would be a good approach if the input arrays were not sorted, but because they are sorted, we can take advantage of the two pointers technique to improve to $O(n)$.
+
+If we declared $n=$ arr1 length and $m=$ arr2 length, the time complexity of the sorting approach would be $O((n+m) \cdot \log (m+n))$ and the time complexity of combine algorithm would be $O(n+m)$.
+
+### Time Complexity
+
+The time complexity is $O(n+m)$ because the while loop iterations cost $O(1)$ each, and there can never be more than $O(n+m)$ iterations of the while loop.
+
+### Space Complexity
+
+The space complexity is $O(n+m)$ because we are creating a new array of size $n+m$ to store the output. If we don't count the output as extra space, then the space complexity is $O(1)$.
