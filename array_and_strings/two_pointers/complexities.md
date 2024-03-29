@@ -119,7 +119,7 @@ Write a function that reverses a string. The input string is given as an array o
 You must do this by modifying the input array in-place with O(1) extra memory.
 
 <div style="text-align: center;">
-    <img src="diagrams/reverse_string.png" alt="Alt text for the image" width="550" height="350">
+    <img src="diagrams/reverse_string.png" width="550" height="350">
 </div>
 
 ### Time Complexity
@@ -129,3 +129,25 @@ Both pointers traverse the string from opposite ends until they merge. So every 
 ### Space Complexity
 
 A character array is used to store the characters of the string. So the space complexity is $O(n)$. If the input to the function is a character array itself or the language supports string mutability, then the space complexity would be $O(1)$, because the algorithm does an in-place reversal of the character array.
+
+---
+
+## Squares of Sorted Array
+
+Given an integer array `nums` sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+
+<div style="text-align: center;">
+    <img src="diagrams/sorted_squares.png" width="750" height="350">
+</div>
+
+Since the array is sorted, loosely speaking it has some negative elements with squares in decreasing order, then some non-negative elements with squares in increasing order.
+
+For example, with `[-3, -2, -1, 4, 5, 6]`, we have the negative part `[-3, -2, -1]` with squares `[9, 4, 1]`, and the positive part `[4, 5, 6]` with squares `[16, 25, 36]`. Our strategy is to iterate over the negative part in reverse, and the positive part in the forward direction.
+
+### Time Complexity
+
+The time complexity is $O(n)$ because the while or foor loop iterations can never be more than `n`.
+
+### Space Complexity
+
+The space complexity is $O(n)$ because we are creating a new array of size `n` to store the output. If we don't count the output as extra space, then the space complexity is $O(1)$.
