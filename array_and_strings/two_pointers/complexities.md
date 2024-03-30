@@ -184,3 +184,22 @@ Thus, the overall time complexity of the function is $O(n)+O(n)=O(2n)=O(n)$, whe
 2. **Temporary variables and word reversal**: For reversing each word, temporary space is required proportional to the length of the word being processed. However, since these are done one at a time and the space is reused for each word, the additional space required is $O(m)$, where $m$ is the length of the longest word in the input string. This does not add to the overall space complexity in terms of the input size $n$.
    
 Therefore, the overall space complexity of the function is $O(n)$, where $n$ is the length of the input string, primarily due to the storage of the split words and the output string.
+
+---
+
+## Reverse Only Letters
+
+Given a string `s`, reverse the string according to the following rules:
+
+1. All the characters that are not English letters remain in the same position.
+2. All the English letters (lowercase or uppercase) should be reversed.
+
+### Time Complexity
+
+The time complexity of a two-pointer approach in python is $O(n)$, where $n$ is the length of the input string `s`. The step that converts the string to a list is $O(n)$, and the two-pointer approach takes $O(n)$ time as well. So, $O(n)+O(n)=O(2n)=O(n)$.
+
+In c++, the time complexity is $O(n)$ because there is no need to convert the string to a list. At most, the two-pointer approach will iterate through the string once.
+
+### Space Complexity
+
+The space complexity is $O(n)$ because we are converting the string to a list of characters, which requires $O(n)$ space. The two-pointer approach does not require any additional space if we use `std::swap` or `std::iter_swap` to swap the characters in place. In python, we use the tuple unpacking method to swap the characters.
