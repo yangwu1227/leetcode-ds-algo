@@ -196,10 +196,10 @@ Given a string `s`, reverse the string according to the following rules:
 
 ### Time Complexity
 
-The time complexity of a two-pointer approach in python is $O(n)$, where $n$ is the length of the input string `s`. The step that converts the string to a list is $O(n)$, and the two-pointer approach takes $O(n)$ time as well. So, $O(n)+O(n)=O(2n)=O(n)$.
+The time complexity of a two-pointer approach in python is $O(n)$, where $n$ is the length of the input string `s`. The step that converts the string to a list of characters is $O(n)$; then, the two-pointer approach takes $O(n)$ time as well. So, $O(n)+O(n)=O(2n)=O(n)$.
 
-In c++, the time complexity is $O(n)$ because there is no need to convert the string to a list. At most, the two-pointer approach will iterate through the string once.
+In c++, the time complexity is $O(n)$; there is no need to convert the string to a list of characters. At most, the two-pointer approach will iterate through the string once.
 
 ### Space Complexity
 
-The space complexity is $O(n)$ because we are converting the string to a list of characters, which requires $O(n)$ space. The two-pointer approach does not require any additional space if we use `std::swap` or `std::iter_swap` to swap the characters in place. In python, we use the tuple unpacking method to swap the characters.
+In python, the space complexity is $O(n)$ if we consider the output because we are converting the string to a list of characters, which requires $O(n)$ space. In c++, the two-pointer approach does not require any additional space if we use `std::swap` or `std::iter_swap` to swap the characters in place. In python, we use the tuple unpacking method to swap the characters, and so there is auxiliary space used for swapping.

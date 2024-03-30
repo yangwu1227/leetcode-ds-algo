@@ -9,7 +9,7 @@ std::vector<int> combine(const std::vector<int> &arr1, const std::vector<int> &a
     int arr1N = arr1.size(), arr2M = arr2.size();
 
     std::vector<int> ans;
-    // Request vector capacity to be at least (n + m), so push back
+    // Request vector capacity to be at least (n + m), so push back does not need to reallocate
     ans.reserve(arr1N + arr2M);
 
     // Once this while loop finished, at least one array is exhausted

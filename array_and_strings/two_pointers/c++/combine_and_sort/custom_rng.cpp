@@ -2,7 +2,6 @@
 #include <vector>
 #include <random>
 #include <algorithm>  // Include for std::sort
-#include <functional> // Include for std::ref
 #include "custom_rng.h"
 
 std::vector<int> generateRandomVector(size_t size, int min, int max)
@@ -13,7 +12,7 @@ std::vector<int> generateRandomVector(size_t size, int min, int max)
     std::mt19937 mersenneEngine{rnd_device()};
     std::uniform_int_distribution<int> dist{min, max};
 
-    // Use std::ref to ensure mersenneEngine is passed by reference
+    // Lambda function that takes a distribution and engine
     auto gen = [&dist, &mersenneEngine]()
     {
         return dist(mersenneEngine);

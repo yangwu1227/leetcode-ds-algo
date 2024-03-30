@@ -20,6 +20,7 @@ public:
 
     /**
      * @brief This method uses the boost split function to split string into a vector of words.
+     * Then uses join to combine the vector of reversed words back into a string.
      *
      * @param s A string containing words separated by whitespace.
      * @return std::string The string with the order of characters in each word reversed.

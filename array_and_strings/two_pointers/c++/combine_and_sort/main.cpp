@@ -19,7 +19,7 @@ int main()
 
     // Print output
     // The comparison &value != &arr1.back() checks if the current element's address is not the same as the address of the last element
-    // If the current element is not the last element, add  ", ", if it is, add nothing ""
+    // If the current element is not the last element, add ", ", if it is, add nothing ""
     std::cout << "The inputs {";
     for (const auto &value : arr1)
     {
