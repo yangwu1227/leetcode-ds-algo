@@ -151,3 +151,36 @@ The time complexity is $O(n)$ because the while or foor loop iterations can neve
 ### Space Complexity
 
 The space complexity is $O(n)$ because we are creating a new array of size `n` to store the output. If we don't count the output as extra space, then the space complexity is $O(1)$.
+
+---
+
+## Reverse Words in a String
+
+Given a string `s`, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+
+We traverse the string and find every word's start and end index. Then, we will reverse each word using the two-pointer approach.
+
+1. Find the start and end index of every word given by startIndex and endindex.
+2. Swap the characters in the word pointed by startIndex and endIndex.
+3. Increment startIndex by 1 and decrement endIndex by 1.
+4. Repeat steps 2 and 3 until startIndex < endIndex.
+
+<div style="text-align: center;">
+    <img src="diagrams/reverse_words_in_string.png" width="450" height="650">
+</div>
+
+### Time Complexity
+
+1. **Splitting the string into words**: The 'split()' method in python runs in $O(n)$ time (or loop in c++), where $n$ is the length of the input string `s`. This operation iterates through the entire string to find spaces and create a list (vector) of words.
+
+2. **Reversing each word**: For each word, we perform a reversal using the two-pointer approach. If $m$ represents the average length of a word and $k$ represents the total number of words, the total time for this step is $O(m \cdot k)$. Since $m \cdot k$ is roughly equivalent to $n$ (because all words combined give us the original string without spaces), we can also consider this part as $O(n)$.
+
+Thus, the overall time complexity of the function is $O(n)+O(n)=O(2n)=O(n)$, where $n$ is the length of the input string.
+
+### Space Complexity
+
+1. **List of words**: The space required to store the list of words is $O(k)$, where $k$ is the number of words. This is because each word, on average, takes up space proportional to its length, and all words combined would take up space proportional to the length of the string. However, considering the spaces are removed, the exact space usage might be slightly less than $n$, but in terms of complexity, we consider it $O(n)$.
+
+2. **Temporary variables and word reversal**: For reversing each word, temporary space is required proportional to the length of the word being processed. However, since these are done one at a time and the space is reused for each word, the additional space required is $O(m)$, where $m$ is the length of the longest word in the input string. This does not add to the overall space complexity in terms of the input size $n$.
+   
+Therefore, the overall space complexity of the function is $O(n)$, where $n$ is the length of the input string, primarily due to the storage of the split words and the output string.
