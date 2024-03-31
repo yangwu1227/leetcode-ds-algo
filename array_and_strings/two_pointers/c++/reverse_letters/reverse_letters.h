@@ -4,7 +4,7 @@
 #include <string>
 
 /**
- * @brief Given a string s, reverse the string according to the following rules:
+ * @brief Given a string s, reverse the string based on the rules specified below.
  *
  * @param s The string to reverse
  * @return The string with the letters reversed
