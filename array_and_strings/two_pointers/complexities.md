@@ -203,3 +203,23 @@ In c++, the time complexity is $O(n)$; there is no need to convert the string to
 ### Space Complexity
 
 In python, the space complexity is $O(n)$ if we consider the output because we are converting the string to a list of characters, which requires $O(n)$ space. In c++, the two-pointer approach does not require any additional space if we use `std::swap` or `std::iter_swap` to swap the characters in place. In python, we use the tuple unpacking method to swap the characters, and so there is auxiliary space used for swapping.
+
+---
+
+## Minimum Common Value
+
+Given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, return the minimum integer common to both arrays. If there is no common integer amongst `nums1` and `nums2`, return `-1`.
+
+Note that an integer is said to be common to `nums1` and `nums2` if both arrays have at least one occurrence of that integer.
+
+<div style="text-align: center;">
+    <img src="diagrams/minimum_common_value.png" width="450" height="250">
+</div>
+
+### Time Complexity
+
+The time complexity is $O(n+m)$, where $n$ and $m$ are the lengths of `nums1` and `nums2`, respectively. Each pointer can be incremented as many times as `n` or `m`, respectively, meaning we will iterate at most `n+m` times.
+
+### Space Complexity
+
+The space complexity is $O(1)$ because we are only using a fixed number of variables irrespective of the input size.
