@@ -14,8 +14,7 @@
             "environment": [],
             "externalConsole": false,
             "osx": {
-                "MIMode": "gdb",
-                "miDebuggerPath": "gdb",
+                "MIMode": "lldb",
                 "program": "${fileDirname}/main"
             },
             "preLaunchTask": "build"
