@@ -262,3 +262,56 @@ The time complexity is $O(n)$ because we iterate through the array once, and the
 ### Space Complexity
 
 The space complexity is $O(1)$ because we are only using a fixed number of variables, namely `lastNonZeroFoundAt` and `i`, irrespective of the input size.
+
+---
+
+## Reverse Word Order
+
+Given an input string `s`, reverse the order of the words.
+
+A word is defined as a sequence of non-space characters. The words in `s` will be separated by at least one space.
+
+Return a string of the words in reverse order concatenated by a single space.
+
+Note that `s` may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
+
+### Time Complexity
+
+#### Python First Approach
+
+The first approach uses three operations:
+
+1. **Strip leading and trailing spaces**: The `strip()` method in python runs in $O(n)$ time, where $n$ is the length of the input string `s`. This operation iterates through the string to find leading and trailing spaces and removes them.
+2. **Splitting the string**: The `split()` method in python runs in $O(n)$ time, where $n$ is the length of the input string `s`. This operation iterates through the entire string to find spaces and create a list of words.
+3. **Two-pointer approach**: The two-pointer approach to reverse the words runs in $O(n)$ time, where $n$ is the length of the input string `s`. This is because the two pointers traverse the string from opposite ends until they merge. So every character is processed once in this process. Swapping two characters takes a constant amount of time.
+4. **Joining the words**: The `join()` method in python runs in $O(n)$ time, where $n$ is the length of the input string `s`. This operation iterates through the entire list of words to concatenate them into a single string.
+
+The total time complexity of the first approach is $O(n)+O(n)+O(n)+O(n)=O(4n)=O(n)$.
+
+#### Python Second Approach
+
+The second approach uses the `collections.deque` data structure to store the words. The time complexity of the `deque` operations is $O(1)$. 
+Even though there appears to be a nested while loop, the inner while loop is not nested within the outer while loop. The reason is that the inner loop is directly tied to the progress of the outer loop's iterator, $i$.
+
+- Outer Loop: Iterates over each character in the string exactly once. Its purpose is to find the start of a word and then let the inner loop find the end of that word.
+- Inner Loop: Once the outer loop identifies the start of a word (any non-space character after a space), the inner loop runs. It advances $i$ until it finds the end of the current word (a space or the end of the string). The key point is that each iteration of the inner loop advances the same iterator (i) that the outer loop uses.
+
+Because of this mechanism, each character in the string is visited exactly once by these combined loops. The outer loop moves $i$ to the start of a word, and the inner loop moves $i$ to the end of that word. After the inner loop completes for a word, the outer loop effectively skips to the next word or the end of the string, depending on what's next.
+
+And finally, we have a `join` operation that runs in $O(n)$ time, where $n$ is the length of the input string `s`.
+
+Thus, the overall time complexity is $O(n)+ O(1) * k + O(n) = O(n)$, where $k$ is the number of words in the string. Since $k$ is less than $n$ and because the $O(1)$ operations inside the loop do not significantly impact the overall complexity relative to $n$, the overall time complexity simplifies to $O(n)$.
+
+#### C++ Approach
+
+1. **Vector Construction**: $O(n)$, where `n` is the length of the input string. This complexity arises from examining each character to split the string into words.
+2. **Reversing the Vector**: $O(k)$, which is proportional to the number of words in the vector, as the operation involves moving each element in the vector.
+
+### Space Complexity
+
+The space complexity of the first python approach is $O(n)$ because we are creating a list of words, which can be as large as the input string itself. The space complexity of the second approach is also $O(n)$ because we are using a `deque` to store the words, which can be as large as the input string itself.
+
+With c++:
+
+1. **Vector Construction**: $O(k)$ where `k` is the number of words, accounting for the space to store these words in a vector.
+2. **Reversing the Vector**: $O(1)$ because the reversal is performed in-place, requiring no extra space beyond the input.
