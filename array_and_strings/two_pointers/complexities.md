@@ -223,3 +223,42 @@ The time complexity is $O(n+m)$, where $n$ and $m$ are the lengths of `nums1` an
 ### Space Complexity
 
 The space complexity is $O(1)$ because we are only using a fixed number of variables irrespective of the input size.
+
+---
+
+## Move Zeros
+
+Given an integer array `nums`, move all `0`'s to the end of it while maintaining the relative order of the non-zero elements.
+
+### Example 1
+
+Consider an array: `[0, 1, 0, 3, 12]`:
+
+1. Initialization: `lastNonZeroFoundAt = 0, i = 0`
+2. Step 1: `i = 0, array[0] = 0`, no swap, just move i.
+3. Step 2: `i = 1, array[1] = 1`, swap `array[1]` with `array[lastNonZeroFoundAt]`, array becomes `[1, 0, 0, 3, 12]`, increment `lastNonZeroFoundAt` to `1`.
+4. Step 3: `i = 2, array[2] = 0`, no swap, just move `i`.
+5. Step 4: `i = 3, array[3] = 3`, swap `array[3]` with `array[lastNonZeroFoundAt]`, array becomes `[1, 3, 0, 0, 12]`, increment `lastNonZeroFoundAt` to `2`.
+6. Step 5: `i = 4, array[4] = 12`, swap `array[4]` with `array[lastNonZeroFoundAt]`, array becomes `[1, 3, 12, 0, 0]`, increment `lastNonZeroFoundAt` to `3`.
+
+### Example 2
+
+Consider another array:  `[0, 2, 9, 0, 0, 0, 7, 9]`:
+
+1. **Initialization**: `lastNonZeroFoundAt = 0`, `i = 0`.
+2. **Step 1**: At `i = 0`, `array[0] = 0`. No swap, just move `i`.
+3. **Step 2**: At `i = 1`, `array[1] = 2`. Swap `array[1]` with `array[lastNonZeroFoundAt]`. Since `array[lastNonZeroFoundAt]` is `0`, the array becomes `[2, 0, 9, 0, 0, 0, 7, 9]`. Increment `lastNonZeroFoundAt` to `1`.
+4. **Step 3**: At `i = 2`, `array[2] = 9`. Swap `array[2]` with `array[lastNonZeroFoundAt]`. Since `array[lastNonZeroFoundAt]` is `0`, the array becomes `[2, 9, 0, 0, 0, 0, 7, 9]`. Increment `lastNonZeroFoundAt` to `2`.
+5. **Step 4**: At `i = 3`, `array[3] = 0`. No swap, just move `i`.
+6. **Step 5**: At `i = 4`, `array[4] = 0`. No swap, just move `i`.
+7. **Step 6**: At `i = 5`, `array[5] = 0`. No swap, just move `i`.
+8. **Step 7**: At `i = 6`, `array[6] = 7`. Swap `array[6]` with `array[lastNonZeroFoundAt]`. Since `array[lastNonZeroFoundAt]` is `0`, the array becomes `[2, 9, 7, 0, 0, 0, 0, 9]`. Increment `lastNonZeroFoundAt` to `3`.
+9. **Step 8**: At `i = 7`, `array[7] = 9`. Swap `array[7]` with `array[lastNonZeroFoundAt]`. Since `array[lastNonZeroFoundAt]` is `0`, the array becomes `[2, 9, 7, 9, 0, 0, 0, 0]`. Increment `lastNonZeroFoundAt` to `4`.
+
+### Time Complexity
+
+The time complexity is $O(n)$ because we iterate through the array once, and the number of iterations is proportional to the length of the array. 
+
+### Space Complexity
+
+The space complexity is $O(1)$ because we are only using a fixed number of variables, namely `lastNonZeroFoundAt` and `i`, irrespective of the input size.
