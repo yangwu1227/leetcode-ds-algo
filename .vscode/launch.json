@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Debug",
-            "type": "cppdbg",
+            "type": "lldb",
             "request": "launch",
             "args": [],
             "stopAtEntry": false,
