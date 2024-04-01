@@ -315,3 +315,51 @@ With c++:
 
 1. **Vector Construction**: $O(k)$ where `k` is the number of words, accounting for the space to store these words in a vector.
 2. **Reversing the Vector**: $O(1)$ because the reversal is performed in-place, requiring no extra space beyond the input.
+
+---
+
+## Reverse Prefix
+
+Given a 0-indexed string `word` and a character `ch`, reverse the segment of word that starts at index 0 and ends at the index of the first occurrence of `ch` (inclusive). If the character ch does not exist in word, do nothing.
+
+### Example 1
+
+```
+Input: word = "abcdefd", ch = "d"
+Output: "dcbaefd"
+Explanation: The first occurrence of "d" is at index 3. 
+Reverse the part of word from 0 to 3 (inclusive), the resulting string is "dcbaefd".
+```
+
+### Example 2
+
+```
+Input: word = "abcd", ch = "z"
+Output: "abcd"
+Explanation: "z" does not exist in word.
+You should not do any reverse operation, the resulting string is "abcd".
+```
+
+### Time Complexity
+
+#### Python Approach
+
+1. First, we convert `word` to a list of characters, which takes $O(n)$ time, where $n$ is the length of the input string `word`.
+2. The, we iterate through the list of characters to find the index of the character `ch`. This operation takes $O(n)$ time in the worst case.
+3. Finally, if the character `ch` is found, we reverse the segment of the list of characters from index 0 to the index of `ch`. This operation takes $O(n)$ time in the worst case using 
+    the two-pointer approach. That is, if the character `ch` is found at the end of the string, we will reverse the entire string.
+
+The total time complexity of the function is $O(n)+O(n)+O(n)=O(3n)=O(n)$.
+
+Another approach is to use the `find` method to find the index of the character `ch` in the string. The `find` method runs in $O(n)$ time, where $n$ is the length of the input string `word`. Then, we use slicing and concatenation to reverse the segment of the string from index 0 to the index of `ch`. Depending on the implementation and optimizations, the concatenation can take polynomial time.
+
+#### C++ Approach
+
+1. We use the `std::find_first_of` method to find the index of the character `ch` in the string. The `find_first_of` method runs in $O(n)$ time at worst, where $n$ is the length of the input string `word`.
+2. Then, we use the `std::iter_swap` method to swap the characters at the start and end of the segment to reverse the segment. The `iter_swap` method runs in $O(1)$.
+
+The overall time complexity is then $O(n) + O(1) = O(n)$.
+
+### Space Complexity
+
+The space complexity of the python approach is $O(n)$ because we are converting the string to a list of characters, which requires $O(n)$ space. The space complexity of the c++ approach is $O(1)$ because we are not using any extra space beyond the input. All we are using is a fixed number of variables for the pointers.
