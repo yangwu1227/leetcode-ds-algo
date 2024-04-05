@@ -81,3 +81,38 @@ The time complexity of this algorithm is amortized $O(n)$, because the operation
 ## Space Complexity
 
 The space complexity is constant because we are using only integer variables to store the pointers, the count of zeros in the current window, and the maximum length of the subarray.
+
+---
+
+# Subarray Product Less Than K
+
+Given an array of positive integers `nums` and an integer `k`, return the number of subarrays where the product of all the elements in the subarray is strictly less than `k`.
+
+For example, given the input `nums = [10, 5, 2, 6]`, `k = 100`, the answer is `8`. The subarrays with products less than k are:
+
+```
+[10], [5], [2], [6], [10, 5], [5, 2], [2, 6], [5, 2, 6]
+```
+
+In the context of the sliding window algorithm, for a current window defined by indices `(left, right)`, the number of valid sub-windows that end at index `right` is determined by the position of the `left` index. Given that the window can be adjusted to start from any index between `left` and `right` inclusive, the total number of valid windows ending at `right` is equal to the length of the window, calculated as `right - left + 1`. This accounts for all possible starts from `left` to `right`, including the window consisting of just the element at `right`.
+
+## Example 1
+
+- Array: `[4, 7, 1, 2, 5]`, examining window ending at index `4` (`right = 4`).
+- `left` can range from `0` to `4`, inclusive.
+- Total valid windows ending at index `4`: `5` (`right - left + 1` = `4 - 0 + 1`).
+- The valid windows are: `[4, 7, 1, 2, 5]`, `[7, 1, 2, 5]`, `[1, 2, 5]`, `[2, 5]`, `[5]`.
+
+## Example 2
+
+- Array: `[2, 1, 5]`, examining window ending at index `2` (`right = 2`).
+- For window ending at index `2`: `3` (`right - left + 1` = `2 - 0 + 1`).
+- The valid windows are: `[2, 1, 5]`, `[1, 5]`, `[5]`.
+
+## Time Complexity
+
+Again, because the work in each loop iteration is amortized constant $O(1)$, the overall time complexity of this algorithm is $O(n)$, where $n$ is the length of the input array.
+
+## Space Complexity
+
+The space complexity is constant because we are using only integer variables to store the pointers, the product of the current window, and the count of valid subarrays.
