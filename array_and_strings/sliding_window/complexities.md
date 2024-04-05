@@ -13,6 +13,10 @@ function fn(arr):
         Do some logic to update the answer
 ```
 
+<div style="text-align: center;">
+    <img src="diagrams/sub_arrays.png" width="525" height="270">
+</div>
+
 ## Efficiency
 
 For any array withe length `n`, there are 
@@ -59,3 +63,17 @@ This algorithm has a time complexity of $O(n)$, because the operations inside th
 ## Space Complexity
 
 The space complexity is constant because we are only using integer variables to store the left and right pointers, the sum of the current window, and the maximum length of the subarray.
+
+---
+
+# Length of Consecutive 1's Single Flip
+
+Given a binary string s (a string containing only "0" and "1"). You may choose up to one "0" and flip it to a "1". Find the length of the longest substring achievable that contains only "1". Another way to look at this problem is to find the longest substring that contains at most one 0. 
+
+## Time Complexity
+
+The time complexity of this algorithm is amortized $O(n)$, because the operations inside the `for` loop and the `while` loop are $O(1)$. The while loop will run at most `n` times across the entire algorithm, not `n` times per iteration of the `for` loop.
+
+## Space Complexity
+
+The space complexity is constant because we are using only integer variables to store the pointers, the count of zeros in the current window, and the maximum length of the subarray.
