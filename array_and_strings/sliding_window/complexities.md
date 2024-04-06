@@ -1,5 +1,11 @@
 # Psuedocode For Sliding Window
 
+<div style="text-align: center;">
+    <img src="diagrams/sub_arrays.png" width="525" height="270">
+</div>
+
+## Dynamic Window Size
+
 ```
 function fn(arr):
     left = 0
@@ -13,9 +19,24 @@ function fn(arr):
         Do some logic to update the answer
 ```
 
-<div style="text-align: center;">
-    <img src="diagrams/sub_arrays.png" width="525" height="270">
-</div>
+## Fixed Window Size
+
+```
+function fn(arr, k):
+    curr = some data to track the window
+
+    // build the first window
+    for (int i = 0; i < k; i++)
+        Do something with curr or other variables to build first window
+
+    ans = answer variable, probably equal to curr here depending on the problem
+    for (int i = k; i < arr.length; i++)
+        Add arr[i] to window
+        Remove arr[i - k] from window
+        Update ans
+
+    return ans
+```
 
 ## Efficiency
 
@@ -116,3 +137,17 @@ Again, because the work in each loop iteration is amortized constant $O(1)$, the
 ## Space Complexity
 
 The space complexity is constant because we are using only integer variables to store the pointers, the product of the current window, and the count of valid subarrays.
+
+---
+
+## Largest Sum of Subarray with Length K
+
+Given an integer array `nums` and an integer `k`, find the sum of the subarray with the largest sum whose length is `k`.
+
+## Time Complexity
+
+The time complexity of this algorithm is $O(n)$. The first loop to construct the fist window is $O(k)$, and the second loop to slide the window is $O(n - k)$. The total time complexity is $O(k) + O(n - k) = O(n)$.
+
+## Space Complexity
+
+The space complexity is constant because we are using only integer variables to store the pointers, the sum of the current window, and the maximum sum of the subarray.
