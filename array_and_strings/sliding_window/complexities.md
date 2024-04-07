@@ -165,3 +165,21 @@ The time complexity of this algorithm is $O(n)$, since the two loops at most ite
 ## Space Complexity
 
 The space complexity is constant for the same reasons as the previous examples.
+
+---
+
+## Length of Consecutive 1's with K Flips
+
+Given a binary array `nums`, you can perform at most `k` flips. Return the maximum number of consecutive 1's in the array after performing at most `k` flips.
+
+<div style="text-align: center;">
+    <img src="diagrams/longest_ones_k_flips-transformed.png" width="350" height="500">
+</div>
+
+## Time Complexity
+
+Similar to the problem where we can flip at most one zero, the time complexity of this algorithm is amortized $O(n)$. The operations inside `while` is $O(1)$, and the total number of iterations across the entire algorithm is capped at $n$, not $n$ per iteration of the `for` loop. 
+
+## Space Complexity
+
+The space complexity is constant for the same reasons as the previous examples.
