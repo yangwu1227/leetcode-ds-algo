@@ -151,3 +151,17 @@ The time complexity of this algorithm is $O(n)$. The first loop to construct the
 ## Space Complexity
 
 The space complexity is constant because we are using only integer variables to store the pointers, the sum of the current window, and the maximum sum of the subarray.
+
+---
+
+## Largest Average of Subarray with Length K
+
+Given an integer array `nums` consisting of `n` elements, and an integer `k`. Find a contiguous subarray whose length is equal to `k` that has the maximum average value and return this value.
+
+## Time Complexity
+
+The time complexity of this algorithm is $O(n)$, since the two loops at most iterate through the entire array $O(k) + O(n - k) = O(n)$.
+
+## Space Complexity
+
+The space complexity is constant for the same reasons as the previous examples.
