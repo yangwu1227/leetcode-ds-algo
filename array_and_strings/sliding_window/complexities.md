@@ -183,3 +183,26 @@ Similar to the problem where we can flip at most one zero, the time complexity o
 ## Space Complexity
 
 The space complexity is constant for the same reasons as the previous examples.
+
+---
+
+## Minimum Size Subarray Sum
+
+Given an array of positive integers `nums` and a positive integer `target`, return the minimal length of a subarray whose sum is greater than or equal to `target`. If there is no such subarray, return 0 instead.
+
+### Approach using Sliding Window (Dynamic Window Size)
+
+Initialize `left` pointer to `0` and `curr_sum` to `0`.
+Iterate over the `nums`:
+- Add `nums[right]` to `sum`.
+- While `sum` is greater than or equal to `target`:
+  - Update `window_len` = `min(window_len, right - left + 1)`, where `right - left + 1` is the size of the current window. This means that the left index can safely be incremented, since the minimum subarray starting with this index with `curr_sum ≥ target` has been achieved.
+  - Subtract `nums[left]` from `curr_sum` and increment `left`.
+  
+### Time Complexity
+
+The time complexity of this algorithm is $O(n)$; we iterate through `nums` using the `for` loop. The `while` loop inside can run at most `n` times. Each element is visited at most twice, once by the right pointer and once by the left pointer.
+
+### Space Complexity
+
+The space complexity is constant since the variables we use do not change with the size of the input.
