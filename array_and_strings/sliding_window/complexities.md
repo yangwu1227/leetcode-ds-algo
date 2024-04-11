@@ -206,3 +206,46 @@ The time complexity of this algorithm is $O(n)$; we iterate through `nums` using
 ### Space Complexity
 
 The space complexity is constant since the variables we use do not change with the size of the input.
+
+--- 
+
+## Maximum Number of Vowels in a Substring of Given Length
+
+Given a string `s` and an integer `k`, return the maximum number of vowel letters in any substring of `s` with length `k`.
+
+Vowel letters in English are 'a', 'e', 'i', 'o', and 'u'.
+
+### Time Complexity
+
+#### Python
+
+In python:
+
+1. We have a $O(n)$ operation to convert the string to a list of characters.
+2. The first loop to construct the first window is $O(k)$.
+3. The second loop to slide the window is $O(n - k)$.
+4. The set operation to check if a character is a vowel is $O(1)$ average.
+
+Thus, the total time complexity is $O(n) + O(k) + O(n - k) = O(n + k + n - k) = O(2n) = O(n)$.
+
+#### C++
+
+In C++:
+
+1. We have a $O(z)$ operation to create a set of vowels, where $z$ is the number of vowels.
+2. The first loop to construct the first window is $O(k)$.
+3. The second loop to slide the window is $O(n - k)$.
+
+The total time complexity is $O(z) + O(k) + O(n - k) = O(z + k + n - k) = O(z + n) = O(n)$.
+
+### Space Complexity
+
+Outside of the variables and pointers we use, the space complexity is determined by the space used to store the vowels.
+
+#### Python
+
+The space complexity of the set used to store the vowels is $O(z)$ where $z$ is the number of vowels. We also use a list to store the characters of the string, which is $O(n)$. The space complexity is $O(n + z)=O(n)$.
+
+#### C++
+
+We use a boolean array to store the vowels, which is $O(z)$. Finally, unlike python, we can iterate over the string without converting it to a list, so the space complexity is $O(z)$, which is essentially $O(1)$.
