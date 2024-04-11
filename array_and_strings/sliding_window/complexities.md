@@ -249,3 +249,53 @@ The space complexity of the set used to store the vowels is $O(z)$ where $z$ is 
 #### C++
 
 We use a boolean array to store the vowels, which is $O(z)$. Finally, unlike python, we can iterate over the string without converting it to a list, so the space complexity is $O(z)$, which is essentially $O(1)$.
+
+---
+
+## Get Equal Substrings Within Budget
+
+Given two strings `s` and `t` of the same length and an integer `max_cost`, change `s` to `t`, change `s` to `t`. 
+
+Changing the ith character of `s` to ith character of `t` costs `|s[i] - t[i]|` (i.e., the absolute difference between the ASCII values of the characters). 
+
+Return the maximum length of a substring of `s` that can be changed to be the 
+same as the corresponding substring of `t` with a cost less than or equal to `max_cost`. If there is no substring from `s` that can be changed to its corresponding substring from `t`, return 0.
+
+### Examples
+
+```
+Input: s = "abcd", t = "bcdf", maxCost = 3
+Output: 3
+Explanation: "abc" of s can change to "bcd".
+That costs 3, so the maximum length is 3.
+```
+
+```
+Input: s = "abcd", t = "cdef", maxCost = 3
+Output: 1
+Explanation: Each character in s costs 2 to change to character in t,  so the maximum length is 1.
+```
+
+```
+Input: s = "abcd", t = "acde", maxCost = 0
+Output: 1
+Explanation: Not possible to make any change, so the maximum length is 1.
+```
+
+### Time Complexity
+
+#### Python
+
+In python, we have two $O(n)$ operations to convert `s` and `t` to lists of characters. 
+
+Then, the `for` loop slides the window and the `while` loop inside can run at most `n` times. The amortized time for the `while` inside the `loop` is $O(n)$.
+
+The total time complexity is $O(n) + O(n) + O(n) = O(3n) = O(n)$.
+
+#### C++
+
+In C++, there is no need to convert the strings to lists of characters. The time complexity is $O(n)$, for the same reason as the python implementation. The `for` loop slides the window and the `while` loop inside can run at most `n` times. The amortized time for the `while` inside the `loop` is $O(n)$.
+
+### Space Complexity
+
+The space complexity is constant for the same reasons as the previous examples. In python, if we consider the lists used to store the characters of the strings, the space complexity is $O(n) + O(n) = O(2n) = O(n)$. In C++, the space complexity is $O(1)$.
