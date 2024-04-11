@@ -219,20 +219,16 @@ Vowel letters in English are 'a', 'e', 'i', 'o', and 'u'.
 
 #### Python
 
-In python:
-
-1. We have a $O(n)$ operation to convert the string to a list of characters.
-2. The first loop to construct the first window is $O(k)$.
-3. The second loop to slide the window is $O(n - k)$.
-4. The set operation to check if a character is a vowel is $O(1)$ average.
+1. We have a $O(n)$ operation to convert the string to a list of characters
+2. The first loop to construct the first window is $O(k)$, where $k$ is the length of the substring
+3. The second loop to slide the window is $O(n - k)$
+4. The set operation to check if a character is a vowel is $O(1)$ on average (not worst-case)
 
 Thus, the total time complexity is $O(n) + O(k) + O(n - k) = O(n + k + n - k) = O(2n) = O(n)$.
 
 #### C++
 
-In C++:
-
-1. We have a $O(z)$ operation to create a set of vowels, where $z$ is the number of vowels.
+1. We have a $O(z)$ operation (i.e. `for` loop) to create a set of vowels, where $z$ is the number of vowels.
 2. The first loop to construct the first window is $O(k)$.
 3. The second loop to slide the window is $O(n - k)$.
 
@@ -248,7 +244,7 @@ The space complexity of the set used to store the vowels is $O(z)$ where $z$ is 
 
 #### C++
 
-We use a boolean array to store the vowels, which is $O(z)$. Finally, unlike python, we can iterate over the string without converting it to a list, so the space complexity is $O(z)$, which is essentially $O(1)$.
+We use a boolean array to store the vowels, which is $O(z)$. Finally, unlike python, we can iterate, i.e., index over the string directly, so the space complexity is just the array used to store the vowels: $O(z)$.
 
 ---
 
@@ -288,14 +284,14 @@ Explanation: Not possible to make any change, so the maximum length is 1.
 
 In python, we have two $O(n)$ operations to convert `s` and `t` to lists of characters. 
 
-Then, the `for` loop slides the window and the `while` loop inside can run at most `n` times. The amortized time for the `while` inside the `loop` is $O(n)$.
+Then, the `for` loop and the nested `while` loop inside perform the sliding window. The amortized time complexity for the sliding window is $O(n)$. All operations inside the `for` and `while` loops are $O(1)$.
 
 The total time complexity is $O(n) + O(n) + O(n) = O(3n) = O(n)$.
 
 #### C++
 
-In C++, there is no need to convert the strings to lists of characters. The time complexity is $O(n)$, for the same reason as the python implementation. The `for` loop slides the window and the `while` loop inside can run at most `n` times. The amortized time for the `while` inside the `loop` is $O(n)$.
+In C++, there is no need to convert the strings to lists of characters. The amortized time complexity is $O(n)$, for the same reason as in the python implementation.
 
 ### Space Complexity
 
-The space complexity is constant for the same reasons as the previous examples. In python, if we consider the lists used to store the characters of the strings, the space complexity is $O(n) + O(n) = O(2n) = O(n)$. In C++, the space complexity is $O(1)$.
+The space complexity is constant for the same reasons as the previous examples. However, in python, if we consider the lists used to store the characters of the strings `s` and `t`, then the space complexity is $O(n) + O(n) = O(2n) = O(n)$.
