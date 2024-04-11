@@ -71,7 +71,7 @@ for (int right = 0; right < arr.length; right++):
 
 The overall complexity of the algorithm is $O(n)$, not $O\left(n^2\right)$, because the key insight of amortized analysis is recognizing that high-cost operations in some iterations (e.g. `while` loop runs $n$ iterations for a single iteration of the `for`) are balanced by lower-cost operations in others (e.g., for all other iterations of `for`, the `while` will not run at all), leading to a lower average cost per operation across the algorithm's total runtime.
 
---
+---
 
 # Length of Longest Subarray
 
@@ -89,7 +89,7 @@ The space complexity is constant because we are only using integer variables to 
 
 # Length of Consecutive 1's Single Flip
 
-Given a binary string s (a string containing only "0" and "1"). You may choose up to one "0" and flip it to a "1". Find the length of the longest substring achievable that contains only "1". Another way to look at this problem is to find the longest substring that contains at most one 0. 
+Given a binary string `s` (a string containing only "0" and "1"). You may choose up to one "0" and flip it to a "1". Find the length of the longest substring achievable that contains only "1". Another way to look at this problem is to find the longest substring that contains at most one 0. 
 
 For example, given `s = "1101100111"`, the answer is 5. If we flip the element at index 2, the string becomes "1111100111".
 
@@ -119,20 +119,20 @@ In the context of the sliding window algorithm, for a current window defined by 
 
 ## Example 1
 
-- Array: `[4, 7, 1, 2, 5]`, examining window ending at index `4` (`right = 4`).
+- Array: `[4, 7, 1, 2, 5]`, examining the window ending at index `4` (`right = 4`).
 - `left` can range from `0` to `4`, inclusive.
 - Total valid windows ending at index `4`: `5` (`right - left + 1` = `4 - 0 + 1`).
 - The valid windows are: `[4, 7, 1, 2, 5]`, `[7, 1, 2, 5]`, `[1, 2, 5]`, `[2, 5]`, `[5]`.
 
 ## Example 2
 
-- Array: `[2, 1, 5]`, examining window ending at index `2` (`right = 2`).
+- Array: `[2, 1, 5]`, examining the window ending at index `2` (`right = 2`).
 - For window ending at index `2`: `3` (`right - left + 1` = `2 - 0 + 1`).
 - The valid windows are: `[2, 1, 5]`, `[1, 5]`, `[5]`.
 
 ## Time Complexity
 
-Again, because the work in each loop iteration is amortized constant $O(1)$, the overall time complexity of this algorithm is $O(n)$, where $n$ is the length of the input array.
+Again, because the work in each `for` and `while` loop iteration is constant $O(1)$, the overall time complexity of this algorithm is amortized $O(n)$, where $n$ is the length of the input array.
 
 ## Space Complexity
 
@@ -178,7 +178,7 @@ Given a binary array `nums`, you can perform at most `k` flips. Return the maxim
 
 ## Time Complexity
 
-Similar to the problem where we can flip at most one zero, the time complexity of this algorithm is amortized $O(n)$. The operations inside `while` is $O(1)$, and the total number of iterations across the entire algorithm is capped at $n$, not $n$ per iteration of the `for` loop. 
+Similar to the problem where we can flip at most one zero, the time complexity of this algorithm is amortized $O(n)$. The operations inside `while` is $O(1)$, and the total number of iterations across the entire algorithm for the `while` is capped at $n$, not $n$ per iteration of the `for` loop. 
 
 ## Space Complexity
 
@@ -195,9 +195,9 @@ Given an array of positive integers `nums` and a positive integer `target`, retu
 Initialize `left` pointer to `0` and `curr_sum` to `0`.
 Iterate over the `nums`:
 - Add `nums[right]` to `sum`.
-- While `sum` is greater than or equal to `target`:
-  - Update `window_len` = `min(window_len, right - left + 1)`, where `right - left + 1` is the size of the current window. This means that the left index can safely be incremented, since the minimum subarray starting with this index with `curr_sum ≥ target` has been achieved.
-  - Subtract `nums[left]` from `curr_sum` and increment `left`.
+- While `sum` is greater than or equal to `target` (i.e. the window is valid):
+  - Update `window_len` = `min(window_len, right - left + 1)`, where `right - left + 1` is the size of the current window. This means that the left index can now safely be incremented. It is no longer possible to find a even smaller window starting at this `left` index that will have a sum greater than or equal to `target`.
+  - Subtract `nums[left]` from `curr_sum` (i.e. this element is no longer a part of the current window) and increment `left`.
   
 ### Time Complexity
 
