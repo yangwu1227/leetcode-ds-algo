@@ -1,6 +1,6 @@
 // query_sum_limit.h
-#ifndef QUERY_SUM_LIMIT_H
-#define QUERY_SUM_LIMIT_H
+#ifndef QUERY_SUM_LIMIT_HPP
+#define QUERY_SUM_LIMIT_HPP
 #include <vector>
 
 /**
