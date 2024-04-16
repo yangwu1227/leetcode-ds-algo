@@ -21,7 +21,7 @@ int main()
     }
 
     // Test cases
-    std::vector<std::vector<int>> testNums = {{1, 2, 3, 4, 5}, {-3, -1, -2, -4, -5}, {5, -1, 3, -2, 2, -4}};
+    std::vector<std::vector<int>> testNums = {{1, 4, 3, 9, 5}, {-3, -1, -2, -4, -5}, {5, -1, 3, -2, 2, -4}};
     std::vector<std::vector<std::vector<int>>> testQueries = {{{0, 2}, {1, 3}, {0, 4}}, {{0, 1}, {2, 4}, {0, 4}}, {{0, 2}, {1, 4}, {2, 5}}};
     std::vector<int> testLimits = {2, -2, 3};
 

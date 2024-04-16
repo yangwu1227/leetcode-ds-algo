@@ -45,7 +45,7 @@ std::vector<bool> QuerySumHandler::querySumLimitOptimized(const std::vector<int>
     ans.reserve(queries.size());
     for (const auto &query : queries)
     {
-        int left = query[0], right = query[1];
+        auto [left, right] = std::tie(query[0], query[1]);
         // Another way to compute subarray sum, if left index is 0, the prefix sum is simply prefix[right], otherwise, return prefix[right] - prefix[left - 1]
         int subarraySum = prefix[right] - (left > 0 ? prefix[left - 1] : 0);
         ans.push_back(subarraySum < limit);
