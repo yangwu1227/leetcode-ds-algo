@@ -49,3 +49,17 @@ Without the prefix sum, answer each query would cost $O(n)$ time. If we have `q`
 ## Space Complexity
 
 The space complexity is $O(n)$ to store the prefix sum.  We also use $O(q)$ space to store the result of each query. The total space complexity is $O(n + q)$.
+
+---
+
+# Number of Ways to Split Array
+
+Given an integer array `nums`, find the number of ways to split the array into two parts so that the first section has a sum greater than or equal to the sum of the second section. The second section should have at least one number.
+
+## Time Complexity
+
+The time complexity is $O(n)$ to build the prefix sum. We then iterate through the array to find the number of ways to split the array. The total time complexity is $O(n + n - 1) = O(2n - 1) = O(n)$.
+
+## Space Complexity
+
+The space complexity is $O(n)$ to store the prefix sum.
