@@ -22,7 +22,7 @@ Given an array `nums`, to find the sum of the subarray from index `i` to `j`, we
 prefix[j] - prefix[i] + nums[i]
 ```
 
-* The `prefix[i - 1]` is the sum of  all elements before index `i`, and `nums[i]` is the element at index `i`
+* The `prefix[i]` is the sum of  all elements before index `i`, and `nums[i]` is the element at index `i`
 
 * The `prefix[j]` is the sum of all elements up to and including `j`, and `prefix[i]` is the sum of all elements up to and including `i`. So, `prefix[j] - prefix[i]` is the sum of all elements from index `i` and `j` (not including `nums[i]`).
 
