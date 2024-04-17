@@ -155,3 +155,37 @@ The time complexity is $O(n)$ to build the prefix sum. However, in the second lo
 ## Space Complexity
 
 The space complexity is $O(n)$ to store the prefix sum and the result array. This is true for both Python and C++.
+
+---
+
+# Find the Highest Altitude
+
+A road trip consists of `n + 1` points at different altitudes. The start point is `altitude = 0`. Given an integer array `gain` of length `n` where `gain[i]` is the net gain in altitude between points `i` and `i + 1` for all (`0 <= i < n`), return the highest altitude of a point.
+
+## Example
+
+The `altitudes` array is the running sum of the `gain` array with the start point `0`. The highest altitude is the maximum value in the `altitudes` array.
+
+```
+Input: gain = [-5,1,5,0,-7]
+Output: 1
+Explanation: The altitudes are [0,-5,-4,1,1,-6]. The highest is 1.
+```
+
+```
+Input: gain = [-4,-3,-2,-1,4,3,2]
+Output: 0
+Explanation: The altitudes are [0,-4,-7,-9,-10,-6,-3,-1]. The highest is 0.
+```
+
+## Time Complexity
+
+The time complexity is $O(n)$ for both Python and C++. In a single loop, we iterate through each element in the `gain` array to calculate the running sum and update the maximum value.
+
+The addition and comparison operations are $O(1) + O(1) = O(2)$, so the overall time complexity is $O(2n) = O(n)$.
+
+## Space Complexity
+
+The space complexity is constant $O(1)$ because we only use a few variables to store the running sum and the maximum value.
+
+Even though this is solved using a prefix sum, we don't need to store the prefix sum in an array. We can calculate the running sum in place.
