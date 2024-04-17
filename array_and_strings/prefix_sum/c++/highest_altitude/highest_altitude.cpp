@@ -6,11 +6,11 @@ int highestAltitude(const std::vector<int> &gain)
 {
     // Track running sum and find max point in one go, costing O(n)
     int highestPoint = 0;
-    int currentSum = 0;
+    int currentAlt = 0;
     for (const auto &value : gain)
     {
-        currentSum = currentSum + value;
-        highestPoint = std::max(highestPoint, currentSum);
+        currentAlt += value;
+        highestPoint = std::max(highestPoint, currentAlt);
     }
 
     return highestPoint;

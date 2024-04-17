@@ -17,12 +17,11 @@ def highest_altitude(gain: Sequence[int]) -> int:
         The highest altitude of a point
     """
     # Track current sum and find max in one go, which costs O(n)
-    current_sum = 0
-    highest_point = 0
-    for val in gain:
-        current_sum = current_sum + val
+    highest_point = current_alt = 0
+    for value in gain:
+        current_alt += value
         # One comparison O(1)
-        highest_point = max(highest_point, current_sum)
+        highest_point = max(highest_point, current_alt)
         
     return highest_point
     
