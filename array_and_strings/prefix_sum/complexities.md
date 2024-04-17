@@ -77,3 +77,50 @@ Because we start at index `1`, we can build the running sum in place. The time c
 ## Space Complexity
 
 The space complexity is $O(1)$ because we build the running sum in place. List in python and vectors in C++ are mutable, so we can update the array in place.
+
+---
+
+# Minimum Value to Get Positive Step by Step Sum
+
+Find the minimum initial positive value (`startValue`) such that for an array of integers `nums`, the running total starting from `startValue` never drops below 1 when sequentially adding the elements of `nums`.
+
+## Example 1
+
+- **Input:** `nums = [-3, 2, -3, 4, 2]`
+- **Output:** 5
+- **Explanation:** Here's how the running sum calculations pan out starting from `startValue = 5`:
+  - **Step 1:** StartValue + (-3) = 5 - 3 = 2
+  - **Step 2:** Previous Total + 2 = 2 + 2 = 4
+  - **Step 3:** Previous Total + (-3) = 4 - 3 = 1
+  - **Step 4:** Previous Total + 4 = 1 + 4 = 5
+  - **Step 5:** Previous Total + 2 = 5 + 2 = 7
+  - All sums are ≥ 1.
+  
+## Example 2
+
+- **Input:** `nums = [1, 2]`
+- **Output:** 1
+- **Explanation:** Starting at 1, the calculations are:
+  - **Step 1:** StartValue + 1 = 1 + 1 = 2
+  - **Step 2:** Previous Total + 2 = 2 + 2 = 4
+  - All sums are ≥ 1.
+
+## Example 3
+
+- **Input:** `nums = [1, -2, -3]`
+- **Output:** 5
+- **Explanation:** Starting at 5, the calculations show:
+  - **Step 1:** StartValue + 1 = 5 + 1 = 6
+  - **Step 2:** Previous Total + (-2) = 6 - 2 = 4
+  - **Step 3:** Previous Total + (-3) = 4 - 3 = 1
+  - All sums are ≥ 1.
+
+## Time Complexity
+
+The time complexity is $O(n)$ to build the running sum and find the minimum value in one go. If we build the running sum and then find the minimum value, the time complexity would be $O(n + n) = O(2n) = O(n)$, which is still $O(n)$. But doing it in one go is more concise.
+
+In both Python and C++, the `max(i, j)` functions does exactly one comparison. Therefore, the overall time complexity is $O(n)$.
+
+## Space Complexity
+
+The space complexity is $O(1)$ because we build the running sum and save the minimum value using variables that does not depend on the size of the input.
