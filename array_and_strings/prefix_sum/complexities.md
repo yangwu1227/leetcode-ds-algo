@@ -63,3 +63,17 @@ The time complexity is $O(n)$ to build the prefix sum. We then iterate through t
 ## Space Complexity
 
 The space complexity is $O(n)$ to store the prefix sum.
+
+---
+
+# Running Sum of 1D Array
+
+Given an array `nums`, the running sum of the array is defined as `runningSum[i] = sum(nums[0]…nums[i])`. Return the running sum of `nums`.
+
+## Time Complexity
+
+Because we start at index `1`, we can build the running sum in place. The time complexity is $O(n-1) = O(n)$.
+
+## Space Complexity
+
+The space complexity is $O(1)$ because we build the running sum in place. List in python and vectors in C++ are mutable, so we can update the array in place.
