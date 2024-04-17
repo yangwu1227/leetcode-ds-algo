@@ -360,6 +360,6 @@ Another approach is to use the `find` method to find the index of the character 
 
 The overall time complexity is then $O(n) + O(1) = O(n)$.
 
-### Space Complexity
+## Space Complexity
 
 The space complexity of the python approach is $O(n)$ because we are converting the string to a list of characters, which requires $O(n)$ space. The space complexity of the c++ approach is $O(1)$ because we are not using any extra space beyond the input. All we are using is a fixed number of variables for the pointers.
