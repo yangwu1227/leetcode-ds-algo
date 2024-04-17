@@ -140,7 +140,7 @@ The space complexity is constant because we are using only integer variables to 
 
 ---
 
-## Largest Sum of Subarray with Length K
+# Largest Sum of Subarray with Length K
 
 Given an integer array `nums` and an integer `k`, find the sum of the subarray with the largest sum whose length is `k`.
 
@@ -154,7 +154,7 @@ The space complexity is constant because we are using only integer variables to 
 
 ---
 
-## Largest Average of Subarray with Length K
+# Largest Average of Subarray with Length K
 
 Given an integer array `nums` consisting of `n` elements, and an integer `k`. Find a contiguous subarray whose length is equal to `k` that has the maximum average value and return this value.
 
@@ -168,7 +168,7 @@ The space complexity is constant for the same reasons as the previous examples.
 
 ---
 
-## Length of Consecutive 1's with K Flips
+# Length of Consecutive 1's with K Flips
 
 Given a binary array `nums`, you can perform at most `k` flips. Return the maximum number of consecutive 1's in the array after performing at most `k` flips.
 
@@ -186,11 +186,11 @@ The space complexity is constant for the same reasons as the previous examples.
 
 ---
 
-## Minimum Size Subarray Sum
+# Minimum Size Subarray Sum
 
 Given an array of positive integers `nums` and a positive integer `target`, return the minimal length of a subarray whose sum is greater than or equal to `target`. If there is no such subarray, return 0 instead.
 
-### Approach using Sliding Window (Dynamic Window Size)
+## Approach using Sliding Window (Dynamic Window Size)
 
 Initialize `left` pointer to `0` and `curr_sum` to `0`.
 Iterate over the `nums`:
@@ -199,25 +199,25 @@ Iterate over the `nums`:
   - Update `window_len` = `min(window_len, right - left + 1)`, where `right - left + 1` is the size of the current window. This means that the left index can now safely be incremented. It is no longer possible to find a even smaller window starting at this `left` index that will have a sum greater than or equal to `target`.
   - Subtract `nums[left]` from `curr_sum` (i.e. this element is no longer a part of the current window) and increment `left`.
   
-### Time Complexity
+## Time Complexity
 
 The time complexity of this algorithm is $O(n)$; we iterate through `nums` using the `for` loop. The `while` loop inside can run at most `n` times. Each element is visited at most twice, once by the right pointer and once by the left pointer.
 
-### Space Complexity
+## Space Complexity
 
 The space complexity is constant since the variables we use do not change with the size of the input.
 
 --- 
 
-## Maximum Number of Vowels in a Substring of Given Length
+# Maximum Number of Vowels in a Substring of Given Length
 
 Given a string `s` and an integer `k`, return the maximum number of vowel letters in any substring of `s` with length `k`.
 
 Vowel letters in English are 'a', 'e', 'i', 'o', and 'u'.
 
-### Time Complexity
+## Time Complexity
 
-#### Python
+### Python
 
 1. We have a $O(n)$ operation to convert the string to a list of characters
 2. The first loop to construct the first window is $O(k)$, where $k$ is the length of the substring
@@ -226,7 +226,7 @@ Vowel letters in English are 'a', 'e', 'i', 'o', and 'u'.
 
 Thus, the total time complexity is $O(n) + O(k) + O(n - k) = O(n + k + n - k) = O(2n) = O(n)$.
 
-#### C++
+### C++
 
 1. We have a $O(z)$ operation (i.e. `for` loop) to create a set of vowels, where $z$ is the number of vowels.
 2. The first loop to construct the first window is $O(k)$.
@@ -234,21 +234,21 @@ Thus, the total time complexity is $O(n) + O(k) + O(n - k) = O(n + k + n - k) = 
 
 The total time complexity is $O(z) + O(k) + O(n - k) = O(z + k + n - k) = O(z + n) = O(n)$.
 
-### Space Complexity
+## Space Complexity
 
 Outside of the variables and pointers we use, the space complexity is determined by the space used to store the vowels.
 
-#### Python
+### Python
 
 The space complexity of the set used to store the vowels is $O(z)$ where $z$ is the number of vowels. We also use a list to store the characters of the string, which is $O(n)$. The space complexity is $O(n + z)=O(n)$.
 
-#### C++
+### C++
 
 We use a boolean array to store the vowels, which is $O(z)$. Finally, unlike python, we can iterate, i.e., index over the string directly, so the space complexity is just the array used to store the vowels: $O(z)$.
 
 ---
 
-## Get Equal Substrings Within Budget
+# Get Equal Substrings Within Budget
 
 Given two strings `s` and `t` of the same length and an integer `max_cost`, change `s` to `t`, change `s` to `t`. 
 
@@ -257,7 +257,7 @@ Changing the ith character of `s` to ith character of `t` costs `|s[i] - t[i]|` 
 Return the maximum length of a substring of `s` that can be changed to be the 
 same as the corresponding substring of `t` with a cost less than or equal to `max_cost`. If there is no substring from `s` that can be changed to its corresponding substring from `t`, return 0.
 
-### Examples
+## Examples
 
 ```
 Input: s = "abcd", t = "bcdf", maxCost = 3
@@ -278,9 +278,9 @@ Output: 1
 Explanation: Not possible to make any change, so the maximum length is 1.
 ```
 
-### Time Complexity
+## Time Complexity
 
-#### Python
+### Python
 
 In python, we have two $O(n)$ operations to convert `s` and `t` to lists of characters. 
 
@@ -288,10 +288,43 @@ Then, the `for` loop and the nested `while` loop inside perform the sliding wind
 
 The total time complexity is $O(n) + O(n) + O(n) = O(3n) = O(n)$.
 
-#### C++
+### C++
 
 In C++, there is no need to convert the strings to lists of characters. The amortized time complexity is $O(n)$, for the same reason as in the python implementation.
 
-### Space Complexity
+## Space Complexity
 
 The space complexity is constant for the same reasons as the previous examples. However, in python, if we consider the lists used to store the characters of the strings `s` and `t`, then the space complexity is $O(n) + O(n) = O(2n) = O(n)$.
+
+---
+
+# K Radius Subarray Averages
+
+The k-radius average for a subarray of `nums` centered at index `i` with the radius `k` is the average of all elements in `nums` between the indices `i - k` and `i + k` (inclusive). If there are less than `k` elements before or after the index `i`, then the k-radius average is `-1`. Build and return an array `avgs` of length `n` where `avgs[i]` is the k-radius average for the subarray centered at index `i`.
+
+<div style="text-align: center;">
+    <img src="diagrams/k_radius_avg.png" width="500" height="170">
+</div>
+
+In the above example:
+
+1. The k-radius average for index `1` is -1, since there are less then `k = 2` elements before it.
+2. The k-radius average for index `2` is 2.5, since the subarray is `[2, 1, 3, 4, 5]` and the average is `(2 + 1 + 3 + 4 + 5) // 5 = 3`.
+
+So on and so forth.
+
+## Time Complexity
+
+This algorithm can also be solved by first building a prefix sum. In terms of time complexity, both approaches--- sliding window and prefix sum--- have a time complexity of $O(n)$.
+
+In both Python and C++, we have the following operations:
+
+1. Initialize the `avg` array with -1s, which costs $O(n)$
+2. Build the first window by summing and taking the average of the first `2k + 1` elements, which costs $O(2k + 1) = O(k)$
+3. Slide the window across the array; since we only iterate over elements that have `k` elements before and after them, the time complexity is $O((n - k) - (k + 1))=O(n - 2k - 1)=O(n - k)$
+
+The total time complexity is $O(n) + O(k) + O(n - k) = O(2n) = O(n + k + n - k) = O(2n) = O(n)$.
+
+## Space Complexity
+
+Compared to the prefix sum approach, if we do not include the output array, the space complexity is constant, $O(1)$. This is because the sliding window approach does not require any additional space to store the prefix sum.
