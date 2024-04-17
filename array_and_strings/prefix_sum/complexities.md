@@ -146,7 +146,7 @@ So on and so forth.
 
 ### Python3
 
-The time complexity is $O(n)$ to build the prefix sum and calculate the k-radius average for each index. The total time complexity is $O(n + n) = O(2n) = O(n)$.
+The time complexity is $O(n)$ to build the prefix sum and calculate the k-radius average for each index. In the second loop, the cost of `min`, `max` (one comparison) and `append` are all $O(1)$; we can really focus on the append as the most important operation in this second loop. The total time complexity with too loops is $O(n + n) = O(2n) = O(n)$.
 
 ### C++
 
