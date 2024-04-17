@@ -124,3 +124,34 @@ In both Python and C++, the `max(i, j)` functions does exactly one comparison. T
 ## Space Complexity
 
 The space complexity is $O(1)$ because we build the running sum and save the minimum value using variables that does not depend on the size of the input.
+
+---
+
+# K Radius Subarray Averages
+
+The k-radius average for a subarray of `nums` centered at index `i` with the radius `k` is the average of all elements in `nums` between the indices `i - k` and `i + k` (inclusive). If there are less than `k` elements before or after the index `i`, then the k-radius average is `-1`. Build and return an array `avgs` of length `n` where `avgs[i]` is the k-radius average for the subarray centered at index `i`.
+
+<div style="text-align: center;">
+    <img src="diagrams/k_radius_avg.png" width="500" height="170">
+</div>
+
+In the above example:
+
+1. The k-radius average for index `1` is -1, since there are less then `k = 2` elements before it.
+2. The k-radius average for index `2` is 2.5, since the subarray is `[2, 1, 3, 4, 5]` and the average is `(2 + 1 + 3 + 4 + 5) // 5 = 3`.
+
+So on and so forth.
+
+## Time Complexity
+
+### Python3
+
+The time complexity is $O(n)$ to build the prefix sum and calculate the k-radius average for each index. The total time complexity is $O(n + n) = O(2n) = O(n)$.
+
+### C++
+
+The time complexity is $O(n)$ to build the prefix sum. However, in the second loop, because we only iterate through elements that have a valid k-radius range (i.e. from elements `k` to `n - k`), the number of iterations is $O(n - 2k)$. The total time complexity is $O(n + n - 2k) = O(2n - 2k) = O(n - k)$.
+
+## Space Complexity
+
+The space complexity is $O(n)$ to store the prefix sum and the result array. This is true for both Python and C++.
