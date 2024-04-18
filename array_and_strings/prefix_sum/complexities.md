@@ -234,3 +234,33 @@ The time complexity is $O(n)$ for both Python and C++. The cost of building the 
 ## Space Complexity
 
 The space complexity is $O(n)$ to store the prefix sum. This is true for both Python and C++.
+
+---
+
+# Range Sum Query - Immutable
+
+Given an integer array `nums`, a `left` and `right` index, find the sum of all elements between `left` and `right` inclusive.
+
+## Example
+
+```
+Input
+["NumArray", "sumRange", "sumRange", "sumRange"]
+[[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]
+Output
+[null, 1, -1, -3]
+
+Explanation
+NumArray numArray = new NumArray([-2, 0, 3, -5, 2, -1]);
+numArray.sumRange(0, 2); // return (-2) + 0 + 3 = 1
+numArray.sumRange(2, 5); // return 3 + (-5) + 2 + (-1) = -1
+numArray.sumRange(0, 5); // return (-2) + 0 + 3 + (-5) + 2 + (-1) = -3
+```
+
+## Time Complexity
+
+The time complexity is $O(n)$ to build the prefix sum. The cost of finding the sum of a range is $O(1)$ because we can use the formula `prefix[right] - prefix[left] + nums[left]` to find the sum of any given range.
+
+## Space Complexity
+
+The space complexity is $O(n)$ to store the prefix sum for both Python and C++.
