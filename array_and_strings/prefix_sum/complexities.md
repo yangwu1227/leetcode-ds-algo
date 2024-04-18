@@ -162,7 +162,11 @@ The space complexity is $O(n)$ to store the prefix sum and the result array. Thi
 
 A road trip consists of `n + 1` points at different altitudes. The start point is `altitude = 0`. Given an integer array `gain` of length `n` where `gain[i]` is the net gain in altitude between points `i` and `i + 1` for all (`0 <= i < n`), return the highest altitude of a point.
 
-## Example
+<div style="text-align: center;">
+    <img src="diagrams/altitude.png" width="450" height="310">
+</div>
+
+## Examples
 
 The `altitudes` array is the running sum of the `gain` array with the start point `0`. The highest altitude is the maximum value in the `altitudes` array.
 
@@ -189,3 +193,44 @@ The addition and comparison operations are $O(1) + O(1) = O(2)$, so the overall 
 The space complexity is constant $O(1)$ because we only use a few variables to store the running sum and the maximum value.
 
 Even though this is solved using a prefix sum, we don't need to store the prefix sum in an array. We can calculate the running sum in place.
+
+---
+
+# Find Pivot Index
+
+Given an integer array `nums`, return the pivot index of the array. The pivot index is the index where the sum of all the elements to the left of the index is equal to the sum of all the elements to the right of the index. If no such index exists, return `-1`.
+
+## Examples
+
+```
+Input: nums = [1,7,3,6,5,6]
+Output: 3
+Explanation:
+The pivot index is 3.
+Left sum = nums[0] + nums[1] + nums[2] = 1 + 7 + 3 = 11
+Right sum = nums[4] + nums[5] = 5 + 6 = 11
+```
+
+```
+Input: nums = [1,2,3]
+Output: -1
+Explanation:
+There is no index that satisfies the conditions in the problem statement.
+```
+
+```
+Input: nums = [2,1,-1]
+Output: 0
+Explanation:
+The pivot index is 0.
+Left sum = 0 (no elements to the left of index 0)
+Right sum = nums[1] + nums[2] = 1 + -1 = 0
+```
+
+## Time Complexity
+
+The time complexity is $O(n)$ for both Python and C++. The cost of building the prefix sum is $O(n)$, and the cost of finding the pivot index is also $O(n)$ in the worst case, where the pivot index is at the end of the array.
+
+## Space Complexity
+
+The space complexity is $O(n)$ to store the prefix sum. This is true for both Python and C++.
