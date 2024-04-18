@@ -53,7 +53,8 @@
         "algorithm": "cpp",
         "deque": "cpp",
         "list": "cpp",
-        "source_location": "cpp"
+        "source_location": "cpp",
+        "numeric": "cpp"
     },
     "python.analysis.typeCheckingMode": "standard"
 }
