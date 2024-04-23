@@ -54,7 +54,8 @@
         "deque": "cpp",
         "list": "cpp",
         "source_location": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "cassert": "cpp"
     },
     "python.analysis.typeCheckingMode": "standard"
 }
