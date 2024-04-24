@@ -130,6 +130,4 @@ Regardless of whether we use a set or a hash map, the time complexity of inserti
 
 ## Space Complexity
 
-The space complexity of this approach is $O(n)$ since we store the characters of the string in the hash table.
-
-For sets, the space complexity is $O(n)$; at worst, we store all the characters of the string in the set.
+The space complexity of this approach is $O(m)$, where $m$ is the number of allowed characters in the string. In this case, because we are dealing with letters, $m = 26$. We store the characters that have appeared in the hash table or set. This ultimately means that the space complexity is constant and $O(1)$.
