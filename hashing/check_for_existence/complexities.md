@@ -115,3 +115,21 @@ The overall time complexity is $O(n + n) = O(2n) = O(n)$.
 ## Space Complexity
 
 The space complexity of both approaches is $O(n)$ since we store the elements of the array in the hash table.
+
+---
+
+# First Letter to Appear Twice
+
+Given a string `s`, return the first letter that appears twice in the string. We can assume that each input would have exactly one solution.
+
+## Time Complexity
+
+The time complexity of this approach is $O(n)$ where $n$ is the length of the string. We iterate through the string once and check if the current character has already appeared in the hash table. 
+
+Regardless of whether we use a set or a hash map, the time complexity of insertion and look up is $O(1)$ average. Therefore, the overall time complexity is $O(n)$.
+
+## Space Complexity
+
+The space complexity of this approach is $O(n)$ since we store the characters of the string in the hash table.
+
+For sets, the space complexity is $O(n)$; at worst, we store all the characters of the string in the set.
