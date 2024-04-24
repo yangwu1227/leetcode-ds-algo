@@ -131,3 +131,19 @@ Regardless of whether we use a set or a hash map, the time complexity of inserti
 ## Space Complexity
 
 The space complexity of this approach is $O(m)$, where $m$ is the number of allowed characters in the string. In this case, because we are dealing with letters, $m = 26$. We store the characters that have appeared in the hash table or set. This ultimately means that the space complexity is constant and $O(1)$.
+
+---
+
+# Find Unique Values
+
+Given an integer array `nums`, find all the unique numbers `x` in nums that satisfy the following: `x + 1` is not in `nums`, and `x - 1 `is not in `nums`.
+
+## Time Complexity
+
+In both Python and C++, we iterate through the array once to build the set of unique numbers. Then, we iterate through the array again to check if `x + 1` and `x - 1` are in the set. At most, the second iteration will have a time complexity of $O(n)$.
+
+The total time complexity is $O(n + n) = O(2n) = O(n)$.
+
+## Space Complexity
+
+The space complexity of this approach is $O(n)$ since we store the elements of the array in the set.
