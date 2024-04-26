@@ -163,3 +163,93 @@ We build a set from the input string, which has a time complexity of $O(n)$. Thi
 ## Space Complexity
 
 The space complexity of this approach is $O(m)$, where $m$ is the number of allowed characters in the string. In this case, because we are dealing with letters, $m = 26$. We store the characters that have appeared in the set, which can be at most 26 characters. We can therefore think of the space complexity as constant and $O(1)$.
+
+---
+
+# Missing Number
+
+Given an array `nums` containing `n` distinct numbers in the range `[0, n]`, return the only number in the range that is missing from the array.
+
+## Examples
+
+```
+Input: nums = [3,0,1]
+Output: 2
+Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.
+```
+
+```
+Input: nums = [0,1]
+Output: 2
+Explanation: n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.
+```
+
+```
+Input: nums = [9,6,4,2,3,5,7,0,1]
+Output: 8
+Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.
+```
+
+## Time Complexity
+
+### Set Approach
+
+For the hash map approach, we first build the set from the input array, which has a time complexity of $O(n)$. This is because we iterate through the array once and add each element to the set. Insertion in a set (hash map) has a time complexity of $O(1)$ average in both Python and C++.
+
+We then iterate through the range `[0, n]` and check if each number is in the set. At worst, this loop will have $n+1$ iterations, so the time complexity of this step is $O(n)$.
+
+The overall time complexity is $O(n + n) = O(2n) = O(n)$.
+
+### Summation Approach
+
+The summation approach uses the formula for the sum of the first `n` natural numbers, which is $\frac{n(n+1)}{2}$. We calculate the sum of the first `n` natural numbers and subtract the sum of the input array. 
+
+The sum operations costs $O(n + 1) = O(n)$ for the first `n` natural numbers and $O(n)$ for the sum of the input array. The overall time complexity is $O(n + n) = O(2n) = O(n)$.
+
+### XOR Approach
+
+The XOR operation can be used to detect the missing number in a unique and efficient manner because of how it treats duplicate and zero values. 
+
+#### Properties of XOR:
+
+1. Identity: $a \oplus 0=a$
+2. Inverse: $a \oplus a=0$
+3. Commutative: $a \oplus b=b \oplus a$
+4. Associative: $(a \oplus b) \oplus c=a \oplus(b \oplus c)$
+
+#### Strategy:
+
+- **Complete Range**: Create a sequence that includes every number from 0 to n, where n is the length of the original list `nums`. This means there is exactly one of each number from `0` to `n`.
+- **Combine and XOR**: Append this sequence (0 to n) to the original list `nums`. This new combined list will contain two of each number from `0` to `n` except for one number that is missing from `nums`.
+- **Apply XOR**: By XOR-ing all elements of this combined list:
+  - Each number in the range `0` to `n` that appears twice will result in `0` when XOR-ed with itself (due to the **Inverse property**).
+  - The missing number which appears only once will remain, as all other numbers cancel themselves out (due to the **Commutative and Associative properties**).
+
+#### Example
+
+Suppose `nums = [0, 1, 3]` and the length of `nums` (`n`) is 3. Thus, the range 0 to n is `[0, 1, 2, 3]`.
+
+- The combined list would be: `[0, 1, 3, 0, 1, 2, 3]`
+- XOR-ing all elements: `0 ⊕ 1 ⊕ 3 ⊕ 0 ⊕ 1 ⊕ 2 ⊕ 3`
+  - All numbers except `2` appear twice and thus XOR to `0`.
+  - The number `2` remains because it appears only once in the sequence (**Identity property**).
+
+Thus, the missing number `2` is what remains after the XOR operation, and `reduce` applies this operation across the list, accumulating the result into a single value.
+
+This method is efficient ($O(n)$ time complexity) and uses minimal additional space.
+
+## Space Complexity
+
+### Set Approach
+
+The space complexity of this approach is $O(n)$ since we store the elements of the array in the set.
+
+### Summation Approach
+
+The space complexity of this approach is $O(1)$ since we only use a few extra variables to store the sum of the first `n` natural numbers and the sum of the input array. The space does not grow with the input size.
+
+### XOR Approach
+
+In Python, we allocate $O(n + 1)$ to store the full range, i.e., the sequence from `0` to `n`. In Python, we combine this range with the input list `nums` to create a new list. The combined list has a length of $2n + 1$, costing $O(2n + 1)$. We can consider all of this as $O(n)$, ignoring the constant and lower-order terms.
+
+In C++, we also allocate $O(n + 1)$ space for the full range vector, but we do not create a new combined list. So the overall space complexity is $O(n + 1)$, which can be considered as $O(n)$.
