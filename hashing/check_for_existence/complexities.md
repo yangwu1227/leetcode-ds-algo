@@ -147,3 +147,19 @@ The total time complexity is $O(n + n) = O(2n) = O(n)$.
 ## Space Complexity
 
 The space complexity of this approach is $O(n)$ since we store the elements of the array in the set.
+
+---
+
+# Check if the Sentence is Pangram
+
+A pangram is a sentence where every letter of the English alphabet appears at least once.
+
+Given a string `sentence` containing only lowercase English letters, return `true` if sentence is a pangram, or `false` otherwise.
+
+## Time Complexity
+
+We build a set from the input string, which has a time complexity of $O(n)$. This is because we iterate through the string once and add each character to the set. Insertion in a set (hash map) has a time complexity of $O(1)$ average in both Python and C++. We then get the length of the set, checking if it is equal to 26. The overall time complexity is $O(n)$.
+
+## Space Complexity
+
+The space complexity of this approach is $O(m)$, where $m$ is the number of allowed characters in the string. In this case, because we are dealing with letters, $m = 26$. We store the characters that have appeared in the set, which can be at most 26 characters. We can therefore think of the space complexity as constant and $O(1)$.
