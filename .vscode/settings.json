@@ -55,7 +55,8 @@
         "list": "cpp",
         "source_location": "cpp",
         "numeric": "cpp",
-        "cassert": "cpp"
+        "cassert": "cpp",
+        "unordered_set": "cpp"
     },
     "python.analysis.typeCheckingMode": "standard"
 }
