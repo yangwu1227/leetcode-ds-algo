@@ -253,3 +253,19 @@ The space complexity of this approach is $O(1)$ since we only use a few extra va
 In Python, we allocate $O(n + 1)$ to store the full range, i.e., the sequence from `0` to `n`. In Python, we combine this range with the input list `nums` to create a new list. The combined list has a length of $2n + 1$, costing $O(2n + 1)$. We can consider all of this as $O(n)$, ignoring the constant and lower-order terms.
 
 In C++, we also allocate $O(n + 1)$ space for the full range vector, but we do not create a new combined list. So the overall space complexity is $O(n + 1)$, which can be considered as $O(n)$.
+
+---
+
+# Counting Elements
+
+Given an integer `array`, count how many elements `x` there are, such that `x + 1` is also in `array`. If there are duplicates in `array`, count them separately.
+
+## Time Complexity
+
+For both Python and C++, we iterate through the array once to build the set of unique numbers. Then, we iterate through the array again to check if `x + 1` is in the set. At most, the second iteration will have a time complexity of $O(n)$.
+
+The total time complexity is $O(n + n) = O(2n) = O(n)$.
+
+## Space Complexity
+
+The space complexity of this approach is $O(n)$ since we store the elements of the array in the set.
