@@ -269,3 +269,24 @@ The total time complexity is $O(n + n) = O(2n) = O(n)$.
 ## Space Complexity
 
 The space complexity of this approach is $O(n)$ since we store the elements of the array in the set.
+
+---
+
+# Contains Duplicate
+
+Given an integer array `nums`, return `true` if any value appears at least twice in the array, and return `false` if every element is distinct.
+
+## Time Complexity
+
+In Python, we use `collections.defaultdict` to build a hash map from the input array; the keys are the elements and the values are the counts of each element. We iterate through the array once to build this hash map, which has a time complexity of $O(n)$. Incrementing the count of each element in the hash map has a time complexity of $O(1)$. 
+
+In C++, we use an `unordered_set` to store the elements of the array. We iterate through the array to check if each element is in the set. If it is, we return `true`. If it is not, we add the element to the set. Insertion and look up in an `unordered_set` have a time complexity of $O(1)$ average.
+
+The overall time complexity is $O(n)$ for both Python and C++.
+
+## Space Complexity
+
+In Python, the space complexity of this approach is $O(n)$ since we store the elements of the array in the hash map.
+
+In C++, the space complexity of this approach is $O(n)$ since we store the elements of the array in the set.
+
