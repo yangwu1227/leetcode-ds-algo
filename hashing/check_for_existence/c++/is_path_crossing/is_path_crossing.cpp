@@ -5,7 +5,7 @@
 #include <boost/functional/hash.hpp>
 
 template <class T1, class T2>
-std::size_t pairHash::operator()(const std::pair<T1, T2> &pair) const
+std::size_t PairHash::operator()(const std::pair<T1, T2> &pair) const
 {
     std::size_t seed = 0;
     boost::hash_combine(seed, pair.first);
@@ -15,7 +15,7 @@ std::size_t pairHash::operator()(const std::pair<T1, T2> &pair) const
 
 bool isPathCrossing(const std::string &path)
 {
-    std::unordered_set<std::pair<int, int>, pairHash> coordinates;
+    std::unordered_set<std::pair<int, int>, PairHash> coordinates;
     auto [x, y] = std::make_pair(0, 0);
     coordinates.emplace(x, y);
 

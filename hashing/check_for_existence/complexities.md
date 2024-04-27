@@ -335,11 +335,11 @@ Given a string path, where `path[i] = 'N', 'S', 'E' or 'W'`, each representing m
 To make sure that we can make `std::pair<int, int>` the key to `std::unordered_set`, we need to provide a custom hash function for `std::pair<int, int>`. 
 
 ```cpp
-class pairHash
+class PairHash
 {
 public:
     template <class T1, class T2>
-    std::size_t pairHash::operator()(const std::pair<T1, T2> &pair) const
+    std::size_t operator()(const std::pair<T1, T2> &pair) const
     {
         std::size_t seed = 0;
         boost::hash_combine(seed, pair.first);
@@ -349,16 +349,16 @@ public:
 };
 ```
 
-The `pairHash` class is a custom hash function class tailored for hashing `std::pair` objects with elements of any types that support hashing. 
+The `PairHash` class is a custom hash function class tailored for hashing `std::pair` objects with elements of any types that support hashing. 
 
 1. **Class Declaration**:
-   - `class pairHash`: Declares a new class named `pairHash`, which provides a custom hash function for `std::pair` objects.
+   - `class PairHash`: Declares a new class named `PairHash`, which provides a custom hash function for `std::pair` objects.
 
 2. **Template Function for Hashing**:
    - `template <class T1, class T2>`: This template allows the hash function to accept pairs of any data types, such as `int`, `double`, `string`, etc., facilitating universal application.
 
 3. **Operator Overload (Functor)**:
-   - `std::size_t operator()(const std::pair<T1, T2> &pair) const`: Overloads the function call operator `()`. This makes it possible to use instances of `pairHash` as a function that takes a `std::pair` of types `T1` and `T2` and returns a hash value of type `std::size_t`.
+   - `std::size_t operator()(const std::pair<T1, T2> &pair) const`: Overloads the function call operator `()`. This makes it possible to use instances of `PairHash` as a function that takes a `std::pair` of types `T1` and `T2` and returns a hash value of type `std::size_t`.
 
 4. **Hash Computation**:
    - `std::size_t seed = 0;`: Starts the hash computation with an initial seed value of zero.

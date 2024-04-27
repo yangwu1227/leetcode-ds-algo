@@ -13,7 +13,7 @@
  * @param T1 Type of the first element in the pair.
  * @param T2 Type of the second element in the pair.
  */
-class pairHash
+class PairHash
 {
 public:
     template <class T1, class T2>
