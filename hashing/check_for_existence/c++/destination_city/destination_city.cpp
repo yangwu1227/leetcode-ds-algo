@@ -35,9 +35,10 @@ std::string destCity(const std::vector<std::vector<std::string>> &paths)
 
     for (const auto &entry : destCounts)
     {
-        // If the value, i.e., destination cout, is > 0
+        // If the value, i.e., destination count, is > 0
         if (entry.second > 0)
         {
+            // Return name of city
             return entry.first;
         }
     }
