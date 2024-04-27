@@ -321,3 +321,54 @@ Both the above operations have a time complexity of $O(n)$, making the overall t
 ## Space Complexity
 
 For both Python and C++, the space complexity of this approach is $O(n)$ since we store the elements of the array in the hash map--- `collections.defaultdict` in Python and `std::unordered_map` in C++.
+
+---
+
+# Path Crossing
+
+Given a string path, where `path[i] = 'N', 'S', 'E' or 'W'`, each representing moving one unit north, south, east, or west, respectively. Start at the origin `(0, 0)` on a 2D plane and walk on the path specified by `path`.
+
+## Implementation Details
+
+### C++
+
+To make sure that we can make `std::pair<int, int>` the key to `std::unordered_set`, we need to provide a custom hash function for `std::pair<int, int>`. 
+
+```cpp
+class pairHash
+{
+public:
+    template <class T1, class T2>
+    std::size_t pairHash::operator()(const std::pair<T1, T2> &pair) const
+    {
+        std::size_t seed = 0;
+        boost::hash_combine(seed, pair.first);
+        boost::hash_combine(seed, pair.second);
+        return seed;
+    }
+};
+```
+
+The `pairHash` class is a custom hash function class tailored for hashing `std::pair` objects with elements of any types that support hashing. 
+
+1. **Class Declaration**:
+   - `class pairHash`: Declares a new class named `pairHash`, which provides a custom hash function for `std::pair` objects.
+
+2. **Template Function for Hashing**:
+   - `template <class T1, class T2>`: This template allows the hash function to accept pairs of any data types, such as `int`, `double`, `string`, etc., facilitating universal application.
+
+3. **Operator Overload (Functor)**:
+   - `std::size_t operator()(const std::pair<T1, T2> &pair) const`: Overloads the function call operator `()`. This makes it possible to use instances of `pairHash` as a function that takes a `std::pair` of types `T1` and `T2` and returns a hash value of type `std::size_t`.
+
+4. **Hash Computation**:
+   - `std::size_t seed = 0;`: Starts the hash computation with an initial seed value of zero.
+   - `boost::hash_combine(seed, pair.first);`: Integrates the hash of the first element of the pair into the seed.
+   - `boost::hash_combine(seed, pair.second);`: Integrates the hash of the second element of the pair into the seed.
+
+## Time Complexity
+
+In both Python and C++, insertion and lookup in a set have a time complexity of $O(1)$ average. We iterate through the path string once, so the overall time complexity is $O(n)$.
+
+## Space Complexity
+
+The space complexity of this approach is $O(n)$ since we store the visited coordinates in the set.
