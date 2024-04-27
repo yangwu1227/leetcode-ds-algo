@@ -290,3 +290,34 @@ In Python, the space complexity of this approach is $O(n)$ since we store the el
 
 In C++, the space complexity of this approach is $O(n)$ since we store the elements of the array in the set.
 
+--- 
+
+# Destination City
+
+Given an array of paths, where `paths[i] = [cityA_i, cityB_i]` means there exists a direct path going from `cityA_i` to `cityB_i`. Return the destination city, that is, the city without any path outgoing to another city.
+    
+Note: It is guaranteed that the graph of paths forms a line without any loop, therefore, there will be exactly one destination city.
+
+## Time Complexity
+
+### Python
+
+We use the `collections.defaultdict` to build a hash map with city names as keys and count of incoming and outgoing paths as values. That is, for each city, we decrement the count when it is the departure city and increment the count when it is the destination city. This works because cities that are both departure and destination will cancel each other out, while the destination city will have a count of 1. This operation costs $O(n)$.
+
+We then iterate through the hash map to find the city with a count of 1, which costs $O(n)$ at worst.
+
+The overall time complexity is $O(n + n) = O(2n) = O(n)$.
+
+### C++
+
+We use an `std::unordered_map` called `destCounts` to count occurrences of each city as a destination and departure:
+
+* **City Counting**: Each city appearing as a departure has its count decremented, and each appearance as a destination increments its count. This is efficiently managed with the emplace function, which inserts a key-value pair if the key doesn't exist, and adjusts the count appropriately if it does.
+
+* **Destination Identification**: After building the map, we iterate over it to find a city whose final count is greater than zero, identifying it as the destination city since it's not used as a departure point. 
+
+Both the above operations have a time complexity of $O(n)$, making the overall time complexity $O(n + n) = O(2n) = O(n)$.
+
+## Space Complexity
+
+For both Python and C++, the space complexity of this approach is $O(n)$ since we store the elements of the array in the hash map--- `collections.defaultdict` in Python and `std::unordered_map` in C++.
