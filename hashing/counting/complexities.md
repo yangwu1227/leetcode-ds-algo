@@ -72,14 +72,14 @@ For each of the remaining `n-1` vectors, where `n` is the total number of vector
 
   - A new set `current` is created for each vector, which has a time complexity of $O(m \log m)$ for each vector
   - The `std::set_intersection` operation then finds the intersection of `result` and `current`. Assuming `N1 = m` represents the size of `result` and `N2 = m` (the size of each subsequent vector's set), the complexity of `std::set_intersection` is:
-    $$
-    \begin{align*}
-    O(2 * (N1 + N2) - 1) &= O(2 * (m + m) - 1) \\
-    &= O(2 * 2m - 1) \\
-    &= O(4m - 1) \\
-    &= O(m)
-    \end{align*}
-    $$
+$$
+\begin{align*}
+O(2 * (N1 + N2) - 1) &= O(2 * (m + m) - 1) \\
+&= O(2 * 2m - 1) \\
+&= O(4m - 1) \\
+&= O(m)
+\end{align*}
+$$
   - Updating the result using `std::set::swap` is `O(1)`.
 
 The total complexity for the intersections is effectively $O((n-1) \cdot (m))$. A more practical upper bound might consider the input size of each set, leading to $O(n \cdot m)$.
