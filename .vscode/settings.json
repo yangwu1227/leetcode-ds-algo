@@ -59,7 +59,11 @@
         "unordered_set": "cpp",
         "set": "cpp",
         "utility": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "cfenv": "cpp",
+        "iomanip": "cpp",
+        "queue": "cpp",
+        "strstream": "cpp"
     },
     "python.analysis.typeCheckingMode": "standard"
 }
