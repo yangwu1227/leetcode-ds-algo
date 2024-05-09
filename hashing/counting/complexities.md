@@ -157,3 +157,31 @@ For all approaches, we build a hash map containing the frequency of each charact
 We also build a set containing all the frequencies. If all characters have different counts, then the set will contain $n$ elements. The space complexity of this operation is $O(n)$.
 
 Because `s` is a string consisting of lowercase English letters, we can consider the space complexity to be $O(26)$, which simplifies to $O(1)$.
+
+---
+
+# Subarray Sum Equals K
+
+Given an integer array `nums` and an integer `k`, find the number of subarrays whose sum is equal to `k`.
+
+## Explanation
+
+Let `prefix_sum` be an array where `prefix_sum[i]` is the sum of the first `i` elements of `nums`. 
+
+If the cumulative sum up to two indices, `i` and `j` is at a difference of `k` i.e. `prefix_sum[i] − prefix_sum[j] = k`, then sum of elements lying between indices `i` and `j` is `k`.
+
+We use a hash map to store the following data: `{prefix_sum[i]: count}`. This hash map is built by traversing `nums`. Each time we encounter a new prefix sum, add it to hashmap as a key. If the same prefix sum occurs again, we increment the count corresponding to that prefix sum in the hashmap. 
+
+For every prefix sum encountered, we also determine the number of times `prefix_sum[i] - k` has occurred already. This count will determine the number of times a subarray with sum `k` has occurred up to the current index `i`. 
+
+We increment the answer by the number of times `prefix_sum[i] - k` has occurred.
+
+![](diagrams/subarray_sum_equals_k.gif)
+
+## Time Complexity
+
+The time complexity of this approach is $O(n)$, where `n` is the length of the input array `nums`. This is because we traverse the array once and perform constant time operations--- inserting and looking up elements in the hash map--- for each element.
+
+## Space Complexity
+
+The space complexity of this approach is $O(n)$, where `n` is the length of the input array `nums`. This is because the hash map can contain at most `n` distinct prefix sums.
