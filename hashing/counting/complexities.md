@@ -120,19 +120,23 @@ The overall time complexity is $O(n)$.
 
 ### C++
 
+For all the approaches below, we build a hash map containing the frequency of each character in the string, which is $O(n)$.
+
 #### Using `std::unordered_set`
 
-This is the same as the Python approach. The overall time complexity is $O(n)$.
+This is the same as the Python approach. We build a set containing all the frequencies. The overall time complexity is $O(n + n) = O(2n) = O(n)$.
 
 #### Using `std::all_of`
 
-In this approach, we use `std::all_of` to check if all elements in the frequency array are equal to the first element. The time complexity of this operation is $O(n)$.
+In this approach, we use `std::all_of` to check if all counts from the second element onward in the hash map are equal to the first element's count. If so, we know that all characters have the same count. The overall time complexity is $O(n + n) = O(2n) = O(n)$.
 
 #### Using `std::minmax_element`
 
-The `std::minmax_element` function has complexity $O(\text{max}(\frac{3}{2}(n - 1), 0))$. 
+We use the `std::minmax_element` function to find the minimum and maximum counts in the hash map. If the minimum and maximum counts are the same, all characters have the same count.
 
-The overall time complexity is:
+The `std::minmax_element` function has complexity $O(\text{max}(\frac{3}{2}(n - 1), 0))$:
+
+Therefore, the overall time complexity is:
 
 $$
 \begin{align*}
@@ -144,7 +148,7 @@ $$
 
 #### Early Stopping
 
-The early stopping approach has a time complexity of $O(n)$. We build the hash map in $O(n)$ time and then iterate over the hash map to check if all frequencies are the same. The iteration runs at most $n$ times when all characters have different counts.
+The early stopping approach has a time complexity of $O(n)$. We build the hash map in $O(n)$ time and then iterate over the hash map to check if all frequencies are the same. The second iteration runs at most $n$ times, which happens when all characters have the same count.
 
 ## Space Complexity
 
