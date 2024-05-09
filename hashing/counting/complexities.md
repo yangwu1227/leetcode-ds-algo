@@ -178,9 +178,17 @@ We increment the answer by the number of times `prefix_sum[i] - k` has occurred.
 
 ![](diagrams/subarray_sum_equals_k.gif)
 
+In the animation above:
+
+1. `map` is the hash map with the prefix sum up to the current index as the key and the number of times it has occurred as the value
+2. `sum` is the cumulative sum up to the current index or `prefix_sum[i]`
+3. `count` is the number of times `prefix_sum[i] - k` has occurred up to the current index
+4. `k` is the integer constraint
+5. `sum - k` is the difference between the current sum and `k`, which is used to determine the number of times a subarray with sum `k` has occurred up to the current index
+
 ## Time Complexity
 
-The time complexity of this approach is $O(n)$, where `n` is the length of the input array `nums`. This is because we traverse the array once and perform constant time operations--- inserting and looking up elements in the hash map--- for each element.
+The time complexity is $O(n)$, where `n` is the length of the input array `nums`. This is because we traverse the array once and perform constant time operations--- inserting and looking up elements in the hash map--- for each element.
 
 ## Space Complexity
 
