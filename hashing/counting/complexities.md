@@ -99,3 +99,57 @@ $$
 ## Space Complexity
 
 If every element is unique, the space complexity of the dictionary is $O(n \cdot m)$, where $n$ is the number of arrays and $m$ is the average length of each array.
+
+---
+
+# Check if All Characters Have Equal Number of Occurrences
+
+Given a string `s`, return `true` if all characters in `s` have the same number of occurrences, or `false` otherwise.
+
+## Time Complexity
+
+### Python3
+
+For Python, we can either use `collections.Counter` or `collections.defaultdict` to count the frequency of each character in the string. The time complexity of building the dictionary is $O(n)$, where $n$ is the length of the string.
+
+We then build a set containing all the counts. The time complexity of this operation is $O(n)$.
+
+If all characters have the same counts, the set will contain only one element. The time complexity of checking the size of the set is $O(1)$.
+
+The overall time complexity is $O(n)$.
+
+### C++
+
+#### Using `std::unordered_set`
+
+This is the same as the Python approach. The overall time complexity is $O(n)$.
+
+#### Using `std::all_of`
+
+In this approach, we use `std::all_of` to check if all elements in the frequency array are equal to the first element. The time complexity of this operation is $O(n)$.
+
+#### Using `std::minmax_element`
+
+The `std::minmax_element` function has complexity $O(\text{max}(\frac{3}{2}(n - 1), 0))$. 
+
+The overall time complexity is:
+
+$$
+\begin{align*}
+O(n + \frac{3}{2}(n - 1)) &= O(n + \frac{3}{2}n - \frac{3}{2}) \\
+&= O(\frac{5}{2}n) \\
+&= O(n)
+\end{align*}
+$$
+
+#### Early Stopping
+
+The early stopping approach has a time complexity of $O(n)$. We build the hash map in $O(n)$ time and then iterate over the hash map to check if all frequencies are the same. The iteration runs at most $n$ times when all characters have different counts.
+
+## Space Complexity
+
+For all approaches, we build a hash map containing the frequency of each character in the string. The space complexity of this operation is $O(n)$, where $n$ is the length of the string.
+
+We also build a set containing all the frequencies. If all characters have different counts, then the set will contain $n$ elements. The space complexity of this operation is $O(n)$.
+
+Because `s` is a string consisting of lowercase English letters, we can consider the space complexity to be $O(26)$, which simplifies to $O(1)$.
