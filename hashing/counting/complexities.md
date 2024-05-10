@@ -168,9 +168,9 @@ Given an integer array `nums` and an integer `k`, find the number of subarrays w
 
 Let `prefix_sum` be an array where `prefix_sum[i]` is the sum of the first `i` elements of `nums`. 
 
-If the cumulative sum up to two indices, `i` and `j` is at a difference of `k` i.e. `prefix_sum[i] − prefix_sum[j] = k`, then sum of elements lying between indices `i` and `j` is `k`.
+If the the difference between two cumulative sums up to two indices, `i` and `j` is `k` i.e. `prefix_sum[i] − prefix_sum[j] = k`, then the sum of elements lying between indices `i` and `j` is `k`.
 
-We use a hash map to store the following data: `{prefix_sum[i]: count}`. This hash map is built by traversing `nums`. Each time we encounter a new prefix sum, add it to hashmap as a key. If the same prefix sum occurs again, we increment the count corresponding to that prefix sum in the hashmap. 
+We use a hash map to store the following data: `{prefix_sum[i]: count}`, which is built by traversing `nums`. Each time we encounter a new prefix sum, add it to hashmap as a key. If the same prefix sum occurs again, we increment the count corresponding to that prefix sum in the hashmap. 
 
 For every prefix sum encountered, we also determine the number of times `prefix_sum[i] - k` has occurred already. This count will determine the number of times a subarray with sum `k` has occurred up to the current index `i`. 
 
@@ -180,11 +180,11 @@ We increment the answer by the number of times `prefix_sum[i] - k` has occurred.
 
 In the animation above:
 
-1. `map` is the hash map with the prefix sum up to the current index as the key and the number of times it has occurred as the value
+1. `map` is the hash map using prefix sums as keys and the number of times they have occurred as values
 2. `sum` is the cumulative sum up to the current index or `prefix_sum[i]`
 3. `count` is the number of times `prefix_sum[i] - k` has occurred up to the current index
 4. `k` is the integer constraint
-5. `sum - k` is the difference between the current sum and `k`, which is used to determine the number of times a subarray with sum `k` has occurred up to the current index
+5. `sum - k` is the difference between the current sum and `k`, which is used to look up the `count` of the amount of subarrays with sum `k` that have occurred so far
 
 ## Time Complexity
 
