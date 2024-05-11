@@ -193,3 +193,36 @@ The time complexity is $O(n)$, where `n` is the length of the input array `nums`
 ## Space Complexity
 
 The space complexity of this approach is $O(n)$, where `n` is the length of the input array `nums`. This is because the hash map can contain at most `n` distinct prefix sums.
+
+---
+
+# Count Number of Nice Subarrays
+
+Given an array of positive integers `nums` and an integer `k`, find the number of subarrays with exactly `k` odd numbers.
+
+## Example
+
+Consider the array `nums = [3, 2, 4, 5, 6, 7]` and `k = 2`. We want to find the number of subarrays with exactly 2 odd numbers.
+
+| **Iteration** | **num** | **Current Odd Count** | **counts[current_odd_count - k]** | **Update in `counts`** | **Subarrays with Exactly 2 Odd Numbers** |
+|---------------|---------|-----------------------|-----------------------------------|------------------------|------------------------------------------|
+| 1             | 3       | 1                     | `counts[1 - 2] = counts[-1]` (0)  | `{0: 1, 1: 1}`         | None                                     |
+| 2             | 2       | 1                     | `counts[1 - 2] = counts[-1]` (0)  | `{0: 1, 1: 2}`         | None                                     |
+| 3             | 4       | 1                     | `counts[1 - 2] = counts[-1]` (0)  | `{0: 1, 1: 3}`         | None                                     |
+| 4             | 5       | 2                     | `counts[2 - 2] = counts[0]` (1)   | `{0: 1, 1: 3, 2: 1}`   | `[3, 2, 4, 5]`                           |
+| 5             | 6       | 2                     | `counts[2 - 2] = counts[0]` (1)   | `{0: 1, 1: 3, 2: 2}`   | `[3, 2, 4, 5]`, `[2, 4, 5, 6]`           |
+| 6             | 7       | 3                     | `counts[3 - 2] = counts[1]` (3)   | `{0: 1, 1: 3, 2: 2, 3: 1}` | `[3, 2, 4, 5]`, `[2, 4, 5, 6]`, `[4, 5, 6, 7]`, `[5, 6, 7]`, `[2, 4, 5, 6, 7]` |
+
+### Why `counts[current_odd_count - k]`?
+
+Each key of the `counts` dictionary is a count of odd numbers encountered so far (`current_odd_count`), and the value is the number of times this count has occurred.
+
+When `current_odd_count - k` matches a key recorded in `counts`, it means that between that previous point and the current position, exactly $k$ odd numbers have been added. This is because the difference in the number of odd numbers from that previous point to the current point is $k$.
+
+## Time Complexity
+
+The cost of building the `counts` dictionary is $O(n)$, and we traverse the array once. 
+
+## Space Complexity
+
+At most, the `counts` dictionary will contain $n$ elements, where $n$ is the length of the input array `nums`. Therefore, the space complexity is $O(n)$.
