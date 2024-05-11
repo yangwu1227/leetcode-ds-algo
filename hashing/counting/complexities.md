@@ -217,7 +217,13 @@ Consider the array `nums = [3, 2, 4, 5, 6, 7]` and `k = 2`. We want to find the 
 
 Each key of the `counts` dictionary is a count of odd numbers encountered so far (`current_odd_count`), and the value is the number of times this count has occurred.
 
-When `current_odd_count - k` matches a key recorded in `counts`, it means that between that previous point and the current position, exactly $k$ odd numbers have been added. This is because the difference in the number of odd numbers from that previous point to the current point is $k$.
+The `current_odd_count` increases by 1 each time an odd number is encountered. 
+
+When `current_odd_count - k` matches a key recorded in `counts`, it means that between the current position $i$ and a previous position $j$ (i.e. the very first time `current_odd_count - k` was added to the hash map with a count of 1), exactly $k$ odd numbers have been encountered since that point.
+
+Therefore, to get the number of subarrays with exactly `k` odd numbers, we need to find the number of times `current_odd_count - k` has occurred so far. This is the value of `counts[current_odd_count - k]`. 
+
+Adding `counts[current_odd_count - k]` to the answer gives the number of subarrays with exactly `k` odd numbers up to the current position.
 
 ## Time Complexity
 
