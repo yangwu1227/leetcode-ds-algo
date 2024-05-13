@@ -26,7 +26,7 @@ Given a 2D array `nums` that contains $n$ arrays of distinct integers, return a 
 
 ## Time Complexity
 
-### Python3
+### Python
 
 #### Using `collections.defaultdict`
 
@@ -108,7 +108,7 @@ Given a string `s`, return `true` if all characters in `s` have the same number 
 
 ## Time Complexity
 
-### Python3
+### Python
 
 For Python, we can either use `collections.Counter` or `collections.defaultdict` to count the frequency of each character in the string. The time complexity of building the dictionary is $O(n)$, where $n$ is the length of the string.
 
@@ -232,3 +232,71 @@ The cost of building the `counts` dictionary is $O(n)$, and we traverse the arra
 ## Space Complexity
 
 At most, the `counts` dictionary will contain $n$ elements, where $n$ is the length of the input array `nums`. Therefore, the space complexity is $O(n)$.
+
+---
+
+# Find Players With Zero or One Losses
+
+Given an integer array `matches` where `matches[i] = [winner_i, loser_i]` indicates that the player `winner_i` defeated player `loser_i` in a match. Return a list of two lists:
+    
+1. The first list contains the players who never lose once
+2. The second list contains the players who only lost once
+
+## Time Complexity
+
+### Python
+
+Building the `winner_counter` and `loser_counter` dictionaries costs $O(n)$, where `n` is the number of matches.
+
+Using a set comprehension, we iterate over `winner_counter` and `loser_counter` to find the players who never lost and the players who lost once. These operations have a time complexity of $O(n)$.
+
+The sorting operation has a time complexity of $O(n \log n)$.
+
+The overall time complexity is:
+
+$$
+\begin{align*}
+O(n + (n + n) + n \log n) &= O(3n + n \log n) \\
+&= O(n + n \log n)
+\end{align*}
+$$
+
+### C++
+
+We use a single hash map `lossCount` to store the number of losses for each player. Building this hash map costs $O(n)$.
+
+Next, iterate over `lossCount` to find the players who never lost and the players who lost once. This operation has a time complexity of $O(n)$.
+
+Again, the sorting operation has a time complexity of $O(n \log n)$.
+
+Same as the Python solution, the overall time complexity is:
+
+$$
+\begin{align*}
+O(n + n \log n) &= O(2n + n \log n) \\
+&= O(n + n \log n)
+\end{align*}
+$$
+
+### Note
+
+In both solutions, finding the players who satisfy the conditions may be less than $n$ if there are fewer players than matches; in other words, some players participate in multiple matches.
+
+In C++, `lossCount` has all unique players as keys, and so `num of players` may be less then `matches.size()`.
+
+Similarly, in Python, `winner_counter` and `loser_counter` have all unique players who have won or lost as keys.
+
+## Space Complexity
+
+### Python
+
+We use:
+
+1. Two dictionaries `winner_counter` and `loser_counter` to store the number of wins and losses for each player
+2. Two sets `winners` and `losers` to store the players who never lost and the players who lost once
+
+In the worst case, where all players have unique wins and losses, the space complexity is $O(n)$.
+
+### C++
+
+We use a single hash map `lossCount` to store the number of losses for each player. In the worst case, where all players have unique losses, the space complexity is also $O(n)$.
