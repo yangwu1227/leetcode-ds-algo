@@ -300,3 +300,21 @@ In the worst case, where all players have unique wins and losses, the space comp
 ### C++
 
 We use a single hash map `lossCount` to store the number of losses for each player. In the worst case, where all players have unique losses, the space complexity is also $O(n)$.
+
+---
+
+# Largest Unique Number
+
+Given an integer array `nums`, return the largest integer that only occurs once. If no integer occurs once, return `-1`.
+
+## Time Complexity
+
+The time complexity of building the `counter` dictionary is $O(n)$, where `n` is the length of the input array `nums`.
+
+We iterate over the `counter` dictionary to find the largest integer that only occurs once. This operation has a time complexity of $O(n)$.
+
+The overall time complexity is $O(n + n) = O(2n) = O(n)$.
+
+## Space Complexity
+
+The `counter` dictionary contains unique integers from the input array `nums`. In the worst case, where all integers are unique, the space complexity is $O(n)$.
