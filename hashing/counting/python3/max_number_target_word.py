@@ -19,7 +19,7 @@ def max_number_target_word(text: str, target_word: str) -> int:
     int
         The maximum number of instances of the word `target_word` that can be formed
     """
-    # O(2n) to build
+    # O(n + m) to build
     char_counts = Counter(text)
     target_counts = Counter(target_word)
     
