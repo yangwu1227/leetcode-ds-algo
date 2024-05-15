@@ -318,3 +318,55 @@ The overall time complexity is $O(n + n) = O(2n) = O(n)$.
 ## Space Complexity
 
 The `counter` dictionary contains unique integers from the input array `nums`. In the worst case, where all integers are unique, the space complexity is $O(n)$.
+
+---
+
+# Maximum Number of Target Word
+
+Given a string `text`, use the characters of `text` to form as many instances of the word `target_word` as possible.
+
+Note: Use each character in `text` at most once.
+
+## Time Complexity
+
+### Python
+
+The cost of building `text_counts` and `targets_counts` is $O(n + m)$, where $n$ is the length of `text` and $m$ is the length of `target_word`. 
+
+Iterate over the characters in `target_counts`:
+
+1. The character is not in `text_counts`, in which case the answer is $0$
+2. If the character is in `text_counts`, compute `text_counts[char] // target_counts[char]`, which is the potential number of times `target_word` can be formed using the characters in `text` based on this character alone
+3. Across all characters, the minimum of these potential numbers is the maximum number of times `target_word` can be formed using the characters in `text`; this is because we cannot form more instances of `target_word` than any character's maximum potential allows
+
+This operation has a time complexity of $O(m)$.
+
+Therefore, the overall time complexity is $O(n + m + m) = O(n + 2m) = O(n + m)$.
+
+### C++
+
+The approach in C++ is similar to that of Python. The cost of building the hash maps is $O(n + m)$.
+
+We use `std::transform_reduce` to find the minimum of the potential number of times `target_word` can be formed using the characters in `text`. 
+
+This function applies a transformation function to elements in a range, and then reduces the transformed elements to a single value using a reduction function. 
+
+```cpp
+template< class InputIt, class T, class BinaryOp, class UnaryOp >
+T transform_reduce( InputIt first, InputIt last, T init, BinaryOp reduce, UnaryOp transform );
+```
+
+* `first`, `last`: Input iterators to the initial and one past the final element of the container
+* `init`: Initial value of the accumulator
+* `reduce`: Binary operation function object that will be applied to the accumulator and the result of the transformation
+* `transform`: Unary operation function object that will be applied to each element in the range
+
+The time complexity of `std::transform_reduce` is $O(m)$.
+
+Similarly, the overall time complexity is $O(n + m)$.
+
+## Space Complexity
+
+The two hash maps for storing the counts of characters in `text` and `target_word` cost $O(n + m)$ (i.e. if all characters are unique).
+
+The rest are constance space variables, so the overall space complexity is $O(n + m)$.
