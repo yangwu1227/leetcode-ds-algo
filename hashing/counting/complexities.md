@@ -370,3 +370,46 @@ Similarly, the overall time complexity is $O(n + m)$.
 The two hash maps for storing the counts of characters in `text` and `target_word` cost $O(n + m)$ (i.e. if all characters are unique).
 
 The rest are constance space variables, so the overall space complexity is $O(n + m)$.
+
+--- 
+
+# Maximum Length of Subarray with Equal Number of 0s and 1s
+
+Given a binary array `nums`, return the maximum length of a contiguous subarray with an equal number of `0` and `1`.
+
+## Explanation
+
+1. **Early Exit**:
+
+   - If the array `nums` has only one element, it's impossible to have a subarray with equal numbers of `0`s and `1`s, so we return `0`.
+
+2. **Initialization**:
+
+   - `max_len` is initialized to `0` to keep track of the maximum length of the desired subarray.
+
+   - `count` is initialized to `0` to keep track of the balance between `0`s and `1`s. It increments by `1` for each `1` and decrements by `1` for each `0`.
+- 
+   - `hash_map` is a `defaultdict` that will store the first occurrence of each `count` value. It's initialized with `hash_map[0] = -1` to handle the case where the entire subarray from the start has equal numbers of `0`s and `1`s. The formula for the length of a subarray is `index - hash_map[count]`, which becomes `index + 1` when `count` is `0`.
+
+1. **Iterate Through the Array**:
+
+   - For each element in `nums`, update `count`: increment by `1` if the element is `1`, and decrement by `1` if the element is `0`. This is used to keep track of the balance between `0`s and `1`s in the subarray.
+
+2. **Check and Update Maximum Length**:
+
+   - If the current `count` has been seen before in `hash_map`, it means that, since the first occurrence of this `count` up to the current index where this `count` is observed again, the increment and decrement operations perfectly canceled each other out, i.e there has been an equal numbers of `0`s and `1`s. Calculate the length of this subarray as `index - hash_map[count]` and update `max_len` if this length is greater than the current `max_len`.
+   - If the current `count` has not been seen before, store the current index in `hash_map` as the first occurrence of this `count`.
+
+## Time Complexity
+
+The initialization of `hash_map[0] = -1` is $O(1)$ and the iteration over the array `nums` is $O(n)$, where `n` is the length of the array. This is because everything inside the loop is $O(1)$:
+
+* Updating `count` is $O(1)$
+* Checking if `count` is in `hash_map` is $O(1)$
+* Calculating the length of the subarray is $O(1)$
+* Updating `max_len` is $O(1)$
+* Updating `hash_map` is $O(1)$
+
+## Space Complexity
+
+The space complexity is $O(n)$, where `n` is the length of the array `nums`. This is because the `hash_map` dictionary can contain at most `n` distinct `count` values. This happens when the entire array is either all `0`s or all `1`s.
