@@ -204,13 +204,13 @@ Given an array of positive integers `nums` and an integer `k`, find the number o
 
 Consider the array `nums = [3, 2, 4, 5, 6, 7]` and `k = 2`. We want to find the number of subarrays with exactly 2 odd numbers.
 
-| **Iteration** | **num** | **Current Odd Count** | **counts[current_odd_count - k]** | **Update in `counts`** | **Subarrays with Exactly 2 Odd Numbers** |
-|---------------|---------|-----------------------|-----------------------------------|------------------------|------------------------------------------|
-| 1             | 3       | 1                     | `counts[1 - 2] = counts[-1]` (0)  | `{0: 1, 1: 1}`         | None                                     |
-| 2             | 2       | 1                     | `counts[1 - 2] = counts[-1]` (0)  | `{0: 1, 1: 2}`         | None                                     |
-| 3             | 4       | 1                     | `counts[1 - 2] = counts[-1]` (0)  | `{0: 1, 1: 3}`         | None                                     |
-| 4             | 5       | 2                     | `counts[2 - 2] = counts[0]` (1)   | `{0: 1, 1: 3, 2: 1}`   | `[3, 2, 4, 5]`                           |
-| 5             | 6       | 2                     | `counts[2 - 2] = counts[0]` (1)   | `{0: 1, 1: 3, 2: 2}`   | `[3, 2, 4, 5]`, `[2, 4, 5, 6]`           |
+| **Iteration** | **num** | **Current Odd Count** | **counts[current_odd_count - k]** | **Update in `counts`**     | **Subarrays with Exactly 2 Odd Numbers**                                       |
+| ------------- | ------- | --------------------- | --------------------------------- | -------------------------- | ------------------------------------------------------------------------------ |
+| 1             | 3       | 1                     | `counts[1 - 2] = counts[-1]` (0)  | `{0: 1, 1: 1}`             | None                                                                           |
+| 2             | 2       | 1                     | `counts[1 - 2] = counts[-1]` (0)  | `{0: 1, 1: 2}`             | None                                                                           |
+| 3             | 4       | 1                     | `counts[1 - 2] = counts[-1]` (0)  | `{0: 1, 1: 3}`             | None                                                                           |
+| 4             | 5       | 2                     | `counts[2 - 2] = counts[0]` (1)   | `{0: 1, 1: 3, 2: 1}`       | `[3, 2, 4, 5]`                                                                 |
+| 5             | 6       | 2                     | `counts[2 - 2] = counts[0]` (1)   | `{0: 1, 1: 3, 2: 2}`       | `[3, 2, 4, 5]`, `[2, 4, 5, 6]`                                                 |
 | 6             | 7       | 3                     | `counts[3 - 2] = counts[1]` (3)   | `{0: 1, 1: 3, 2: 2, 3: 1}` | `[3, 2, 4, 5]`, `[2, 4, 5, 6]`, `[4, 5, 6, 7]`, `[5, 6, 7]`, `[2, 4, 5, 6, 7]` |
 
 ### Why `counts[current_odd_count - k]`?
@@ -413,3 +413,21 @@ The initialization of `hash_map[0] = -1` is $O(1)$ and the iteration over the ar
 ## Space Complexity
 
 The space complexity is $O(n)$, where `n` is the length of the array `nums`. This is because the `hash_map` dictionary can contain at most `n` distinct `count` values. This happens when the entire array is either all `0`s or all `1`s.
+
+---
+
+# Sum of Unique Elements
+
+Given an integer array `nums`, return the sum of all unique elements of `nums`.
+
+## Time Complexity
+
+The time complexity of building the `counts` hash map is $O(n)$, where `n` is the length of the input array `nums`.
+
+We iterate over the `counts` hash map to find the sum of all unique elements. At worst, all elements in `nums` are unique, and the time complexity of this operation is $O(n)$.
+
+The overall time complexity is $O(n + n) = O(2n) = O(n)$.
+
+## Space Complexity
+
+The `counts` hash map contains unique elements from the input array `nums`. In the worst case, where all elements are unique, the space complexity is $O(n)$.
