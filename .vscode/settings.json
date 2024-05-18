@@ -63,7 +63,8 @@
         "cfenv": "cpp",
         "iomanip": "cpp",
         "queue": "cpp",
-        "strstream": "cpp"
+        "strstream": "cpp",
+        "functional": "cpp"
     },
     "python.analysis.typeCheckingMode": "standard"
 }
