@@ -42,7 +42,7 @@ The overall time complexity is:
 
 $$
 \begin{align*}
-O(n \cdot m + n \cdot m + n \cdot m + m \log m) &= O(3n \cdot m + k \log k) \\
+O(n \cdot m + n \cdot m + n \cdot m + m \log m) &= O(3n \cdot m + m \log m) \\
 &= O(n \cdot m + m \log m)
 \end{align*}
 $$
