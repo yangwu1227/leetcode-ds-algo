@@ -431,3 +431,46 @@ The overall time complexity is $O(n + n) = O(2n) = O(n)$.
 ## Space Complexity
 
 The `counts` hash map contains unique elements from the input array `nums`. In the worst case, where all elements are unique, the space complexity is $O(n)$.
+
+--- 
+
+# Count Elements With Maximum Frequency
+
+Given an array `nums` consisting of positive integers, return the total count of the elements in `nums` that appear with the highest frequency. 
+
+## Example
+
+```
+Input: nums = [1,2,2,3,1,4]
+Output: 4
+Explanation: The elements 1 and 2 have a frequency of 2 which is the maximum frequency in the array.
+So the number of elements in the array with maximum frequency is 4.
+```
+
+## Time Complexity
+
+### Python
+
+`Counter(nums)` costs $O(n)$, where `n` is the length of the input array `nums`.
+
+We find the maximum frequency in the `counter` dictionary, which costs $O(n)$.
+
+Finally, iterate over the `counter` dictionary to add up the elements with the maximum frequency. In the worst case, all elements have the same and thus the maximum frequency, and this operation costs $O(n)$.
+
+The overall time complexity is $O(n + n + n) = O(3n) = O(n)$.
+
+### C++
+
+The time complexity of building the `counts` hash map is $O(n)$, same as in Python.
+
+We use the `std::max_element` function to find the maximum frequency in the `counts` hash map. This function has a time complexity of $O(n - 1)$.
+
+Using `std::accumulate`, we iterate over the `counts` hash map to find the total count of elements with the maximum frequency. This operation has a time complexity of $O(n)$.
+
+Same as the Python solution, the overall time complexity is $O(n + (n - 1) + n) = O(3n - 1) = O(n)$.
+
+## Space Complexity
+
+For both Python and C++, building the hash map costs $O(n)$, where `n` is the length of the input array `nums`.
+
+Everything else is constant space, such as `total_count` in Python and `auto maxIter` iterator in C++.
