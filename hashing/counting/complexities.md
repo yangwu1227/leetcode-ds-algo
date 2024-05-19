@@ -18,7 +18,7 @@ The right pointer moves across each character in the string once $O(n)$, and for
 
 The space used by the dictionary depends on the number of distinct characters in the string but is bounded by the size of the alphabet if `k` is not smaller than this size. In the worst case (with all unique characters and `k` equal to this number), the space complexity is $O(\min(k, |\sum|))$, where $|\sum|$ is the alphabet size (26 for lowercase English letters).
 
---
+---
 
 # Intersection of Multiple Arrays
 
@@ -502,3 +502,145 @@ The overall time complexity is $O(n + n) = O(2n) = O(n)$.
 The `counts` hash map contains unique elements from the input array. In the worst case, where all elements are unique, the space complexity is $O(n)$.
 
 All other variables are constant space.
+
+--- 
+
+# Unique Number of Occurrences
+
+Given an array of integers, return true if all elements have unique counts.
+
+## Time Complexity
+
+### Python
+
+The cost of building the `counts` hash map is $O(n)$, where `n` is the length of the input array.
+
+Next, we build a set `set_of_unique_counts` to store the unique counts of elements in the input array. In the worst case, all elements are unique (i.e., each with a count of $1$), there will be `n` unique keys in the `counts` hash map. We would iterate over all `n` keys to build the set.
+
+Checking that the length of the set is equal to the length of the hash map is $O(1)$.
+
+Overall, the time complexity is $O(n + n + 1) = O(2n + 1) = O(n)$.
+
+### C++
+
+The cost of building the hash map is again $O(n)$.
+
+We use `std::transform` and `std::insert_iterator` to build the set `setUniqueCounts`. 
+
+The `std::transform` function has the following signature:
+
+```cpp
+template< class InputIt, class OutputIt, class UnaryOperation >
+OutputIt transform( InputIt first1, InputIt last1, OutputIt d_first, UnaryOperation unary_op );
+```   
+
+* `first1`, `last1`: Input iterators to the initial and one past the final element of the hash map
+* `d_first`: Output iterator to the `end` of the set `setUniqueCounts` for insertion
+* `unary_op`: Unary operation function applied to each pair of `(num, count)` in the hash map, simply extracting the count
+
+Again, in the worst case, no elements are duplicated, the cost of building this set is $O(n)$.
+
+As in Python, the check for lengths of the hash map and the set is $O(1)$.
+
+The overall time complexity is again $O(n)$.
+
+## Space Complexity
+
+We build two data structures: a hash map and a set: 
+
+1. **hash map**:
+   - The hash map contains unique elements from the input array, mapping each element to its count.
+   - In the worst case, where there are no duplicates (each element appears exactly once), the hash map will have $n$ unique keys.
+   
+2. **set**:
+   - The set contains all unique counts of elements in the input array.
+   - In the worst case, where the counts are as follows:
+     - 1 appears 1 time
+     - 2 appears 2 times
+     - 3 appears 3 times
+     - ...
+     - $k$ appears $k$ times
+   - The set will contain $k$ unique counts.
+   - Here, $k$ is the number of unique elements in the input array.
+
+#### Case 1: All Elements are Unique
+
+- **Hash Map**: If all elements are unique, the hash map will have $n$ unique keys.
+- **Set**: The set will contain a single unique count of $1$.
+
+In this case, the space complexity is $O(n + 1) = O(n)$.
+
+#### Case 2: Worst Case with $k$ Unique Counts
+
+- **Hash Map**: The hash map will contain $k$ unique keys.
+- **Set**: The set will contain $k$ unique counts.
+
+```
+nums = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+counts = {1: 1, 2: 2, 3: 3, 4: 4}
+setUniqueCounts = {1, 2, 3, 4}
+```
+
+In this case, the space complexity is $O(k + k) = O(2k) = O(k)$.
+
+#### Overall Space Complexity
+
+The space complexity is $O(n)$ in the worst case, where all elements are unique. This is because $k$ is bounded by $n$.
+
+#### Why is $k$ Bounded by $n$?
+
+To understand why $k$ bounded by $n$, consider the nature of the counts:
+
+1. **Unique Elements**: If each element in the input array is unique, the hash map will have $n$ unique keys, each with a count of $1$. The set in this case will have only one unique count, which is $1$.
+
+2. **Non-Unique Elements**: In a scenario where counts are unique and follow the pattern $1, 2, 3, \ldots, k$:
+   - The total number of elements in such a pattern is the sum of the first $k$ natural numbers: $\frac{k \cdot (k + 1)}{2} \le n$.
+   - This sum must be less than or equal to $n$ (the total number of elements in the input array). 
+
+We can solve for $k$ after rearranging the equation:
+
+$$
+\begin{align*}
+k^2 + k & \leq 2n
+\end{align*}
+$$
+
+Given the quadratic equation $k^2 + k - 2n = 0$, we can solve for $k$ using the quadratic formula with $a=1$, $b=1$, and $c=-2n$:
+
+$$
+\begin{align*}
+k &= \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \\ 
+&= \frac{-1 \pm \sqrt{1 + 8n}}{2}
+\end{align*}
+$$
+
+This shows that $k$ is constrained by $n$.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+def compute_roots(n):
+    k1 = (-1 - np.sqrt(8 * n + 1)) / 2
+    k2 = (-1 + np.sqrt(8 * n + 1)) / 2
+    return k1, k2
+
+n_values = np.linspace(0, 10, 400)
+
+k_intervals = [compute_roots(n) for n in n_values]
+k1_values = [interval[0] for interval in k_intervals]
+k2_values = [interval[1] for interval in k_intervals]
+
+plt.figure(figsize=(10, 6))
+plt.plot(n_values, k1_values, label=r'$k_1 = \frac{-1 - \sqrt{8n + 1}}{2}$')
+plt.plot(n_values, k2_values, label=r'$k_2 = \frac{-1 + \sqrt{8n + 1}}{2}$')
+plt.fill_between(n_values, k1_values, k2_values, color='gray', alpha=0.5)
+plt.xlabel('n')
+plt.ylabel('k')
+plt.title('Interval for k for different values of n')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+![](diagrams/unique_count_k_constrained_by_n.png)
