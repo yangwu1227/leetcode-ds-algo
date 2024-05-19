@@ -474,3 +474,31 @@ Same as the Python solution, the overall time complexity is $O(n + (n - 1) + n) 
 For both Python and C++, building the hash map costs $O(n)$, where `n` is the length of the input array `nums`.
 
 Everything else is constant space, such as `total_count` in Python and `auto maxIter` iterator in C++.
+
+---
+
+# Find Lucky Integer in an Array
+
+A lucky integer is defined as an integer that has a count equaling its value. Given an array of integers, return the largest lucky integer in the array. 
+
+If there are multiple lucky integers, return the largest of them. If there is no lucky integer, return `-1`.
+
+## Time Complexity
+
+The cost of building a hash map `counts` is $O(n)$, where `n` is the length of the input array.
+
+We iterate over the keys in the `counts` hash map to find the largest lucky integer.
+
+In Python, this is doing using a generator expression inside `max()`, with a default value of `-1` if there are no lucky integers. 
+
+In C++, we use a structured binding to iterate over the hash map and find the largest lucky integer.
+
+In the worst case, all elements in the input array are unique, and we need to check $n$ pairs of `(num, count)` in the hash map for `num == count`. Therefore, this operation has a time complexity of $O(n)$.
+
+The overall time complexity is $O(n + n) = O(2n) = O(n)$.
+
+## Space Complexity
+
+The `counts` hash map contains unique elements from the input array. In the worst case, where all elements are unique, the space complexity is $O(n)$.
+
+All other variables are constant space.
