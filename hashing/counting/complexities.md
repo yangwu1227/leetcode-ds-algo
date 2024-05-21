@@ -644,3 +644,43 @@ plt.show()
 ```
 
 ![](diagrams/unique_count_k_constrained_by_n.png)
+
+---
+
+# Sort Characters By Frequency
+
+Given a string `s`, sort it in decreasing order based on the count of its characters. The count of a character is the number of times it appears in the string.
+
+## Time Complexity
+
+### Python
+
+Building the hash map costs $O(n)$, where `n` is the length of the input string `s`.
+
+The `Counter.most_common()` method is essentially sorts the hash map by value in descending order.
+
+```python
+sorted(self.items(), key=_itemgetter(1), reverse=True)
+```
+
+Given $k$ unique characters, the time complexity of sorting is $O(k \log k)$. In the worst case, $k = n$ (i.e., all characters are unique), and the time complexity is $O(n \log n)$.
+
+In general, given a single character and a count $m$, the `character * count` operation has a time complexity of $O(m)$. In this case, since counts are constant, the complexity of repeated each character by its count can be simplified to $O(1)$. 
+
+We iterate over the list of tuples returned by `Counter.most_common()` to build a list of strings, which of whic is composed of `character * count`; this operation has a time complexity of $O(n)$ if every character is unique.
+
+Finally, the `join` operation has a time complexity of $O(k)$, where $k$ is the number of unique characters. Again, in the worst case, $k = n$, and the time complexity is $O(n)$.
+
+The overall time complexity is $O(n + n \log n + n + n) = O(3n + n \log n) = O(n + n \log n)$.
+
+### C++
+
+Same as Python, building the hash map costs $O(n)$.
+
+We copy each `(charactor, count)` pair from the hash map to a vector of pairs. This operation has a time complexity of $O(k)$, where $k$ is the number of unique characters. In the worst case, $k = n$, and the time complexity is $O(n)$.
+
+Sorting the vector of pairs by the second element of each has a time complexity of $O(n \log n)$ in the worst case.
+
+We iterate over the sorted vector of pairs to build the final string by concatenating strings like `std::string(count, character)` using `+=`, which has a time complexity of $O(n)$ in the worst case.
+
+The overall time complexity is once again $O(n + n + n \log n + n) = O(3n + n \log n) = O(n + n \log n)$.
