@@ -684,3 +684,48 @@ Sorting the vector of pairs by the second element of each has a time complexity 
 We iterate over the sorted vector of pairs to build the final string by concatenating strings like `std::string(count, character)` using `+=`, which has a time complexity of $O(n)$ in the worst case.
 
 The overall time complexity is once again $O(n + n + n \log n + n) = O(3n + n \log n) = O(n + n \log n)$.
+
+--- 
+
+# Length of Longest Subarray With at Most K Frequency
+
+Given an array of integers `nums` and an integer `k`, return the length of the longest subarray whose elements appear no more than `k` times.
+
+## Time Complexity
+
+We use a sliding window approach to find the longest subarray with at most `k` frequency.
+
+We create two pointers, `left` and `right`, to define the window. The window is defined by the range `[left, right]`.
+
+1. **Initialization**:
+   - `left` and `right` are initialized to `0`.
+   - `max_len` is initialized to `0` to keep track of the length of the longest subarray.
+   - `counts` is a hash map that stores the frequency of each element in the window.
+
+2. **Iterate Over the Array**:
+   - For each element in `nums`, we increment the frequency of the element in the `counts` hash map.
+   - If the frequency of the element exceeds `k`, we shrink the window by incrementing `left` and decrementing the frequency of the element at `nums[left]` in the `counts` hash map.
+
+3. **Update the Maximum Length**:
+   - For each window, we update the `max_len` with the maximum of the current `max_len` and the length of the current window.
+
+The time complexity of this approach is amortized $O(n)$, where `n` is the length of the input array `nums`. The operations inside the `for` and `while` loops are $O(1)$--- insertion, lookup, and incrementing/decrementing the counts.
+
+### Why Amortized $O(n)$?
+
+1. Each element is added to the window exactly once when the right pointer moves from left to right.
+
+2. Each element is removed from the window at most once when the left pointer moves to ensure the window remains valid.
+
+This means that each element is processed at most twice: once when expanding the window and once when shrinking it. Hence, the total work done by both the `left` and `right` pointers is proportional to $2n$, leading to an amortized time complexity of $O(n)$.
+
+## Space Complexity
+
+The hash map contains unique elements from the input array `nums`. In the worst case, all elements have:
+
+1. Counts less than or equal to `k > 1`
+2. Counts equal to 1
+
+In this case, the hash map will contain $n$ unique keys. The space complexity is $O(n)$.
+
+The rest of the variables are constant space.
