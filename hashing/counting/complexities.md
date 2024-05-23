@@ -791,3 +791,27 @@ The overall time complexity is $O(n + n) = O(2n) = O(n)$.
 ## Space Complexity
 
 The hash map contains unique elements from the input array `nums`. In the worst case, where all elements are unique, the space complexity is $O(n)$.
+
+---
+
+# Binary Subarrays With Sum
+
+Given a binary array `nums` and an integer `k`, return the number of non-empty subarrays with a sum `k`.
+
+## Explanation
+
+This is very similar to the problem of finding the number of subarrays with a sum equal to `k`. 
+
+![](diagrams/binary_subarray_sum_equals_k.gif)
+
+Again, we use the fact that, when the difference between two prefix sums up to two indices, `i` and `j` is `k`, it means that the sum of elements lying between indices `i` and `j` is `k`.
+
+If `counts[prefix_sum_i - k]` is the number of times the prefix sum `prefix_sum_i - k` has occurred up to the current index, then we need to add these occurrences of valid subarrays to the running total of valid subarrays.
+
+## Time Complexity
+
+The time complexity is $O(n)$, where `n` is the length of the input array `nums`. We traverse the array once and perform constant time operations--- inserting and looking up elements in the hash map--- for each element in the array.
+
+## Space Complexity
+
+In the worst case, all elements in the binary array are 1s, and the hash map will contain $n + 1$ elements. Note that the hash map is initialized with `hash_map[0] = 1` to handle the case where the entire subarray from the start has a sum of `k`. Thus, the overall space complexity is $O(n + 1) = O(n)$.
