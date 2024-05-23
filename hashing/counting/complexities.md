@@ -808,6 +808,18 @@ Again, we use the fact that, when the difference between two prefix sums up to t
 
 If `counts[prefix_sum_i - k]` is the number of times the prefix sum `prefix_sum_i - k` has occurred up to the current index, then we need to add these occurrences of valid subarrays to the running total of valid subarrays.
 
+## Example
+
+Consider the input array `nums = [1, 0, 1, 0, 1]` and `k = 2`:
+
+| **Iteration** | **num** | **Current Sum** | **counts[current_sum - k]** | **Update in `counts`**     | **Subarrays with Sum `k`**                                      |
+| ------------- | ------- | --------------- | -------------------------- | -------------------------- | --------------------------------------------------------------- |
+| 1             | 1       | 1               | `counts[1 - 2] = counts[-1]` (0) | `{0: 1, 1: 1}`             | None                                                             |
+| 2             | 0       | 1               | `counts[1 - 2] = counts[-1]` (0) | `{0: 1, 1: 2}`             | None                                                             |
+| 3             | 1       | 2               | `counts[2 - 2] = counts[0]` (1)  | `{0: 1, 1: 2, 2: 1}`       | `[1, 0, 1]`                                                     |
+| 4             | 0       | 2               | `counts[2 - 2] = counts[0]` (1)  | `{0: 1, 1: 2, 2: 2}`       | `[1, 0, 1]`, `[1, 0, 1, 0]`                                     |
+| 5             | 1       | 3               | `counts[3 - 2] = counts[1]` (2)  | `{0: 1, 1: 2, 2: 2, 3: 1}` | `[1, 0, 1]`, `[1, 0, 1, 0]`, `[1, 0, 1, 0, 1]`, `[0, 1, 0, 1]` |
+
 ## Time Complexity
 
 The time complexity is $O(n)$, where `n` is the length of the input array `nums`. We traverse the array once and perform constant time operations--- inserting and looking up elements in the hash map--- for each element in the array.
