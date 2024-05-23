@@ -729,3 +729,65 @@ The hash map contains unique elements from the input array `nums`. In the worst 
 In this case, the hash map will contain $n$ unique keys. The space complexity is $O(n)$.
 
 The rest of the variables are constant space.
+
+---
+
+# Number of Good Pairs
+
+Given an array of integers `nums`, return the number of valid pairs. A pair of elements `(i, j)` is valid if `nums[i] == nums[j]` and `i < j`.
+
+## Explanation
+
+1. **Early Exit**:
+   - If the input array `nums` has a single element, there are no valid pairs, so we return `0`.
+
+2. **Hash Map**:
+   - We build a hash map `counts` to store the frequency of each element in the input array `nums`.
+
+3. **Counting Valid Pairs**:
+   - For each element in the hash map with count $c$, we calculate the number of valid pairs that can be formed with this element using the binomial coefficient formula: $\binom{c}{2} = \frac{c \cdot (c - 1)}{2}$.
+   - We sum up the number of valid pairs for each element in the hash map.
+
+## Example
+
+Consider the input array `nums = [1, 2, 3, 1, 1, 3, 3]`:
+
+<center>
+
+| Index | Element | Hash Map (`counts`)            |
+|-------|---------|--------------------------------|
+| 0     | 1       | {1: 1}                         |
+| 1     | 2       | {1: 1, 2: 1}                   |
+| 2     | 3       | {1: 1, 2: 1, 3: 1}             |
+| 3     | 1       | {1: 2, 2: 1, 3: 1}             |
+| 4     | 1       | {1: 3, 2: 1, 3: 1}             |
+| 5     | 3       | {1: 3, 2: 1, 3: 2}             |
+| 6     | 3       | {1: 3, 2: 1, 3: 3}             |
+
+</center>
+
+The number of valid pairs for each element is calculated as follows:
+
+<center>
+
+| Element | Count | Calculation                      | Number of Pairs |
+|---------|-------|----------------------------------|-----------------|
+| 1       | 3     | $\binom{3}{2} = \frac{3 \cdot 2}{2} = 3$ | 3               |
+| 2       | 1     | $\binom{1}{2} = \frac{1 \cdot 0}{2} = 0$ | 0               |
+| 3       | 3     | $\binom{3}{2} = \frac{3 \cdot 2}{2} = 3$ | 3               |
+
+</center>
+
+The total number of valid pairs is $3 + 0 + 3 = 6$.
+
+## Time Complexity
+
+The complexity of building the hash map is $O(n)$, where `n` is the length of the input array `nums`.
+
+We iterate over the keys in the hash map to calculate the number of valid pairs for each element. In the worst case, all elements are unique, and the time complexity of this operation is $O(n)$.
+
+The overall time complexity is $O(n + n) = O(2n) = O(n)$.
+
+## Space Complexity
+
+The hash map contains unique elements from the input array `nums`. In the worst case, where all elements are unique, the space complexity is $O(n)$.
