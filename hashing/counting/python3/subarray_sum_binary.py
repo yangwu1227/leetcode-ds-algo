@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from collections import defaultdict
 from random import randint
 
-def binary_subarray_sum(nums: Sequence[int], k: int) -> int:
+def subarray_sum_binary(nums: Sequence[int], k: int) -> int:
     """
     Given a binary array `nums` and an integer `k`, return the number of non-empty subarrays with a sum `k`.
 
@@ -38,7 +38,7 @@ def main() -> int:
         size = randint(2, 10)
         goal = randint(0, size)
         nums = tuple(randint(0, 1) for _ in range(size))
-        num_subarrays = binary_subarray_sum(nums, goal)
+        num_subarrays = subarray_sum_binary(nums, goal)
         print(f"Given the array {nums}, there are {num_subarrays} with sum = {goal}")
     
     return 0

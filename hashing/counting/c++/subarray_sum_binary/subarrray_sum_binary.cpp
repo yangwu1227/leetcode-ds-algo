@@ -1,9 +1,9 @@
-// binary_subarray_sum.cpp
-#include "binary_subarray_sum.hpp"
+// subarray_sum_binary.cpp
+#include "subarray_sum_binary.hpp"
 #include <unordered_map>
 #include <vector>
 
-int binarySubarraySum(const std::vector<int> &nums, int k)
+int subarraySumBinary(const std::vector<int> &nums, int k)
 {
     std::unordered_map<int, int> counts;
     // Start with empty array with a prefix sum of 0, increment its count

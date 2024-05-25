@@ -1,5 +1,5 @@
 // main.cpp
-#include "binary_subarray_sum.hpp"
+#include "subarray_sum_binary.hpp"
 #include "custom_bn_rng.hpp"
 #include <vector>
 #include <map>
@@ -16,7 +16,7 @@ int main()
 
     for (const auto &[nums, k] : testCases)
     {
-        int numSubarray = binarySubarraySum(nums, k);
+        int numSubarray = subarraySumBinary(nums, k);
         std::cout << "Given the input {";
         for (const auto &num : nums)
         {

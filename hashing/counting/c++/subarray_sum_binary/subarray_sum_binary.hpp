@@ -1,6 +1,6 @@
-// binary_subarray_sum.hpp
-#ifndef BINARY_SUBARRAY_SUM_HPP
-#define BINARY_SUBARRAY_SUM_HPP
+// subarray_sum_binary.hpp
+#ifndef SUBARRAY_SUM_BINARY_HPP
+#define SUBARRAY_SUM_BINARY_HPP
 #include <vector>
 
 /**
@@ -10,6 +10,6 @@
  * @param k A positive sum constraint
  * @return int Number of valid subarrays
  */
-int binarySubarraySum(const std::vector<int> &nums, int k);
+int subarraySumBinary(const std::vector<int> &nums, int k);
 
 #endif
