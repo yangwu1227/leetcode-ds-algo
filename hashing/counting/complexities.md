@@ -873,48 +873,52 @@ All other variables, such as `left`, `right`, `current_sum`, and `max_sum`, are 
 
 Given two strings `s1` and `s2`, return `true` if `s2` contains the permutation of `s1`.
 
+A permutation of a string is a rearrangement of its characters. For example, `abc` has the following permutations: `abc`, `acb`, `bac`, `bca`, `cab`, `cba`.
+
 ## Explanation
 
 1. **Early Exit**:
-   - If the length of `s2` is less than the length of `s1`, it's impossible for `s2` to contain the permutation of `s1`, so we return `false`.
+   
+   - If the length of `s2` is less than the length of `s1`, it is impossible for `s2` to contain a permutation of `s1`, so we return `false`.
 
 2. **Hash Maps**:
-   - We build two hash maps, `s1_counts` and `s2_window_counts`, to store the frequency of characters in `s1` and the current window of characters in `s2`.
-   - We initialize the `s2_window_counts` hash map with the frequency of characters in the first window of `s2` with the same length as `s1`.
+   
+   - We build two hash maps, `s1_counts` and `s2_window_counts`, to store the counts of *all* characters in `s1` and a *subset* of characters in `s2`.
+   - We initialize the `s2_window_counts` hash map with the counts of the first `len(s1)` characters in `s2`. This is effectively the first window of length `len(s1)` in `s2`.
 
 3. **Sliding Window**:
-   - We use a sliding window approach to traverse `s2` and check if the current window contains the permutation of `s1`.
-   - To slide each window of length `s1` over `s2`, we increment the count of the character at the right pointer and decrement the count of the character at the left pointer.
-   - We then compare the hash maps `s1_counts` and `s2_window_counts` to check if the current window contains the permutation of `s1`; that is, if they are equal.
-   - Two hash maps are equal if they have the same keys and the same values for each key.
-   - To make the comparisons work, we need to delete keys from the `s2_window_counts` hash map when their count reaches `0`.
+   
+   - We use a sliding window with fixed length `len(s1)` to slide over all characters `s2[len(s1)]` to `s2[len(s2) - 1]` in `s2`.
+     - At the beginning of each iteration, we compare the hash maps `s1_counts` and `s2_window_counts` to check for equality. If they are equal, we return `true`.
+     - To slide each window of length `s1` over `s2`, we increment the count of the character at the right pointer (i.e. **we have encountered this character in the current window**) and decrement the count of the character at the left pointer (i.e. **we are removing this character from the current window**).
+     - **Note**: To make the hash maps comparison work, we need to delete keys from the `s2_window_counts` hash map when their count reaches `0`. This ensures that both hash maps have the same number of keys.
 
 ## Time Complexity
 
-Let $n$ and $m$ be the lengths of strings `s1` and `s2`, respectively.
+Let $l_1$ and $l_2$ be the lengths of strings `s1` and `s2`, respectively.
 
-Also, let $n_k$ and $m_k$ be the number of unique characters in strings `s1` and `s2`, respectively, which are bounded by $26$ (the number of lowercase English letters).
+Also, let $c_1$ and $c_2$ be the number of unique characters in strings `s1` and `s2`, respectively, which are bounded by $26$ (the number of lowercase English letters).
 
 The costs of each step are as follows:
 
-1. Building the hash map `s1_counts` costs $O(n)$, where `n` is the length of the string `s1`. 
-2. Building the initial window hash map `s2_window_counts` costs $O(n)$.
-3. The sliding window loop iterates over $m-n$ elements:
-   - The cost of comparing the hash maps is $O(n)$. This is because, in the worst case, all characters in `s1` are unique and $n = n_k$; therefore, the hash maps `s1_counts` and `s2_window_counts` will have $n=n_k$ unique keys.
-   - Incrementing and decrementing the counts in the hash map is $O(1)$.
-   - Lookup and Deleting keys from the hash map is also $O(1)$.
+1. Building the hash map `s1_counts` costs $O(l_1)$.
+2. Building the initial window hash map `s2_window_counts` costs $O(l_1)$.
+3. The sliding window loop iterates over $l_2 - l_1$ elements:
+   - The cost of comparing the hash maps is $O(c_1)$. This is because, in the worst case, all 26 letters appear in `s1` and so $c_1 = 26$; therefore, the hash maps `s1_counts` and `s2_window_counts` will have $c_1 = 26$ unique keys.
+   - Incrementing and decrementing the counts in the hash map are $O(1)$.
+   - Lookup and Deleting keys from the hash map are also $O(1)$.
 
-The overall time complexity is:
+Ignoring the constant operations and focusing on the most costly operation (i.e. comparing the hash maps) in the `for` loop, the overall complexity is:
 
 $$
 \begin{align*}
-O(n + n + (m - n) \cdot (n + 1 + 1)) &= O(2n + (m - n) \cdot n) \\
-&= O(n + mn - n^2) \\
+O(l_1 + l_1 + (l_2 - l_1) \cdot c_1) &= O(2l_1 + (l_2 - l_1) \cdot 26) \\
+&= O(l_1 + (l_2 - l_1) \cdot 26) \\
 \end{align*}
 $$ 
 
-Given that $n$ and $m$ are bounded by $26$, the time complexity is $O(26 + 26 \cdot 26 - 26^2) = O(26) = O(1)$.
-
 ## Space Complexity
 
-The space complexity can be considered $O(1)$, as the hash maps `s1_counts` and `s2_window_counts` contain at most $26$ unique keys.
+The space complexity can be considered $O(1)$, as the hash maps `s1_counts` and `s2_window_counts` contain at most $26$ unique keys. In other words, regardless of $l_1$ and $l_2$, the space complexity is bounded by the number of unique characters in the English alphabet.
+
+The rest of the variables, such as `left` and `right`, are constant space.
