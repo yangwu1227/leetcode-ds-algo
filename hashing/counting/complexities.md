@@ -827,3 +827,42 @@ The time complexity is $O(n)$, where `n` is the length of the input array `nums`
 ## Space Complexity
 
 In the worst case, all elements in the binary array are 1s, and the hash map will contain $n + 1$ elements. Note that the hash map is initialized with `hash_map[0] = 1` to handle the case where the entire subarray from the start has a sum of `k`. Thus, the overall space complexity is $O(n + 1) = O(n)$.
+
+--- 
+
+# Maximum Erasure Value
+
+Given an array of positive integers `nums`, find the maximum sum among all unique subarrays.
+
+## Time Complexity
+
+We use a sliding window approach to find the maximum sum among all unique subarrays.
+
+We create two pointers, `left` and `right`, to define the window. The window is defined by the range `[left, right]`.
+
+We use a hash map `counts` to keep track of the frequency of each element in the current window, and a variable `current_sum` to keep track of the sum of elements in the current window.
+
+1. **Initialization**:
+   - `left` and `right` are initialized to `0`.
+   - `current_sum` is initialized to `0`.
+   - `max_sum` is initialized to `0`.
+   - `counts` is a hash map that stores the frequency of each element in the window.
+
+2. **Iterate Over the Array**:
+   - For each element `nums[right]`, we increment its count in the `counts` hash map, costing $O(1)$.
+   - We add the element `nums[right]` to the `current_sum`, also costing $O(1)$.
+   - If the frequency of the element exceeds `1`, we keep shrinking the window by:
+     - Decrementing the count of the element `nums[left]` in the `counts` hash map, which is $O(1)$.
+     - Subtracting the element `nums[left]` from the `current_sum`, again $O(1)$.
+     - Incrementing `left` to shrink the window, also $O(1)$.
+  
+3. **Update the Maximum Sum**:
+   - For each window, we update the `max_sum` with the maximum of the current `max_sum` and the `current_sum`.
+
+Even though there is a `while` loop inside the `for` loop, each element is processed at most twice: once when expanding the window and once when shrinking it. Hence, the total work done by both the `left` and `right` pointers is proportional to $O(2n)$, leading to an amortized time complexity of $O(n)$.
+
+## Space Complexity
+
+The hash map contains unique elements from the input array `nums`. In the worst case, all elements have a single count, and the hash map will contain $n$ unique keys. The space complexity is $O(n)$.
+
+All other variables, such as `left`, `right`, `current_sum`, and `max_sum`, are constant space.
