@@ -35,19 +35,19 @@ Given the input: `("zhf", "fhz", "cpp", "python", "pcp", "statistics", "math", "
 
 We iterate through the input array of strings of size $n$ once:
 
-- Sorting each string takes `O(k + k log k)` time, where `k` is the length of the string. 
-  - In Python3, `sorted` returns a list of characters, so we need to join them back to a string, which takes `O(k)` time. 
-  - In C++, `sort` sorts the string in-place, so we need to copy the string first.
+- Sorting each string takes $O(m + m \log m)$ time, where $m$ is the average length of a string.
+  - In Python, `sorted` returns a list of characters, so we need to join them back to a string, which takes $O(m)$ time. 
+  - In C++, `std::sort` sorts the string in-place, so we need to copy the string first, which again takes $O(m)$ time.
   
-- We look up the sorted string in the hash map, which is `O(1)` time. If the key does not exist, it will be initialized with an empty list or vector. If it exists, we append or push back the original string to the list or vector in `O(1)` time amortized (reallocation may occur).
+- We look up the sorted string in the hash map, which is $O(1)$ time. If the key does not exist, the value will be initialized with an empty list or vector. If the key exists, we append or push back the original string to the list or vector in $O(1)$ time amortized (since reallocation may occur).
 
-- Finally, we convert the hash map values to a list of lists or vector of vectors. In the worst case, in which there are no matching anagrams, there will be `n` groups, each containing one string. This takes `O(n)` time.
+- Finally, we convert the hash map values to a list of lists or vector of vectors. In the worst case, in which there are no matching anagrams, there will be $n$ groups, each containing one string. This takes $O(n)$ time.
 
-Therefore, the overall time complexity, ignoring the lower order terms $k$ and $n$, is:
+Therefore, the overall time complexity, ignoring the lower order terms $m$ and $n$, is:
 
 $$
 \begin{align*}
-O(n \cdot (k + k \log k) + n) = O(n \cdot k \log k)
+O(n \cdot (m + m \log m) + n) = O(n \cdot m \log m)
 \end{align*}
 $$
 
