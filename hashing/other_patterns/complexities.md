@@ -154,7 +154,7 @@ We iterate through the input array containing $n$ numbers:
   - Look up the digit sum in the hash map in $O(1)$ time. If the key already exists, this means that we have found a pair of numbers with the same digit sum.
     - Compute the sum of the pair of numbers in $O(1)$ time.
     - Check if the answer needs to be updated using `max(ans, nums[i] + nums[j])`, an $O(1)$ operation.
-  - Update the hash map with the maximum value of the number with the same digit sum `max(nums[i], nums[j])` in $O(1)$ time. This ensures that `nums[j]` is the largest number previously seen with the same digit sum as `nums[i]`.
+  - Update the hash map with the maximum value of the number with the same digit sum `max(nums[i], nums[j])` in $O(1)$ time. This ensures that `nums[j]` is the largest previously seen number with the same digit sum as `nums[i]`.
 
 Considering the most significant operation, which is the digit sum calculation, the overall time complexity is $O(n \cdot k)$.
 
