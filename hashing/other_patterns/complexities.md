@@ -113,3 +113,51 @@ The overall time complexity is $O(n)$.
 ## Space Complexity
 
 We store the indices of the cards in the hash map, which can have up to $n$ keys in the worst case (i.e. no two cards are matching). Therefore, the space complexity is $O(n)$.
+
+# Max Sum of a Pair With Equal Sum of Digits
+
+Given an array of integers `nums`, find the maximum value of `nums[i] + nums[j]`, where `nums[i]` and `nums[j]` have the same digit sum (the sum of their individual digits). 
+
+## Example
+
+```
+Input: nums = [18, 43, 36, 13, 7]
+Output: 54
+```
+
+The pairs (i, j) that satisfy the conditions are:
+
+  - (0, 2), both numbers have a sum of digits equal to $9$, and their sum is $18 + 36 = 54$.
+  - (1, 4), both numbers have a sum of digits equal to $7$, and their sum is $43 + 7 = 50$.
+
+## Explanation
+
+The input array is `[18, 43, 36, 13, 7]`:
+
+<center>
+
+| Iteration | Number | Digit Sum Calculation | Digit Sum | hashMap                  | Action                                           | Resulting `ans` |
+|-----------|--------|-----------------------|-----------|--------------------------|--------------------------------------------------|-----------------|
+| 1         | 18     | `1 + 8 = 9`           | 9         | `{9: 18}`                | Record 18 with digit sum 9                       | 0               |
+| 2         | 43     | `4 + 3 = 7`           | 7         | `{9: 18, 7: 43}`         | Record 43 with digit sum 7                       | 0               |
+| 3         | 36     | `3 + 6 = 9`           | 9         | `{9: 36, 7: 43}`         | 18 + 36 = 54, update hashMap with max(18, 36)    | 54              |
+| 4         | 13     | `1 + 3 = 4`           | 4         | `{9: 36, 7: 43, 4: 13}`  | Record 13 with digit sum 4                       | 54              |
+| 5         | 7      | `7`                   | 7         | `{9: 36, 7: 43, 4: 13}`  | 43 + 7 = 50, update hashMap with max(43, 7)      | 54              |
+
+</center>
+
+## Time Complexity
+
+We iterate through the input array containing $n$ numbers:
+
+  - Calculate the digit sum of each number in $O(k)$ time, where $k$ is the *average* number of digits in an integer element.
+  - Look up the digit sum in the hash map in $O(1)$ time. If the key already exists, this means that we have found a pair of numbers with the same digit sum.
+    - Compute the sum of the pair of numbers in $O(1)$ time.
+    - Check if the answer needs to be updated using `max(ans, nums[i] + nums[j])`, an $O(1)$ operation.
+  - Update the hash map with the maximum value of the number with the same digit sum `max(nums[i], nums[j])` in $O(1)$ time. This ensures that `nums[j]` is the largest number previously seen with the same digit sum as `nums[i]`.
+
+Considering the most significant operation, which is the digit sum calculation, the overall time complexity is $O(n \cdot k)$.
+
+## Space Complexity
+
+We store the numbers in the hash map, which can have up to $n$ keys in the worst case (i.e. no two numbers have the same digit sum). Therefore, the space complexity is $O(n)$.
