@@ -4,14 +4,14 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/local/include/" 
+                "/opt/homebrew/include"
             ],
             "defines": [],
             "macFrameworkPath": [
-                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+                "/Applications/Xcode.app/Contents/Developer"
             ],
             "cStandard": "c17",
-            "intelliSenseMode": "macos-clang-x86",
+            "intelliSenseMode": "macos-clang-arm64",
             "cppStandard": "c++17"
         }
     ],
