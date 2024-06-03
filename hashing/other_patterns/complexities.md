@@ -161,3 +161,98 @@ Considering the most significant operation, which is the digit sum calculation, 
 ## Space Complexity
 
 We store the numbers in the hash map, which can have up to $n$ keys in the worst case (i.e. no two numbers have the same digit sum). Therefore, the space complexity is $O(n)$.
+
+---
+
+# Equal Row and Column Pairs
+
+Given a `n x  n` matrix of positive integers, return the number of pairs `(r_i, c_i)` such that row `r_i` and column `c_i` are equal. A row and column pair are considered equal if they contian the same elements in the same order, i.e., they are equal arrays.
+
+## Examples
+
+<div style="text-align: center;">
+    <img src="diagrams/row_column_pair_ex_1.png" width="150" height="150">
+</div>
+
+```
+Input: gird = [[3, 2, 1],[1, 7, 6],[2, 7, 7]]
+Output: 1
+``` 
+
+The equal pairs are:
+
+- Row 3 and column 2: `[2, 7, 7]`
+
+<div style="text-align: center;">
+    <img src="diagrams/row_column_pair_ex_2.png" width="170" height="170">
+</div>
+
+```
+Input: grid = [[3, 1, 2, 2],[1, 4, 4, 5],[2, 4, 2, 2],[2, 4, 2, 2]]
+Output: 3
+```
+
+The equal pairs are:
+
+- Row 1 and column 1: `[3, 1, 2, 2]`
+- Row 3 and column 3: `[2, 4, 2, 2]`
+- Row 4 and column 3: `[2, 4, 2, 2]`
+
+## Time Complexity
+
+### Python
+
+#### Numpy Approach
+
+1. The conversion of the list of lists to a numpy array mostly likely takes $O(n^2)$ time since there are $n^2$ numbers in the input data structure. This conversion can be avoided if the input is already a numpy array.
+
+2. We iterate through the numpy array `grid`, containing $n$ rows:
+    - Conver the row to a tuple in $O(n)$ time (i.e. $n$ is the number of columns)
+    - Increment the count of the row tuple in the hash map in $O(1)$ time
+
+3. To build the column hash map, we can use the transpose of the numpy array. Transposing an array takes $O(1)$ time, since it is simply a swap of the shape and strides of the array. We iterate through the transposed array, containing $n$ columns:
+    - Convert the column to a tuple in $O(n)$ time (i.e. $n$ is the number of rows)
+    - Increment the count of the column tuple in the hash map in $O(1)$ time
+
+4. Finally, we iterate through the column (but row would work as well) hash map:
+    - For each column key, we check if that column exists in the row hash map in $O(1)$ time
+    - If the key exists, we increment the count of equal pairs by the product of the counts of the row and column tuples in $O(1)$ time; this is because for a given array that appears $n$ times in the row hash map and $m$ times in the column hash map, there are $n \times m$ possible equal pairs
+
+With all the above considered, the overall time complexity is:
+
+$$
+\begin{align*}
+O(n^2 + n^2 + n^2 + n) &= O(3n^2 + n) \\
+&= O(n^2)
+\end{align*}
+$$
+
+With large input sizes, the quadratic term will dominate the linear term.
+
+#### Built-in `List` Approach
+
+Without using `numpy`, step 3 above would be modified as follows:
+
+3. We iterate through from 1 to $n$ (the number of columns):
+    - Build each column tuple in $O(n)$ time:
+      - `row[j] for row in grid` takes $O(n)$ time since there are $n$ rows and indexing a list takes $O(1)$ time
+      - The generator expression is wrapped in `tuple(row[j] for row in grid)`, and so the cost of this takes $O(n)$ time
+    - Increment the count of the column tuple in the hash map in $O(1)$ time
+
+The complexity of this step is again $O(n \times 2n)=O(2n^2)=O(n^2)$; therefore, the overall complexity remains $O(n^2)$, similar to the `numpy` approach.
+
+The code is more verbose than the `numpy` approach, so it is better to use numpy input data structures instead of lists of lists.
+
+### C++
+
+The C++ approach is similar to the Python approach. The only difference is that we convert each vector to a `std::string` representation to use as a key in the hash map.
+
+The overall time complexity is $O(n^2)$.
+
+## Space Complexity
+
+We need to store the row and column counts in two separate hash maps. In the worst case, where every row and column is unique, the hash maps will contain $n$ keys each. 
+
+In Python, each key is a tuple of $n$ integers, and so the space complexity is $O(n \times n) = O(n^2)$.
+
+In C++, each key is a string representation of the row or column, which have $n$ characters. Therefore, the space complexity is again $O(n \times n) = O(n^2)$.
