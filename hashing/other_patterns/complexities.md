@@ -256,3 +256,48 @@ We need to store the row and column counts in two separate hash maps. In the wor
 In Python, each key is a tuple of $n$ integers, and so the space complexity is $O(n \times n) = O(n^2)$.
 
 In C++, each key is a string representation of the row or column, which have $n$ characters. Therefore, the space complexity is again $O(n \times n) = O(n^2)$.
+
+--- 
+
+# Ransom Note
+
+Given two strings `ransom_note` and `magazine`, return `True` if `ransom_note` can be constructed by using the letters from `magazine`.
+
+Each letter in `magazine` can only be used once in `ransom_note`.
+
+## Time Complexity
+
+Let $n$ be the length of the `ransom_note` string and $m$ be the length of the `magazine` string.
+
+### One Hash Map Approach
+
+We iterate through the `magazine` string containing $m$ characters and build a hash map of the character counts in $O(m)$ time.
+
+Next, we iterate through the `ransom_note` string containing $n$ characters and decrement the count of each character in the above hash map. If the count of any character becomes negative, we return `False` since:
+
+1. Either that character does not exist in the `magazine` string, in which case the default count is zero and decrementing it will make it negative
+2. Or there is not enough of that character in the `magazine` string to construct the `ransom_note` string
+
+The overall time complexity is $O(m + n)$.
+
+### Two Hash Map Approach
+
+We build two hash maps, one for the `magazine` string and one for the `ransom_note` string, each containing $m$ and $n$ characters, respectively. The time complexity of building these hash maps is $O(m + n)$.
+
+Then, during the iteration through the `ransom_note` string, we check if the count of each character in the `magazine` hash map is less than the count of that character in the `ransom_note` hash map. If it is, we return `False` since there are not enough characters in the `magazine` string to construct the `ransom_note` string.
+
+The overall time complexity is $O(m + n + n) = O(m + 2n) = O(m + n)$.
+
+### Bounded by English Alphabet
+
+Since both $m$ and $n$ are bounded by the size of the English alphabet, which is a constant $26$, the overall time complexity is $O(26 \times 3)=O(78)$ for the two hash maps approach and $O(26 \times 2)=O(52)$ for the one hash map approach.
+
+Both of these can be considered as $O(1)$ time complexity.
+
+## Space Complexity
+
+For the one hash map approach, the space complexity is $O(m)$ since we store the counts of the characters in `magazine`.
+
+For the two hash map approach, the space complexity is $O(m + n)$ for storing the counts of the characters in both `magazine` and `ransom_note`.
+
+Similar to time complexity, because $m$ and $n$ are bounded by the size of the English alphabet, we can considered both approaches have constant space comlexity. Not matter how many characters are in the strings, the hash maps can have at most $26$ keys.
