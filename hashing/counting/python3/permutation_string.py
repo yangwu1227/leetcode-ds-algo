@@ -26,7 +26,7 @@ def check_inclusion(s1: str, s2: str) -> bool:
     s2_window_counts = Counter(s2[slice(len_s1)])
     # O(m) where m = len(2) - len(s1)
     for window_end in range(len_s1, len_s2):
-        # O(n) comparisons if every character in s1 is unique, so both hashmaps contains n keys
+        # O(n) comparisons if every character in s1 is unique and both hashmaps contain n keys
         if s1_counts == s2_window_counts:
             return True
         # Add the next character or increment its count if already exists
