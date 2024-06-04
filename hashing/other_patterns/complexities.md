@@ -288,7 +288,7 @@ Then, during the iteration through the `ransom_note` string, we check if the cou
 
 The overall time complexity is $O(m + n + n) = O(m + 2n) = O(m + n)$.
 
-### Bounded by English Alphabet
+### Bounds
 
 Since both $m$ and $n$ are bounded by the size of the English alphabet, which is a constant $26$, the overall time complexity is $O(26 \times 3)=O(78)$ for the two hash maps approach and $O(26 \times 2)=O(52)$ for the one hash map approach.
 
@@ -301,3 +301,52 @@ For the one hash map approach, the space complexity is $O(m)$ since we store the
 For the two hash map approach, the space complexity is $O(m + n)$ for storing the counts of the characters in both `magazine` and `ransom_note`.
 
 Similar to time complexity, because $m$ and $n$ are bounded by the size of the English alphabet, we can considered both approaches have constant space comlexity. Not matter how many characters are in the strings, the hash maps can have at most $26$ keys.
+
+---
+
+# Jewels and Stones
+
+Given two strings `jewewls` and `stones`, return the number of `stones` that are considered `jewels`.
+
+* Each character in `jewels` is unique, representing a stone type that is considered a jewel
+
+* Each character in `stones` represents a stone. Y
+
+## Time Complexity
+
+### Hash Map Approach
+
+We iterate through `stones` to build a hash map of the stone counts in $O(n)$ time, where $n$ is the length of the `stones` string.
+
+Next, we iterate through `jewels` to get the count of each jewel in the hash map in $O(m)$ time, where $m$ is the length of the `jewels` string.
+
+The overall time complexity is $O(n + m)$.
+
+### Set Approach
+
+This is the opposite of the hash map approach. We iterate through `jewels` to build a set of the jewel characters in $O(m)$ time.
+
+Next, we iterate through `stones` to check if each stone is in the set in $O(n)$ time, summing the `True` values.
+
+The overall time complexity is $O(m + n)$.
+
+### Bounds
+
+Since `jewels` and `stones` contain lower or upper case English alphabet characters, $m$ and $n$ are bounded by $26 \times 2 = 52$. Therefore, the overall time complexity is $O(52 + 52) = O(104) = O(1)$ regardless of the actual lengths of the strings.
+
+## Space Complexity
+
+### Hash Map Approach
+
+We store the counts of the stones in the hash map, which can have up to $n$ keys in the worst case (i.e. no two stones are the same). Therefore, the space complexity is $O(n)$.
+
+### Set Approach
+
+We store the jewel characters in the set, which can have up to $m$ keys in the worst case (i.e. no two jewels are the same). Therefore, the space complexity is $O(m)$.
+
+### Bounds
+
+Again, since $m$ and $n$ are bounded by $52$, the space complexity can be considered const, $O(52) = O(1)$.
+
+
+
