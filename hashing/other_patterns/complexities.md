@@ -348,5 +348,106 @@ We store the jewel characters in the set, which can have up to $m$ keys in the w
 
 Again, since $m$ and $n$ are bounded by $52$, the space complexity can be considered const, $O(52) = O(1)$.
 
+--- 
+
+# Longest Substring Without Repeating Characters
+
+Given a string `s`, return the length of the longest substring without repeating characters.
+
+## Explanation
+
+### Hash Map Approach
+
+The input string is `"abcabcbb"`:
+
+<center>
+
+| Character | Left Pointer | Right Pointer | Character Counts                  | Action                           | Window         | Resulting `window_len` |
+|-----------|---------------|---------------|-----------------------------------|----------------------------------|----------------|------------------------|
+| a         | 0             | 0             | {'a': 1}                          | Expand window, add 'a'           | a              | 1                      |
+| b         | 0             | 1             | {'a': 1, 'b': 1}                  | Expand window, add 'b'           | ab             | 2                      |
+| c         | 0             | 2             | {'a': 1, 'b': 1, 'c': 1}          | Expand window, add 'c'           | abc            | 3                      |
+| a         | 1             | 3             | {'a': 1, 'b': 1, 'c': 1}          | Duplicate 'a', move left pointer | bca            | 3                      |
+| b         | 2             | 4             | {'a': 1, 'b': 1, 'c': 1}          | Duplicate 'b', move left pointer | cab            | 3                      |
+| c         | 3             | 5             | {'a': 1, 'b': 1, 'c': 1}          | Expand window, add 'c'           | abc            | 3                      |
+| b         | 5             | 6             | {'a': 0, 'b': 1, 'c': 1}          | Duplicate 'b', move left pointer | cb             | 3                      |
+| b         | 7             | 7             | {'a': 0, 'b': 1, 'c': 0}          | Duplicate 'b', move left pointer | b              | 3                      |
+
+</center>
 
 
+### Using Optimized Sliding Window Approach
+
+<center>
+
+| Character | Left Pointer | Right Pointer | Character Indices                  | Window         | Resulting `window_len` |
+|-----------|---------------|---------------|-----------------------------------|----------------|------------------------|
+| a         | 0             | 0             | {'a': 1}                          | a              | 1                      |
+| b         | 0             | 1             | {'a': 1, 'b': 2}                  | ab             | 2                      |
+| c         | 0             | 2             | {'a': 1, 'b': 2, 'c': 3}          | abc            | 3                      |
+| a         | 1             | 3             | {'a': 4, 'b': 2, 'c': 3}          | bca            | 3                      |
+| b         | 2             | 4             | {'a': 4, 'b': 5, 'c': 3}          | cab            | 3                      |
+| c         | 3             | 5             | {'a': 4, 'b': 5, 'c': 6}          | abc            | 3                      |
+| b         | 5             | 6             | {'a': 4, 'b': 7, 'c': 6}          | cb             | 3                      |
+| b         | 7             | 7             | {'a': 4, 'b': 8, 'c': 6}          | b              | 3                      |
+
+</center>
+
+## Time Complexity
+
+### Hash Map Approach
+
+We iterate through the input string containing $n$ characters:
+
+  - Add or increment the count of `s[right]` in the hash map in $O(1)$ time.
+
+  - While the count of `s[right]` is greater than $1$, we shrink the window by decrementing the count of `s[left]` in the hash map and incrementing the left pointer in $O(1)$ time.
+
+  - Update the maximum window length in $O(1)$ time.
+
+Each character is visited at most twice by the two pointers:
+
+1. Once by the right pointer, which iterates through the string
+2. Once by the left pointer, which shrinks the window
+
+The overall time complexity is proportional to $O(2n)=O(n)$.
+
+### Optimized Sliding Window Approach
+
+The idea here is that if `s[right]` has a duplicates in the window `[left, right)` with the index `right`, we can skip all the elements in the range `[left, right]` by moveing the left pointer directly to `right + 1`. 
+
+This resets the window to a new starting point without any duplicates. Therefore, there is no need to increment the left pointer one by one and may result in fewer visits to each character.
+
+Again, we iterate through the input string containing $n$ characters:
+
+  - Check if the character at `right` is in the hash map in $O(1)$ time.
+
+  - If the character is in the hash map, we update the left pointer to either 
+
+    - the current left pointer or 
+    - one after the last occurrence of the character in the hash map
+  
+    This costs in $O(1)$ and ensures that the left pointer is skiped to the right of the last occurrence of a repeated character.
+
+  - Update the maximum window length in $O(1)$ time.
+
+  - Update the index of `s[right]` in the hash map to `right + 1` in $O(1)$ time, which ensures that if this character is encountered again, the left pointer can be moved directly to this index.
+
+  Thus, the overall number of times each character is visited may be less than $2n$. Still, the time complexity is $O(n)$ amortized.
+
+
+## Space Complexity
+
+### Hash Map Approach
+
+We store the counts of the characters in the hash map, which can have up to $n$ keys in the worst case (i.e. no two characters are the same). Therefore, the space complexity is $O(n)$.
+
+### Optimized Sliding Window Approach
+
+This approach uses a hash map to store the indices of the characters; similar to the hash map approach, in the worst case, the hash map can have up to $n$ keys. Therefore, the space complexity is $O(n)$.
+
+### Bounds
+
+As of the time of writing, the extended ASCII character set has $256$ characters, including upper and lower case English alphabets, digits, and symbols.
+
+In the worst case, the input string `s` have all the characters in the extended ASCII set. Therefore, the maximum number of keys in the hash map is $256$, which can be considered a constant.
