@@ -10,7 +10,10 @@
                 "${fileDirname}/*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-                "-std=c++17"
+                "-std=c++17",
+                "-I/opt/homebrew/Cellar/boost/1.85.0/include", 
+                "-L/opt/homebrew/Cellar/boost/1.85.0/lib",  
+                "-lboost_system"    
             ],
             "options": {
                 "cwd": "${fileDirname}"
