@@ -518,3 +518,73 @@ We would only iterate through the entire input strings when there are no conflic
 We use two hash maps to trade off space for time. Without the second hash map that maps characters in `t` to characters in `s`, we would need to iterate through the values of `s_to_t` hash map to check if a character in `t` is already mapped to a character in `s` during each iteration through the input strings.
 
 In the worst case, every character in `s` and `t` is unique, so both hash maps contain $n$ keys, leading to a space complexity of $O(n)$.
+
+--
+
+## Word Pattern
+
+Given a `pattern` and a string `s`, return `True` if `s` follows the same pattern as `pattern`. 
+
+A string `s` follows `pattern` if each word in `s` is mapped to a character in `pattern` and each character in `pattern` is mapped to a word in `s`.
+
+This is a variation of the isomorphic strings problem.
+
+## Explanation
+
+Let `pattern = "abba"` and `s = "dog cat cat dog"`:
+
+<center>
+
+| Iteration | pat_char | word | Action                          | pattern_to_word       | word_to_pattern       |
+|-----------|-----------|------|---------------------------------|-----------------------|-----------------------|
+| 0         | a         | dog  | Mapping a to dog and dog to a   | {'a': 'dog'}          | {'dog': 'a'}          |
+| 1         | b         | cat  | Mapping b to cat and cat to b   | {'a': 'dog', 'b': 'cat'} | {'dog': 'a', 'cat': 'b'} |
+| 2         | b         | cat  | b is already mapped to cat      | {'a': 'dog', 'b': 'cat'} | {'dog': 'a', 'cat': 'b'} |
+| 3         | a         | dog  | a is already mapped to dog      | {'a': 'dog', 'b': 'cat'} | {'dog': 'a', 'cat': 'b'} |
+
+</center>
+
+The example above shows that "dog cat cat dog" follows the pattern "abba".
+
+Let `pattern = "aaaa"` and `s = "dog cat cat dog"`:
+
+<center>
+
+| Iteration | pat_char | word | Action                          | pattern_to_word       | word_to_pattern       |
+|-----------|-----------|------|---------------------------------|-----------------------|-----------------------|
+| 0         | a         | dog  | Mapping a to dog and dog to a   | {'a': 'dog'}          | {'dog': 'a'}          |
+| 1         | a         | cat  | Conflict detected: a cannot map to cat | {'a': 'dog'} | {'dog': 'a'}          |
+
+</center>
+
+The example above shows that "dog cat cat dog" does not follow the pattern "aaaa".
+
+## Time Complexity
+
+This is very similar to the isomorphic strings problem. One additional operation is splitting the input string `s` into an array of words.
+
+In Python, this is accomplished by `s.split()`, which takes $O(n)$ time, where $n$ is the length of the input string `s`.
+
+In C++, we can use `std::istringstream` or `boost::split`, both of which take $O(n)$ time.
+
+Additionally, since the constraints on `s` and `pattern` are not the same, it may be possible that the length of `s` after splitting is different from the length of `pattern`. 
+
+If the length of `pattern` is $m$, the loop that iterates through the words in `s` and the characters in `pattern` will run for $m$ iterations in the worst case (i.e., in the case that `s` follows `pattern`).
+
+The overall time complexity is therefore $O(n + m)$.
+
+## Space Complexity
+
+The space complexity depends on whether the number of words in `s` is the same as the length of `pattern`.
+
+### Case I: `len(s.split()) == len(pattern)`
+
+In the worst case, every word in `s` and every character in `pattern` is unique. Both hasp maps will contain $m$ keys, leading to a space complexity of $O(m)$.
+
+Adding the space required to store the words in `s` after splitting it, also $O(m)$, the overall space complexity is $O(2m + m) = O(3m) = O(m)$.
+
+### Case II: `len(s.split()) != len(pattern)`
+
+The check `len(s.split()) == len(pattern)` is done before creating the hash maps. If the lengths are different, we can return `False` immediately, and the hash maps will never be initialized.
+
+Therefore, the space complexity is simply the space required to store the words in `s` after splitting it. In the worst case, every word in `s` is a single character separated by single spaces. Given $n$ characters, the number of words after splitting would be $\frac{n}{2}$, leading to a space complexity of $O(\frac{n}{2})$.
