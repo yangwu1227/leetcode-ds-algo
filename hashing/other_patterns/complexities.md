@@ -451,3 +451,70 @@ This approach uses a hash map to store the indices of the characters; similar to
 As of the time of writing, the extended ASCII character set has $256$ characters, including upper and lower case English alphabets, digits, and symbols.
 
 In the worst case, the input string `s` have all the characters in the extended ASCII set. Therefore, the maximum number of keys in the hash map is $256$, which can be considered a constant.
+
+---
+
+# Isomorphic Strings
+
+Given two strings `s` and `t`, determine if they are isomorphic. Two strings `s` and `t` are isomorphic if the characters in `s` can be replaced to get `t`.
+
+Note: All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same 
+character, but a character may map to itself.
+
+## Explanation
+
+Let `s = "paper"` and `t = "title"`:
+
+<center>
+
+| Iteration | s_char | t_char | Action                          | s_to_t                                 | t_to_s                                 |
+|-----------|--------|--------|---------------------------------|----------------------------------------|----------------------------------------|
+| 0         | p      | t      | Mapping p to t and t to p       | {'p': 't'}                             | {'t': 'p'}                             |
+| 1         | a      | i      | Mapping a to i and i to a       | {'p': 't', 'a': 'i'}                   | {'t': 'p', 'i': 'a'}                   |
+| 2         | p      | t      | p is already mapped to t        | {'p': 't', 'a': 'i'}                   | {'t': 'p', 'i': 'a'}                   |
+| 3         | e      | l      | Mapping e to l and l to e       | {'p': 't', 'a': 'i', 'e': 'l'}         | {'t': 'p', 'i': 'a', 'l': 'e'}         |
+| 4         | r      | e      | Mapping r to e and e to r       | {'p': 't', 'a': 'i', 'e': 'l', 'r': 'e'} | {'t': 'p', 'i': 'a', 'l': 'e', 'e': 'r'} |
+
+</center>
+
+Let `s = "bbbaaaba"` and `t = "aaabbbba"`:
+
+<center>
+
+| Iteration | s_char | t_char | Action                                                                  | s_to_t                | t_to_s                |
+|-----------|--------|--------|-------------------------------------------------------------------------|-----------------------|-----------------------|
+| 0         | b      | a      | Mapping b to a and a to b                                               | {'b': 'a'}            | {'a': 'b'}            |
+| 1         | b      | a      | b is already mapped to a                                                | {'b': 'a'}            | {'a': 'b'}            |
+| 2         | b      | a      | b is already mapped to a                                                | {'b': 'a'}            | {'a': 'b'}            |
+| 3         | a      | b      | Mapping a to b and b to a                                               | {'b': 'a', 'a': 'b'}  | {'a': 'b', 'b': 'a'}  |
+| 4         | a      | b      | a is already mapped to b                                                | {'b': 'a', 'a': 'b'}  | {'a': 'b', 'b': 'a'}  |
+| 5         | a      | b      | a is already mapped to b                                                | {'b': 'a', 'a': 'b'}  | {'a': 'b', 'b': 'a'}  |
+| 6         | b      | b      | b is already mapped to a \| Conflict detected: b cannot map to b        | {}                    | {}                    |
+
+</center>
+
+## Time Complexity
+
+Create two hash maps, `s_to_t` and `t_to_s`, to store the mappings of characters from `s` to `t` and `t` to `s`, respectively.
+
+We iterate through the input strings `s` and `t`, each containing $n$ characters:
+
+  - **If**: we check if `s[i]` is already in `s_to_t`, which means that it has already been mapped to a character in `t`. 
+    - If it is, we check if `s[i]` is mapped to a different character in `t` than `t[i]`. If it is, we return `False` since the same `s[i]` character cannot be mapped to two different characters in `t`.
+    
+    The above requires a look up in the hash map `s[i] in s_to_t` in $O(1)$ time and an equality check `s_to_t[s[i]] != t[i]`, which is also $O(1)$ time.
+  
+  - **Else If**: if `s[i]` is not already in `s_to_t`, we check if `t[i]` is already in `t_to_s`, which means that it has already been mapped to a character in `s`.
+    - If it is, we check if `t[i]` is mapped to a different character in `s` than the current `s[i]`. If it is, we return `False` since the same `t[i]` character cannot be mapped to by two different characters in `s`.
+
+    Again, look up `t[i] in t_to_s` and the equality check `t_to_s[t[i]] != s[i]` are both $O(1)$ operations.
+
+  - **Else**: The first and second checks can both return `True`, but if neither of them does, we add the mappings `s[i]` to `t[i]` and `t[i]` to `s[i]` in $O(1)$ time.
+
+We would only iterate through the entire input strings when there are no conflicts in the mappings. Therefore, the overall time complexity is $O(n)$.
+
+## Space Complexity
+
+We use two hash maps, comprimising some space complexity to improve the time complexity (i.e, being able to check for conflits using bidirectional lookups).
+
+In the worst case, every character in `s` and `t` is unique, so both hash maps contain $n$ keys, leading to a space complexity of $O(n)$.
