@@ -515,6 +515,6 @@ We would only iterate through the entire input strings when there are no conflic
 
 ## Space Complexity
 
-We use two hash maps, comprimising some space complexity to improve the time complexity (i.e, being able to check for conflits using bidirectional lookups).
+We use two hash maps to trade off space for time. Without the second hash map that maps characters in `t` to characters in `s`, we would need to iterate through the values of `s_to_t` hash map to check if a character in `t` is already mapped to a character in `s` during each iteration through the input strings.
 
 In the worst case, every character in `s` and `t` is unique, so both hash maps contain $n$ keys, leading to a space complexity of $O(n)$.
