@@ -561,15 +561,15 @@ The example above shows that "dog cat cat dog" does not follow the pattern "aaaa
 
 ## Time Complexity
 
-This is very similar to the isomorphic strings problem. One additional operation is splitting the input string `s` into an array of words.
+This is very similar to the isomorphic strings problem, where the overall time complexity is $O(n)$. One additional operation is splitting the input string `s` into an array of words using a single space as the delimiter.
 
-In Python, this is accomplished by `s.split()`, which takes $O(n)$ time, where $n$ is the length of the input string `s`.
+In Python, this is accomplished by `s.split()`, which takes $O(n)$ time, where $n$ is the number of characters in `s`.
 
-In C++, we can use `std::istringstream` or `boost::split`, both of which take $O(n)$ time.
+In C++, we can use `std::istringstream` or `boost::split`, and both approaches take $O(n)$ time.
 
-Additionally, since the constraints on `s` and `pattern` are not the same, it may be possible that the length of `s` after splitting is different from the length of `pattern`. 
+Additionally, since the constraints on the number of characters in `s` and `pattern` are not the same, it may be possible that the length of the array containing words in `s` is different from the number of characters in `pattern`. 
 
-If the length of `pattern` is $m$, the loop that iterates through the words in `s` and the characters in `pattern` will run for $m$ iterations in the worst case (i.e., in the case that `s` follows `pattern`).
+Let the number of characters in `pattern` be $m$, the loop that iterates through the words in `s` and the characters in `pattern` will run for $m$ iterations in the worst case (i.e., in the case that `s` follows `pattern` and we do not return `False` early).
 
 The overall time complexity is therefore $O(n + m)$.
 
@@ -579,12 +579,12 @@ The space complexity depends on whether the number of words in `s` is the same a
 
 ### Case I: `len(s.split()) == len(pattern)`
 
-In the worst case, every word in `s` and every character in `pattern` is unique. Both hasp maps will contain $m$ keys, leading to a space complexity of $O(m)$.
+In the worst case, every word in `s` and every character in `pattern` is unique. Both hasp maps will contain $m$ keys.
 
-Adding the space required to store the words in `s` after splitting it, also $O(m)$, the overall space complexity is $O(2m + m) = O(3m) = O(m)$.
+Adding the space required to store the words in `s` after splitting it, also $O(m)$ in this case, the overall space complexity is $O(2m + m) = O(3m) = O(m)$.
 
 ### Case II: `len(s.split()) != len(pattern)`
 
 The check `len(s.split()) == len(pattern)` is done before creating the hash maps. If the lengths are different, we can return `False` immediately, and the hash maps will never be initialized.
 
-Therefore, the space complexity is simply the space required to store the words in `s` after splitting it. In the worst case, every word in `s` is a single character separated by single spaces. Given $n$ characters, the number of words after splitting would be $\frac{n}{2}$, leading to a space complexity of $O(\frac{n}{2})$.
+Therefore, the space complexity here is simply the space required to store the words in `s` after splitting it. In the worst case, every word in `s` is a single character separated by single spaces. Given $n$ characters, the number of words after splitting would be $\frac{n}{2}$, leading to a space complexity of $O(\frac{n}{2})$.
