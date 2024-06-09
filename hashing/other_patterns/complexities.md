@@ -519,7 +519,7 @@ We use two hash maps to trade off space for time. Without the second hash map th
 
 In the worst case, every character in `s` and `t` is unique, so both hash maps contain $n$ keys, leading to a space complexity of $O(n)$.
 
---
+---
 
 ## Word Pattern
 
@@ -588,3 +588,145 @@ Adding the space required to store the words in `s` after splitting it, also $O(
 The check `len(s.split()) == len(pattern)` is done before creating the hash maps. If the lengths are different, we can return `False` immediately, and the hash maps will never be initialized.
 
 Therefore, the space complexity here is simply the space required to store the words in `s` after splitting it. In the worst case, every word in `s` is a single character separated by single spaces. Given $n$ characters, the number of words after splitting would be $\frac{n}{2}$, leading to a space complexity of $O(\frac{n}{2})$.
+
+---
+
+# Custom Sort String
+
+Given two strings `order` and `s`, return a permuted string of `s` such that the characters in `s` are sorted according to the order of characters in `order`. 
+
+For characters in `s` that are not in `order`, they can be placed in any position in the permuted string.
+
+Note that `order` does not contain any duplicate characters and may contain characters that are not in `s`.
+
+## Explanation
+
+Let `order = "cba"` and `s = "abccd"`:
+
+<center>
+
+| Iteration | `order_char` | `s_char_counts`                       | `perm_list` | Action                                  |
+|-----------|--------------|---------------------------------------|-------------|-----------------------------------------|
+| -         | -            | `{'c': 2, 'a': 1, 'b': 1, 'd': 1}`    | `[]`        | Initial `s_char_counts`                 |
+| 1         | 'c'          | `{'c': 2, 'a': 1, 'b': 1, 'd': 1}`    | `['cc']`    | Append 'cc' to `perm_list` and remove 'c' from `s_char_counts` |
+| -         | -            | `{'a': 1, 'b': 1, 'd': 1}`            | `['cc']`    | Updated `s_char_counts` after removing 'c' |
+| 2         | 'b'          | `{'a': 1, 'b': 1, 'd': 1}`            | `['cc', 'b']` | Append 'b' to `perm_list` and remove 'b' from `s_char_counts` |
+| -         | -            | `{'a': 1, 'd': 1}`                    | `['cc', 'b']` | Updated `s_char_counts` after removing 'b' |
+| 3         | 'a'          | `{'a': 1, 'd': 1}`                    | `['cc', 'b', 'a']` | Append 'a' to `perm_list` and remove 'a' from `s_char_counts` |
+| -         | -            | `{'d': 1}`                            | `['cc', 'b', 'a']` | Updated `s_char_counts` after removing 'a' |
+| -         | -            | `{'d': 1}`                            | `['cc', 'b', 'a', 'd']` | Append remaining 'd' to `perm_list` |
+| -         | -            | -                                     | `['cc', 'b', 'a', 'd']` | Final `perm_list`                      |
+| -         | -            | -                                     | `['cc', 'b', 'a', 'd']` | Result: "ccbad"                          |
+
+</center>
+
+## Time Complexity
+
+Define the following variables:
+
+* $n$ as the number of characters in `s`
+  - $T$ as the total number of characters that appear in `s` and `order`
+  - $t$ as the number of *unique* characters that appear in `s` and `order`
+  - $K$ as the total number of characters that appear in `s` but not in `order`
+  - $k$ as the number of *unique* characters that appear in `s` but not in `order`
+
+  The following relationships hold:
+  
+  - $n = T + K$
+  - $t \leq T$
+  - $k \leq K$
+  - $t = m$ since `order` does not contain any duplicate characters and if $t$ is the number of unique characters that appear in both in `s` and `order`, then $t$ is also the number of characters in `order`
+
+* $m=t$ as the number of characters in `order`
+
+### Python
+
+#### Two Loops Approach
+
+1. Using `collections.Counter`, we first create a hash map of each character in `s` and its count in $O(n)$ time.
+
+2. We iterate through the characters in `order`:
+
+    - This loop runs for $m=t$ iterations and removes $m=t$ keys from the hash map.
+
+    - If the character is in the hash map, we append that character, multiplied by its count, to `perm_list` in $O(1)$ and remove the character from the hash map in $O(1)$.
+
+    - `perm_list` now contains $T$ characters characters from `s`, some of which are *grouped* into substrings based on their counts. The exact number of elements in `perm_list` is dependent on the counts of each character that appears in `s` and `order`.
+
+3. We iterate through the renaming keys in the hash map:
+
+    - This loop runs for $k$ iterations.
+
+    - For each key, we append that character, multiplied by its count, to `perm_list` in $O(1)$ time (no need to remove the keys anymore).
+
+    - This loop adds $K$ characters to the mix, some of which are also grouped into substrings, and `perm_list` now contains all $T+K=n$ characters from `s`.
+
+4. We join all strings in the `perm_list` to form the permuted string in $O(n)$ time.
+
+The work done in the first and fourth steps is $O(n)$ each.
+
+The second and third steps are more nuanced, but the total work done in these two steps is also $O(n)$.
+
+1. Each multiplication operation, $\text{character} \times m_i$, has a time complexity of $O(m_i)$.
+2. If we perform this operation $k$ times, and the sum of all $m_i$ is $n$:
+  $$
+  O(m_1) + O(m_2) + \cdots + O(m_k) = O(m_1 + m_2 + \cdots + m_k) = O(n)
+  $$
+
+Therefore, the total time complexity is $O(n + n + n) = O(3n) = O(n)$.
+
+#### Generators Approach
+
+1. Same as the first approach with $O(n)$ time complexity.
+
+2. To obtain the sorted portion of the permuted string, we use a generator expression to accomplish the same task as the second step in the first approach. Then, we join the generator expression in $O(T)$ time.
+
+3. To handle the remaining keys in the hash map, we use another generator expression to accomplish the same task as the third step in the first approach before joining the generator expression in $O(K)$ time.
+
+4. Finally, add the two strings containing $T$ and $K$ characters, respectively, in $O(T + K)=O(n)$ time. According to this [stackoverflow post](https://stackoverflow.com/questions/37133547/time-complexity-of-string-concatenation-in-python), some optimizations may be done to avoid creating a new string when doing string concatenation as `str_a += str_b`; however, this is an implementation detail and not a guarantee.
+
+Again, the overall time complexity is $O(n)$.
+
+### C++
+
+In `C++`, we can directly use `std::string::push_back` to add characters to the `permString` string. This operation is generally amortized constat, but reallocations may occur. As a defensive measure, we can pre-allocate memory for the output string to ensure it has a capacity equal to `s.size()` with `permString.reserve(s.size())` (to avoid automatic reallocations).
+
+1. Same as the Python approach, the time complexity of creating the hash map is $O(n)$.
+
+2. Iterate through each character in `order`:
+
+    - This loop runs for $m=t$ iterations.
+
+    - If the character is present in the hash map, append that character to the `permString` string in a while loop that runs at most $m_i$ times, where $m_i$ is the count of that character in `s`.
+
+    - After this loop, `permString` contains $T$ characters.
+
+3. Iterate through the remaining keys in the hash map:
+
+    - This loop runs for $k$ iterations.
+
+    - For each key, append that character to the `permString` string based on its count.
+
+    - This loop completes the `permString` string, which now contains all $T+K=n$ characters from `s`.
+
+The total time complexity is $O(n)$.
+
+## Space Complexity
+
+For both Python and C++, the space required for the hash map is $O(n)$ in the worst case, where every character in `s` is unique. If there are duplicates, the space required is less than $O(n)$ since the hash map will contain fewer keys than the number of characters in `s`.
+
+### Python
+
+#### Two Loops Approach
+
+In addition to the hash map, we use a `perm_list` to store the grouped substrings of characters in `s` based on their counts. The number of elements in `perm_list` is dependent on the counts of each character that appears in `s` and `order`. However, if we consider just the cost of storing these characters, then there are a total of $n$ characters in `perm_list`.
+
+So, the overall space complexity is $O(n + n) = O(2n) = O(n)$.
+
+#### Generators Approach
+
+Generators eliminate the need for using a list, so the space complexity is $O(n)$ just for the hash map (not considering the space required for the `sorted_portion`, `non_sorted_portion`, and the output strings).
+
+### C++
+
+In C++, the space complexity is $O(n)$ for the hash map if we do not considered the space required for the `permString` string. Even if we do, the space complexity is still $O(n + n) = O(2n) = O(n)$.
