@@ -730,3 +730,66 @@ Generators eliminate the need for using a list, so the space complexity is $O(n)
 ### C++
 
 In C++, the space complexity is $O(n)$ for the hash map if we do not considered the space required for the `permString` string. Even if we do, the space complexity is still $O(n + n) = O(2n) = O(n)$.
+
+--- 
+
+# Determine if Two Strings Are Close
+
+Check if two strings are considered close. Two strings are close if one can be transformed into the other using the following operations:
+
+  1. Swap any two existing characters in the string. Example: `'abcde' -> 'aecdb'`
+  2. Transform every occurrence of one character into another character and vice versa. Example: `'aacabb' -> 'bbcbaa'` (all 'a's are transformed into 'b's and all 'b's into 'a's)
+
+Both operations can be used on either string as many times as necessary.
+
+## Explanation
+
+Let `first = "abc"` and `second = "bca"`:
+
+- **Final Keys Comparison**: `dict_keys(['a', 'b', 'c']) == dict_keys(['b', 'c', 'a'])`
+- **Final Values Comparison**: `[1, 1, 1] == [1, 1, 1]`
+- **Result**: `True`
+
+Let `first = "yangc"` and `second = "yancw"`:
+
+- **Final Keys Comparison**: `dict_keys(['y', 'a', 'n', 'g', 'c']) == dict_keys(['y', 'a', 'n', 'g', 'w'])`
+- **Final Values Comparison**: `[1, 1, 1, 1, 1] == [1, 1, 1, 1, 1]`
+- **Result**: `False`
+
+## Time Complexity
+
+Let $n$ be the length of the first string and $m$ be the length of the second string.
+
+Both $n$ and $m$ are bounded by the size of the English alphabet, which is a constant $26$.
+
+If $n!=m$, we return `False` immediately. Therefore, the overall time complexity is $O(1)$.
+
+### Python
+
+1. Using `collections.Counter`, we create a hash map of counts of each character in the first and second strings, which is $O(n + n)=O(2n)=O(n)$.
+
+2. We compare the keys and values of the two hash maps; in the worst case, the hash maps will contain $26$ keys each. Therefore, the time complexity of this operation is $O(26 + 26)=O(52)=O(1)$.
+
+3. We also sort the counts of the characters in the hash maps, which is $O(26 \log 26 + 26 \log 26)=O(2 \times 26 \log 26)=O(52 \log 26)=O(1)$.
+
+4. The comparisons of the keys and counts are both, in the worst case where the hash maps contain $26$ keys, $O(26)=O(1)$.
+
+The overall time complexity is $O(n + 1 + 1 + 1)=O(n)$.
+
+### C++
+
+1. We use two `std::unordered_map` to store the counts and two `std::unordered_set` to store the unique characters of the first and second strings. Same as Python, the time complexity is $O(n)$.
+
+2. We load the counts of the characters into two vectors and sort them. The time complexity of moving the counts into the vectors is $O(26 + 26)=O(52)=O(1)$, and that of sorting is $O(26 \log 26 + 26 \log 26)=O(2 \times 26 \log 26)=O(52 \log 26)=O(1)$.
+
+3. Same as Python, the comparisons of the keys and counts are both $O(26)=O(1)$.
+
+The overall time complexity is once again $O(n)$.
+
+## Space Complexity
+
+The space complexity can be considered constant. 
+
+The hash maps can contain at most $26$ keys. 
+
+The lists or vectors of counts can contain at most $26$ elements, which happens when the counts are distributed as: `a: 1, b: 2, c: 3, ..., z: 26`. 
