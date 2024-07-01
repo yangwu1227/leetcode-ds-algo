@@ -72,7 +72,7 @@ def remove_from_start(self) -> None:
 
 ### `node.hpp` & `node.cpp`
 
-* **Smart Pointers** (`std::shared_ptr`): Used to manage the lifetime of dynamically allocated objects. `std::shared_ptr` automatically deletes the managed object when the last `shared_ptr` pointing to it is destroyed.
+* **Smart Pointers** (`std::shared_ptr`): Used to manage the lifetime of dynamically allocated objects, i.e., `Node` instances. The `std::shared_ptr` automatically deletes the managed object when the last `shared_ptr` pointing to it is destroyed. This ensures that each node in the linked list, which may be pointed to by multiple pointers, is deleted only when it is no longer needed.
 
 * **Type Aliases** (`using`): Creates a type alias for `std::shared_ptr<Node>`. This improves code readability and reduces the need to write `std::shared_ptr<Node>` repeatedly.
 
@@ -90,7 +90,7 @@ using Ptr = std::shared_ptr<Node>;
 explicit Node(int data) : data(data) {}
 ```
 
-* **Friend Functions**: Declares a non-member function that can access the private and protected members of the class. In this case, `operator<<` is made a friend of `Node` so it can access `Node`'s private data members. Overloading the `<<` operator allows for custom output formatting.
+* **Friend Functions**: Declares a non-member function that can access the private and protected members of the class. In this case, `operator<<` is made a friend of `Node` so it can access `Node`'s private data members. Overloading the `<<` operator allows for custom output formatting when using `std::cout`.
 
 ```cpp
 friend std::ostream& operator<<(std::ostream& os, const Node& node);
@@ -104,7 +104,11 @@ friend class DoublyLinkedList;
 
 #### `DoublyLinkedList::DoublyLinkedList()`
 
-* **Constructor**: The `std::make_shared<T>()` is a utility function used to create a `std::shared_ptr<T>`. It allocates memory for an object of type `T` and constructs the object in that memory. It then returns a `std::shared_ptr<T>` that manages this memory.
+* **Constructor**: The `std::make_shared<T>()` is a utility function used to create a `std::shared_ptr<T>`. It allocates memory for an object of type `T` and constructs the object in that memory. It then returns a `std::shared_ptr<T>` that manages this memory. 
+
+* **Sentinel Nodes**: The doubly linked list uses sentinel nodes (`head` and `tail`) to simplify the implementation. These sentinel nodes are not part of the actual data but are used to avoid special cases when adding or removing nodes from the list.
+
+* `std::make_shared<Node>()` is more efficient than `std::shared_ptr<Node>(new Node())` because it avoids a separate memory allocation for the control block of the `shared_ptr`.
 
 * `head = std::make_shared<Node>()`: 
     - Allocates memory for a `Node` object.
