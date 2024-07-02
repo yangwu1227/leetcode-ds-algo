@@ -1,5 +1,9 @@
 # Doubly Linked List
 
+## Remove & Insert Operations
+
+![](diagrams/remove_insert.gif)
+
 ## Python
 
 ### `add_to_end`
