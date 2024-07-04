@@ -1,48 +1,54 @@
-// singly.hpp
-#ifndef SINGLY_HPP
-#define SINGLY_HPP
+#ifndef SINGLY_LINKED_LIST_HPP
+#define SINGLY_LINKED_LIST_HPP
 
-class Nodes
+#include "node.hpp"
+#include <memory>
+#include <iostream>
+
+/**
+ * @class SinglyLinkedList
+ * @brief A class representing a singly linked list with a sentinel head node.
+ */
+class SinglyLinkedList
 {
 public:
     /**
-     * @brief Construct a new Nodes object.
-     *
-     * @param data An integer
+     * @brief Constructs an empty singly linked list with a sentinel head node.
      */
-    Nodes(int data);
+    SinglyLinkedList();
 
     /**
-     * @brief Get the data of the node. This function does not modify the state of the object.
+     * @brief Adds a node to the end of the singly linked list.
      *
-     * @return The integer data of the node
+     * @param node_to_add The node to be added to the end of the list.
      */
-    int getData() const;
+    void add_to_end(ListNode::Ptr node_to_add);
 
     /**
-     * @brief Set the data of the node.
-     *
-     * @param data An integer to set the node's data to
+     * @brief Removes a node from the end of the singly linked list.
      */
-    void setData(int data);
+    void remove_from_end();
 
     /**
-     * @brief Get the next node. This function does not modify the state of the object.
+     * @brief Adds a node to the start of the singly linked list.
      *
-     * @return A pointer to the next Nodes object
+     * @param node_to_add The node to be added to the start of the list.
      */
-    Nodes *getNext() const;
+    void add_to_start(ListNode::Ptr node_to_add);
 
     /**
-     * @brief Set the 'next' pointer of this current node to point to the next node.
-     *
-     * @param nextNode A pointer to the next Nodes object
+     * @brief Removes a node from the start of the singly linked list.
      */
-    void setNext(Nodes *nextNode);
+    void remove_from_start();
+
+    /**
+     * @brief Displays the values in the linked list from start to end.
+     */
+    void display() const;
 
 private:
-    int data;
-    Nodes *next;
+    ListNode::Ptr head; // Pointer to the sentinel head node
+    ListNode::Ptr tail; // Pointer to the tail node
 };
 
 #endif

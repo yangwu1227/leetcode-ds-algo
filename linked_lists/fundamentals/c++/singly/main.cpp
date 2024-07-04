@@ -1,32 +1,36 @@
-// main.cpp
 #include "singly.hpp"
 #include <iostream>
+#include <vector>
 
 int main()
 {
-    Nodes *one = new Nodes(1);
-    Nodes *two = new Nodes(2);
-    Nodes *three = new Nodes(3);
-    Nodes *four = new Nodes(4);
-    Nodes *five = new Nodes(5);
-
-    // The '->' operator is used to call methods on the object that the pointer points to
-    // It is equivalent to dereferencing the pointer and then accessing the member: (*one).setNext(two)
-    one->setNext(two);
-    two->setNext(three);
-    three->setNext(four);
-    four->setNext(five);
-
-    // Modify data of the first two nodes
-    one->setData(10);
-    two->setData(20);
-
-    Nodes *currentNode = one;
-    while (currentNode != nullptr)
+    SinglyLinkedList sll;
+    std::vector<ListNode::Ptr> nodes;
+    for (int i = 1; i <= 5; ++i)
     {
-        std::cout << "Node data: " << currentNode->getData() << std::endl;
-        currentNode = currentNode->getNext();
+        nodes.push_back(std::make_shared<ListNode>(i));
     }
+
+    for (const auto &node : nodes)
+    {
+        std::cout << "Adding " << *node << " to the end of the singly linked list" << '\n';
+        sll.add_to_end(node);
+    }
+
+    std::cout << "Current state of the singly linked list: " << '\n';
+    sll.display();
+
+    std::cout << "Removing the first node" << '\n';
+    sll.remove_from_start();
+    sll.display();
+
+    std::cout << "Removing the last node" << '\n';
+    sll.remove_from_end();
+    sll.display();
+
+    std::cout << "Adding a node to the start" << '\n';
+    sll.add_to_start(std::make_shared<ListNode>(8));
+    sll.display();
 
     return 0;
 }

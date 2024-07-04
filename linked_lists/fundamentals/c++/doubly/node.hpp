@@ -5,20 +5,20 @@
 #include <iostream>
 
 /**
- * @class Node
+ * @class ListNode
  * @brief A class representing a node in a doubly linked list.
  */
-class Node
+class ListNode
 {
 public:
-    using Ptr = std::shared_ptr<Node>;
+    using Ptr = std::shared_ptr<ListNode>;
 
     /**
-     * @brief Constructs a new Node object.
+     * @brief Constructs a new ListNode object.
      *
      * @param data An integer representing the data associated with the node instance
      */
-    explicit Node(int data = 0);
+    explicit ListNode(int data = 0);
 
     /**
      * @brief Overloads the << operator to print the node data.
@@ -27,7 +27,7 @@ public:
      * @param node The node to be printed
      * @return std::ostream& The output stream with the node data
      */
-    friend std::ostream &operator<<(std::ostream &os, const Node &node);
+    friend std::ostream &operator<<(std::ostream &os, const ListNode &node);
 
 private:
     int data; // The data stored in the node

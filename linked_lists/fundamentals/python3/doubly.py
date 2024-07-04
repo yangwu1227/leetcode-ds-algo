@@ -1,6 +1,6 @@
 from typing import Union, Any
 
-class Node(object):
+class ListNode(object):
     def __init__(self, data: Union[int, None]):
         """
         Initializes the node instance.
@@ -13,6 +13,7 @@ class Node(object):
         self.data: Union[int, None] = data
         self.next: Any = None
         self.prev: Any = None
+        
     def __repr__(self) -> str:
         """
         Return a meaningful printable string describing the node instance.
@@ -30,18 +31,18 @@ class DoublyLinkedList(object):
         """
         Initializes an empty doubly linked list with sentinel head and tail nodes.
         """
-        self.head: Node = Node(None) # Sentinel node
-        self.tail: Node = Node(None) # Sentinel node
+        self.head: ListNode = ListNode(None) # Sentinel node
+        self.tail: ListNode = ListNode(None) # Sentinel node
         self.head.next = self.tail # The next pointer of the head points to the tail
         self.tail.prev = self.head # The prev pointer of the tail points to the head
 
-    def add_to_end(self, node_to_add: Node) -> None:
+    def add_to_end(self, node_to_add: ListNode) -> None:
         """
         Adds a node to the end of the doubly linked list.
 
         Parameters
         ----------
-        node_to_add : Node
+        node_to_add : ListNode
             The node to be added to the end of the list.
         """
         node_to_add.next = self.tail
@@ -61,13 +62,13 @@ class DoublyLinkedList(object):
         node_to_remove.prev.next = self.tail
         self.tail.prev = node_to_remove.prev
 
-    def add_to_start(self, node_to_add: Node) -> None:
+    def add_to_start(self, node_to_add: ListNode) -> None:
         """
         Adds a node to the start of the doubly linked list.
 
         Parameters
         ----------
-        node_to_add : Node
+        node_to_add : ListNode
             The node to be added to the start of the list.
         """
         node_to_add.prev = self.head
@@ -103,7 +104,7 @@ class DoublyLinkedList(object):
 def main() -> int:
 
     dll = DoublyLinkedList()
-    nodes = [Node(i) for i in range(1, 6)]
+    nodes = [ListNode(i) for i in range(1, 6)]
 
     for node in nodes:
         print(f"Adding {node} to the end")

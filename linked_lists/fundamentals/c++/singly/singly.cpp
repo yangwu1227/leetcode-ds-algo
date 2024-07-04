@@ -1,26 +1,68 @@
-// singly.cpp
 #include "singly.hpp"
 
-Nodes::Nodes(int data) : data(data), next(nullptr) {}
-
-int Nodes::getData() const
+SinglyLinkedList::SinglyLinkedList()
 {
-    return data;
+    head = std::make_shared<ListNode>(); // Sentinel head node
+    tail = head; // At the beginning, head and tail are the same
 }
 
-void Nodes::setData(int data)
+void SinglyLinkedList::add_to_end(ListNode::Ptr node_to_add)
 {
-    // The 'this' pointer is passed as a hidden argument to all nonstatic member functions; it is the object for which a member function is called
-    this->data = data;
+    tail->next = node_to_add;
+    tail = node_to_add;
 }
 
-Nodes *Nodes::getNext() const
+void SinglyLinkedList::remove_from_end()
 {
-    // The 'next' pointer points to the next 'Nodes' object in the linked list, if there is none, next will be a 'nullptr'
-    return next;
+    if (head->next == nullptr)
+    {
+        return;
+    }
+
+    ListNode::Ptr current = head;
+    while (current->next != tail)
+    {
+        current = current->next;
+    }
+
+    current->next = nullptr;
+    tail = current;
 }
 
-void Nodes::setNext(Nodes *nextNode)
+void SinglyLinkedList::add_to_start(ListNode::Ptr node_to_add)
 {
-    next = nextNode;
+    node_to_add->next = head->next;
+    head->next = node_to_add;
+
+    if (tail == head)
+    {
+        tail = node_to_add;
+    }
+}
+
+void SinglyLinkedList::remove_from_start()
+{
+    if (head->next == nullptr)
+    {
+        return;
+    }
+
+    ListNode::Ptr node_to_remove = head->next;
+    head->next = node_to_remove->next;
+
+    if (head->next == nullptr)
+    {
+        tail = head;
+    }
+}
+
+void SinglyLinkedList::display() const
+{
+    ListNode::Ptr current = head->next;
+    while (current != nullptr)
+    {
+        std::cout << current->data << " -> ";
+        current = current->next;
+    }
+    std::cout << "None" << std::endl;
 }

@@ -3,10 +3,10 @@
 #include <memory>
 #include <iostream>
 
-Node::Node(int data) : data(data) {}
+ListNode::ListNode(int data) : data(data) {}
 
-std::ostream &operator<<(std::ostream &os, const Node &node)
+std::ostream &operator<<(std::ostream &os, const ListNode &node)
 {
-    os << "Node(data = " << node.data << ")";
+    os << "ListNode(data = " << node.data << ")";
     return os;
 }

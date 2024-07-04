@@ -5,13 +5,13 @@
 
 DoublyLinkedList::DoublyLinkedList()
 {
-    head = std::make_shared<Node>(); // Sentinel head node
-    tail = std::make_shared<Node>(); // Sentinel tail node
+    head = std::make_shared<ListNode>(); // Sentinel head node
+    tail = std::make_shared<ListNode>(); // Sentinel tail node
     head->next = tail;
     tail->prev = head;
 }
 
-void DoublyLinkedList::add_to_end(Node::Ptr node_to_add)
+void DoublyLinkedList::add_to_end(ListNode::Ptr node_to_add)
 {
     node_to_add->next = tail;
     node_to_add->prev = tail->prev;
@@ -26,12 +26,12 @@ void DoublyLinkedList::remove_from_end()
         return;
     }
 
-    Node::Ptr node_to_remove = tail->prev;
+    ListNode::Ptr node_to_remove = tail->prev;
     node_to_remove->prev->next = tail;
     tail->prev = node_to_remove->prev;
 }
 
-void DoublyLinkedList::add_to_start(Node::Ptr node_to_add)
+void DoublyLinkedList::add_to_start(ListNode::Ptr node_to_add)
 {
     node_to_add->prev = head;
     node_to_add->next = head->next;
@@ -46,14 +46,14 @@ void DoublyLinkedList::remove_from_start()
         return;
     }
 
-    Node::Ptr node_to_remove = head->next;
+    ListNode::Ptr node_to_remove = head->next;
     node_to_remove->next->prev = head;
     head->next = node_to_remove->next;
 }
 
 void DoublyLinkedList::display() const
 {
-    Node::Ptr current = head->next;
+    ListNode::Ptr current = head->next;
     while (current != tail)
     {
         std::cout << current->data << " -> ";
