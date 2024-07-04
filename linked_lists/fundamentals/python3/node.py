@@ -7,7 +7,7 @@ class ListNode(object):
 
         Parameters
         ----------
-        data : Union[int,åå None]
+        data : Union[int, None]
             An integer representing the data associated with the node instance
         """
         self.data: Union[int, None] = data
