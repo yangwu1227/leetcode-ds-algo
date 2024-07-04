@@ -1,14 +1,4 @@
-from typing import Any
-from random import randint
-
-class ListNode(object):
-    def __init__(self, data: Any):
-        self.data: Any = data
-        self.next: Any = None
-        
-    def __repr__(self) -> str:
-        class_name = type(self).__name__
-        return f"{class_name}(data = {self.data})"
+from node import ListNode
     
 class SinglyLinkedList(object):
     def __init__(self):
