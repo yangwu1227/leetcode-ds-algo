@@ -157,3 +157,48 @@ Consider a list with no cycle: `1 -> 2 -> 3 -> ... -> n`
 The space complexity is $O(1)$ because we only use two pointers, `slow` and `fast`, to traverse the list.
 
 This does not include the space required for the input linked list and node objects.
+
+---
+
+# Middle of the Linked List
+
+Given the `head` of a singly linked list, return the middle node of the linked list. If there are two middle nodes, return the second node.
+
+## Explanation
+
+### Odd Number of Nodes
+
+Consider a linked list with the following structure `1 -> 2 -> 3 -> 4 -> 5`:
+
+<center>
+
+| Iteration | `slow` Position | `fast` Position | While Loop Check `fast` and `fast.next` | Middle Node Reached? |
+|-----------------|------------------|-----------------|----------------------------------------|----------------------|
+| 1               | 1                | 1               | True                                   | No                   |
+| 2               | 2                | 3               | True                                   | No                   |
+| 3               | 3                | 5               | False (loop stops)                     | Yes                  |
+
+</center>
+
+### Even Number of Nodes
+
+Consider a linked list with the following structure `1 -> 2 -> 3 -> 4 -> 5 -> 6`:
+
+<center>
+
+| Iteration | `slow` Position | `fast` Position | While Loop Check `fast` and `fast.next` | Middle Node Reached? |
+|-----------------|------------------|-----------------|----------------------------------------|----------------------|
+| 1               | 1                | 1               | True                                   | No                   |
+| 2               | 2                | 3               | True                                   | No                   |
+| 3               | 3                | 5               | True                                   | No                   |
+| 4               | 4                | None            | False (loop stops)                     | Yes                  |
+
+</center>
+
+## Time Complexity
+
+In the worst-case scenario, the `fast` pointer requires $\frac{n}{2}$ steps to reach the end of the list, i.e., when `fast` becomes `None` or `nullptr`. The `slow` pointer will be at the middle node after $\frac{n}{2}$ steps. The time complexity is $O(\frac{n}{2})$, which is essentially $O(n)$ as $n$ tends to infinity.
+
+## Space Complexity
+
+Again, the space complexity is $O(1)$ because we only use two pointers, `slow` and `fast`, to traverse the list.
