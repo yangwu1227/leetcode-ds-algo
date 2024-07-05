@@ -2,18 +2,18 @@
 #include "has_cycle.hpp"
 #include "node.hpp"
 
-bool hasCycle(ListNode::Ptr head)
+bool hasCycle(const ListNode::Ptr &head)
 {
     // Pointers
     auto fast = head;
     auto slow = head;
 
-    while (fast != nullptr && fast->next != std::nullptr)
+    while (fast != nullptr && fast->next != nullptr)
     {
         // Iterate the pointers
         fast = fast->next->next;
         slow = slow->next;
-    
+
         // Check for cycle
         if (fast == slow)
         {
@@ -23,4 +23,3 @@ bool hasCycle(ListNode::Ptr head)
 
     return false;
 }
-

@@ -9,6 +9,6 @@
  * @param head  A shared pointer to the head of the linked list
  * @return bool `true` if there is a cycle, `false` otherwise
  */
-bool hasCycle(ListNode::Ptr head);
+bool hasCycle(const ListNode::Ptr &head);
 
 #endif
