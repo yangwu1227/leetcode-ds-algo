@@ -1,3 +1,50 @@
+# ListNode
+
+## Python
+
+The `ListNode` class is used to represent a single node in a linked list. Each node contains:
+
+* `data`: The value stored in the node.
+* `next`: A reference to the next node in the list.
+* `prev`: A reference to the previous node in the list (for doubly linked lists).
+
+The `__repr__` method is overridden to provide a string representation of the node when using `print()`.
+
+In the Python implementation, the `ListNode` class can be shared between singly and doubly linked lists. The `next` and `prev` pointers are set to `None` by default.
+
+## C++
+
+### `node.hpp` & `node.cpp`
+
+* **Smart Pointers** (`std::shared_ptr`): Used to manage the lifetime of dynamically allocated objects, i.e., `ListNode` instances. The `std::shared_ptr` automatically deletes the managed object when the last `shared_ptr` pointing to it is destroyed. This ensures that each node in the linked list, which may be owned by multiple parts of a program, is deleted only when it is no longer needed.
+
+* **Type Aliases** (`using`): Creates a type alias for `std::shared_ptr<ListNode>`. This improves code readability and reduces the need to write `std::shared_ptr<ListNode>` repeatedly.
+
+```cpp
+using Ptr = std::shared_ptr<ListNode>;
+```
+
+* **Constructor Initialization Lists**: Used to initialize class members. This is more efficient than assignment inside the constructor body because it directly constructs the members.
+
+    * **Null Pointers**: The `next` and `prev` (only for doubly linked list) pointers will be null pointers as they are not explicitly initialized.
+
+    * **Explicit Keyword**: When the constructor of a class is marked as `explicit`, it cannot be used for implicit conversions or copy-initialization. This means that the compiler will not use this constructor to convert an integer (or any other type specified) to a `ListNode` object implicitly.
+
+```cpp
+explicit ListNode(int data) : data(data) {}
+```
+
+* **Friend Functions and Classes**: Declares a non-member function that can access the private and protected members of the class. In this case, `operator<<` is made a friend of `ListNode` so it can access `ListNode`'s private data members. Overloading the `<<` operator allows for custom output formatting when using `std::cout`.
+
+```cpp
+friend std::ostream& operator<<(std::ostream& os, const ListNode& node);
+
+friend class SinglyLinkedList;
+friend class DoublyLinkedList;
+```
+
+---
+
 # Doubly Linked List
 
 ## Remove & Insert Operations
@@ -76,39 +123,16 @@ def remove_from_start(self) -> None:
 
 ## C++
 
-### `node.hpp` & `node.cpp`
+### `DoublyLinkedList::DoublyLinkedList()`
 
-* **Smart Pointers** (`std::shared_ptr`): Used to manage the lifetime of dynamically allocated objects, i.e., `ListNode` instances. The `std::shared_ptr` automatically deletes the managed object when the last `shared_ptr` pointing to it is destroyed. This ensures that each node in the linked list, which may be pointed to by multiple pointers, is deleted only when it is no longer needed.
-
-* **Type Aliases** (`using`): Creates a type alias for `std::shared_ptr<ListNode>`. This improves code readability and reduces the need to write `std::shared_ptr<ListNode>` repeatedly.
-
-```cpp
-using Ptr = std::shared_ptr<ListNode>;
+```cpp  
+DoublyLinkedList::DoublyLinkedList() {
+    head = std::make_shared<ListNode>(); // Sentinel head node
+    tail = std::make_shared<ListNode>(); // Sentinel tail node
+    head->next = tail;
+    tail->prev = head;
+}
 ```
-
-* **Constructor Initialization Lists**: Used to initialize class members. This is more efficient than assignment inside the constructor body because it directly constructs the members.
-
-* **Null Pointers**: The `next` and `prev` pointers will be null pointers as they are not explicitly initialized.
-
-* **Explicit Keyword**: When the constructor of a class is marked as `explicit`, it cannot be used for implicit conversions or copy-initialization. This means that the compiler will not use this constructor to convert an integer (or any other type specified) to a `ListNode` object implicitly.
-
-```cpp
-explicit ListNode(int data) : data(data) {}
-```
-
-* **Friend Functions**: Declares a non-member function that can access the private and protected members of the class. In this case, `operator<<` is made a friend of `ListNode` so it can access `ListNode`'s private data members. Overloading the `<<` operator allows for custom output formatting when using `std::cout`.
-
-```cpp
-friend std::ostream& operator<<(std::ostream& os, const ListNode& node);
-```
-
-```cpp
-friend class DoublyLinkedList;
-```
-
-### `doubly.hpp` & `doubly.cpp`
-
-#### `DoublyLinkedList::DoublyLinkedList()`
 
 * **Constructor**: The `std::make_shared<T>()` is a utility function used to create a `std::shared_ptr<T>`. It allocates memory for an object of type `T` and constructs the object in that memory. It then returns a `std::shared_ptr<T>` that manages this memory. 
 
@@ -126,15 +150,7 @@ friend class DoublyLinkedList;
 * `tail = std::make_shared<ListNode>()`:
     - Similar to the previous line, but this time it creates and assigns the sentinel tail node.
 
-```cpp  
-DoublyLinkedList::DoublyLinkedList() {
-    head = std::make_shared<ListNode>(); // Sentinel head node
-    tail = std::make_shared<ListNode>(); // Sentinel tail node
-    head->next = tail;
-    tail->prev = head;
-}
-```
-#### `void DoublyLinkedList::add_to_end(ListNode::Ptr node_to_add)`
+### `void DoublyLinkedList::add_to_end(ListNode::Ptr node_to_add)`
 
 ```cpp
 void DoublyLinkedList::add_to_end(ListNode::Ptr node_to_add)
@@ -155,7 +171,7 @@ void DoublyLinkedList::add_to_end(ListNode::Ptr node_to_add)
         - `tail->prev->next = node_to_add`: The current last node's `next` points to the new node.
         - `tail->prev = node_to_add`: The tail's `prev` points to the new node, making it the new last node.
 
-#### `void DoublyLinkedList::remove_from_end()`
+### `void DoublyLinkedList::remove_from_end()`
 
 ```cpp
 void DoublyLinkedList::remove_from_end()
@@ -181,7 +197,7 @@ void DoublyLinkedList::remove_from_end()
         - `node_to_remove->prev->next = tail`: The node before the one being removed points to the tail.
         - `tail->prev = node_to_remove->prev`: The tail points back to the node before the one being removed.
 
-#### `void DoublyLinkedList::add_to_start(ListNode::Ptr node_to_add)`
+### `void DoublyLinkedList::add_to_start(ListNode::Ptr node_to_add)`
 
 ```cpp
 void DoublyLinkedList::add_to_start(ListNode::Ptr node_to_add)
@@ -202,7 +218,7 @@ void DoublyLinkedList::add_to_start(ListNode::Ptr node_to_add)
         - `head->next->prev = node_to_add`: The current first node's `prev` points to the new node.
         - `head->next = node_to_add`: The head's `next` points to the new node, making it the new first node.
 
-#### `void DoublyLinkedList::remove_from_start()`
+### `void DoublyLinkedList::remove_from_start()`
 
 ```cpp
 void DoublyLinkedList::remove_from_start()
@@ -228,7 +244,7 @@ void DoublyLinkedList::remove_from_start()
         - `node_to_remove->next->prev = head`: The node after the one being removed points back to the head.
         - `head->next = node_to_remove->next`: The head points to the node after the one being removed.
 
-#### `void DoublyLinkedList::display() const`
+### `void DoublyLinkedList::display() const`
 
 ```cpp
 void DoublyLinkedList::display() const
@@ -252,3 +268,209 @@ void DoublyLinkedList::display() const
     - **Output**:
         - `std::cout << current->data << " -> "`: Prints the data of each node followed by an arrow.
         - `std::cout << "None" << std::endl`: Prints `None` at the end to signify the end of the list.
+
+---
+
+# Singly Linked List
+
+## Python
+
+### `add_to_end`
+
+```python
+def add_to_end(self, node_to_add: ListNode) -> None:
+    self.tail.next = node_to_add
+    self.tail = node_to_add
+```
+
+* The `next` pointer of the current tail node is updated to point to the new node.
+* The tail pointer is updated to point to the new node, making it the new tail.
+* Initially, the head and tail pointers point to the same node when the list is empty. After adding the first node to the end, the `head` pointer remains unchanged (i.e., it points to the sentinel head with `data = None` or `data = 0`), and the tail pointer points to the new node.
+
+### `remove_from_end`
+
+```python
+def remove_from_end(self) -> None:
+    if self.head.next is None:
+        # The list is empty
+        return None
+
+    # If the list has only one element
+    if self.head.next == self.tail:
+        self.head.next = None
+        self.tail = self.head
+        return None
+
+    current = self.head
+    while current.next != self.tail:
+        current = current.next
+    
+    current.next = None
+    self.tail = current
+```
+
+* If the list is empty (i.e., `head.next` is `None`), do nothing.
+* If the list has only one element (i.e., `head.next` points to `tail`), set `head.next` to `None` and update the `tail` pointer to point to the `head` sentinel. This effectively empties the list.
+* If the list has more than one element, traverse the list until the **node before the tail** is reached. 
+    - Set the `next` pointer of this node before the tail to `None` and update the `tail` pointer to point to this node. 
+    - This effectively removes the tail node from the list.
+
+### `add_to_start`
+
+```python
+def add_to_start(self, node_to_add: ListNode) -> None:
+    node_to_add.next = self.head.next
+    self.head.next = node_to_add
+
+    # If the list was empty, update the tail
+    if self.tail == self.head:
+        self.tail = node_to_add
+```
+
+* The `next` pointer of the new node should point to the node that is currently the first real node in the list (i.e., the node after the `head` sentinel).
+* The `next` pointer of the `head` sentinel should be updated to point to the new node, making the new node the first real node in the list.
+* If the list was initially empty (i.e., `tail` points to `head`), update the `tail` pointer to point to the new node, making it the first and last node in the list.
+
+### `remove_from_start`
+
+```python
+def remove_from_start(self) -> None:
+    if self.head.next is None:
+        # The list is empty
+        return None
+
+    node_to_remove = self.head.next
+    self.head.next = node_to_remove.next
+
+    # If the list becomes empty after removal, update the tail
+    if self.head.next is None:
+        self.tail = self.head
+```
+
+* If the list is empty (i.e., `head.next` is `None`), do nothing.
+* The `node_to_remove` is the one after the `head` sentinel, which is the first real node in the list `head.next`.
+* Update the `next` pointer of the `head` sentinel to point to the node after the one being removed, i.e., `node_to_remove.next`, effectively removing the first node from the list. 
+* If the list becomes empty after the removal (i.e., `head.next` is `None`), update the `tail` pointer to point to the `head` sentinel, making the list empty.
+
+---
+
+## C++ 
+
+### `SinglyLinkedList::SinglyLinkedList()`
+
+```cpp
+SinglyLinkedList::SinglyLinkedList()
+{
+    head = std::make_shared<ListNode>(); // Sentinel head node
+    tail = head; // At the beginning, head and tail are the same
+}
+```
+
+* Similar to the doubly linked list, the singly linked list uses a sentinel head node to simplify the implementation. The `head` pointer points to the sentinel head node, and the `tail` pointer initially points to the same node.
+
+### `void SinglyLinkedList::add_to_end(ListNode::Ptr node_to_add)`
+
+```cpp
+void SinglyLinkedList::add_to_end(ListNode::Ptr node_to_add)
+{
+    tail->next = node_to_add;
+    tail = node_to_add;
+}
+```
+
+* **Pointers Used**: `tail`, `node_to_add`
+* **Purpose**: Adds a new node to the end of the list.
+    - **Set Pointers of the New ListNode**:
+        - `tail->next = node_to_add`: The current tail node's `next` points to the new node.
+    - **Update Tail Pointer**:
+        - `tail = node_to_add`: Update the tail pointer to point to the new node.
+
+### `void SinglyLinkedList::remove_from_end()`
+
+```cpp
+void SinglyLinkedList::remove_from_end()
+{
+    if (head->next == nullptr)
+    {
+        return;
+    }
+
+    ListNode::Ptr current = head;
+    while (current->next != tail)
+    {
+        current = current->next;
+    }
+
+    current->next = nullptr;
+    tail = current;
+}
+```
+
+* **Pointers Used**: `head`, `tail`, `current`
+* **Purpose**: Removes the node at the end of the list.
+    - **Check for Empty List**:
+        - `if (head->next == nullptr)`: If the list is empty (only the `head` sentinel), do nothing.
+    - **Traverse to Node Before Tail**:
+        - `ListNode::Ptr current = head`: Start at the `head` sentinel.
+        - `while (current->next != tail)`: Traverse until the node before the `tail` is reached.
+        - `current->next = nullptr`: Set the `next` pointer of the node before the tail to `nullptr`.
+        - `tail = current`: Update the `tail` pointer to point to the node before the `tail`.
+
+### `void SinglyLinkedList::add_to_start(ListNode::Ptr node_to_add)`
+
+```cpp
+void SinglyLinkedList::add_to_start(ListNode::Ptr node_to_add)
+{
+    node_to_add->next = head->next;
+    head->next = node_to_add;
+
+    if (tail == head)
+    {
+        tail = node_to_add;
+    }
+}
+```
+
+* **Pointers Used**: `head`, `tail`, `node_to_add`
+* **Purpose**: Adds a new node to the start of the list.
+    - **Set Pointers of the New ListNode**:
+        - `node_to_add->next = head->next`: The new node's `next` points to the node currently at the start of the list.
+    - **Update Head Pointer**:
+        - `head->next = node_to_add`: Update the `next` pointer of the `head` sentinel to point to the new node, since it is now the first node.
+    - **Update Tail Pointer**:
+        - `if (tail == head)`: If the list was initially empty, update the `tail` pointer to point to the new node.
+
+### `void SinglyLinkedList::remove_from_start()`
+
+```cpp
+void SinglyLinkedList::remove_from_start()
+{
+    if (head->next == nullptr)
+    {
+        return;
+    }
+
+    ListNode::Ptr node_to_remove = head->next;
+    head->next = node_to_remove->next;
+
+    if (head->next == nullptr)
+    {
+        tail = head;
+    }
+}
+```
+
+* **Pointers Used**: `head`, `tail`, `node_to_remove`
+* **Purpose**: Removes the node at the start of the list.
+    - **Check for Empty List**:
+        - `if (head->next == nullptr)`: If the list is empty (only the `head` sentinel), do nothing.
+    - **Identify ListNode to Remove**:
+        - `ListNode::Ptr node_to_remove = head->next`: Points to the node after the `head` sentinel, which is the first real node to be removed.
+    - **Update Head Pointer**:
+        - `head->next = node_to_remove->next`: Update the `next` pointer of the `head` sentinel to point to the node after the one being removed, effectively linking the `head` to the new first node.
+    - **Update Tail Pointer**:
+        - `if (head->next == nullptr)`: If the list becomes empty after the removal, update the `tail` pointer to point to the `head` sentinel.
+
+### `void SinglyLinkedList::display() const`
+
+This is exactly the same as the `display` method for the doubly linked list.
