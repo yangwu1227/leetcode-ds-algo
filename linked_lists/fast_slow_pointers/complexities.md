@@ -202,3 +202,50 @@ In the worst-case scenario, the `fast` pointer requires $\frac{n}{2}$ steps to r
 ## Space Complexity
 
 Again, the space complexity is $O(1)$ because we only use two pointers, `slow` and `fast`, to traverse the list.
+
+---
+
+# Kth Node from the End of a Linked List
+
+Given `head`, the sentinel head node, of a singly linked list and `k`, return the kth node from the end of the linked list. 
+
+## Explanation
+
+Consider a linked list with the following structure `1 -> 2 -> 3 -> 4 -> 5` and `k = 2`:
+
+<center>
+
+| Step | `fast` Position | `slow` Position | While Loop Check `fast` | Kth Node from End |
+|------|-----------------|-----------------|-------------------------|-------------------|
+| 1    | 1               | 1               | True                    | No                |
+| 2    | 2               | 1               | True                    | No                |
+| 3    | 3               | 1               | True                    | No                |
+| 4    | 4               | 2               | True                    | No                |
+| 5    | 5               | 3               | True                    | No                |
+| 6    | None            | 4               | False (loop stops)      | Yes               |
+
+</center>
+
+## Time Complexity
+
+Let $n$ be the number of nodes in the singly linked list.
+
+* Initializing the `slow` and `fast` pointers to the sentinel head node takes $O(1)$ time.
+
+* We first move the `fast` pointer to the `k`th node from the beginning of the list. This takes $O(k)$ time as each move of the pointer is $O(1)$. This effectively moves the `fast` pointer $k$ steps ahead of the `slow` pointer.
+
+* We then move both the `slow` and `fast` pointers until the `fast` pointer reaches the end of the list. This takes $O(n - k)$ time as the `fast` pointer is $k$ steps ahead of the `slow` pointer.
+
+The overall time complexity is therefore:
+
+$$
+\begin{align*}
+O(1) + O(k) + O(n - k) &= O(1 + k + n - k) \\
+&= O(1 + n) \\
+&= O(n)
+\end{align*}
+$$
+
+## Space Complexity
+
+With the use of two pointers, `slow` and `fast`, the space complexity is $O(1)$.
