@@ -32,7 +32,7 @@ class SinglyLinkedList(object):
         if self.head.next == self.tail:
             self.head.next = None
             self.tail = self.head
-            return
+            return None
 
         current = self.head
         while current.next != self.tail:
