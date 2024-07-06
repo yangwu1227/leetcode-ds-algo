@@ -249,3 +249,33 @@ $$
 ## Space Complexity
 
 With the use of two pointers, `slow` and `fast`, the space complexity is $O(1)$.
+
+---
+
+# Remove Duplicates from Sorted List
+
+Given the `head` of a sorted linked list, delete all duplicates such that each element appears only once. 
+
+## Explanation
+
+Consider a sorted linked list with the following structure: `1 -> 1 -> 2 -> 3 -> 3`.
+
+<center>
+
+| Step | `current` Position | `current.data` | `current.next.data` | Action            | List After Step      |
+|------|--------------------|----------------|---------------------|-------------------|----------------------|
+| 1    | 1                  | 1              | 1                   | Remove duplicate  | `1 -> 2 -> 3 -> 3`   |
+| 2    | 1                  | 1              | 2                   | Move to next node | `1 -> 2 -> 3 -> 3`   |
+| 3    | 2                  | 2              | 3                   | Move to next node | `1 -> 2 -> 3 -> 3`   |
+| 4    | 3                  | 3              | 3                   | Remove duplicate  | `1 -> 2 -> 3`        |
+| 5    | 3                  | 3              | None                | End of list       | `1 -> 2 -> 3`        |
+
+</center>
+
+## Time Complexity
+
+In the worst case, we need $n-1$ comparisons between `current.data` and `current.next.data` to check fo duplicates; therefore, the time complexity is $O(n - 1)$, which tends to $O(n)$ as $n$ tends to infinity.
+
+## Space Complexity
+
+We only use one pointer `current` (i.e., the dummy reference to `head`), so the space complexity is $O(1)$.
