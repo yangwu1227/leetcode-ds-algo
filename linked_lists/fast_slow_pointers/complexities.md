@@ -324,3 +324,44 @@ In the worst case, we need $n-1$ comparisons between `current.data` and `current
 For the single pointer solution, we only use one pointer `current` (i.e., the dummy reference to `head`), so the space complexity is $O(1)$.
 
 Even for the fast and slow pointer solution, the space complexity is $O(1)$ because we only use two pointers, `slow` and `fast`, to traverse the list.
+
+---
+
+#  Delete the Middle Node of a Linked List
+
+Given the `head` of a singly linked list, delete the middle node of the linked list. If there are two middle nodes, delete the second middle node.
+
+## Explanation
+
+Given a linked list with the following structure `1 -> 3 -> 4 -> 7 -> 1 -> 2 -> 6`:
+
+
+<center>
+
+| Step | `slow` Position | `fast` Position | `prev` Position | Action                         |
+|------|-----------------|-----------------|-----------------|-------------------------------|
+| Init | 1               | 1               | 1            | Initial positions             |
+| 1    | 3               | 4               | 1               | Move `slow` and `fast` forward |
+| 2    | 4               | 1               | 3               | Move `slow` and `fast` forward |
+| 3    | 7               | 6               | 4               | Move `slow` and `fast` forward |
+
+</center>
+
+## Time Complexity
+
+Given a linked list with $n$ nodes, 
+
+* We iterate through the list using the fast and slow pointers. The fast pointer moves two steps at a time, while the slow pointer moves one step at a time. The `while` loop continues until the fast pointer reaches the end of the list, which takes $\frac{n}{2}$ steps. All operations inside the loop take $O(1)$ time.
+* The `prev` pointer is used to keep track of the node before the middle node. This pointer points to the node right before the middle node when the fast pointer reaches the end of the list. Removing this node takes $O(1)$ time.
+
+The overall time complexity is $O(\frac{n}{2})$, which is essentially $O(n)$ as $n$ tends to infinity.
+
+## Space Complexity
+
+We only use three pointers:
+
+* `slow` pointer: Moves one step at a time.
+* `fast` pointer: Moves at twice the speed of the `slow` pointer.
+* `prev` pointer: Keeps track of the node before the `slow` pointer.
+
+The space complexity is const $O(1)$.
