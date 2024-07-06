@@ -365,3 +365,71 @@ We only use three pointers:
 * `prev` pointer: Keeps track of the node before the `slow` pointer.
 
 The space complexity is const $O(1)$.
+
+---
+
+# Remove Nth Node From End of List
+
+Given the `head` of a singly linked list, remove the `kth` node from the end of the list.
+
+## Explanation
+
+Given a linked list with the following structure `1 -> 2 -> 3 -> 4 -> 5` and `k = 2`:
+
+### Initializing the Pointers
+
+We first initialize the all three pointers to the sentinel head node, which contains `None` as the data value.
+
+### Moving Fast pointer `k` Steps Ahead
+
+The `fast` pointer moves `k` steps ahead of the `slow` pointer. In this case, the `fast` pointer moves `None->1->2` steps ahead of the `slow` pointer to the node with value `2`.
+
+### Moving Both Pointers
+
+<center>
+
+| Step | `fast` Position | `slow` Position | `prev` Position | Action                         |
+|------|-----------------|-----------------|-----------------|-------------------------------|
+| Init | 2               | None            | None            | Initial positions             |
+| 1    | 3               | 1               | None            | Move `fast` and `slow` forward |
+| 2    | 4               | 2               | 1               | Move `fast` and `slow` forward |
+| 3    | 5               | 3               | 2               | Move `fast` and `slow` forward |
+| 4    | None            | 4               | 3               | `fast` is `None`, stop loop    |
+
+</center>
+
+### Removing the Kth Node from the End
+- The `slow` pointer is now at the kth node from the end (`4`), and the `prev` pointer is at `3`.
+- Update `prev.next` to `slow.next`, effectively removing the kth node from the end.
+
+#### Before Removal:
+`1 -> 2 -> 3 -> 4 -> 5 -> None`
+
+#### After Removal:
+`1 -> 2 -> 3 -> 5 -> None`
+
+## Time Complexity
+
+Given a linked list with $n$ nodes,
+
+* We initialize the `slow`, `fast`, and `prev` pointers to the sentinel head node, which takes $O(1)$ time.
+
+* We move the `fast` pointer $k$ steps ahead of the `slow` pointer, which takes $O(k)$ time.
+
+* We then move both the `slow` and `fast` pointers until the `fast` pointer reaches the end of the list. This takes $O(n - k)$ time.
+
+* The `prev` pointer is used to keep track of the node before the kth node from the end. Removing this node takes $O(1)$ time.
+
+The overall time complexity is therefore:
+
+$$
+\begin{align*}
+O(1) + O(k) + O(n - k) &= O(1 + k + n - k) \\
+&= O(1 + n) \\
+&= O(n)
+\end{align*}
+$$
+
+## Space Complexity
+
+Again, the space complexity is $O(1)$ because we only use three pointers, `slow`, `fast`, and `prev`.
