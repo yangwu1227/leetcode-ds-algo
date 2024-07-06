@@ -6,7 +6,7 @@
 /**
  * @brief Given the `head` of a singly linked list, delete the middle node.
  *
- * @param head The sentinel head of the linked list
+ * @param head A shared pointer to the sentinel head of the linked list
  * @return ListNode::Ptr The sentinel head of the modified linked list with the middle node removed
  */
 ListNode::Ptr deleteMiddleNode(const ListNode::Ptr &head);
