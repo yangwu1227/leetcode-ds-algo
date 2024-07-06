@@ -258,6 +258,8 @@ Given the `head` of a sorted linked list, delete all duplicates such that each e
 
 ## Explanation
 
+### Single Pointer
+
 Consider a sorted linked list with the following structure: `1 -> 1 -> 2 -> 3 -> 3`.
 
 <center>
@@ -272,10 +274,53 @@ Consider a sorted linked list with the following structure: `1 -> 1 -> 2 -> 3 ->
 
 </center>
 
+### Fast & Slow Pointers
+
+Again, consider a sorted linked list with the following structure: `1 -> 1 -> 2 -> 3 -> 3`.
+
+<center>
+
+| Step | `slow.data` | `fast.data` | Action                                                      | List After Step    |
+|------|-------------|-------------|-------------------------------------------------------------|--------------------|
+| 1    | 1           | 1           | - Duplicate found                                           |
+|      |             |             | - Remove `fast` node                                        |
+|      |             |             | - Set `slow.next` to `fast.next`                            |
+|      |             |             | - Move `fast` to `2`                                        | `1 -> 2 -> 3 -> 3` |
+| 2    | 1           | 2           | - No duplicate found                                        |
+|      |             |             | - Move `slow` to `2`                                        |
+|      |             |             | - Move `fast` to `3`                                        | `1 -> 2 -> 3 -> 3` |
+| 3    | 2           | 3           | - No duplicate found                                        |
+|      |             |             | - Move `slow` to `3`                                        |
+|      |             |             | - Move `fast` to `3`                                        | `1 -> 2 -> 3 -> 3` |
+| 4    | 3           | 3           | - Duplicate found                                           |
+|      |             |             | - Remove `fast` node                                        |
+|      |             |             | - Set `slow.next` to `fast.next`                            |
+|      |             |             | - Move `fast` to `None`                                     | `1 -> 2 -> 3`      |
+
+</center>
+
+The fast and slow pointer approach uses two pointers:
+
+- The slow pointer keeps track of the last unique node.
+
+- The fast pointer scans ahead to find duplicates.
+
+- Traverse the list using a while loop until the fast pointer reaches the end. In each iteration:
+
+  - If the slow pointer and fast pointer point to nodes with the same data (a duplicate):
+    - Update the slow pointer's next node to skip the fast pointer (i.e., `slow.next = fast.next`).
+    - Move the fast pointer one step ahead to continue checking for duplicates.
+
+  - If the slow pointer and fast pointer point to nodes with different data (no duplicate):
+
+    - Move both the slow and fast pointers one step ahead.
+
 ## Time Complexity
 
 In the worst case, we need $n-1$ comparisons between `current.data` and `current.next.data` to check fo duplicates; therefore, the time complexity is $O(n - 1)$, which tends to $O(n)$ as $n$ tends to infinity.
 
 ## Space Complexity
 
-We only use one pointer `current` (i.e., the dummy reference to `head`), so the space complexity is $O(1)$.
+For the single pointer solution, we only use one pointer `current` (i.e., the dummy reference to `head`), so the space complexity is $O(1)$.
+
+Even for the fast and slow pointer solution, the space complexity is $O(1)$ because we only use two pointers, `slow` and `fast`, to traverse the list.

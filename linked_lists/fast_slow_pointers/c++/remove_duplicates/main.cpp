@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <cassert>
 
 int main()
 {
@@ -32,11 +33,17 @@ int main()
         }
 
         // Pass the sentinel head node
-        ListNode::Ptr dedupedHead = removeDuplicates(sll.head);
+        ListNode::Ptr dedupedHeadSingle = RemoveDuplicates::singlePointer(sll.head);
+        ListNode::Ptr dedupedHeadFastSlow = RemoveDuplicates::fastSlowPointers(sll.head);
+        ListNode::Ptr currentSingle, currentFastSlow;
+        while (currentSingle != nullptr && currentFastSlow->next != nullptr)
+        {
+            assert(currentSingle->data == currentFastSlow->data);
+        }
 
         sll.display();
         // Dereference the shared pointer
-        std::cout << "The new first node of the deduplicated sorted linked list above is " << *dedupedHead->next << '\n';
+        std::cout << "The new first node of the deduplicated sorted linked list above is " << *dedupedHeadFastSlow->next << '\n';
     }
     std::cout << std::endl;
 

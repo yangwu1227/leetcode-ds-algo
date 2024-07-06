@@ -9,6 +9,11 @@
  * @param head A shared pointer to the sentinel head of the singly linked list
  * @return ListNode::Ptr A shared pointer to the new sentinel head of the sorted, deduplciated linked list
  */
-ListNode::Ptr removeDuplicates(const ListNode::Ptr &head);
+class RemoveDuplicates
+{
+public:
+    static ListNode::Ptr singlePointer(const ListNode::Ptr &head);
+    static ListNode::Ptr fastSlowPointers(const ListNode::Ptr &head);
+};
 
 #endif
