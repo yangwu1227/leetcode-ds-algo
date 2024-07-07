@@ -438,3 +438,71 @@ $$
 ## Space Complexity
 
 Again, the space complexity is $O(1)$ because we only use three pointers, `slow`, `fast`, and `prev`.
+
+---
+
+# Remove Duplicates from Sorted List II
+
+Given the `head` of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+
+## Explanation
+
+Given a sorted linked list with the following structure `1 -> 2 -> 3 -> 3 -> 4 -> 4 -> 5`:
+
+<center>
+
+| Step | `slow` Position | `fast` Position | List State            | Action                             |
+|------|-----------------|-----------------|-----------------------|------------------------------------|
+| Init | Sentinel (0)    | 1               | [1, 2, 3, 3, 4, 4, 4, 5] | Initial positions                  |
+| 1    | 1               | 2               | [1, 2, 3, 3, 4, 4, 4, 5] | Move `slow` to `1`, `fast` to `2`  |
+| 2    | 2               | 3               | [1, 2, 3, 3, 4, 4, 4, 5] | Move `slow` to `2`, `fast` to `3`  |
+| 3    | 2               | 3 (second 3)      | [1, 2, 3, 3, 4, 4, 4, 5] | `fast` skips duplicates of `3`     |
+| 4    | 2               | 4               | [1, 2, 4, 4, 4, 5]       | Update `slow.next` to `4`         |
+| 5    | 2               | 4 (third 4)       | [1, 2, 4, 4, 4, 5]       | `fast` skips duplicates of `4`     |
+| 6    | 2               | 5               | [1, 2, 5]             | Update `slow.next` to `5`         |
+| 7    | 5               | None            | [1, 2, 5]             | `fast` is `None`, outer while loop stops      |
+
+</center>
+
+## Time Complexity
+
+Given a sorted linked list with $n$ nodes:
+
+* We check for two edge cases:
+    
+    - If the list is empty, i.e., `head.next` is `None`, we return the sentinel head node.
+    - If the list has only one node, i.e., `head.next.next` is `None`, we return the sentinel head node.
+
+* We initialize the `slow` and `fast` pointers to the sentinel head node and the first real node, respectively, costing $O(1)$.
+
+* While `fast` is not `None`:
+
+    - Use another `while` loop to scan the `fast` pointer forward, checking two conditions:
+
+        - `fast.next` is not `None`: This ensures that we do not try to access `None.next` inside the loop.
+        - `fast.data` is equal to `fast.next.data`: This is `True` when we find a duplicate node.
+
+      As long as the `fast` pointer is pointing to a duplicate node, we keep moving the `fast` pointer forward. When this `while` loop completes, the `fast` pointer is pointing to the last duplicate node with a given duplicated value. **Assuming duplicates are present and there are $m$ duplicates of a given value, this loop takes $O(m)$ time $\forall \;  m \leq n$**. 
+
+      In the case where all nodes have duplicate values, the `fast` pointer moves forward by $n$ nodes inside this loop. In the case where there are no duplicates, this loop does not execute at all.
+
+    - After the inner `while` loop completes, we check if `slow.next == fast`:
+
+        - If `slow.next == fast`, this means that the `fast` pointer did not move forward and is still just one step ahead of `slow`, i.e., there were no duplicates detected. In this case, we move the `slow` pointer forward by one step, which is $O(1)$.
+
+        - If `slow.next != fast`, this means that the `fast` pointer moved forward more than one step to skip duplicates. We update `slow.next` to `fast.next`, effectively removing all duplicates, including the last duplicate node pointed to by the `fast` pointer. This operation is $O(1)$.
+
+    - Finally, we move the `fast` pointer forward by one step, which is $O(1)$. This completes one iteration of the outer `while` loop.
+
+Even though we have nested `while` loops, each node is visited at most twice: once by the `slow` pointer and once by the `fast` pointer. The nodes with duplicate values are only visited by the `fast` pointer; this is because, in the presence of duplicates, the `slow` pointer skips ahead to the next unique node and does not visit the duplicate nodes at all.
+
+As a result, the overall time complexity, ignoring the constant operations outside of the loops, is proportional to the number of nodes in the linked list, i.e., $O(n)$.
+
+## Space Complexity
+
+We use two pointers:
+
+* `slow` pointer: Used to keep track of the last unique node.
+* `fast` pointer: Used to scan ahead to find duplicates.
+
+The space complexity is $O(1)$.
