@@ -349,12 +349,13 @@ Given a linked list with the following structure `1 -> 3 -> 4 -> 7 -> 1 -> 2 -> 
 
 ## Time Complexity
 
-Given a linked list with $n$ nodes, 
+Given a linked list with $n$ nodes:
 
-* We iterate through the list using the fast and slow pointers. The fast pointer moves two steps at a time, while the slow pointer moves one step at a time. The `while` loop continues until the fast pointer reaches the end of the list, which takes $\frac{n}{2}$ steps. All operations inside the loop take $O(1)$ time.
+* We iterate through the list using the `fast` and `slow` pointers. The `fast` pointer moves two steps at a time, while the `slow` pointer moves one step at a time. The `while` loop continues until the `fast` pointer reaches the end of the list, which takes $\frac{n}{2}$ steps. All operations inside the loop cost $O(1)$.
+
 * The `prev` pointer is used to keep track of the node before the middle node. This pointer points to the node right before the middle node when the fast pointer reaches the end of the list. Removing this node takes $O(1)$ time.
 
-The overall time complexity is $O(\frac{n}{2})$, which is essentially $O(n)$ as $n$ tends to infinity.
+The overall time complexity is $O(\frac{n}{2})$, which is $O(n)$ as $n$ tends to infinity.
 
 ## Space Complexity
 
@@ -368,7 +369,7 @@ The space complexity is const $O(1)$.
 
 ---
 
-# Remove Nth Node From End of List
+# Remove Kth Node From End of List
 
 Given the `head` of a singly linked list, remove the `kth` node from the end of the list.
 
@@ -378,11 +379,11 @@ Given a linked list with the following structure `1 -> 2 -> 3 -> 4 -> 5` and `k 
 
 ### Initializing the Pointers
 
-We first initialize the all three pointers to the sentinel head node, which contains `None` as the data value.
+We first initialize all three pointers to the sentinel head node, which contains `None` as the data value.
 
-### Moving Fast pointer `k` Steps Ahead
+### Moving Fast Pointer `k` Steps Ahead of Slow Pointer
 
-The `fast` pointer moves `k` steps ahead of the `slow` pointer. In this case, the `fast` pointer moves `None->1->2` steps ahead of the `slow` pointer to the node with value `2`.
+The `fast` pointer moves `k` steps ahead of the `slow` pointer. In this case, the `fast` pointer moves from `None->1->2` to the node with data value `2`.
 
 ### Moving Both Pointers
 
@@ -399,24 +400,28 @@ The `fast` pointer moves `k` steps ahead of the `slow` pointer. In this case, th
 </center>
 
 ### Removing the Kth Node from the End
+
 - The `slow` pointer is now at the kth node from the end (`4`), and the `prev` pointer is at `3`.
+
 - Update `prev.next` to `slow.next`, effectively removing the kth node from the end.
 
 #### Before Removal:
+
 `1 -> 2 -> 3 -> 4 -> 5 -> None`
 
 #### After Removal:
+
 `1 -> 2 -> 3 -> 5 -> None`
 
 ## Time Complexity
 
-Given a linked list with $n$ nodes,
+Given a linked list with $n$ nodes:
 
 * We initialize the `slow`, `fast`, and `prev` pointers to the sentinel head node, which takes $O(1)$ time.
 
-* We move the `fast` pointer $k$ steps ahead of the `slow` pointer, which takes $O(k)$ time.
+* We move the `fast` pointer $k$ steps ahead of the `slow` pointer, which takes $O(k)$ time since the `fast = fast.next` operation is $O(1)$.
 
-* We then move both the `slow` and `fast` pointers until the `fast` pointer reaches the end of the list. This takes $O(n - k)$ time.
+* We then move both the `slow` and `fast` pointers at the same speed until the `fast` pointer reaches the end of the list. This takes $O(n - k)$ time, because, again, iterating the pointers takes $O(1)$ time per iteration.
 
 * The `prev` pointer is used to keep track of the node before the kth node from the end. Removing this node takes $O(1)$ time.
 
@@ -424,8 +429,8 @@ The overall time complexity is therefore:
 
 $$
 \begin{align*}
-O(1) + O(k) + O(n - k) &= O(1 + k + n - k) \\
-&= O(1 + n) \\
+O(1) + O(k) + O(n - k) + O(1) &= O(1 + k + n - k + 1) \\
+&= O(1 + n + 1) \\
 &= O(n)
 \end{align*}
 $$
