@@ -506,3 +506,57 @@ We use two pointers:
 * `fast` pointer: Used to scan ahead to find duplicates.
 
 The space complexity is $O(1)$.
+
+---
+
+# Swapping Nodes in a Linked List
+
+Given the `head` node of a linked list and an integer `k`, swap the values of the `kth` node from the start and the `kth` node from the end.
+
+## Explanation
+
+Given a linked list with the following structure `7 -> 9 -> 6 -> 6 -> 7 -> 8 -> 3 -> 0 -> 9 -> 5` and `k = 5`:
+
+<center>
+
+| Step  | `fast` Position | `slow` Position | `kth_from_start` Position | List State                         | Action                                              |
+|-------|------------------|-----------------|---------------------------|------------------------------------|-----------------------------------------------------|
+| Init  | Sentinel (0)     | Sentinel (0)    |                           | [7, 9, 6, 6, [7, 8], 3, 0, 9, 5]   | Initial positions                                   |
+| 1     | 7                | Sentinel (0)    | 7                         |                                    | Move `fast` to 7 in the first loop, keep a reference to this node |
+| 2     | 8                | 7               | 7                         |                                    | Move `fast` to 8 and `slow` to 7                    |
+| 3     | 3                | 9               | 7                         |                                    | Move `fast` to 3 and `slow` to 9                    |
+| 4     | 0                | 6               | 7                         |                                    | Move `fast` to 0 and `slow` to 6                    |
+| 5     | 9                | 6               | 7                         |                                    | Move `fast` to 9 and `slow` to 6                    |
+| 6     | 5                | 7               | 7                         |                                    | Move `fast` to 5 and `slow` to 7                    |
+| 7     | None             | 8               | 7                         |                                    | Move `fast` to None and `slow` to 8 as loop finishes |
+| Swap  |                  | 8               | 7                         | [7, 9, 6, 6, [8, 7], 3, 0, 9, 5]   | Swap the values of `kth_from_start` and `slow`      |
+
+</center>
+
+## Time Complexity
+
+Given a linked list with $n$ nodes:
+
+* The only edge case to check is when the list has a single node, which costs $O(1)$.
+
+* We initialize the `slow` and `fast` pointers to the sentinel head node, $O(1)$.
+
+* We move the `fast` pointer $k$ steps ahead of the `slow` pointer, which is $O(k)$.
+
+* We then move both the `slow` and `fast` pointers at the same speed until the `fast` pointer reaches the end of the list. This costs $O(n - k)$.
+
+* We swap the values of the `kth` node from the start and the `kth` node from the end, again, $O(1)$.
+
+The overall time complexity is therefore:
+
+$$
+\begin{align*}
+O(1) + O(k) + O(n - k) + O(1) &= O(1 + k + n - k + 1) \\
+&= O(1 + n + 1) \\
+&= O(n)
+\end{align*}
+$$
+
+## Space Complexity
+
+We only use two pointers, `slow` and `fast`, to traverse the list. The space complexity is $O(1)$.
