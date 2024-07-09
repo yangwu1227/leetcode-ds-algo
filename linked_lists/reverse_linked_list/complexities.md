@@ -79,3 +79,60 @@ The algorithm traverses the linked list once, reversing the `next` pointer of ea
 ## Space Complexity
 
 The algorithm uses a constant amount of extra space. The space complexity is $O(1)$.
+
+---
+
+# Swap Nodes in Pairs
+
+Given a linked list, swap every two adjacent nodes. Only the nodes can be changed and not the values of the nodes.
+
+## Explanation
+
+Given a singly linked list with the following structure `12 -> 27 -> 7 -> 17 -> 77`:
+
+<center>
+
+| Step | List State | `current` | `prev` | Operations |
+|------|-------------|-----------|--------|------------|
+| Initial | `head -> 12 -> 27 -> 7 -> 17 -> 77 -> None` | `12` | `head` | Initialize pointers |
+| 1 | `head -> 27 -> 12 -> 7 -> 17 -> 77 -> None` | `7` | `12` | Swap `12` and `27` <br> Move `prev` to `12` and `current` to `7` |
+| 2 | `head -> 27 -> 12 -> 17 -> 7 -> 77 -> None` | `77` | `7` | Swap `7` and `17` <br> Move `prev` to `7` and `current` to `77` |
+| Final | `head -> 27 -> 12 -> 17 -> 7 -> 77 -> None` | `None` | `7` | No more pairs to swap |
+
+</center>
+
+## Time Complexity
+
+Given linked list with $n$ nodes:
+
+* We check for two edge cases:
+
+    - If the linked list is empty, which is $O(1)$.
+
+    - If the linked list has only one node, which is $O(1)$.
+
+* As long as there are at least two nodes to swap, we traverse the linked list and carry out the following operations on each pair of `first` and `second` nodes:
+
+    - At the start of each iteration, we have: `prev -> first -> second -> next_first -> next_second`.
+
+        **Swapping operations**:
+
+        - Set `first.next` to `second.next` so `prev -> (first & second) -> next_first -> next_second`.
+
+        - Set `second.next` to `first` so `(prev & second) -> first -> next_first -> next_second`.
+
+        - Set `prev.next` to `second` so `prev -> second -> first -> next_first -> next_second`.
+
+        **Moving pointers**:
+
+        - Move `prev` to `first` so `second -> (prev = first) -> next_first -> next_second`.
+
+        - Move `current` to `first.next` so `second -> (prev = first) -> (current = next_first) -> next_second`.
+
+        The above operations cost at each iteration $O(5) = O(1)$.
+
+Because we traverse the linked list once and perform $O(1)$ operations at each iteration, the time complexity is $O(n)$.
+
+## Space Complexity
+
+Becuase we only use pointers, the space complexity is $O(1)$.
