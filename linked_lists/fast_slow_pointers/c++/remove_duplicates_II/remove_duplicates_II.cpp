@@ -5,7 +5,11 @@
 ListNode::Ptr removeDuplicates(const ListNode::Ptr &head)
 {
     // Empty or single node
-    if (head->next == nullptr || head->next->next == nullptr)
+    if (head->next == nullptr)
+    {
+        return head;
+    }
+    if (head->next->next == nullptr)
     {
         return head;
     }

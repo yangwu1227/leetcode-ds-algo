@@ -16,7 +16,9 @@ def remove_duplicates(head: ListNode) -> ListNode:
         The sentinel head of the sorted list with unique elements only
     """
     # Empty or single node
-    if head.next is None or head.next.next is None:
+    if head.next is None:
+        return head
+    if head.next.next is None:
         return head
 
     # Fast is initialized to point to the second real node
