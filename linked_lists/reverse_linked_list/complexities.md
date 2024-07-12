@@ -253,3 +253,61 @@ All operations inside the loops can be considered $O(1)$. Therefore, the overall
 ## Space Complexity 
 
 We only use pointers, so the space complexity is $O(1)$.
+
+---
+
+# Reverse Linked List II
+
+Given the `head` of a singly linked list and two integers `left` and `right` where `left <= right`, reverse the nodes of the list from position `left` to position `right`.
+
+## Explanation
+
+Given a singly linked list with the following structure `1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7`, `left = 3`, and `right = 5`:
+
+The first loop (`left - 1 = 3 - 1 = 2` iterations) is used to move the `current` pointer to the node right before position `left`:
+
+<center>
+
+| Step | List State | `current` | Operations |
+|------|-------------|-----------|------------|
+| Initial | `head -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> None` | `head` | Initialize pointer |
+| 1 | `head -> [1] -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> None` | `1` | Move `current` to `1` |
+| 2 | `head -> 1 -> [2] -> 3 -> 4 -> 5 -> 6 -> 7 -> None` | `2` | Move `current` to `2` |
+
+</center>
+
+Initialize the following pointers:
+
+*  `node_before_left = current = 2`
+
+* `left_node = current = 3`
+
+* `prev = None = nullptr`
+
+The second loop (`right - left + 1 = 5 - 3 + 1 = 3` iterations) reverses the nodes from position `left` to position `right`:
+
+<center>
+
+| Step | `current` | `prev` | Operations |
+|------|-----------|--------|------------|
+| 1 | `3` | `None` | * `next_node = 4` <br> * `3.next = None` <br> * `prev = 3` <br> * `current = next_node = 4` |
+| 2 | `4` | `3` | * `next_node = 5` <br> * `4.next = 3` <br> * `prev = 4` <br> * `current = next_node = 5` |
+| 3 | `5` | `4` | * `next_node = 6` <br> * `5.next = 4` <br> * `prev = 5` <br> * `current = next_node = 6` |
+
+</center>
+
+After reversing the nodes from position `left` to position `right`, we connect the reversed nodes to the original linked list:
+
+* `node_before_left.next = 2.next -> prev = 5 -> 4 -> 3 -> None`
+
+* `left_node.next = 3.next -> current = 6 -> 7 -> None`
+
+The linked list becomes `1 -> 2 -> 5 -> 4 -> 3 -> 6 -> 7`.
+
+## Time Complexity
+
+In the worst case, left and right are at the ends of the linked list `left = 1` and `right = n`, the `current` pointer moves from the start of the linked list to the end. The time complexity is $O(n)$.
+
+## Space Complexity
+
+The space complexity is $O(1)$ because we only use pointers.
