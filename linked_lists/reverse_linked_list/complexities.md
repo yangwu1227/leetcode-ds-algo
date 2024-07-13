@@ -404,3 +404,137 @@ Because of these *optimizations*, the runtime performance of the c++ implementat
 ## Space Complexity
 
 For both the Python and C++ implementations, the space complexity is $O(1)$ because we only use pointers.
+
+---
+
+# Reverse Nodes in Even Length Groups
+
+The nodes in the linked list are sequentially assigned to non-empty groups whose lengths form the sequence of the natural numbers $(1, 2, 3, 4, ...)$. The length of a group is the number of nodes assigned to it.
+
+* The 1st node is assigned to the first group
+* The 2nd and the 3rd nodes are assigned to the second group
+* The 4th, 5th, and 6th nodes are assigned to the third group, and so on
+
+Note that the length of the last group may be less than or equal to one plus the length of the second to last group. So simply relying on the expected length of each group may not be enough to determine when to reverse the nodes in a group.
+
+## Explanation
+
+### Example 1
+
+```
+Input: head = [5, 2, 6, 3, 9, 1, 7, 3, 8, 4]
+Output: [5, 6, 2, 3, 9, 1, 4, 8, 3, 7]
+```
+
+<center>
+
+| Group | Nodes         | Length | Action    | Resulting Nodes    |
+|-------|---------------|--------|-----------|--------------------|
+| 1     | [5]           | 1      | No change | [5]                |
+| 2     | [2, 6]        | 2      | Reverse   | [6, 2]             |
+| 3     | [3, 9, 1]     | 3      | No change | [3, 9, 1]          |
+| 4     | [7, 3, 8, 4]  | 4      | Reverse   | [4, 8, 3, 7]       |
+
+</center>
+
+### Example 2
+
+```
+Input: head = [1, 1, 0, 6]
+Output: [1, 0, 1, 6]
+```
+
+<center>
+
+| Group | Nodes     | Length | Action    | Resulting Nodes |
+|-------|-----------|--------|-----------|-----------------|
+| 1     | [1]       | 1      | No change | [1]             |
+| 2     | [1, 0]    | 2      | Reverse   | [0, 1]          |
+| 3     | [6]       | 1      | No change | [6]             |
+
+</center>
+
+### Example 3
+
+```
+Input: head = [1, 1, 0, 6, 5]
+Output: [1, 0, 1, 5, 6]
+```
+
+<center>
+
+| Group | Nodes     | Length | Action    | Resulting Nodes |
+|-------|-----------|--------|-----------|-----------------|
+| 1     | [1]       | 1      | No change | [1]             |
+| 2     | [1, 0]    | 2      | Reverse   | [0, 1]          |
+| 3     | [6, 5]    | 2      | Reverse   | [5, 6]          |
+
+</center>
+
+## Time Complexity
+
+The `current` pointer traverses the entire linked list until it points to `None` or `nullptr`. Every node in the linked list is visited at least twice:
+
+* Once to determine the length of the group it belongs to.
+
+```python
+while current and actual_group_length < expected_group_length:
+    current = current.next
+    actual_group_length += 1
+```
+
+```cpp
+while (actualGroupLength < expectedGroupLength && current != nullptr)
+{
+    current = current->next;
+    actualGroupLength++;
+}
+```
+
+* Once to move the `last_node_prev_group` pointer through the current group to prepare for the next group.
+
+```python
+for _ in range(actual_group_length):
+    last_node_prev_group = last_node_prev_group.next
+```
+
+```cpp
+for (int i = 0; i < actualGroupLength; i++)
+{
+    lastNodePrevGroup = lastNodePrevGroup->next;
+}
+```
+
+* If a group needs to be reversed, i.e., the length of the group is even, the nodes in it are visited a third time to reverse the group.
+
+```python
+prev = None
+current = start_node
+while group_length > 0:
+    next_node = current.next
+    current.next = prev
+    prev = current
+    current = next_node
+    group_length -= 1
+```
+
+```cpp
+ListNode::Ptr prev = nullptr;
+ListNode::Ptr current = startNode;
+while (groupLength > 0)
+{
+    ListNode::Ptr nextNode = current->next;
+    current->next = prev;
+    prev = current;
+    current = nextNode;
+    groupLength--;
+}
+```
+
+The overall work done on each node (i.e., moving and setting `next` pointers) is proportinal to $O(3n) = O(n)$, where $n$ is the number of nodes in the linked list.
+
+For inputs that have single or two nodes, the time complexity is $O(1)$ since we simply return the sentinel `head` node.
+
+## Space Complexity
+
+The space complexity is $O(1)$ because we only use pointers.
