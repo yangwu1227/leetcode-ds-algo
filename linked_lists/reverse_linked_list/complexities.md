@@ -311,3 +311,96 @@ In the worst case, left and right are at the ends of the linked list `left = 1` 
 ## Space Complexity
 
 The space complexity is $O(1)$ because we only use pointers.
+
+---
+
+# Palindrome Linked List
+
+Given the `head` of a singly linked list, return `true` if it is a palindrome.
+
+## Time Complexity
+
+### Python
+
+The python implementation uses three `while` loops and a `for` loop:
+
+* The first `while` loop iterates the `fast` and `slow` pointers at different speeds to find the middle of the linked list.
+
+    - With an odd number of nodes, the `fast` pointer requires $\text{Floor}(\frac{n}{2})$ steps for the `while` loop to terminate; the `fast` pointer points at `None` by the end of the loop.
+
+    - With an even number of nodes, the `fast` pointer requires $\frac{n}{2}$ steps to reach the end of the linked list; the `fast` pointer points at the last node by the end of the loop.
+
+* The second `while` loop reverses:
+
+    - The second half of the linked list including the middle node if the number of nodes is odd, requiring $\text{Floor}(\frac{n}{2})$ steps.
+
+    - The second half of the linked list in $\frac{n}{2}$ steps if the number of nodes is even.
+
+* The third `for` loop iterates a `fast` pointer ahead of a `slow` pointer in preparation for the final comparisons of nodes.
+
+    - For an odd number of nodes, the `fast` pointer moves Floor($\frac{n}{2}$) steps ahead of the `slow` pointer.
+
+    - For an even number of nodes, the `fast` pointer moves $\frac{n}{2}$ steps to reach the end of the linked list.
+
+* The final `while` loop compares the nodes on the left and right sides of the linked list.
+
+    - For an odd number of nodes, there will be Floor($\frac{n}{2}$) comparisons.
+
+    - For an even number of nodes, there will be $\frac{n}{2}$ comparisons.
+
+#### Odd
+
+$$
+\begin{align*}
+O(4 \times \text{Floor}(\frac{n}{2})) &= \text{Asymptotically} \; O(4 \times \frac{n}{2}) \\
+&= O(2n) \\
+&= O(n)
+\end{align*}
+$$
+
+#### Even
+
+$$
+\begin{align*}
+O(4 \times \frac{n}{2})&= O(2n) \\
+&= O(n)
+\end{align*}
+$$
+
+### C++
+
+The c++ implementation differs from the python implementation in the following ways:
+
+* The first `while` loop checks for `fast->next != nullptr` and `fast->next->next != nullptr` instead of `fast != nullptr` and `fast->next != nullptr`. The effect is that, by the end of this loop, the `slow` pointer will point to the node right before the first node of the section to be reversed, regardless of whether the number of nodes is odd or even. 
+
+    - For odd number of nodes, the `fast` pointer requires $\text{Floor}(\frac{n}{2})$ steps to reach the end of the linked list.
+
+    - For even number of nodes, the `fast` pointer requires $\frac{n}{2}$ steps to reach the end of the linked list.
+
+* The second `while` loop reverses the second half of the linked list.
+
+    - It takes $\text{Floor}(\frac{n}{2})$ steps to reverse the second half of the linked list for an odd number of nodes.
+
+    - It takes $\frac{n}{2}$ steps to reverse the second half of the linked list.
+
+    After reversing the second half of the linked list, we do not connect the reversed nodes to the original linked list as we do in the python implementation.
+
+* The third `while` loop compares each pair of nodes in the first and second half of the linked list.
+
+    - For an odd number of nodes, there will be Floor($\frac{n}{2}$) comparisons.
+
+    - For an even number of nodes, there will be $\frac{n}{2}$ comparisons.
+
+Again, the time complexity is $O(n)$. However, the c++ implementation differs from the python implementation:
+
+* We do not connect the reversed nodes to the original linked list.
+
+* No need to handle things differently for odd and even numbers of nodes.
+
+* No need for a `for` loop to move the `fast` pointer ahead of the `slow` pointer before comparing nodes.
+
+The runtime performance of the c++ implementation is likely to be better than the python implementation. It is trivial to implement these optimizations in the python implementation as well.
+
+## Space Complexity
+
+For both the python and C++ implementations, the space complexity is $O(1)$ because we only use pointers.
