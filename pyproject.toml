@@ -1,0 +1,19 @@
+[tool.poetry]
+package-mode = false
+name = "leetcode-ds-algo"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+numpy = ">=2.0.0"
+matplotlib = ">=3.9.1"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = ">=6.29.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
