@@ -72,6 +72,66 @@ class SinglyLinkedList(object):
         if self.head.next is None:
             self.tail = self.head
 
+    def add_at_index(self, index: int, node_to_add: ListNode) -> None:
+        """
+        Adds a node at a specific index in the singly linked list.
+
+        Parameters
+        ----------
+        index : int
+            The index at which the node should be added.
+        node_to_add : ListNode
+            The node to be added to the list.
+        """
+        if index < 0:
+            raise IndexError("Index must be non-negative")
+
+        current = self.head
+        current_index = 0
+
+        while current is not None and current_index < index:
+            current = current.next
+            current_index += 1
+
+        if current is None:
+            raise IndexError("Index out of bounds")
+
+        node_to_add.next = current.next
+        current.next = node_to_add
+
+        # If added at the end, update the tail
+        if node_to_add.next is None:
+            self.tail = node_to_add
+
+    def remove_at_index(self, index: int) -> None:
+        """
+        Removes a node at a specific index in the singly linked list.
+
+        Parameters
+        ----------
+        index : int
+            The index of the node to be removed.
+        """
+        if index < 0:
+            raise IndexError("Index must be non-negative")
+
+        current = self.head
+        current_index = 0
+
+        while current.next is not None and current_index < index:
+            current = current.next
+            current_index += 1
+
+        if current.next is None:
+            raise IndexError("Index out of bounds")
+
+        node_to_remove = current.next
+        current.next = node_to_remove.next
+
+        # If removed the tail, update the tail
+        if node_to_remove == self.tail:
+            self.tail = current
+
     def display(self) -> None:
         """
         Displays the values in the linked list from start to end.
@@ -104,6 +164,14 @@ def main() -> int:
 
     print("Adding a new node to the start")
     sll.add_to_start(node_to_add=ListNode(9))
+    sll.display()
+
+    print("Adding a new node at index 2")
+    sll.add_at_index(2, ListNode(99))
+    sll.display()
+
+    print("Removing a node at index 2")
+    sll.remove_at_index(2)
     sll.display()
 
     return 0
