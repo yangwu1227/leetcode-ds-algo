@@ -1,7 +1,7 @@
 from node import ListNode
 
 class DoublyLinkedList(object):
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes an empty doubly linked list with sentinel head and tail nodes.
         """

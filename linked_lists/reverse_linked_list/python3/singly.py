@@ -1,7 +1,7 @@
 from node import ListNode
     
 class SinglyLinkedList(object):
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes an empty singly linked list with a sentinel head node.
         """
