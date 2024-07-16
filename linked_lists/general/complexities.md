@@ -79,3 +79,74 @@ The time complexity of this algorithm is $O(n)$ as we need to traverse the entir
 ## Space Complexity
 
 The space complexity is $O(1)$ as we are using a constant amount of extra space, i.e., a single variable `decimal`, regardless of the input size.
+
+---
+
+# Odd Even Linked List
+
+Given the `head` of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices. The first node is considered odd and the second node is even, and so on.
+
+## Explanation
+
+The following pointers are initialized:
+
+* `current` points to the first node of the linked list.
+* `prev` points to the sentinel head node.
+* `first_even_node` points to the first even node.
+
+### Odd Number of Nodes
+
+Consider the linked list `head -> 1 -> 2 -> 3 -> 4 -> 5 -> None`. The odd-even linked list should look like `head -> 1 -> 3 -> 5 -> 2 -> 4 -> None`.
+
+<center>
+
+| Iteration | `prev` | `current` | `current.next` | `length` | Action |
+| --- | --- | --- | --- | --- | --- |
+| 1 | `head` | `1` | `2` | `1` | * `current.next = current.next.next` so `1 -> 3` <br> * `prev = 1` <br> * `current = next_node = 2` |
+| 2 | `1` | `2` | `3` | `2` | * `current.next = current.next.next` so `2 -> 4` <br> * `prev = 2` <br> * `current = next_node = 3` |
+| 3 | `2` | `3` | `4` | `3` | * `current.next = current.next.next` so `3 -> 5` <br> * `prev = 3` <br> * `current = next_node = 4` |
+| 4 | `3` | `4` | `5` | `4` | * `current.next = current.next.next` so `4 -> None` <br> * `prev = 4` <br> * `current = next_node = 5` |
+| 5 | `4` | `5` | `None` | `5` | Not executed since `current.next` is `None` |
+
+</center>
+
+The `length` is currently $n - 1$, so we need to increment it by $1$ to get the total number of nodes in the linked list.
+
+At this point, we have two disconnected linked lists:
+
+1. `head -> 1 -> 3 -> (current = 5) -> None`
+2. `(first_even_node = 2) -> 4 -> None`
+
+Connect the last node of the odd linked list to the first node of the even linked list, `current.next = first_even_node`, to get the final linked list: `head -> 1 -> 3 -> 5 -> 2 -> 4 -> None`.
+
+### Even Number of Nodes
+
+Consider the linked list `head -> 1 -> 2 -> 3 -> 4 -> None`. The odd-even linked list should look like `head -> 1 -> 3 -> 2 -> 4 -> None`.
+
+<center>
+
+| Iteration | `prev` | `current` | `current.next` | `length` | Action |
+| --- | --- | --- | --- | --- | --- |
+| 1 | `head` | `1` | `2` | `1` | * `current.next = current.next.next` so `1 -> 3` <br> * `prev = 1` <br> * `current = next_node = 2` |
+| 2 | `1` | `2` | `3` | `2` | * `current.next = current.next.next` so `2 -> None` <br> * `prev = 2` <br> * `current = next_node = 3` |
+| 3 | `2` | `3` | `4` | `3` | * `current.next = current.next.next` so `3 -> None` <br> * `prev = 3` <br> * `current = next_node = 4` |
+| 4 | `3` | `4` | `None` | `4` | Not executed since `current.next` is `None` |
+
+</center>
+
+After the loop, increment the `length` by $1$.
+
+Again, we have two disconnected linked lists, and the only difference is that the `prev` instead of the `current` pointer points to the last node of the odd linked list:
+
+1. `head -> 1 -> (prev = 3) -> None`
+2. `(first_even_node = 2) -> 4 -> None`
+
+We connect the two linked lists via `prev.next = first_even_node` to get the final linked list: `head -> 1 -> 3 -> 2 -> 4 -> None`.
+
+## Time Complexity
+
+Each node is visited once, so the time complexity of this algorithm is $O(n)$, where $n$ is the number of nodes in the linked list. All operations inside the `while` loop can be considered $O(1)$.
+
+## Space Complexity
+
+This algorithm modifies the input linked list in-place, so the space complexity is $O(1)$. The only space used are for the pointers `prev`, `current`, and `first_even_node` as well as the `length` variable.
