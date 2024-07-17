@@ -352,6 +352,58 @@ def remove_from_start(self) -> None:
 * Update the `next` pointer of the `head` sentinel to point to the node after the one being removed, i.e., `node_to_remove.next`, effectively removing the first node from the list. 
 * If the list becomes empty after the removal (i.e., `head.next` is `None`), update the `tail` pointer to point to the `head` sentinel, making the list empty.
 
+### `add_at_index`
+
+```python
+def add_at_index(self, index: int, node_to_add: ListNode) -> None:
+    if index < 0:
+        raise IndexError("Index must be non-negative")
+
+    current = self.head
+    current_index = 0
+
+    # Traverse the list to the node before the desired index
+    while current is not None and current_index < index:
+        current = current.next
+        current_index += 1
+
+    if current is None:
+        raise IndexError("Index out of bounds")
+
+    # Add the new node after the current node
+    node_to_add.next = current.next
+    current.next = node_to_add
+
+    if node_to_add.next is None:
+        self.tail = node_to_add
+```
+
+### `remove_at_index`
+
+```python
+def remove_at_index(self, index: int) -> None:
+    if index < 0:
+        raise IndexError("Index must be non-negative")
+
+    current = self.head
+    current_index = 0
+
+    # Traverse the list to the node before the desired index
+    while current.next is not None and current_index < index:
+        current = current.next
+        current_index += 1
+
+    if current.next is None:
+        raise IndexError("Index out of bounds")
+
+    # Remove the node after the current node
+    node_to_remove = current.next
+    current.next = node_to_remove.next
+
+    if node_to_remove == self.tail:
+        self.tail = current
+```
+
 ---
 
 ## C++ 
@@ -470,6 +522,78 @@ void SinglyLinkedList::remove_from_start()
         - `head->next = node_to_remove->next`: Update the `next` pointer of the `head` sentinel to point to the node after the one being removed, effectively linking the `head` to the new first node.
     - **Update Tail Pointer**:
         - `if (head->next == nullptr)`: If the list becomes empty after the removal, update the `tail` pointer to point to the `head` sentinel.
+
+### `void SinglyLinkedList::add_at_index(int index, ListNode::Ptr node_to_add)`
+
+```cpp
+void SinglyLinkedList::add_at_index(int index, ListNode::Ptr node_to_add)
+{
+    if (index < 0)
+    {
+        throw std::out_of_range("Index must be non-negative");
+    }
+
+    ListNode::Ptr current = head;
+    int current_index = 0;
+
+    // Traverse the list to the node before the desired index
+    while (current != nullptr && current_index < index)
+    {
+        current = current->next;
+        ++current_index;
+    }
+
+    if (current == nullptr)
+    {
+        throw std::out_of_range("Index out of bounds");
+    }
+
+    // Add the new node after the current node
+    node_to_add->next = current->next;
+    current->next = node_to_add;
+
+    if (node_to_add->next == nullptr)
+    {
+        tail = node_to_add;
+    }
+}
+```
+
+### `void SinglyLinkedList::remove_at_index(int index)`
+
+```cpp
+void SinglyLinkedList::remove_at_index(int index)
+{
+    if (index < 0)
+    {
+        throw std::out_of_range("Index must be non-negative");
+    }
+
+    ListNode::Ptr current = head;
+    int current_index = 0;
+
+    // Traverse the list to the node before the desired index
+    while (current->next != nullptr && current_index < index)
+    {
+        current = current->next;
+        ++current_index;
+    }
+
+    if (current->next == nullptr)
+    {
+        throw std::out_of_range("Index out of bounds");
+    }
+
+    // Remove the node after the current node
+    ListNode::Ptr node_to_remove = current->next;
+    current->next = node_to_remove->next;
+
+    if (node_to_remove == tail)
+    {
+        tail = current;
+    }
+}
+```
 
 ### `void SinglyLinkedList::display() const`
 
