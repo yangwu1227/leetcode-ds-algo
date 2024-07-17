@@ -10,13 +10,15 @@ The `ListNode` class is used to represent a single node in a linked list. Each n
 
 The `__repr__` method is overridden to provide a string representation of the node when using `print()`.
 
-In the Python implementation, the `ListNode` class can be shared between singly and doubly linked lists. The `next` and `prev` pointers are set to `None` by default.
+In the Python implementation, the `ListNode` class can be used by both the singly and doubly linked list classes. The `next` and `prev` pointers are set to `None` by default.
 
 ## C++
 
+The `ListNode` class in C++ is similar to the Python implementation. In addition, C++ supports pointers directly. In these implementations, we opt to use `std::shared_ptr` to manage the memory lifecycle of `ListNode` objects. Alternatively, the `std::unique_ptr` could be used. Both smart pointers should be used in favor of raw pointers (i.e., there is notion of ownership in moving pointers around in many linked list problems).
+
 ### `node.hpp` & `node.cpp`
 
-* **Smart Pointers** (`std::shared_ptr`): Used to manage the lifetime of dynamically allocated objects, i.e., `ListNode` instances. The `std::shared_ptr` automatically deletes the managed object when the last `shared_ptr` pointing to it is destroyed. This ensures that each node in the linked list, which may be owned by multiple parts of a program, is deleted only when it is no longer needed.
+* **Smart Pointers** (`std::shared_ptr`): Used to manage the lifetime of dynamically allocated objects, i.e., `ListNode` objects. The `std::shared_ptr` automatically deletes the managed object when the last `shared_ptr` pointing to it is destroyed. This ensures that each node in the linked list, which may be owned by multiple parts of a program, is deleted only when it is no longer needed.
 
 * **Type Aliases** (`using`): Creates a type alias for `std::shared_ptr<ListNode>`. This improves code readability and reduces the need to write `std::shared_ptr<ListNode>` repeatedly.
 
@@ -142,6 +144,13 @@ def add_at_index(self, index: int, node_to_add: ListNode) -> None:
     current.next = node_to_add
 ```
 
+* Traverse the list to the node before the desired index.
+* If the index is out of bounds or the current node is the tail node, raise an `IndexError`. To add a node at the end of the list, use the `add_to_end` method.
+* The `next` pointer of the new node should point to the node after the current node.
+* The `prev` pointer of the new node should point to the current node.
+* Update the `prev` pointer of the node after the current node should now point back to the new node.
+* Update the `next` pointer of the current node to point to the new node as the `current` node is now followed by the new node.
+
 ### `remove_at_index`
 
 ```python
@@ -163,6 +172,12 @@ def remove_at_index(self, index: int) -> None:
     current.next = node_to_remove.next
     node_to_remove.next.prev = current
 ```
+
+* Traverse the list to the node before the desired index.
+* If the index is out of bounds or the next node after the `current` node is the tail node, raise an `IndexError`. To remove the last node in the list, use the `remove_from_end` method.
+* The node to be removed is the one after the current node as desired.
+* Perform a skip to connect the `current` node directly to the node after the one being removed, effectively removing the node from the list.
+* Update the `prev` pointer of the node after the one being removed to point back to the `current` node.
 
 ---
 
@@ -320,6 +335,8 @@ void DoublyLinkedList::add_at_index(int index, ListNode::Ptr node_to_add)
 }
 ```
 
+Same as the Python implementation.
+
 ### `void DoublyLinkedList::remove_at_index(int index)`
 
 ```cpp
@@ -349,6 +366,8 @@ void DoublyLinkedList::remove_at_index(int index)
     node_to_remove->next->prev = current;
 }
 ```
+
+Same as the Python implementation.
 
 ### `void DoublyLinkedList::display() const`
 
@@ -484,6 +503,12 @@ def add_at_index(self, index: int, node_to_add: ListNode) -> None:
         self.tail = node_to_add
 ```
 
+* Traverse the list to the node before the desired index.
+* If `current` pointer points to `None`, raise an `IndexError`.
+* The `next` pointer of the new node should point to the node after the current node.
+* Update the `next` pointer of the current node to point to the new node, effectively adding the new node to the list.
+* If the new node is added at the end of the list, update the `tail` pointer to point to the new node.
+
 ### `remove_at_index`
 
 ```python
@@ -509,6 +534,12 @@ def remove_at_index(self, index: int) -> None:
     if node_to_remove == self.tail:
         self.tail = current
 ```
+
+* Traverse the list to the node before the desired index.
+* If the next node after the `current` node is `None`, raise an `IndexError`.
+* The node to be removed is the one after the `current` node.
+* Perform a skip to connect the `current` node directly to the node after the one being removed, effectively removing the node from the list.
+* If the node being removed is the last node in the list, update the `tail` pointer to point to the `current` node.
 
 ---
 
@@ -665,6 +696,8 @@ void SinglyLinkedList::add_at_index(int index, ListNode::Ptr node_to_add)
 }
 ```
 
+Same as the Python implementation.
+
 ### `void SinglyLinkedList::remove_at_index(int index)`
 
 ```cpp
@@ -700,6 +733,8 @@ void SinglyLinkedList::remove_at_index(int index)
     }
 }
 ```
+
+Same as the Python implementation.
 
 ### `void SinglyLinkedList::display() const`
 
