@@ -56,6 +56,66 @@ void SinglyLinkedList::remove_from_start()
     }
 }
 
+void SinglyLinkedList::add_at_index(int index, ListNode::Ptr node_to_add)
+{
+    if (index < 0)
+    {
+        throw std::out_of_range("Index must be non-negative");
+    }
+
+    ListNode::Ptr current = head;
+    int current_index = 0;
+
+    while (current != nullptr && current_index < index)
+    {
+        current = current->next;
+        ++current_index;
+    }
+
+    if (current == nullptr)
+    {
+        throw std::out_of_range("Index out of bounds");
+    }
+
+    node_to_add->next = current->next;
+    current->next = node_to_add;
+
+    if (node_to_add->next == nullptr)
+    {
+        tail = node_to_add;
+    }
+}
+
+void SinglyLinkedList::remove_at_index(int index)
+{
+    if (index < 0)
+    {
+        throw std::out_of_range("Index must be non-negative");
+    }
+
+    ListNode::Ptr current = head;
+    int current_index = 0;
+
+    while (current->next != nullptr && current_index < index)
+    {
+        current = current->next;
+        ++current_index;
+    }
+
+    if (current->next == nullptr)
+    {
+        throw std::out_of_range("Index out of bounds");
+    }
+
+    ListNode::Ptr node_to_remove = current->next;
+    current->next = node_to_remove->next;
+
+    if (node_to_remove == tail)
+    {
+        tail = current;
+    }
+}
+
 void SinglyLinkedList::display() const
 {
     ListNode::Ptr current = head->next;

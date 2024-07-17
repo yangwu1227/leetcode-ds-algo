@@ -32,5 +32,13 @@ int main()
     sll.add_to_start(std::make_shared<ListNode>(8));
     sll.display();
 
+    std::cout << "Adding a node at index 2" << '\n';
+    sll.add_at_index(3, std::make_shared<ListNode>(99));
+    sll.display();
+
+    std::cout << "Removing a node at index 2" << '\n';
+    sll.remove_at_index(2);
+    sll.display();
+
     return 0;
 }
