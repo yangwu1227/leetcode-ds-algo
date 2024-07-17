@@ -119,6 +119,51 @@ def remove_from_start(self) -> None:
 * The `prev` pointer of the node after the one being removed should point to the head sentinel.
 * The `next` pointer of the head sentinel should be updated to point to the node after the one being removed.
 
+### `add_at_index`
+
+```python
+def add_at_index(self, index: int, node_to_add: ListNode) -> None:
+    if index < 0:
+        raise IndexError("Index must be non-negative")
+
+    current = self.head
+    current_index = 0
+
+    while current is not None and current_index < index:
+        current = current.next
+        current_index += 1
+
+    if current is None or current == self.tail:
+        raise IndexError("Index out of bounds")
+
+    node_to_add.next = current.next
+    node_to_add.prev = current
+    current.next.prev = node_to_add
+    current.next = node_to_add
+```
+
+### `remove_at_index`
+
+```python
+def remove_at_index(self, index: int) -> None:
+    if index < 0:
+        raise IndexError("Index must be non-negative")
+
+    current = self.head
+    current_index = 0
+
+    while current.next is not None and current_index < index:
+        current = current.next
+        current_index += 1
+
+    if current.next is None or current.next == self.tail:
+        raise IndexError("Index out of bounds")
+
+    node_to_remove = current.next
+    current.next = node_to_remove.next
+    node_to_remove.next.prev = current
+```
+
 ---
 
 ## C++
@@ -243,6 +288,67 @@ void DoublyLinkedList::remove_from_start()
     - **Update Existing ListNodes**:
         - `node_to_remove->next->prev = head`: The node after the one being removed points back to the head.
         - `head->next = node_to_remove->next`: The head points to the node after the one being removed.
+
+### `void DoublyLinkedList::add_at_index(int index, ListNode::Ptr node_to_add)`
+
+```cpp
+void DoublyLinkedList::add_at_index(int index, ListNode::Ptr node_to_add)
+{
+    if (index < 0)
+    {
+        throw std::out_of_range("Index must be non-negative");
+    }
+
+    ListNode::Ptr current = head;
+    int current_index = 0;
+
+    while (current != nullptr && current_index < index)
+    {
+        current = current->next;
+        ++current_index;
+    }
+
+    if (current == nullptr || current == tail)
+    {
+        throw std::out_of_range("Index out of bounds");
+    }
+
+    node_to_add->next = current->next;
+    node_to_add->prev = current;
+    current->next->prev = node_to_add;
+    current->next = node_to_add;
+}
+```
+
+### `void DoublyLinkedList::remove_at_index(int index)`
+
+```cpp
+void DoublyLinkedList::remove_at_index(int index)
+{
+    if (index < 0)
+    {
+        throw std::out_of_range("Index must be non-negative");
+    }
+
+    ListNode::Ptr current = head;
+    int current_index = 0;
+
+    while (current->next != nullptr && current_index < index)
+    {
+        current = current->next;
+        ++current_index;
+    }
+
+    if (current->next == nullptr || current->next == tail)
+    {
+        throw std::out_of_range("Index out of bounds");
+    }
+
+    ListNode::Ptr node_to_remove = current->next;
+    current->next = node_to_remove->next;
+    node_to_remove->next->prev = current;
+}
+```
 
 ### `void DoublyLinkedList::display() const`
 

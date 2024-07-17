@@ -51,6 +51,59 @@ void DoublyLinkedList::remove_from_start()
     head->next = node_to_remove->next;
 }
 
+void DoublyLinkedList::add_at_index(int index, ListNode::Ptr node_to_add)
+{
+    if (index < 0)
+    {
+        throw std::out_of_range("Index must be non-negative");
+    }
+
+    ListNode::Ptr current = head;
+    int current_index = 0;
+
+    while (current != nullptr && current_index < index)
+    {
+        current = current->next;
+        ++current_index;
+    }
+
+    if (current == nullptr || current == tail)
+    {
+        throw std::out_of_range("Index out of bounds");
+    }
+
+    node_to_add->next = current->next;
+    node_to_add->prev = current;
+    current->next->prev = node_to_add;
+    current->next = node_to_add;
+}
+
+void DoublyLinkedList::remove_at_index(int index)
+{
+    if (index < 0)
+    {
+        throw std::out_of_range("Index must be non-negative");
+    }
+
+    ListNode::Ptr current = head;
+    int current_index = 0;
+
+    while (current->next != nullptr && current_index < index)
+    {
+        current = current->next;
+        ++current_index;
+    }
+
+    if (current->next == nullptr || current->next == tail)
+    {
+        throw std::out_of_range("Index out of bounds");
+    }
+
+    ListNode::Ptr node_to_remove = current->next;
+    current->next = node_to_remove->next;
+    node_to_remove->next->prev = current;
+}
+
 void DoublyLinkedList::display() const
 {
     ListNode::Ptr current = head->next;

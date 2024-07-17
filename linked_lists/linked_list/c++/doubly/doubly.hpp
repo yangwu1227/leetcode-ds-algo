@@ -43,6 +43,21 @@ public:
     void remove_from_start();
 
     /**
+     * @brief Adds a node at a specific index in the doubly linked list.
+     *
+     * @param index The index at which the node should be added.
+     * @param node_to_add The node to be added to the list.
+     */
+    void add_at_index(int index, ListNode::Ptr node_to_add);
+
+    /**
+     * @brief Removes a node at a specific index in the doubly linked list.
+     *
+     * @param index The index of the node to be removed.
+     */
+    void remove_at_index(int index);
+
+    /**
      * @brief Displays the values in the linked list from start to end.
      */
     void display() const;

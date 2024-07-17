@@ -62,6 +62,61 @@ class DoublyLinkedList(object):
         node_to_remove.next.prev = self.head
         self.head.next = node_to_remove.next
 
+    def add_at_index(self, index: int, node_to_add: ListNode) -> None:
+        """
+        Adds a node at a specific index in the doubly linked list.
+
+        Parameters
+        ----------
+        index : int
+            The index at which the node should be added.
+        node_to_add : ListNode
+            The node to be added to the list.
+        """
+        if index < 0:
+            raise IndexError("Index must be non-negative")
+
+        current = self.head
+        current_index = 0
+
+        while current is not None and current_index < index:
+            current = current.next
+            current_index += 1
+
+        if current is None or current == self.tail:
+            raise IndexError("Index out of bounds")
+
+        node_to_add.next = current.next
+        node_to_add.prev = current
+        current.next.prev = node_to_add
+        current.next = node_to_add
+
+    def remove_at_index(self, index: int) -> None:
+        """
+        Removes a node at a specific index in the doubly linked list.
+
+        Parameters
+        ----------
+        index : int
+            The index of the node to be removed.
+        """
+        if index < 0:
+            raise IndexError("Index must be non-negative")
+
+        current = self.head
+        current_index = 0
+
+        while current.next is not None and current_index < index:
+            current = current.next
+            current_index += 1
+
+        if current.next is None or current.next == self.tail:
+            raise IndexError("Index out of bounds")
+
+        node_to_remove = current.next
+        current.next = node_to_remove.next
+        node_to_remove.next.prev = current
+
     def display(self) -> None:
         """
         Displays the values in the linked list from start to end.
@@ -96,7 +151,15 @@ def main() -> int:
     dll.display() 
 
     print("Adding a new node to the start")
-    dll.add_to_start(node_to_add=ListNode(23))
+    dll.add_to_start(ListNode(23))
+    dll.display()
+
+    print("Adding a new node at index 2")
+    dll.add_at_index(2, ListNode(99))
+    dll.display()
+
+    print("Removing a node at index 4")
+    dll.remove_at_index(4)
     dll.display()
 
     return 0

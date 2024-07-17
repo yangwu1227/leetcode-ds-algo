@@ -25,12 +25,21 @@ int main()
     dll.remove_from_start();
     dll.display();
 
+
     std::cout << "Removing the last node" << '\n';
     dll.remove_from_end();
     dll.display();
 
     std::cout << "Adding a node to the start" << '\n';
-    dll.add_to_start(std::make_shared<ListNode>(9));
+    dll.add_to_start(std::make_shared<ListNode>(23));
+    dll.display();
+
+    std::cout << "Adding a node at index 2" << '\n';
+    dll.add_at_index(2, std::make_shared<ListNode>(99));
+    dll.display();
+
+    std::cout << "Removing a node at index 4" << '\n';
+    dll.remove_at_index(4);
     dll.display();
 
     return 0;
