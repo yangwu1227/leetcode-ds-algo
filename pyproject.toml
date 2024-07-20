@@ -6,6 +6,7 @@ name = "leetcode-ds-algo"
 python = "^3.11"
 numpy = ">=2.0.0"
 matplotlib = ">=3.9.1"
+scipy = ">=1.14.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = ">=6.29.5"
