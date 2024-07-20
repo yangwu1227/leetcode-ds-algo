@@ -246,7 +246,7 @@ The space complexity is $O(1)$ because we are modifying the input matrix in plac
 
 # Random Flip Matrix
 
-Given a `m x n` binary grid matrix with all the values set 0 initially. Design an algorithm to randomly pick an index `(i, j)` where `matrix[i][j] == 0` and flips it to 1. All the indices `(i, j)` where `matrix[i][j] == 0` should be equally likely to be returned.
+Given a `m x n` binary grid matrix with all the values set 0 initially. Design an algorithm to randomly pick an index `(i, j)` where `matrix[i][j] == 0` and flips it to 1. After each flip, all the remaining (available) indices `(i, j)` where `matrix[i][j] == 0` should be equally likely to be returned.
 
 ## Explanation
 
@@ -262,7 +262,7 @@ Consider a binary matrix of size `m x n` where $m = 3$ and $n = 3$:
 
 ### 1D to 2D Index 
 
-Given a 1D index `index` $\in \{0,..., \text{index}, ..., m \cdot n\}$, we can convert it to a 2D index `(i, j)` as follows:
+Given a 1D index `index` $\in \{0,..., \text{index}, ..., (m \cdot n) - 1\}$, we can convert it to a 2D index `(i, j)` $\forall i \in \{0, ..., m - 1\}, j \in \{0, ..., n - 1\}$ as follows:
 
 #### C++
 
@@ -288,13 +288,13 @@ j = index % n
 
 2. Column Index Calculation $(j)$:
 
-    - Given `index`, the remainder $j=\text{index} \; \% \; n$ represents the column index.
+    - Given `index`, the remainder $j=\text{index}$ $\%$ (modulus) $n$ represents the column index.
 
     - This works because the remainder after dividing `index` by $n$ is the position within the current (incomplete) row.
 
-    - Therefore, the column index $j$ is the position within the row after accounting for the number of complete rows.
+    - Therefore, the column index $j$ is the position within the row after accounting for all complete rows before `index`.
 
-#### Example
+#### Mapping 1D to 2D Index
 
 Given the matrix and $m = 3$ and $n = 3$:
 
@@ -306,29 +306,29 @@ Given the matrix and $m = 3$ and $n = 3$:
 ]
 ```
 
-* `index = 0`, the 2D index is `(0 // 3, 0 % 3) = (0, 0)`
+<center>
 
-* `index = 1`, the 2D index is `(1 // 3, 1 % 3) = (0, 1)`
+| 1D Index | 2D Index |
+|----------|----------|
+| 0        | `(0 // 3, 0 \% 3) = (0, 0)` |
+| 1        | `(1 // 3, 1 \% 3) = (0, 1)` |
+| 2        | `(2 // 3, 2 \% 3) = (0, 2)` |
+| 3        | `(3 // 3, 3 \% 3) = (1, 0)` |
+| 4        | `(4 // 3, 4 \% 3) = (1, 1)` |
+| 5        | `(5 // 3, 5 \% 3) = (1, 2)` |
+| 6        | `(6 // 3, 6 \% 3) = (2, 0)` |
+| 7        | `(7 // 3, 7 \% 3) = (2, 1)` |
+| 8        | `(8 // 3, 8 \% 3) = (2, 2)` |
 
-* `index = 2`, the 2D index is `(2 // 3, 2 % 3) = (0, 2)`
+</center>
 
-* `index = 3`, the 2D index is `(3 // 3, 3 % 3) = (1, 0)`
-
-* `index = 4`, the 2D index is `(4 // 3, 4 % 3) = (1, 1)`
-
-* `index = 5`, the 2D index is `(5 // 3, 5 % 3) = (1, 2)`
-
-* `index = 6`, the 2D index is `(6 // 3, 6 % 3) = (2, 0)`
-
-* `index = 7`, the 2D index is `(7 // 3, 7 % 3) = (2, 1)`
-
-* `index = 8`, the 2D index is `(8 // 3, 8 % 3) = (2, 2)`
-
-### Walkthrough 
+### Algorithm Walkthrough 
 
 * **m** = 3
 * **n** = 3
 * **total** = 9
+* **available indices** = 9
+* **map** = {}
 
 <center>
 
@@ -350,7 +350,7 @@ Given the matrix and $m = 3$ and $n = 3$:
 
 ## Time Complexity
 
-The time complexity for each flip operation is $O(1)$. Regardless of the inputs $m$ and $n$, the same amount of work is done to:
+The time complexity for each flip is $O(1)$. Regardless of the inputs $m$ and $n$, the same amount of work is done inside the `flip` method or member function to:
 
 1. Generate a random index in $O(1)$
 
@@ -358,15 +358,15 @@ The time complexity for each flip operation is $O(1)$. Regardless of the inputs 
 
 3. Look up the random index in the map in $O(1)$
 
-4. Update the map with the new index in $O(1)$
+4. Insert (hash) the random index to create a index to index mapping in $O(1)$
 
 5. Convert the 1D index to a 2D index in $O(1)$
 
 ## Space Complexity
 
-The space complexity is $O(m \times n)$ to store the mapping of indices. This is because, in the worst case where each generation of random indices is unique, the map will contain all the indices from $0$ to $m \times n - 1$ as keys.
+The space complexity is $O(m \times n)$ to store the mapping of indices. This is because, in the worst case where each generation of random indices is unique, the map will contain all the indices from $0$ to $(m \cdot n) - 1$ as keys.
 
-For examples, given a $3 \times 3$ matrix, the map will contain the following mappings:
+For examples, given a $3 \times 3$ matrix, the map will contain the following mappings in an arbitrary order:
 
 ```plaintext
 {8: 0, 5: 3, 0: 8, 7: 1, 4: 4, 2: 6, 6: 2, 1: 7, 3: 5}
