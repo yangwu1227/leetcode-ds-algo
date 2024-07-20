@@ -69,7 +69,8 @@
         "stack": "cpp",
         "fstream": "cpp",
         "shared_mutex": "cpp",
-        "dense": "cpp"
+        "dense": "cpp",
+        "sparse": "cpp"
     },
     "python.analysis.typeCheckingMode": "standard"
 }
