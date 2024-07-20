@@ -241,3 +241,133 @@ $$
 ## Space Complexity
 
 The space complexity is $O(1)$ because we are modifying the input matrix in place.
+
+---
+
+# Random Flip Matrix
+
+Given a `m x n` binary grid matrix with all the values set 0 initially. Design an algorithm to randomly pick an index `(i, j)` where `matrix[i][j] == 0` and flips it to 1. All the indices `(i, j)` where `matrix[i][j] == 0` should be equally likely to be returned.
+
+## Explanation
+
+Consider a binary matrix of size `m x n` where $m = 3$ and $n = 3$:
+
+```plaintext
+[
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0]
+]
+```
+
+### 1D to 2D Index 
+
+Given a 1D index `index` $\in \{0,..., \text{index}, ..., m \cdot n\}$, we can convert it to a 2D index `(i, j)` as follows:
+
+#### C++
+
+```c++
+int i = index / n;
+int j = index % n;
+```
+
+#### Python
+
+```python
+i = index // n
+j = index % n
+```
+
+1. Row Index Calculation (i):
+
+    - Given `index`, when divided by the number of columns $n$, the quotient $i=\text{Floor}[\frac{\text{index}}{n}]$ represents the row index.
+
+    - This works because each complete row contains exactly $n$ elements.
+
+    - Therefore, the row index $i$ is the number of complete rows before reaching `index` $\in \{0,..., \text{index}, ..., m \cdot n\}$.
+
+2. Column Index Calculation $(j)$:
+
+    - Given `index`, the remainder $j=\text{index} \; \% \; n$ represents the column index.
+
+    - This works because the remainder after dividing `index` by $n$ is the position within the current (incomplete) row.
+
+    - Therefore, the column index $j$ is the position within the row after accounting for the number of complete rows.
+
+#### Example
+
+Given the matrix and $m = 3$ and $n = 3$:
+
+```plaintext
+[
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8]
+]
+```
+
+* `index = 0`, the 2D index is `(0 // 3, 0 % 3) = (0, 0)`
+
+* `index = 1`, the 2D index is `(1 // 3, 1 % 3) = (0, 1)`
+
+* `index = 2`, the 2D index is `(2 // 3, 2 % 3) = (0, 2)`
+
+* `index = 3`, the 2D index is `(3 // 3, 3 % 3) = (1, 0)`
+
+* `index = 4`, the 2D index is `(4 // 3, 4 % 3) = (1, 1)`
+
+* `index = 5`, the 2D index is `(5 // 3, 5 % 3) = (1, 2)`
+
+* `index = 6`, the 2D index is `(6 // 3, 6 % 3) = (2, 0)`
+
+* `index = 7`, the 2D index is `(7 // 3, 7 % 3) = (2, 1)`
+
+* `index = 8`, the 2D index is `(8 // 3, 8 % 3) = (2, 2)`
+
+### Walkthrough 
+
+* **m** = 3
+* **n** = 3
+* **total** = 9
+
+<center>
+
+| action | indices pool       | random index | available indices | index to flip | current flipped indices    | 2D index |
+|--------|--------------------|--------------|-------------------|---------------|----------------------------|----------|
+| flip   | [0, 1, 2, 3, 4, 5, 6, 7, 8] | 1            | 8                 | {}.get(1, 1) = 1             | map[1] = map.get(8, 8) = 8 -> {1: 8} | 1 = [0, 1]   |
+| flip   | [0, 1, 2, 3, 4, 5, 6, 7]    | 5            | 7                 | {1: 8}.get(5, 5) = 5         | map[5] = map.get(7, 7) = 7 -> {1: 8, 5: 7} | 5 = [1, 2]   |
+| flip   | [0, 1, 2, 3, 4, 5, 6]       | 5            | 6                 | {1: 8, 5: 7}.get(5, 5) = 7   | map[5] = map.get(6, 6) = 6 -> {1: 8, 5: 6} | 7 = [2, 1]   |
+| flip   | [0, 1, 2, 3, 4, 5]          | 2            | 5                 | {1: 8, 5: 6}.get(2, 2) = 2   | map[2] = map.get(5, 5) = 6 -> {1: 8, 5: 6, 2: 6} | 2 = [0, 2]   |
+| flip   | [0, 1, 2, 3, 4]             | 4            | 4                 | {1: 8, 5: 6, 2: 6}.get(4, 4) = 4 | map[4] = map.get(4, 4) = 4 -> {1: 8, 5: 6, 2: 6, 4: 4} | 4 = [1, 1]   |
+| flip   | [0, 1, 2, 3]                | 2            | 3                 | {1: 8, 5: 6, 2: 6, 4: 4}.get(2, 2) = 6 | map[2] = map.get(3, 3) = 3 -> {1: 8, 5: 6, 2: 3, 4: 4} | 6 = [2, 0]   |
+| flip   | [0, 1, 2]                   | 2            | 2                 | {1: 8, 5: 6, 2: 3, 4: 4}.get(2, 2) = 3 | map[2] = map.get(2, 2) = 3 -> {1: 8, 5: 6, 2: 3, 4: 4} | 3 = [1, 0]   |
+| flip   | [0, 1]                      | 1            | 1                 | {1: 8, 5: 6, 2: 3, 4: 4}.get(1, 1) = 8 | map[1] = map.get(1, 1) = 8 -> {1: 8, 5: 6, 2: 3, 4: 4} | 8 = [2, 2]   |
+| flip   | [0]                         | 0            | 0                 | {1: 8, 5: 6, 2: 3, 4: 4}.get(0, 0) = 0 | map[0] = map.get(0, 0) = 0 -> {1: 8, 5: 6, 2: 3, 4: 4, 0: 0} | 0 = [0, 0]   |
+| reset  | NA                          | NA           | 9                 | NA            | {}                         | NA       |
+| flip   | [0, 1, 2, 3, 4, 5, 6, 7, 8] | 1            | 8                 | {}.get(1, 1) = 1             | map[1] = map.get(8, 8) = 8 -> {1: 8} | 1 = [0, 1]   |
+
+</center>
+
+## Time Complexity
+
+The time complexity for each flip operation is $O(1)$. Regardless of the inputs $m$ and $n$, the same amount of work is done to:
+
+1. Generate a random index in $O(1)$
+
+2. Decrement the count of available indices in $O(1)$
+
+3. Look up the random index in the map in $O(1)$
+
+4. Update the map with the new index in $O(1)$
+
+5. Convert the 1D index to a 2D index in $O(1)$
+
+## Space Complexity
+
+The space complexity is $O(m \times n)$ to store the mapping of indices. This is because, in the worst case where each generation of random indices is unique, the map will contain all the indices from $0$ to $m \times n - 1$ as keys.
+
+For examples, given a $3 \times 3$ matrix, the map will contain the following mappings:
+
+```plaintext
+{8: 0, 5: 3, 0: 8, 7: 1, 4: 4, 2: 6, 6: 2, 1: 7, 3: 5}
+```
