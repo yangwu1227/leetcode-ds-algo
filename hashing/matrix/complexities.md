@@ -371,3 +371,50 @@ For examples, given a $3 \times 3$ matrix, the map will contain the following ma
 ```plaintext
 {8: 0, 5: 3, 0: 8, 7: 1, 4: 4, 2: 6, 6: 2, 1: 7, 3: 5}
 ```
+
+---
+
+# Sum of Matrix After Queries
+
+Given an integer `n` and a 0-indexed 2D array queries where `queries[i] = [type_i, index_i, val_i]`. Initially, all values of the `n x n` matrix are initialized to 0's. For each query:
+
+* If `type_i == 0`, set the values in the row with `index_i` to `val_i`, overwriting any previous values
+* If `type_i == 1`, set the values in the column with `index_i` to `val_i`, overwriting any previous values
+
+Lastly, return the sum of the matrix after all queries are applied.
+
+## Explanation
+
+Given the matrix size `n = 3` and the queries `[[0, 0, 1], [1, 2, 2], [0, 2, 3], [1, 0, 4]]`:
+
+<center>
+
+| **Type** | **Index** | **Value** | **Visited** | **Cells Left to Modify** | **Matrix Sum** |
+|----------|-----------|-----------|-------------|--------------------------|----------------|
+| NA       | NA        | NA        | - **columns_visited** = {}<br> - **rows_visited** = {} | - **vertical_cells_left_to_modify** = 3<br> - **horizontal_cells_left_to_modify** = 3 | **matrix_sum** = 0 |
+| 0        | 0         | 1         | - **columns_visited** = {}<br> - **rows_visited** = {0} | - **vertical_cells_left_to_modify** = 2<br> - **horizontal_cells_left_to_modify** = 3 | **matrix_sum** += 3 x 1 = 3 |
+| 1        | 2         | 2         | - **columns_visited** = {2}<br> - **rows_visited** = {0} | - **vertical_cells_left_to_modify** = 2<br> - **horizontal_cells_left_to_modify** = 2 | **matrix_sum** += 2 x 2 = 7 |
+| 0        | 2         | 3         | - **columns_visited** = {2}<br> - **rows_visited** = {0, 2} | - **vertical_cells_left_to_modify** = 1<br> - **horizontal_cells_left_to_modify** = 2 | **matrix_sum** += 2 x 3 = 13 |
+| 1        | 0         | 4         | - **columns_visited** = {0, 2}<br> - **rows_visited** = {0, 2} | - **vertical_cells_left_to_modify** = 1<br> - **horizontal_cells_left_to_modify** = 1 | **matrix_sum** += 1 x 4 = 17 |
+
+</center>
+
+## Time Complexity
+
+Let $q$ be the number of queries and $n$ be the size of the matrix. The operations taken during each query are:
+
+* Check if `type` is `0` or `1` in $O(1)$
+
+* Look up the row or column index in the visited set in $O(1)$
+
+* Update the `matrix_sum` in $O(1)$
+
+* Decrement the count of cells left to modify in $O(1)$
+
+* Insert (hash) the row or column index in the visited set in $O(1)$
+
+Therefore, the overall time complexity is $O(q)$.
+
+## Space Complexity
+
+Considering only the most significant memory usages (i.e., ignoring the integer variables), we use $O(2n) = O(n)$ space to store the visited rows and columns sets in the worst case.
