@@ -1,6 +1,6 @@
 # Set Matrix Zeroes
 
-Given an $m \times n$ integer matrix matrix, if an element is 0, set its entire row and column to 0's. 
+Given an $m \times n$ integer `matrix`, if an element is 0, set its entire row and column to 0's. 
 
 ## Explanation 0(1) Space Solution
 
@@ -87,13 +87,13 @@ After the loop, the matrix is:
 ]
 ```
 
-This effectively marked the rows and columns that need to be set to zero.
+This effectively marked the rows and columns that need to be set to zero. In this case, the row marked to be zeroed is `[0, 0, 6]` and the column marked to be zeroed is `[0, 0, 8]`.
 
 ### Zero Rows and Columns Based on Marks
 
 #### Zero Columns
 
-For `row` in `1, 2`:
+Fixing `col = 0`, iterate `row` over `1, 2`:
 
 <center>
 
@@ -116,7 +116,7 @@ After zeroing the columns, the matrix is:
 
 #### Zero Rows
 
-For `col` in `1, 2`:
+Fixing `row = 0`, iterate `col` over `1, 2`:
 
 <center>
 
@@ -137,9 +137,11 @@ After zeroing the rows, the matrix is:
 ]
 ```
 
+For this example, this completes the zeroing of the rows and columns.
+
 ### Zero First Row and Column If Necessary
 
-Since both `first_row_zero` and `first_col_zero` are `False`, no action is needed in this case.
+Since both `first_row_zero` and `first_col_zero` are `False`, no action is needed in this case. However, if either of them were `True`, the first row or column would be zeroed.
 
 ## Time Complexity
 
@@ -204,7 +206,7 @@ for (int col = 1; col < n; ++col)
 }
 ```
 
-The work done inside these loops, i.e., `matrix.row(row).setZero()` and `matrix.col(col).setZero()`, runs in $O(n)$ and $O(m)$ times, respectively.
+The operations done inside each iteration of these loops, i.e., `matrix.row(row).setZero()` and `matrix.col(col).setZero()`, run in $O(n)$ and $O(m)$ times, respectively. Therefore, the total time complexities for these two loops are:
 
 * $O((m - 1) \times n) = O(m \times n)$ 
 * $O(m \times (n - 1)) = O(m \times n)$  
@@ -222,7 +224,7 @@ if (firstColZero)
 }
 ```
 
-These last two loops are not run if `firstRowZero` and `firstColZero` are `False`. So if we consider the worst case, i.e., both `firstRowZero` and `firstColZero` are `True`, the time complexity is $O(m + n)$. 
+These last two loops are not run if `firstRowZero` and `firstColZero` are `False`. If we consider the worst case, i.e., both `firstRowZero` and `firstColZero` are `True`, the time complexity is $O(m + n)$. 
 
 ### Total Time Complexity
 
