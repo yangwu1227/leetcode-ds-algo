@@ -417,3 +417,148 @@ As can be seen, all operations are independent of the matrix dimensions $n \time
 ## Space Complexity
 
 Considering only the most significant memory usage (i.e., ignoring the use of integer variables), we use $O(2n) = O(n)$ space to store the visited rows and columns sets; this is becuase, in the worst case, all rows and columns are visited at least once.
+
+---
+
+# Sparse Matrix Multiplication
+
+Given two sparse matrices `A` and `B` (in their dense representations), design an algorithm to multiply them and return the result as a dense matrix. 
+
+In Python, the sparse matrices are represented as lists of lists. For example, the matrix:
+
+```python
+A = [[1, 0, 0],
+     [-1, 0, 3]]
+
+B = [[7, 0, 0],
+     [0, 0, 0],
+     [0, 0, 1]]
+```
+
+In C++, the sparse matrices are represented as vectors of vectors. For example, the matrix:
+
+```c++
+std::vector<std::vector<double>> A = {{1.0, 0.23, 0.43},
+                                      {-1.45, 0.3, 3.0}};
+
+std::vector<std::vector<double>> B = {{7.0, 0.0, 0.0},
+                                      {0.0, 0.0, 0.0},
+                                      {0.0, 0.0, 1.0}};
+```
+
+## Explanation
+
+To multiply two matrices, `A` ($m \times k$) and `B` ($k \times n$), the result is a matrix `C` ($m \times n$). Each element of `C` is computed as the dot product of the corresponding row of `A` and the column of `B`. Specifically:
+
+$$
+\begin{align*}
+C[i][j] = \sum_{t=0}^{k-1} A[i][t] \times B[t][j]
+\end{align*}
+$$
+
+where $t$ must be a common dimension between `A` and `B`, i.e., the number of columns in `A` must be equal to the number of rows in `B`.
+
+### Dictionary of Keys (DOK) Format
+
+To handle sparse matrices, we can optimize the multiplication by skipping the multiplication and addition operations for elements that are zero. This can be done by converting the dense matrices `A` and `B` to dictionary of keys (DOK) format. In DOK format, we store the indices of non-zero elements as keys and their values as values.
+
+#### Python
+
+In Python, the `scipy.sparse.dok_matrix` class, which is a subclass of the `dict` class, implements the DOK format.
+
+#### C++
+
+The `Eigen::SparseMatrix` class in C++ can be used to represent sparse matrices; however, the underlying implementation is a versatile variant of the widely-used Compressed Column (or Row) Storage scheme.
+
+### Algorithm Walkthrough
+
+Given the matrices `A` and `B`:
+
+```python   
+A = [[1, 0, 0],
+     [-1, 0, 3]]
+
+B = [[7, 0, 0],
+     [0, 0, 0],
+     [0, 0, 1]]
+```
+
+The sparse matrices `A` and `B` in DOK format are:
+
+```python
+A = {(0, 0): 1, (1, 0): -1, (1, 2): 3}
+B = {(0, 0): 7, (2, 2): 1}
+```
+
+#### First Non-Zero Element of `A`
+
+* Initialize `a_row_idx = 0`
+* Initialize `common_idx = 0`
+* Initialize `a_value = 1`
+
+<center>
+
+| `other_col_idx` | `B[common_idx, other_col_idx]` | Non-Zero? | Operation |
+|-----------------|--------------------------------|-----------|-----------|
+| 0               | $B[0, 0] = 7$                 | Yes       | - $A[0, 0] x B[0, 0] = 1 \times 7 = 7$ <br> - Update $C[0, 0] = 7$ |
+| 1               | $B[0, 1] = 0$                 | No        | Skip multiplication |
+| 2               | $B[0, 2] = 0$                 | No        | Skip multiplication |
+
+</center>
+
+#### Second Non-Zero Element of `A`
+
+* Initialize `a_row_idx = 1`
+* Initialize `common_idx = 0`
+* Initialize `a_value = -1`
+
+<center>
+
+| `other_col_idx` | `B[common_idx, other_col_idx]` | Non-Zero? | Operation |
+|-----------------|--------------------------------|-----------|-----------|
+| 0               | $B[0, 0] = 7$                | Yes       | - $A[1, 0] x B[0, 0] = -1 \times 7 = -7$ <br> - Update $C[1, 0] = -7$ |
+| 1               | $B[0, 1] = 0$                 | No        | Skip multiplication |
+| 2               | $B[0, 2] = 0$                | No        | Skip multiplication |
+
+</center>
+
+#### Third Non-Zero Element of `A`
+
+* Initialize `a_row_idx = 1`
+* Initialize `common_idx = 2`
+* Initialize `a_value = 3`
+
+Iterate over the columns of `B`:
+
+<center>
+
+| `other_col_idx` | `B[common_idx, other_col_idx]` | Non-Zero? | Operation |
+|-----------------|--------------------------------|-----------|-----------|
+| 0               | $B[2, 0] = 0$                 | No        | Skip multiplication |
+| 1               | $B[2, 1] = 0$              | No        | Skip multiplication |
+| 2               | $B[2, 2] = 1$                 | Yes       | - $A[1, 2] \times B[2, 2] = 3 \times 1 = 3$ <br> Update $C[1, 2] = 3$ |
+
+</center>
+
+The final sparse matrix `C` is:
+
+```python
+C = {(0, 0): 7, (1, 0): -7, (1, 2): 3}
+```
+
+The dense matrix `C` is:
+
+```python
+C = [[7, 0, 0],
+     [-7, 0, 3]]
+```
+
+## Time Complexity
+
+If $A$ has $a$ non-zero elements and $B$ has $b$ non-zero elements, the time complexity of the multiplication is $O(a \times d)$, where $d$ is the average number of non-zero elements per column in $B$. This is because, for each non-zero element in $A$, we iterate over the columns of $B$, carying out a multiplication and addition operation per iteration.
+
+## Space Complexity
+
+The space complexity depends on the number of non-zero elements in the resultant matrix, which is typically proportional to the sparsity of A and B. 
+
+In addition, because we use a dictionary to store the non-zero elements, the space complexity is $O(a + b)$, where $a$ and $b$ are the number of non-zero elements in $A$ and $B$, respectively.
