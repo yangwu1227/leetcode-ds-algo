@@ -422,9 +422,9 @@ Considering only the most significant memory usage (i.e., ignoring the use of in
 
 # Sparse Matrix Multiplication
 
-Given two sparse matrices `A` and `B` (in their dense representations), design an algorithm to multiply them and return the result as a dense matrix. 
+Given two sparse matrices `A` and `B` in their dense representations, design an algorithm to efficiently multiply them. The result should be returned in the dense representation. 
 
-In Python, the sparse matrices are represented as lists of lists. For example, the matrix:
+In Python, the sparse matrices are represented as lists of lists:
 
 ```python
 A = [[1, 0, 0],
@@ -435,7 +435,7 @@ B = [[7, 0, 0],
      [0, 0, 1]]
 ```
 
-In C++, the sparse matrices are represented as vectors of vectors. For example, the matrix:
+In C++, the sparse matrices are represented as vectors of vectors:
 
 ```c++
 std::vector<std::vector<double>> A = {{1.0, 0.23, 0.43},
@@ -448,7 +448,7 @@ std::vector<std::vector<double>> B = {{7.0, 0.0, 0.0},
 
 ## Explanation
 
-To multiply two matrices, `A` ($m \times k$) and `B` ($k \times n$), the result is a matrix `C` ($m \times n$). Each element of `C` is computed as the dot product of the corresponding row of `A` and the column of `B`. Specifically:
+When two matrices, `A` ($m \times k$) and `B` ($k \times n$), are multiplied, the result is a matrix `C` ($m \times n$). Each element $c_{ij}$ of `C` is computed as the dot product of the $i$-th row of `A` and the $j$-th column of `B`:
 
 $$
 \begin{align*}
@@ -456,11 +456,13 @@ C[i][j] = \sum_{t=0}^{k-1} A[i][t] \times B[t][j]
 \end{align*}
 $$
 
-where $t$ must be a common dimension between `A` and `B`, i.e., the number of columns in `A` must be equal to the number of rows in `B`.
+Note that $t$ is the dimension of the row space of `A` and the column space of `B`.
 
 ### Dictionary of Keys (DOK) Format
 
-To handle sparse matrices, we can optimize the multiplication by skipping the multiplication and addition operations for elements that are zero. This can be done by converting the dense matrices `A` and `B` to dictionary of keys (DOK) format. In DOK format, we store the indices of non-zero elements as keys and their values as values.
+To handle sparse matrices, we can optimize the multiplication by skipping multiplication and addition operations for elements $c_{ij}$ that would be zeros anyways. This can be done by first converting the dense matrices `A` and `B` to dictionary of keys (DOK) format. In DOK format, we store the indices $(i, j)$ of non-zero elements as keys and their cell values as values of a dictionary.
+
+To check our implementation, we compare our output matrix against those of the reference implementations in Python and C++.
 
 #### Python
 
@@ -468,7 +470,7 @@ In Python, the `scipy.sparse.dok_matrix` class, which is a subclass of the `dict
 
 #### C++
 
-The `Eigen::SparseMatrix` class in C++ can be used to represent sparse matrices; however, the underlying implementation is a versatile variant of the widely-used Compressed Column (or Row) Storage scheme.
+The `Eigen::SparseMatrix` class in C++ can be used to represent sparse matrices; however, the underlying implementation of `Eigen::SparseMatrix` is actually a versatile variant of the widely-used compressed column (or row) storage scheme.
 
 ### Algorithm Walkthrough
 
@@ -492,15 +494,64 @@ B = {(0, 0): 7, (2, 2): 1}
 
 #### First Non-Zero Element of `A`
 
-* Initialize `a_row_idx = 0`
+* Initialize `row_idx = 0`
 * Initialize `common_idx = 0`
-* Initialize `a_value = 1`
+* Initialize `value = 1`
+
+Given the row index `row_idx = 0`, the question is: what are the relevant cell values in `B` that need to be multiplied with this non-zero element in `A[row_idx, common_idx]`? 
+
+Because each row in `A` is dotted with each column in `B`, with the element from `A` being fixed, the cell value `A[0, 0] = 1` contributes to three different dot products:
+
+1. Row 0 of `A` dotted with column 0 of `B` to compute the element at `C[0, 0]`:
+
+$$
+\begin{bmatrix}
+\textcolor{red}{1} \\
+0 \\
+0
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\textcolor{red}{7} \\
+0 \\
+0
+\end{bmatrix} = 1 \times 7 = 7
+$$
+
+2. Row 0 of `A` dotted with column 1 of `B` to compute the element at `C[0, 1]`:
+
+$$
+\begin{bmatrix}
+\textcolor{red}{1} \\
+0 \\
+0
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\textcolor{red}{0} \\
+0 \\
+0
+\end{bmatrix} = 1 \times 0 = 0
+$$
+
+3. Row 0 of `A` dotted with column 2 of `B` to compute the element at `C[0, 2]`:
+
+$$
+\begin{bmatrix}
+\textcolor{red}{1} \\
+0 \\
+0
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\textcolor{red}{0} \\
+0 \\
+1
+\end{bmatrix} = 1 \times 0 = 0
+$$
 
 <center>
 
-| `other_col_idx` | `B[common_idx, other_col_idx]` | Non-Zero? | Operation |
+| col_idx | B[common_idx, col_idx] | Non-Zero? | Operation |
 |-----------------|--------------------------------|-----------|-----------|
-| 0               | $B[0, 0] = 7$                 | Yes       | - $A[0, 0] x B[0, 0] = 1 \times 7 = 7$ <br> - Update $C[0, 0] = 7$ |
+| 0               | $B[0, 0] = 7$                 | Yes       | - $A[0, 0] \times B[0, 0] = 1 \times 7 = 7$ <br> - Update $C[0, 0] = 7$ |
 | 1               | $B[0, 1] = 0$                 | No        | Skip multiplication |
 | 2               | $B[0, 2] = 0$                 | No        | Skip multiplication |
 
@@ -508,15 +559,62 @@ B = {(0, 0): 7, (2, 2): 1}
 
 #### Second Non-Zero Element of `A`
 
-* Initialize `a_row_idx = 1`
+* Initialize `row_idx = 1`
 * Initialize `common_idx = 0`
-* Initialize `a_value = -1`
+* Initialize `value = -1`
+
+The second non-zero element in `A` is $A[1, 0] = -1$. This element contributes to the following dot products:
+
+1. Row 1 of `A` dotted with column 0 of `B` to compute the element at `C[1, 0]`:
+
+$$
+\begin{bmatrix}
+\textcolor{red}{-1} \\
+0 \\
+3
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\textcolor{red}{7} \\
+0 \\
+0
+\end{bmatrix} = -1 \times 7 = -7
+$$
+
+2. Row 1 of `A` dotted with column 1 of `B` to compute the element at `C[1, 1]`:
+
+$$
+\begin{bmatrix}
+\textcolor{red}{-1} \\
+0 \\
+3
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\textcolor{red}{0} \\
+0 \\
+0
+\end{bmatrix} = -1 \times 0 = 0
+$$
+
+3. Row 1 of `A` dotted with column 2 of `B` to compute the element at `C[1, 2]`:
+
+$$
+\begin{bmatrix}
+\textcolor{red}{-1} \\
+0 \\
+3
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\textcolor{red}{0} \\
+0 \\
+1
+\end{bmatrix} = -1 \times 1 = -1
+$$
 
 <center>
 
-| `other_col_idx` | `B[common_idx, other_col_idx]` | Non-Zero? | Operation |
+| col_idx | B[common_idx, other_col_idx] | Non-Zero? | Operation |
 |-----------------|--------------------------------|-----------|-----------|
-| 0               | $B[0, 0] = 7$                | Yes       | - $A[1, 0] x B[0, 0] = -1 \times 7 = -7$ <br> - Update $C[1, 0] = -7$ |
+| 0               | $B[0, 0] = 7$                | Yes       | - $A[1, 0] \times B[0, 0] = -1 \times 7 = -7$ <br> - Update $C[1, 0] = -7$ |
 | 1               | $B[0, 1] = 0$                 | No        | Skip multiplication |
 | 2               | $B[0, 2] = 0$                | No        | Skip multiplication |
 
@@ -524,11 +622,56 @@ B = {(0, 0): 7, (2, 2): 1}
 
 #### Third Non-Zero Element of `A`
 
-* Initialize `a_row_idx = 1`
+* Initialize `row_idx = 1`
 * Initialize `common_idx = 2`
-* Initialize `a_value = 3`
+* Initialize `value = 3`
 
-Iterate over the columns of `B`:
+The third non-zero element in `A` is $A[1, 2] = 3$. This element contributes to the following dot products:
+
+1. Row 1 of `A` dotted with column 0 of `B` to compute the element at `C[1, 0]`:
+
+$$
+\begin{bmatrix}
+-1 \\
+0 \\
+\textcolor{red}{3}
+\end{bmatrix} \cdot
+\begin{bmatrix}
+7 \\
+0 \\
+\textcolor{red}{0}
+\end{bmatrix} = 3 \times 0 = 0
+$$
+
+2. Row 1 of `A` dotted with column 1 of `B` to compute the element at `C[1, 1]`:
+
+$$
+\begin{bmatrix}
+-1 \\
+0 \\
+\textcolor{red}{3}
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\
+0 \\
+\textcolor{red}{0}
+\end{bmatrix} = 3 \times 0 = 0
+$$
+
+3. Row 1 of `A` dotted with column 2 of `B` to compute the element at `C[1, 2]`:
+
+$$
+\begin{bmatrix}
+-1 \\
+0 \\
+\textcolor{red}{3}
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\
+0 \\
+\textcolor{red}{1}
+\end{bmatrix} = 3 \times 1 = 3
+$$
 
 <center>
 
@@ -536,17 +679,17 @@ Iterate over the columns of `B`:
 |-----------------|--------------------------------|-----------|-----------|
 | 0               | $B[2, 0] = 0$                 | No        | Skip multiplication |
 | 1               | $B[2, 1] = 0$              | No        | Skip multiplication |
-| 2               | $B[2, 2] = 1$                 | Yes       | - $A[1, 2] \times B[2, 2] = 3 \times 1 = 3$ <br> Update $C[1, 2] = 3$ |
+| 2               | $B[2, 2] = 1$                 | Yes       | - $A[1, 2] \times B[2, 2] = 3 \times 1 = 3$ <br> - Update $C[1, 2] = 3$ |
 
 </center>
 
-The final sparse matrix `C` is:
+The output sparse matrix `C` is:
 
 ```python
 C = {(0, 0): 7, (1, 0): -7, (1, 2): 3}
 ```
 
-The dense matrix `C` is:
+The dense representation of the output matrix `C` is:
 
 ```python
 C = [[7, 0, 0],
@@ -555,10 +698,18 @@ C = [[7, 0, 0],
 
 ## Time Complexity
 
-If $A$ has $a$ non-zero elements and $B$ has $b$ non-zero elements, the time complexity of the multiplication is $O(a \times d)$, where $d$ is the average number of non-zero elements per column in $B$. This is because, for each non-zero element in $A$, we iterate over the columns of $B$, carying out a multiplication and addition operation per iteration.
+If $A$ has $a$ non-zero elements and $B$ has $b$ non-zero elements, the time complexity of the sparse matrix multiplication is $O(a \times d)$, where $d$ is the average number of non-zero elements per column in $B$. 
+
+This is because, for each non-zero element in $A$, we iterate over the columns of $B$, carying out, on average, $d$ multiplication and addition operations per column.
+
+Note that is much more efficient than the $O(m \times n \times k)$ time complexity of the naive matrix multiplication algorithm, which is derived as follows:
+
+1. For each element in the resulting $m \times n$ matrix, a dot product of a row from $A$ and a column from $B$ is computed. 
+
+2. Each dot product involves $k$ multiplications and $k-1$ additions, which can be considered as $O(k + (k-1)) = O(k)$.
+
+Therefore, for each element in the resulting matrix $C_{ij}$, the number of operations is $O(k)$. Since there are $m \times n$ elements in the resulting matrix, the total time complexity is $O(m \times n \times k)$.
 
 ## Space Complexity
 
-The space complexity depends on the number of non-zero elements in the resultant matrix, which is typically proportional to the sparsity of A and B. 
-
-In addition, because we use a dictionary to store the non-zero elements, the space complexity is $O(a + b)$, where $a$ and $b$ are the number of non-zero elements in $A$ and $B$, respectively.
+The space complexity of the output matrix $C$ depends on the number of non-zero elements in the resultant matrix, which is typically proportional to the sparsity of A and B. That is, if $a$ and $b$ are the number of non-zero elements in $A$ and $B$, respectively, the space complexity of the output matrix $C$ is $O(a + b)$ in the worst case where $a = m \times k$ and $b = k \times n$.
