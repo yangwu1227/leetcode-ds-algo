@@ -15,7 +15,7 @@ void printDenseMatrix(const std::vector<std::vector<double>> &matrix)
     int cols = rows > 0 ? matrix[0].size() : 0;
 
     // Print column headers
-    std::cout << "     "; // initial padding for row headers
+    std::cout << "     "; // Initial padding for row headers
     for (int j = 0; j < cols; ++j)
     {
         std::cout << std::setw(8) << j << " ";
@@ -47,7 +47,7 @@ void printDenseMatrix(const std::vector<std::vector<double>> &matrix)
 
 void testMatrixMultiplication(int rows1, int cols1, int rows2, int cols2)
 {
-    // Generate random matrices
+    // Generate random dense matrices
     auto dense_matrix_1 = generateRandomMatrix(rows1, cols1, -10.0, 10.0);
     auto dense_matrix_2 = generateRandomMatrix(rows2, cols2, -10.0, 10.0);
 

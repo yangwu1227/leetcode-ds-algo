@@ -1,17 +1,12 @@
 // indices.hpp
 #ifndef INDICES_HPP
 #define INDICES_HPP
-#include <utility>
+#include <cstddef>
 
 /**
- * @brief A custom hash function for `std::pair` instances, utilizing Boost's `hash_combine` to generate hash values.
- * This allows pairs to be used as keys in standard containers like `std::unordered_map` and `std::unordered_set`.
+ * @class Indices
  *
- * The `hash_combine` function provides a way to combine the hash values of individual elements of a pair,
- * resulting in a single hash value that considers both elements, minimizing collisions.
- *
- * @param T1 Type of the first element in the pair.
- * @param T2 Type of the second element in the pair.
+ * @brief Represents a pair of hashable indices (row, column) for a sparse matrix.
  */
 class Indices
 {
@@ -19,21 +14,25 @@ public:
     /**
      * @brief Constructs an Indices object.
      *
-     * @param row Row index.
-     * @param col Column index.
+     * @param row Row index
+     * @param col Column index
      */
     Indices(int row, int col);
 
     /**
-     * @brief Equality operator to compare two Indices objects.
+     * @brief Overload the equality operator to compare two Indices objects
      *
-     * @param other The other Indices object to compare with.
-     * @return true if the indices are equal, false otherwise.
+     * @param other The other Indices object to compare with
+     * @return `true` if the indices are equal, false otherwise
      */
     bool operator==(const Indices &other) const;
 
     /**
-     * @brief Custom hash function for Indices.
+     * @brief A custom hash function for `Indices` objects, utilizing `boost::hash_combine` to generate hash values.
+     * This allows pairs of indices to be used as keys in standard hash table data structures like `std::unordered_map` and `std::unordered_set`.
+     *
+     * The `hash_combine` function provides a way to combine the hash values of individual elements of a pair, i.e., `i` and `j`, resulting in
+     * a single hash value that considers both elements, minimizing collisions.
      */
     struct Hash
     {
@@ -41,9 +40,9 @@ public:
     };
 
 private:
-    int i; ///< Row index
-    int j; ///< Column index
-    friend class SparseMatrix;
+    int i;                     // Row index
+    int j;                     // Column index
+    friend class SparseMatrix; // Allow SparseMatrix to access private members of Indices
 };
 
 #endif
