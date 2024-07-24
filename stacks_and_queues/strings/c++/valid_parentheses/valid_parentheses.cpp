@@ -30,12 +30,12 @@ bool validParentheses(const std::string &s)
             }
 
             char lastOpenBracket = parenthesesStack.top();
-            parenthesesStack.pop();
             // Check if the current closing bracket matches the last open bracket in the stack
             if (matchingBracket[lastOpenBracket] != currentBracket)
             {
                 return false;
             }
+            parenthesesStack.pop();
         }
     }
     
