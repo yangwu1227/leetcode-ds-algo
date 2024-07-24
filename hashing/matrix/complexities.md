@@ -713,3 +713,158 @@ Therefore, for each element in the resulting matrix $C_{ij}$, the number of oper
 ## Space Complexity
 
 The space complexity of the output matrix $C$ depends on the number of non-zero elements in the resultant matrix, which is typically proportional to the sparsity of A and B. That is, if $a$ and $b$ are the number of non-zero elements in $A$ and $B$, respectively, the space complexity of the output matrix $C$ is $O(a + b)$ in the worst case where $a = m \times k$ and $b = k \times n$.
+
+---
+
+# Match Alphanumerical Pattern in Matrix I 
+
+Given two inputs:
+
+* 2D integer matrix `matrix` where $0 \le \text{matrix}[i][j] \le 9$
+
+* 2D character matrix `pattern` where each element is either a digit or a a lowercase english letter
+
+Find the indices $(i, j)$, which is the top-left corner of the submatrix in `matrix` that matches the pattern in `pattern`. The pattern is considered matched if the submatrix in `matrix` has the same dimensions as `pattern` and the elements in the submatrix match the corresponding elements in `pattern`.
+If there are multiple matches, return the top-left corner of the submatrix with the smallest row index. If there are still multiple matches, return the top-left corner of the submatrix with the smallest column index. If there are no matches, return `[-1, -1]`.
+
+## Examples
+
+### Example 1
+
+* board = [[1, 2, 2], [2, 2, 3], [2, 3, 3]]
+
+* pattern = ["ab", "bb]:
+
+$$
+\text{board} = \begin{bmatrix}
+\textcolor{red}{1} & \textcolor{red}{2} & 2 \\
+\textcolor{red}{2} & \textcolor{red}{2} & 3 \\
+2 & 3 & 3
+\end{bmatrix}
+\;\;
+\text{pattern} = \begin{bmatrix}
+a & b \\
+b & b
+\end{bmatrix}
+$$
+
+The submatrix in `board` that matches the pattern in `pattern` has the top-left corner at $(0, 0)$.
+
+### Example 2
+
+* board = [[1, 2], [2, 1]]
+
+* pattern = ["xx"]
+
+$$
+\text{board} = \begin{bmatrix}
+1 & 2 \\
+2 & 1
+\end{bmatrix}
+\;\;
+\text{pattern} = \begin{bmatrix}
+x & x
+\end{bmatrix}
+$$
+
+There are no submatrices in `board` that match the pattern in `pattern`.
+
+### Example 3
+
+* board = [[1, 1, 2], [3, 3, 4], [6, 6, 6]]
+
+* pattern = ["ab", "66"]
+
+$$
+\text{board} = \begin{bmatrix}
+1 & 1 & 2 \\
+3 & \textcolor{red}{3} & \textcolor{red}{4} \\
+6 & \textcolor{red}{6} & \textcolor{red}{6}
+\end{bmatrix}
+\;\;
+\text{pattern} = \begin{bmatrix}
+a & b \\
+6 & 6
+\end{bmatrix}
+$$
+
+The submatrix in `board` that matches the pattern in `pattern` has the top-left corner at $(1, 1)$.
+
+## Explanation
+
+The algorithm iterates over all possible submatrices in `matrix` that have the same dimensions as `pattern`, starting from the top-left corner of each submatrix.
+
+For each submatrix with top-left corner at $(i, j)$, the algorithm checks if the elements in the submatrix match the corresponding elements in `pattern`. If a match is found, the algorithm returns the top-left corner $(i, j)$.
+
+The logic for checking if a submatrix matches the pattern is as follows:
+
+* Initializes two dictionaries: `board_int_to_pattern_str` and `pattern_str_to_board_int` to maintain a bidirectional mapping between board integers and pattern strings.
+
+* Iterates over each element in the pattern matrix and the corresponding element in the board submatrix starting at $(i, j)$.
+
+    - If the element in the pattern matrix is a digit, the algorithm checks if the corresponding element in the board submatrix matches the digit. If not, the submatrix does not match the pattern, and the algorithm returns `False` to move on to the next submatrix.
+
+    - If the element in the pattern matrix is a lowercase letter, the algorithm makes two checks:
+
+        1. If the element in the board submatrix is already mapped to a different letter in `board_int_to_pattern_str`, the submatrix does not match the pattern, and the algorithm returns `False`.
+
+        2. If the element in the pattern matrix is already mapped to by a different integer in `pattern_str_to_board_int`, the submatrix does not match the pattern, and the algorithm returns `False`.
+
+        3. Otherwise, the algorithm updates the mappings in `board_int_to_pattern_str` and `pattern_str_to_board_int` and continues to the next element in the pattern matrix.
+
+* If all elements in the pattern matrix match the corresponding elements in the board submatrix, the algorithm returns `True` to indicate that the submatrix matches the pattern.
+
+## Time Complexity
+
+Let $m$ and $n$ be the number of rows and columns in the `matrix`, respectively, and $p$ and $q$ be the number of rows and columns in the `pattern`, respectively.
+
+There can be at most $(m - p + 1) \times (n - q + 1)$ submatrices in the `matrix` that have the same dimensions as the `pattern`. 
+
+For each submatrix, the algorithm iterates over all elements in the `pattern`. For each element in the `pattern`, the algorithm performs the following operations:
+
+* Check if the element in `pattern` is a digit in $O(1)$
+
+  - If the element in `pattern` is a digit, the algorithm checks if the corresponding element in the submatrix matches the digit in $O(1)$.
+
+* If the element in `pattern` is a lowercase letter:
+
+  - One lookup and one comparisons both costing $O(1)$.
+
+  - Another lookup and another comparison both costing $O(1)$.
+
+  - Two updates to the mappings both costing $O(1)$.
+
+For each submatrix, we can consider the time complexity to be $O(p \times q)$.
+
+In the wrost case, i.e., no submatrix matches the pattern, the time complexity can be modeled as:
+
+$$
+\begin{align*}
+O\Big[(m - p + 1) \times (n - q + 1) \times p \times q\Big]
+\end{align*}
+$$
+
+## Space Complexity
+
+The components contributing to the space complexity are:
+
+1. **Hash Maps**:
+
+    - Two hash maps, `board_int_to_pattern_str` and `pattern_str_to_board_int`, are used.
+
+    - **Keys for `board_int_to_pattern_str`**: Limited to integers from 0 to 9 (10 possible keys).
+
+    - **Keys for `pattern_str_to_board_int`**: Limited to 26 lowercase letters (26 possible keys).
+
+    - Total possible unique mappings: $36 (10 + 26)$.
+
+2. **Space per Submatrix**:
+
+    - For each submatrix, the space required to store mappings in the worst case is $O(36) = O(1)$.
+
+3. **Total Space for All Submatrices**:
+
+    - There are $(m - p + 1) \times (n - q + 1)$ possible submatrices
+
+    - Even if all submatrices match the pattern and mappings are stored for each, the total space remains $O(1)$ for each submatrix.
+
