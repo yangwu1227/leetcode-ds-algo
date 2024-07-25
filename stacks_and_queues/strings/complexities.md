@@ -122,3 +122,77 @@ In Python, we also need to join the characters in the stack to form a string. Th
 ## Space Complexity
 
 We use a stack (i.e., list in Python and string in C++) to store the characters. In the worst case, we would push all $n$ characters onto the stack. Therefore, the space complexity is $O(n)$.
+
+---
+
+# Backspace String Compare
+
+Given two strings `s` and `t`, both containing lowercase English letters and the character '#', determine if the two strings are equal after applying the backspace characters.
+
+A backspace character '#' removes the character before it, including itself. If there is no character before the backspace character, it has no effect.
+
+## Explanation
+
+Given `s = "ab#c"` and `t = "ad#c"`, we can apply the backspace characters as follows:
+
+For string `s`:
+
+<center>
+
+| Stack | Current Character | Action |
+|-------|-------------------|--------|
+| []    | a                 | Push the character onto the stack |
+| ["a"] | b                 | Push the character onto the stack |
+| ["a", "b"] | #             | Pop the top of the stack |
+| ["a"] | c                 | Push the character onto the stack |
+
+</center>
+
+After applying the backspace characters, the resulting string is `s = "ac"`.
+
+For string `t`:
+
+<center>
+
+| Stack | Current Character | Action |
+|-------|-------------------|--------|
+| []    | a                 | Push the character onto the stack |
+| ["a"] | d                 | Push the character onto the stack |
+| ["a", "d"] | #             | Pop the top of the stack |
+| ["a"] | c                 | Push the character onto the stack |
+
+</center>
+
+After applying the backspace characters, the resulting string is `t = "ac"`.
+
+Since the resulting strings are equal, we return `True`.
+
+## Time Complexity
+
+### Building the Strings
+
+Let $n$ and $m$ be the lengths of strings `s` and `t`, respectively. We iterate through each character in both strings, performing the following operations:
+
+* Check if the stack is empty and if the current character is a backspace character, both in $O(1)$
+
+  - If the current character is a backspace character and the stack is not empty, pop the top of the stack in $O(1)$
+
+* If the stack is empty, the condition above will not be met, but we need to double check that the current character is not a backspace character before pushing it onto the stack in $O(1)$
+
+The process of building the strings takes $O(n + m)$ time.
+
+**Note**: Again, in Python, we need to join the characters in the stack to form a string. But the overall time complexity is still $O(n + m + n + m) = O(2n + 2m) = O(n + m)$.
+
+### Comparing the Strings
+
+The comparison of two strings of fixed lengths can be considered $O(1)$ if the lengths of the built strings are not the same. In the worst case, when the lengths of the built strings are the same, we need to compare each character in the strings, which takes $O(\text{min}(n, m))$. 
+
+### Overall Time Complexity
+
+Considering the time complexities of building the strings and comparing the resultant strings, the overall time complexity is $O(n + m + \text{min}(n, m))$. If $n = m$, the time complexity is $O(3n) = O(n)$.
+
+## Space Complexity
+
+We use a stack for each string to store the characters. In the worst case, we would push all $n$ and $m$ characters onto the stacks; that is, neither string contains any backspace characters. 
+
+Therefore, the space complexity is $O(n + m)$. If $n = m$, the space complexity can be considered $O(2n)=O(n)$.
