@@ -75,3 +75,46 @@ In the worst case, we iterate through all $n$ characters in the input string $s$
 In the worst case, i.e. all characters are opening brackets, we would push all $n$ characters onto the stack. Therefore, the space complexity is $O(n)$.
 
 This is not considering the space complexity of the dictionary used to store the bracket mappings, which can be considered as $O(1)$ since the dictionary will only contain a constant number of key-value pairs.
+
+---
+
+# Remove All Adjacent Duplicates In String
+
+Given a string `s` containing lowercase English letters, remove all adjacent duplicates from the string. 
+
+## Explanation
+
+Given `s = "abbaca"`, we can remove the adjacent duplicates as follows:
+
+<center>
+
+| Stack | Current Character | Action |
+|-------|-------------------|--------|
+| []    | a                 | Push the character onto the stack |
+| ["a"] | b                 | Push the character onto the stack |
+| ["a", "b"] | b             | The current character is the same as the top of the stack, pop the top of the stack |
+| ["a"] | a                 | The current character is the same as the top of the stack, pop the top of the stack |
+| []    | c                 | Push the character onto the stack |
+| ["c"] | a                 | Push the character onto the stack |
+
+</center>
+
+After removing all adjacent duplicates, the resulting string is `s = "ca"`.
+
+## Time Complexity
+
+Given $n$ as the length of the input string $s$, we iterate through each character in the string; during each iteration, we perform the following operations:
+
+* Check if the stack is empty and if the current character is the same as the top of the stack both in $O(1)$
+
+  - If the current character is the same as the top of the stack, pop the top of the stack in $O(1)$
+
+* If the current character is not the same as the top of the stack or the stack is empty, push the current character onto the stack in $O(1)$
+
+Therefore, the overall time complexity is $O(n)$.
+
+**Note**: In C++, we can directly use `std::string::push_back()` and `std::string::pop_back()` to simulate the stack operations. These operations are both unspecified but generally amortized $O(1)$ according to references [here](https://cplusplus.com/reference/string/string/push_back/) and [here](https://cplusplus.com/reference/string/string/pop_back/).
+
+## Space Complexity
+
+We use a stack (i.e., list in Python and string in C++) to store the characters. In the worst case, we would push all $n$ characters onto the stack. Therefore, the space complexity is $O(n)$.
