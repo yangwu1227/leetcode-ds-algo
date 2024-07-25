@@ -10,7 +10,7 @@ std::string removeDuplicates(const std::string &s)
     }
 
     std::string output;
-    output.reserve(s.size());
+    output.reserve(s.length());
     for (const auto &character : s)
     {
         // If the stack is not empty and the top of the stack is the same as the current character, adjacent duplicates detected
