@@ -111,9 +111,13 @@ Given $n$ as the length of the input string $s$, we iterate through each charact
 
 * If the current character is not the same as the top of the stack or the stack is empty, push the current character onto the stack in $O(1)$
 
-Therefore, the overall time complexity is $O(n)$.
+### C++
 
-**Note**: In C++, we can directly use `std::string::push_back()` and `std::string::pop_back()` to simulate the stack operations. These operations are both unspecified but generally amortized $O(1)$ according to references [here](https://cplusplus.com/reference/string/string/push_back/) and [here](https://cplusplus.com/reference/string/string/pop_back/).
+In C++, we can directly use `std::string::push_back()` and `std::string::pop_back()` to simulate the stack operations. These operations are both unspecified but generally amortized $O(1)$ according to references [here](https://cplusplus.com/reference/string/string/push_back/) and [here](https://cplusplus.com/reference/string/string/pop_back/). Therefore, the overall time complexity is $O(n)$.
+
+### Python
+
+In Python, we also need to join the characters in the stack to form a string. The time complexity of this operation is $O(n)$. Therefore, the overall time complexity is $O(n + n) = O(2n) = O(n)$.
 
 ## Space Complexity
 
