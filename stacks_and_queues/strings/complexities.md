@@ -196,3 +196,66 @@ Considering the time complexities of building the strings and comparing the resu
 We use a stack for each string to store the characters. In the worst case, we would push all $n$ and $m$ characters onto the stacks; that is, neither string contains any backspace characters. 
 
 Therefore, the space complexity is $O(n + m)$. If $n = m$, the space complexity can be considered $O(2n)=O(n)$.
+
+---
+
+# Simplify Path 
+
+Given an absolute Unix-style file path starting with '/', transform it into its simplified canonical form following these rules:
+
+1. Single '.' represents the current directory and should be ignored.
+2. Double '..' means moving up one directory level.
+3. Multiple slashes '//' should be treated as a single slash '/'.
+4. Sequences of periods not covered by the above rules (e.g., '...') are treated as valid directory or file names.
+5. The canonical path must:
+   - Start with a single '/'.
+   - Have directories separated by a single '/'.
+   - Not end with a '/' unless it is the root directory.
+   - Exclude any single or double periods.
+
+Return the simplified canonical path.
+
+## Explanation 
+
+Given `path = "/.../a/../b/c/../d/./"`, the simplified canonical path can be created as follows:
+
+<center>
+
+| Stack                | Current Component | Action                                                      |
+|----------------------|-------------------|-------------------------------------------------------------|
+| []                   | NA                 | Initialize stack                                            |
+| []                   | ...               | Push `...` onto the stack                                   |
+| ["..."]             | a                 | Push `a` onto the stack                                     |
+| ["...", "a"]       | ..                | Pop the top of the stack (move up one directory level)      |
+| ["..."]             | b                 | Push `b` onto the stack                                     |
+| ["...", "b"]       | c                 | Push `c` onto the stack                                     |
+| ["...", "b", "c"] | ..                | Pop the top of the stack (move up one directory level)      |
+| ["...", "b"]       | d                 | Push `d` onto the stack                                     |
+| ["...", "b", "d"] | .                 | Ignore `.` (current directory)                              |
+| ["...", "b", "d"] | End of Path       | Join stack components with `/` to create `/.../b/d`                            |
+
+</center>
+
+## Time Complexity
+
+Let $n$ be the length of the input string `path` and $k$ be the number of components after splitting `path` based on "/".
+
+### Python
+
+In Python, we use the `split("/")` method to split the input `path` into a list of path components. This operation costs $O(n)$.
+
+Splitting `path` results in approximately $\frac{n}{2} + 1$ components in the worst case for an input of length $n$ (e.g., `/a/b/c/d/e/f/ -> ["", "a", "b", "c", "d", "e", "f", ""]`. Therefore, the time complexity of the stack operations is $O(\frac{n}{2} + 1)$, which can be considered $O(n)$.
+
+Finally, we use `"/".join()` to concatenate the stacks into the simplified canonical path. The complexity of `join` scales with respect to the number of characters being concatenated $O(n)$.
+
+The overall time complexity is therefore $O(n)$.
+
+### C++
+
+We use `boost::split()` to split `path` into all of its components, which costs $O(n)$. 
+
+The rest of the steps are the same as those of Python. So the overall time complexity in C++ is also $O(n)$.
+
+## Space Complexity
+
+The space complexity is $O(n)$, again, due to the fact that there can be appromiately $\frac{n}{2} + 1$ components after splitting `path` based on "/". In the worst case, every component may be valid and pushed to the stack. 
