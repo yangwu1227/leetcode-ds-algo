@@ -309,4 +309,48 @@ The overall time complexity is therefore $O(n)$.
 
 ## Space Complexity
 
-The space complexity is $O(n)$, as we use a stack to store the characters. In the worst case, we would push all $n$ characters onto the stack.
+The space complexity is $O(n)$, as we use a stack to store the characters. In the worst case, we would push all $n$ characters onto the stack if no adjacent character pairs can be removed.
+
+---
+
+# Removing Stars From a String
+
+For a string `s` with stars (*), repeatedly remove each star and its closest preceding character until no stars remain.
+
+## Explanation
+
+Given `s = "ab*cd**e"`, we can remove the stars as follows:
+
+<center>
+
+| Stack | Current Character | Action |
+|-------|-------------------|--------|
+| []    | a                 | Push the character onto the stack |
+| ["a"] | b                 | Push the character onto the stack |
+| ["a", "b"] | *             | Pop the top of the stack |
+| ["a"] | c                 | Push the character onto the stack |
+| ["a", "c"] | d             | Push the character onto the stack |
+| ["a", "c", "d"] | *         | Pop the top of the stack |
+| ["a", "c"] | *             | Pop the top of the stack |
+| ["a"] | e                 | Push the character onto the stack |
+
+</center>
+
+After removing all stars, the resulting string is `s = "ae"`.
+
+## Time Complexity
+
+For a string `s` of length $n$, we iterate through each character in the string, performing the following operations:
+
+* Check if the stack is empty and if the current character is a star, both in $O(1)$
+
+  - If the current character is a star and the stack is not empty, pop the top of the stack in $O(1)$
+
+* If the stack is empty or the current character is not a star, push the current character onto the stack in $O(1)$
+
+The overall time complexity is $O(n)$.
+
+## Space Complexity
+
+Similar to the previous problems, the space complexity is $O(n)$, as we use a stack to store the characters. In the worst case, we would push all $n$ characters onto the stack if no stars are in the input string.
+
