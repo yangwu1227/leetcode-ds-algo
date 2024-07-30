@@ -259,3 +259,54 @@ The rest of the steps are the same as those of Python. So the overall time compl
 ## Space Complexity
 
 The space complexity is $O(n)$, again, due to the fact that there can be appromiately $\frac{n}{2} + 1$ components after splitting `path` based on "/". In the worst case, every component may be valid and pushed to the stack. 
+
+---
+
+# Make The String Great
+
+Given a string `s` of mixed case English letters, a "good" string has no adjacent characters where one is a lower-case letter and the other is the same letter in upper-case, or vice-versa.
+
+To make the string good, repeatedly remove any such adjacent character pairs until no more remain.
+
+Return the resulting "good" string, which is guaranteed to be unique. Note that an empty string is also considered good.
+
+## Explanation
+
+Given `s = "leEeetcode"`, we can remove the adjacent character pairs as follows:
+
+<center>
+
+| Stack | Current Character | Action |
+|-------|-------------------|--------|
+| []    | l                 | Push the character onto the stack |
+| ["l"] | e                 | Push the character onto the stack |
+| ["l", "e"] | E             | The current character is the same as the top of the stack but in different cases, pop the top of the stack |
+| ["l"] | e                 | Push the character onto the stack |
+| ["l", "e"] | e             | Even though the current character is the same as the top of the stack, they are in the same case, push the character onto the stack |
+| ["l", "e", "e"] | t         | Push the character onto the stack |
+| ["l", "e", "e", "t"] | c     | Push the character onto the stack |
+| ["l", "e", "e", "t", "c"] | o | Push the character onto the stack |
+| ["l", "e", "e", "t", "c", "o"] | d | Push the character onto the stack |
+| ["l", "e", "e", "t", "c", "o", "d"] | e | The current character is the same as the top of the stack but in different cases, pop the top of the stack |
+
+</center>
+
+After removing all adjacent character pairs, the resulting string is `s = "leetcode"`.
+
+## Time Complexity
+
+Given $n$ as the length of the input string `s`, we iterate through each character in the string, performing the following operations:
+
+* Check if the stack is empty and if the current character is the same as the top of the stack but in different cases after case swapping the top of the stack, all in $O(1)$
+
+  - If the current character is the same as the top of the stack but in different cases, pop the top of the stack in $O(1)$
+
+* If the stack is empty, the condition above will not be met, and we will push the current character onto the stack in $O(1)$
+
+In Python, we also need to join the characters in the stack to form a string. The time complexity of this operation is $O(n)$. 
+
+The overall time complexity is therefore $O(n)$.
+
+## Space Complexity
+
+The space complexity is $O(n)$, as we use a stack to store the characters. In the worst case, we would push all $n$ characters onto the stack.
