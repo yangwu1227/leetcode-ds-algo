@@ -246,7 +246,7 @@ In Python, we use the `split("/")` method to split the input `path` into a list 
 
 Splitting `path` results in approximately $\frac{n}{2} + 1$ components in the worst case for an input of length $n$ (e.g., `/a/b/c/d/e/f/ -> ["", "a", "b", "c", "d", "e", "f", ""]`. Therefore, the time complexity of the stack operations is $O(\frac{n}{2} + 1)$, which can be considered $O(n)$.
 
-Finally, we use `"/".join()` to concatenate the stacks into the simplified canonical path. The complexity of `join` scales with respect to the number of characters being concatenated $O(n)$.
+Finally, we use `"/".join()` to concatenate the stacks into the simplified canonical path. The complexity of `join` scales with respect to the number of characters being concatenated, i.e., $O(n)$.
 
 The overall time complexity is therefore $O(n)$.
 
