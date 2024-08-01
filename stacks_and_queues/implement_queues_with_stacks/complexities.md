@@ -43,9 +43,9 @@ def empty(self) -> bool:
     return len(self.internal_deque) == 0
 ```
 
-The time complexity of the `empty` operation is $O(1)$ since we only need to check the length of the `deque` to determine if it is empty. 
+The time complexity of the `empty` check is $O(1)$ since we only need to check the length of the `deque` to determine if it is empty. 
 
-This is made into a property to more closely align with how the **emptiness** of a queue is thought of--- as a property of the queue itself.
+This is made into a property to more closely align with how the **emptiness** of a queue is thought of, i.e., as a property of the queue itself.
 
 ## C++
 
@@ -58,7 +58,7 @@ void QueueDeque::push(int x)
 }
 ```
 
-Similar to Python, the time complexity of the `push` operation is $O(1)$ since `std::deque` have constant insertion and removal time at both ends.
+Similar to Python, the time complexity of the `push` operation is $O(1)$ since `std::deque` have constant insertion and removal times from both ends.
 
 ### Pop
 
@@ -82,7 +82,7 @@ int QueueDeque::peek() const
 }
 ```
 
-The time complexity of the `peek` operation is $O(1)$ since we only need to access the `front` element of the `deque`.
+The time complexity of the `peek` operation is $O(1)$ since we only need to access the `front` element of the `std::deque`.
 
 ### Empty
 
@@ -93,7 +93,7 @@ bool QueueDeque::empty() const
 }
 ```
 
-The time complexity of the `empty` operation is $O(1)$.
+The time complexity of the `empty` check is $O(1)$. The `const` keyword is used to indicate that the method does not modify the instance's state.
 
 ---
 
@@ -101,7 +101,7 @@ The time complexity of the `empty` operation is $O(1)$.
 
 ## Python
 
-The Python implementation uses two `List` objects to simulate the queue. `List` instances support $O(1)$ amortized time complexity for append and pop operations from the end of the list.
+The Python implementation uses two `List` objects to simulate the queue. `List` supports $O(1)$ amortized time complexities for append and pop operations from the *end of the list*.
 
 ### Push
 
@@ -114,7 +114,7 @@ def push(self, x: int) -> None:
 
 The `push` operation carries out the following steps:
 
-* If the `stack` list is empty, set the `front` attribute of the queue to the element being pushed, costing $O(1)$.
+* If the `stack` list is empty, set the `front` attribute of the queue instance to the element being pushed, costing $O(1)$. This is because the `front` attribute is only set once when the first element is pushed into the queue.
 
 * Append the element to the `stack` list, costing $O(1)$.
 
@@ -136,7 +136,7 @@ The `pop` operation carries out the following steps:
 
 * If the `stack_reversed` list is non-empty, the top element is popped from it, costing $O(1)$.
 
-The time complexity of the `pop` operation is $O(n)$ in the worst case and $O(1)$ in the average case. The amortized time complexity of the `pop` operation is $O(1)$.
+The time complexity of the `pop` operation is $O(n)$ in the worst case (i.e., the first pop operation) and $O(1)$ in the average case. Therefore, the amortized time complexity of the `pop` operation is $O(1)$.
 
 ### Peek
 
@@ -151,7 +151,7 @@ The `peek` operation carries out the following steps:
 
 * If the `stack_reversed` list is non-empty, return the top element of the `stack_reversed` list. This costs $O(1)$.
 
-* If the `stack_reversed` list is empty, return the `front` attribute of the queue. This costs $O(1)$.
+* If the `stack_reversed` list is empty, i.e., no `pop` operation has been performed yet, return the `front` attribute of the queue instance.
 
 The time complexity of the `peek` operation is $O(1)$.
 
@@ -163,7 +163,7 @@ def empty(self) -> bool:
     return len(self.stack) == len (self.stack_reversed) == 0
 ```
 
-The queue is empty if both the `stack` and `stack_reversed` lists are empty. This is because the `stack` list contains all the elements that are pushed into the queue, and the `stack_reversed` list contains all the elements in the reverse order once the first pop operation is performed. 
+The queue is empty if both the `stack` and `stack_reversed` lists are empty. This is because the `stack` list contains all the elements that are pushed to the queue, and the `stack_reversed` list contains all the elements in the reverse order once the first pop operation is performed.
 
 The time complexity of the `empty` check is $O(1)$.
 
@@ -211,7 +211,7 @@ int QueueStack::pop()
 
 The `pop` operation carries out the following steps:
 
-* If the `stackReversed` stack is empty, we need to reverse the elements in the `stack` stack. This is done by popping all elements from the `stack` stack and pushing them to the `stackReversed` stack. This costs $O(n)$, where $n$ is the number of elements in the `stack` stack.
+* If the `stackReversed` stack is empty, we need to reverse the elements in the `stack` stack to support **FIFO**. This is done by popping all elements from `stack` and pushing them to `stackReversed`. This costs $O(n)$, where $n$ is the number of elements in the `stack` stack.
 
 * If the `stackReversed` stack is non-empty, we simply pop the top element from it, costing $O(1)$.
 
