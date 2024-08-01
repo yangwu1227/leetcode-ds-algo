@@ -132,11 +132,11 @@ def pop(self) -> int:
 
 The `pop` operation carries out the following steps:
 
-* If the `stack_reversed` list is empty, all elements are popped from the `stack` list and pushed to the `stack_reversed` list. This costs $O(n)$, where $n$ is the number of elements in the `stack` list.
+* If the `stack_reversed` list is empty, all elements are popped from the `stack` list and pushed to the `stack_reversed` list. This costs $O(k)$, where $k$ is the number of elements in the `stack` list.
 
 * If the `stack_reversed` list is non-empty, the top element is popped from it, costing $O(1)$.
 
-The time complexity of the `pop` operation is $O(n)$ in the worst case (i.e., the first pop operation) and $O(1)$ in the average case. Therefore, the amortized time complexity of the `pop` operation is $O(1)$.
+The time complexity of the `pop` operation is $O(k)$ in the worst case (i.e., the first pop operation) and $O(1)$ in the average case. Therefore, the amortized time complexity of the `pop` operation is $O(1)$.
 
 ### Peek
 
@@ -211,9 +211,9 @@ int QueueStack::pop()
 
 The `pop` operation carries out the following steps:
 
-* If the `stackReversed` stack is empty, we need to reverse the elements in the `stack` stack to support **FIFO**. This is done by popping all elements from `stack` and pushing them to `stackReversed`. This costs $O(n)$, where $n$ is the number of elements in the `stack` stack.
+* If `stackReversed` is empty, we need to reverse the elements in `stack` to support **FIFO**. This is because the bottom of the stack is the front of the queue. The reversal is done by popping all elements from `stack` and pushing them to the `stackReversed`, so that the top of `stackReversed` is the front of the queue. This costs $O(k)$, where $k$ is the number of elements in `stack` before the first pop operation.
 
-* If the `stackReversed` stack is non-empty, we simply pop the top element from it, costing $O(1)$.
+* If `stackReversed` is non-empty, i.e., after the first pop operation, we simply pop the top element from it, costing $O(1)$.
 
 The overall time complexity of the `pop` operation is the same as that of the Python implementation, which is amortized $O(1)$.
 
