@@ -361,23 +361,23 @@ Similar to the previous problems, the space complexity is $O(n)$, as we use a st
 Given a string `s` and deques:
 
 * `original_deque`: initialized with the characters of `s`
-* `temp_deque`: initially empty
-* `output`: initially empty (`std::string` in C++ and `deque` in Python)
+* `temp_deque`: initially empty and used to store characters temporarily before pushing them to `output`
+* `output`: initially empty, an `std::string` in C++ and a `deque` in Python
 
-Apply these operations until both `original_deque` and `temp_deque` are empty:
+Apply two operations until both `original_deque` and `temp_deque` are empty:
 
 1. Remove the first character of `original_deque` and push it to `temp_deque`.
 2. Remove the last character of `temp_deque` and push it to `output`.
 
-Return the lexicographically smallest string **possible** that can be written in `output` using only these operations.
+Return the lexicographically smallest string **possible** `output` using only these operations.
 
-**Note**: The lexicographically order is $a < b < c < \ldots < z$. However, because we can only use the above two operations, the smallest string possible may not be the lexicographically smallest string.
+**Note**: The lexicographically order is $a < b < c < \ldots < z$. However, because we can only use the above two operations, the smallest string possible given a string `s` may not be the lexicographically smallest string strictly following an alphabetical order.
 
 ## Explanations
 
 Given `s = "bdda"`, the algorithm can be applied as follows:
 
-### Initialize the Deques
+### Initialize Deques
 
 * `original_dque`: ['b', 'd', 'd', 'a']
 
@@ -387,19 +387,22 @@ Given `s = "bdda"`, the algorithm can be applied as follows:
 
 ### Precompute the Smallest Character to the Right of each Character in `s`
 
-* `smallest_right = [""] * len(s) = 4`: ["", "", "", ""]
+We create a precomputed array `smallest_right` to store the smallest character to the right of each character in `s` with the same length as `s`.
 
-* `smallest_right[-1] = s[-1]`: ["", "", "", "a"]
+* Initialize `smallest_right = [""] * (len(s) = 4)`: ["", "", "", ""]
 
-Start iterating from the second to last character to the first character:
+* Set `smallest_right[-1] = s[-1]`: ["", "", "", "a"]
+
+Start iterating from the second to last character to the first character in reverse order:
 
 <center>
 
-| Character | Comparison | Action |
-|-----------|------------|--------|
-| 'd'       | min('d', 'a') | smallest_right[2] = 'a' |
-| 'd'       | min('d', 'a') | smallest_right[1] = 'a' |
-| 'b'       | min('b', 'a') | smallest_right[0] = 'a' |
+| Character | Index | Comparison                                      | Action                       |
+|-----------|-------|-------------------------------------------------|------------------------------|
+| 'd'       | 2     | min('d', smallest_right[2 + 1]) = min('d', 'a') | smallest_right[2] = 'a'      |
+| 'd'       | 1     | min('d', smallest_right[1 + 1]) = min('d', 'a') | smallest_right[1] = 'a'      |
+| 'b'       | 0     | min('b', smallest_right[0 + 1]) = min('b', 'a') | smallest_right[0] = 'a'      |
+
 
 </center>
 
@@ -429,9 +432,9 @@ After applying the operations, the resulting string is `output = "addb"`.
 
 Given $n$ as the length of the input string `s`, we perform the following operations:
 
-* Precompute the smallest character to the right of each character in `s` in $O(n)$
+* Precompute the smallest character to the right of each character in `s`: since each `min(s[i], smallest_right[i + 1])` operation is $O(1)$ and there are $n - 1$ such operations, this step can be considered $O(n)$
 
-* Apply the operations until both `original_deque` and `temp_deque` are empty in $O(n)$; all checks, push, and pop operations are $O(1)$
+* Apply the operations until both `original_deque` and `temp_deque` are empty in $O(n)$; all checks, push, and pop operations can be considered $O(1)$ and there can be at most $n$ such operations
 
 In Python, we also need to join the characters in the `output` deque to form a string. The time complexity of this operation is $O(n)$.
 
@@ -439,6 +442,18 @@ The overall time complexity is therefore $O(n)$.
 
 ## Space Complexity
 
-In Python, the `output` variable is bound to a `deque` instance, whereas in C++, `output` is an `std::string`. 
+In Python, the `output` variable is bound to a `deque` object; in C++, `output` is an `std::string`. 
 
-Regardless, the space complexity is $O(n)$, as we use the `original_deque`, `temp_deque`, and `output` to store the characters. In the worst case, we would push all $n$ characters onto the deques.
+Here are the key components that contribute to the space complexity:
+
+1. **original_deque:** This deque is initialized with the characters of the input string `s`, which $n$.
+   
+2. **temp_deque:** This deque temporarily holds characters moved from `original_deque`. In the worst case, it can also hold up to $n$ characters.
+
+3. **smallestRight:** This `std::vector` or `deque` holds the smallest characters to the right of each character in the input string `s`, which is also of size $n$.
+
+4. **output:** This data structure holds the resulting string. In the worst case, it can also grow to size $n$.
+
+Since each of these structures can potentially hold up to $n$ elements, the total space complexity is the sum of the space used by these data structures:
+
+$$O(n) + O(n) + O(n) + O(n) = O(4n) = O(n)$$
