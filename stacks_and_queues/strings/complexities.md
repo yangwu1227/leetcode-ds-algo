@@ -354,3 +354,91 @@ The overall time complexity is $O(n)$.
 
 Similar to the previous problems, the space complexity is $O(n)$, as we use a stack to store the characters. In the worst case, we would push all $n$ characters onto the stack if no stars are in the input string.
 
+---
+
+# Using a Robot to Print the Lexicographically Smallest String
+
+Given a string `s` and deques:
+
+* `original_deque`: initialized with the characters of `s`
+* `temp_deque`: initially empty
+* `output`: initially empty (`std::string` in C++ and `deque` in Python)
+
+Apply these operations until both `original_deque` and `temp_deque` are empty:
+
+1. Remove the first character of `original_deque` and push it to `temp_deque`.
+2. Remove the last character of `temp_deque` and push it to `output`.
+
+Return the lexicographically smallest string **possible** that can be written in `output` using only these operations.
+
+**Note**: The lexicographically order is $a < b < c < \ldots < z$. However, because we can only use the above two operations, the smallest string possible may not be the lexicographically smallest string.
+
+## Explanations
+
+Given `s = "bdda"`, the algorithm can be applied as follows:
+
+### Initialize the Deques
+
+* `original_dque`: ['b', 'd', 'd', 'a']
+
+* `temp_deque`: []
+
+* `output`: []
+
+### Precompute the Smallest Character to the Right of each Character in `s`
+
+* `smallest_right = [""] * len(s) = 4`: ["", "", "", ""]
+
+* `smallest_right[-1] = s[-1]`: ["", "", "", "a"]
+
+Start iterating from the second to last character to the first character:
+
+<center>
+
+| Character | Comparison | Action |
+|-----------|------------|--------|
+| 'd'       | min('d', 'a') | smallest_right[2] = 'a' |
+| 'd'       | min('d', 'a') | smallest_right[1] = 'a' |
+| 'b'       | min('b', 'a') | smallest_right[0] = 'a' |
+
+</center>
+
+The `smallest_right` array is now `["a", "a", "a", "a"]`.
+
+### Apply the Operations
+
+<center>
+
+| Original Deque           | Temp Deque        | Output     | Temp Deque Empty? | Original Deque Empty? | Current Character | Smallest Right Comparison     | Action                               |
+|--------------------------|-------------------|------------|-------------------|-----------------------|-------------------|-------------------------------|---------------------------------------|
+| ['b', 'd', 'd', 'a']     | []                | []         | True              | False                 | 'b'               | N/A                           | Move 'b' to `temp_deque`              |
+| ['d', 'd', 'a']          | ['b']             | []         | False             | False                 | 'd'               | N/A                           | Move 'd' to `temp_deque`              |
+| ['d', 'a']               | ['b', 'd']        | []         | False             | False                 | 'd'               | N/A                           | Move 'd' to `temp_deque`              |
+| ['a']                    | ['b', 'd', 'd']   | []         | False             | False                 | 'a'               | N/A                           | Move 'a' to `temp_deque`              |
+| []                       | ['b', 'd', 'd', 'a'] | []     | False             | True                  | N/A               | temp_deque[-1] ('a') <= smallest_right[4] ('a') | Pop 'a' from `temp_deque` to `output` |
+| []                       | ['b', 'd', 'd']   | ['a']      | False             | True                  | N/A               | temp_deque[-1] ('d') <= smallest_right[4] ('a') | Pop 'd' from `temp_deque` to `output` |
+| []                       | ['b', 'd']        | ['a', 'd'] | False             | True                  | N/A               | temp_deque[-1] ('d') <= smallest_right[4] ('a') | Pop 'd' from `temp_deque` to `output` |
+| []                       | ['b']             | ['a', 'd', 'd'] | False             | True                  | N/A               | temp_deque[-1] ('b') <= smallest_right[4] ('a') | Pop 'b' from `temp_deque` to `output` |
+| []                       | []                | ['a', 'd', 'd', 'b'] | True              | True                  | N/A               | N/A                           | N/A                                   |
+
+</center>
+
+After applying the operations, the resulting string is `output = "addb"`.
+
+## Time Complexity
+
+Given $n$ as the length of the input string `s`, we perform the following operations:
+
+* Precompute the smallest character to the right of each character in `s` in $O(n)$
+
+* Apply the operations until both `original_deque` and `temp_deque` are empty in $O(n)$; all checks, push, and pop operations are $O(1)$
+
+In Python, we also need to join the characters in the `output` deque to form a string. The time complexity of this operation is $O(n)$.
+
+The overall time complexity is therefore $O(n)$.
+
+## Space Complexity
+
+In Python, the `output` variable is bound to a `deque` instance, whereas in C++, `output` is an `std::string`. 
+
+Regardless, the space complexity is $O(n)$, as we use the `original_deque`, `temp_deque`, and `output` to store the characters. In the worst case, we would push all $n$ characters onto the deques.
