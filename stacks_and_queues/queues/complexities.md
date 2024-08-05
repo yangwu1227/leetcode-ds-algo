@@ -29,3 +29,26 @@ The `std::queue` used to store requests time stamps also have $O(1)$ performance
 
 The space complexity depends on the number of requests that are within the `threshold` window. During a single call to `ping`, the space complexity is $O(n)$ in the worst case, i.e., when all requests are within the `threshold` window. 
 
+---
+
+# Moving Average from Data Stream
+
+Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.
+
+- `next(int val)`: Returns the moving average of the last `window_size` values of the stream.
+
+## Time Complexity
+
+Each call to `next` involves the following operations:
+
+* Check if the window is full, which is $O(1)$
+
+  - If the window is full, remove the oldest element from the window by subtracting it from the running sum and popping the front of the queue, both of which are $O(1)$
+
+* Add the new element to the window by pushing it to the back of the queue and adding it to the running sum, both are $O(1)$
+
+The time complexity of each call to `next` is $O(1)$.
+
+## Space Complexity
+
+The space complexity depends on the window size. The space complexity is $O(window_size)$, as the queue will store at most `window_size` elements.
