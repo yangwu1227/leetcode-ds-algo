@@ -155,8 +155,8 @@ Let $n$ be the number of elements in the input array `nums`. The algorithm itera
    - All work done inside the third `while` loop (i.e., comparison of two integers, popping the front of the deques) can be considered $O(1)$.
    - For an input of size $n$, there would be $n - 1$ comparisons between each pair of elements, leading to $O(n - 1) = O(n)$ pop operations to either the increasing (if the input is strictly decreasing) or decreasing deque (if the input is strictly increasing).
 
-Therefore, the total time complexity can be considered $O(n)$.
+With both parts combined, the total time complexity can be modeled as $O(3n) + O(n) = O(4n) = O(n)$.
 
 ## Space Complexity
 
-In the worst case, in which the input array remains constant, all elements are pushed to both the increasing and decreasing deques. This results in a space complexity of $O(n + n) = O(2n) = O(n)$.
+In the worst case, in which the input array remains constant (e.g., `[12, 12, 12, 12, 12]`), all elements are pushed to both deques and no pop operations are carried out. The space complexity is therefore $O(n + n) = O(2n) = O(n)$.
