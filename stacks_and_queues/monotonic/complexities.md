@@ -33,7 +33,7 @@ Given $n$ days of temperatures, the algorithm processes each day as follows:
 
 2. **Push Operation**: If the current temperature is less than or equal to the temperature at the top of the stack, or after the stack becomes empty, we push the current day index onto the stack in $O(1)$ time.
 
-Each day's index is pushed and popped from the stack at most once. In the worst-case scenario, such as when temperatures are in increasing order (e.g., `[30, 35, 53, 62, 70, 90]`), every index from 0 to $n - 1$ is pushed and then popped.
+Each day's index is pushed and popped from the stack at most once. In the worst-case scenario, such as when temperatures are strictly increasing (e.g., `[30, 35, 53, 62, 70, 90]`), every index from 0 to $n - 1$ is pushed and then popped.
 
 Thus, the overall time complexity is $O(2n)$, which simplifies to $O(n)$.
 
@@ -88,7 +88,7 @@ Given $n$ elements in the input array `nums`, the algorithm processes each eleme
 
    - Push the maximum element, i.e., `nums[deque[0]]`, to the output array in $O(1)$ time.
 
-In the worst case, i.e. when the input array is **monotonically increasing**, each element is pushed to the deque once, and before pushing a new element, the previous element in the deque is popped (since the new element breaks the non-increasing monotonicity).
+In the worst case, i.e. when the input array is **strictly increasing**, each element is pushed to the deque once, and before pushing a new element, the previous element in the deque is popped (since the new element breaks the non-increasing monotonicity).
 
    - Each index is pushed once and can be popped at most once. This means there are at most $n$ push operations and $n$ pop operations, leading to $O(2n) = O(n)$ time.
 
@@ -108,3 +108,55 @@ $$
 ## Space Complexity
 
 In the worst case, the deque stores all indices from the last window, i.e., $åk$ indices. This happens when the input array is **monotonically non-increasing**, which means there are no pop operations except for those used to maintain the window size. The space complexity is therefore $O(k)$.
+
+---
+
+# Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+
+Given an array of integers `nums` and an integer `limit`, return the size of the longest non-empty subarray such that the absolute difference between any two elements of this subarray is less than or equal to `limit`.
+
+
+## Explanation
+
+Given `nums = [1, 5, 6, 7, 8, 10, 6, 5, 6]` and `limit = 4`:
+
+<center>
+
+| Left | Right | Window          | Monotonic Increasing           | Monotonic Decreasing           | Action                                                                                     |
+|------|-------|-----------------|--------------------------------|--------------------------------|--------------------------------------------------------------------------------------------|
+| 0    | 0     | [1]             | [1]                            | [1]                            | - Added 1 to both deques. <br> - Updated window size to 1 (right - left + 1 = 0 - 0 + 1).  |
+| 0    | 1     | [1, 5]          | [1, 5]                         | [5]                            | - Popped 1 from decreasing deque because 1 < 5.<br>- Added 5 to both deques.<br>- Updated window size to 2 (right - left + 1 = 1 - 0 + 1). |
+| 1    | 2     | [5, 6]          | [5, 6]                         | [6]                            | - Popped 5 from decreasing deque because 5 < 6.<br>- Added 6 to both deques.<br>- Window size is invalid because 6 - 1 > 4.<br>  - Popped 1 from front of increasing deque because it's equal to the leftmost element.<br>- Moved left to 1. Window is now [5, 6].<br>- Updated window size to 2 (right - left + 1 = 2 - 1 + 1). |
+| 1    | 3     | [5, 6, 7]       | [5, 6, 7]                      | [7]                            | - Popped 6 from decreasing deque because 6 < 7.<br>- Added 7 to both deques.<br>- Updated window size to 3 (right - left + 1 = 3 - 1 + 1). |
+| 1    | 4     | [5, 6, 7, 8]    | [5, 6, 7, 8]                   | [8]                            | - Popped 7 from decreasing deque because 7 < 8.<br>- Added 8 to both deques.<br>- Updated window size to 4 (right - left + 1 = 4 - 1 + 1). |
+| 2    | 5     | [6, 7, 8, 10]   | [6, 7, 8, 10]                  | [10]                           | - Popped 8 from decreasing deque because 8 < 10.<br>- Added 10 to both deques.<br>- Window size is invalid because 10 - 5 > 4.<br>  - Popped 5 from front of increasing deque because it's equal to the leftmost element.<br>- Moved left to 2. Window is now [6, 7, 8, 10].<br>- Updated window size to 4 (right - left + 1 = 5 - 2 + 1). |
+| 2    | 6     | [6, 7, 8, 10, 6] | [6, 6]                         | [10, 6]                        | - Popped 10 from increasing deque because 10 > 6.<br>  - Popped 8 from increasing deque because 8 > 6.<br>  - Popped 7 from increasing deque because 7 > 6.<br>- Added 6 to both deques.<br>- Updated window size to 5 (right - left + 1 = 6 - 2 + 1). |
+| 6    | 7     | [6, 5]          | [5]                            | [6, 5]                         | - Popped 6 from increasing deque because 6 > 5.<br>  - Popped 6 from increasing deque because 6 > 5.<br>- Added 5 to both deques.<br>- Window size is invalid because 10 - 5 > 4.<br>- Moved left to 3. Window is now [7, 8, 10, 6, 5].<br>- Window size is invalid because 10 - 5 > 4.<br>- Moved left to 4. Window is now [8, 10, 6, 5].<br>- Window size is invalid because 10 - 5 > 4.<br>- Moved left to 5. Window is now [10, 6, 5].<br>- Window size is invalid because 10 - 5 > 4.<br>  - Popped 10 from front of decreasing deque because it's equal to the leftmost element.<br>- Moved left to 6. Window is now [6, 5].<br>- Updated window size to 5 (right - left + 1 = 7 - 6 + 1). |
+| 6    | 8     | [6, 5, 6]       | [5, 6]                         | [6, 6]                         | - Popped 5 from decreasing deque because 5 < 6.<br>- Added 6 to both deques.<br>- Updated window size to 5 (right - left + 1 = 8 - 6 + 1). |
+
+</center>
+
+The longest continuous subarray with an absolute difference less than or equal to 4 is `[7, 7, 8, 10, 6]` with a size of 5.
+
+## Time Complexity
+
+Let $n$ be the number of elements in the input array `nums`. The algorithm iterates through each index of the array and performs the following operations:
+
+1. **First Two While Loops**: The first two while loops are used to maintain the monotonicity of the increasing and decreasing deques. They are mutually exclusive in that:
+
+   - If the input array is **strictly increasing**, every element will be pushed and popped from the decreasing deque repeatedly while only being pushed to the increasing deque.
+
+   - If the input array is **strictly decreasing**, every element will be pushed and popped from the increasing deque repeatedly while only being pushed to the decreasing deque.
+
+   In the sense, each element is pushed and popped at most $O(3n)$ times during these while loops in the worst case, contributing $O(n)$ to the total time complexity.
+
+2. **Window Size Check**: In the worst case, with `limit = 0` and the gaps between each element in the input array being greater than zero (e.g. `[1, 3, 5, 7, 9, 11]` or `[17, 12, 7, 2]`), the window becomes invalid after each element is added. 
+
+   - All work done inside the third `while` loop (i.e., comparison of two integers, popping the front of the deques) can be considered $O(1)$.
+   - For an input of size $n$, there would be $n - 1$ comparisons between each pair of elements, leading to $O(n - 1) = O(n)$ pop operations to either the increasing (if the input is strictly decreasing) or decreasing deque (if the input is strictly increasing).
+
+Therefore, the total time complexity can be considered $O(n)$.
+
+## Space Complexity
+
+In the worst case, in which the input array remains constant, all elements are pushed to both the increasing and decreasing deques. This results in a space complexity of $O(n + n) = O(2n) = O(n)$.

@@ -25,7 +25,7 @@ def max_sliding_window(nums: MutableSequence[int], k: int) -> List[int]:
     num_deque: Deque[int] = deque()
     output: List[int] = []
     for i in range(len(nums)):
-        # As long as the deque is non-empty and the element pointed to by the index at back of the deque is less than te element pointed to by the current index
+        # As long as the deque is non-empty and the element pointed to by the index at back of the deque is less than the element pointed to by the current index
         while num_deque and nums[num_deque[-1]] < nums[i]:
             # Pop the last index of the deque to maintain the monotonic non-increasing property of the deque
             num_deque.pop()
