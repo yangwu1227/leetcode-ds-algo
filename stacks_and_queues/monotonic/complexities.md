@@ -160,3 +160,50 @@ With both parts combined, the total time complexity can be modeled as $O(3n) + O
 ## Space Complexity
 
 In the worst case, in which the input array remains constant (e.g., `[12, 12, 12, 12, 12]`), all elements are pushed to both deques and no pop operations are carried out. The space complexity is therefore $O(n + n) = O(2n) = O(n)$.
+
+---
+
+# Next Greater Element I 
+
+
+Given two distinct integer arrays `nums_1` and `nums_2` where `nums_1` is a subset of `nums_2`, find the array `output` such that for each element `nums_1[i]`, `output[i]` contains the next greater element of `nums_1[i]` in `nums_2`. If no such element exists, `output[i]` will be -1.
+
+## Explanation
+
+The algorithm uses a stack to store the elements in increasing order and a hash map to store the next greater element for each element in `nums_2`.
+
+<center>
+    <img src="diagrams/next_greater_element.gif">
+</center>
+
+<br>
+
+Given `nums_1 = [5, 7, 1]` and `nums_2 = [2, 3, 5, 1, 0, 7, 3]`:
+
+* Hash map: `{2: 3, 3: 5, 0: 7, 1: 7, 5: 7, 3: -1, 7: -1}`
+
+The output array is `[7, -1, 7]`.
+
+## Time Complexity
+
+Let $n$ be the number of elements in `nums_2` and $m$ be the number of elements in `nums_1`. The algorithm carries out the following operations:
+
+1. Iterate over the elements in `nums_2`:
+
+   - While the stack is not empty and the current element is greater than the element at the top of the stack, pop the top element and update the hash map in both in $O(1)$ time. 
+
+   - Push the current element onto the stack in $O(1)$ time.
+
+   Each element can be pushed and popped *at most once*, leading to $O(2n) = $O(n)$ time complexity.
+
+2. Iterate over the elements in `nums_1`:
+
+   - Lookup the next greater element for each element in $O(1)$ time.
+
+The time complexity of the algorithm is $O(n + m)$.
+
+## Space Complexity
+
+In the worst case, where `nums_2` is strictly decreasing, the stack stores all elements from `nums_2` since there would be no pop operations. The space complexity of the stack is $O(n)$. Adding the space required for the hash map, which is $O(n)$, the total space complexity is $O(2n) = O(n)$.
+
+If we also consider the space required to store the output array, which is $O(m)$, the total space complexity becomes $O(n + m)$.
