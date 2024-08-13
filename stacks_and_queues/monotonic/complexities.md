@@ -207,3 +207,77 @@ The time complexity of the algorithm is $O(n + m)$.
 In the worst case, where `nums_2` is strictly decreasing, the stack stores all elements from `nums_2` since there would be no pop operations. The space complexity of the stack is $O(n)$. Adding the space required for the hash map, which is $O(n)$, the total space complexity is $O(2n) = O(n)$.
 
 If we also consider the space required to store the output array, which is $O(m)$, the total space complexity becomes $O(n + m)$.
+
+---
+
+# Online Stock Span
+
+Design an algorithm to calculate the span of a stock's price for the current day based on daily price quotes. The span is the number of consecutive days (including today) where the price was less than or equal to the current price.
+
+**Example:**
+- Prices: `[7, 2, 1, 2]`, Today's price: `2` → Span: `4`
+- Prices: `[7, 34, 1, 2]`, Today's price: `8` → Span: `3`
+
+**Implement the `StockSpanner` class:**
+- `StockSpanner()`: Initializes the class instance.
+- `int next(int price)`: Returns the span for today's price.
+
+## Explanation
+
+We use a montonic decreasing stack to store pair of `(price, span)` for each day. The stack is used to calculate the span for the current day based on the previous days' prices.
+
+Given the example `[100, 80, 60, 70, 60, 75, 85]`:
+
+<center>
+
+| Step | Current Price | Action | Stack State | Span |
+|------|---------------|--------|-------------|------|
+| 1    | 100           | Initialized span to 1 | `[]` |   |
+| 2    |               | Append (100, 1) to the stack | `[(100, 1)]` | 1 |
+| 3    | 80            | Initialized span to 1 | `[(100, 1)]` |   |
+| 4    |               | Append (80, 1) to the stack | `[(100, 1), (80, 1)]` | 1 |
+| 5    | 60            | Initialized span to 1 | `[(100, 1), (80, 1)]` |   |
+| 6    |               | Append (60, 1) to the stack | `[(100, 1), (80, 1), (60, 1)]` | 1 |
+| 7    | 70            | Initialized span to 1 | `[(100, 1), (80, 1), (60, 1)]` |   |
+| 8    |               | The pair (60, 1) will be popped since its price (60) is lower than 70 | `[(100, 1), (80, 1)]` |   |
+| 9    |               | Append (70, 2) to the stack | `[(100, 1), (80, 1), (70, 2)]` | 2 |
+| 10   | 60            | Initialized span to 1 | `[(100, 1), (80, 1), (70, 2)]` |   |
+| 11   |               | Append (60, 1) to the stack | `[(100, 1), (80, 1), (70, 2), (60, 1)]` | 1 |
+| 12   | 75            | Initialized span to 1 | `[(100, 1), (80, 1), (70, 2), (60, 1)]` |   |
+| 13   |               | The pair (60, 1) will be popped since its price (60) is lower than 75 | `[(100, 1), (80, 1), (70, 2)]` |   |
+| 14   |               | The pair (70, 2) will be popped since its price (70) is lower than 75 | `[(100, 1), (80, 1)]` |   |
+| 15   |               | Append (75, 4) to the stack | `[(100, 1), (80, 1), (75, 4)]` | 4 |
+| 16   | 85            | Initialized span to 1 | `[(100, 1), (80, 1), (75, 4)]` |   |
+| 17   |               | The pair (75, 4) will be popped since its price (75) is lower than 85 | `[(100, 1), (80, 1)]` |   |
+| 18   |               | The pair (80, 1) will be popped since its price (80) is lower than 85 | `[(100, 1)]` |   |
+| 19   |               | Append (85, 6) to the stack | `[(100, 1), (85, 6)]` | 6 |
+
+</center>
+
+The spans for the given prices are `[1, 1, 1, 2, 1, 4, 6]`.
+
+## Time Complexity
+
+During each call to the `next` function, the algorithm performs the following operations:
+
+* Initialize the span to 1 in $O(1)$ time
+
+* `While` the stack is non-empty and the current price is greater than the price at the top of the stack:
+
+  - Pop the top of the stack in $O(1)$ time and use the stored span on that day to update the current day's span.
+
+* Push the current price and span onto the stack in $O(1)$ time.
+
+On any given day, assuming that the stack has $n$ pairs of `(price, span)` accumulated from previous days, the algorithm performs at most $O(n)$ pop operations if the current price is greater than all previously stored prices. 
+
+For example, if the prices are as follows `[100, 80, 60, 40, 30, 13, 102]`, the stack will contain the following pairs right before the last price is processed: `[(100, 1), (80, 1), (60, 1), (40, 1), (30, 1), (13, 1)]`. 
+
+When the price `102` is processed, the stack will be emptied, leading to $O(n)$ pop operations.
+
+Therefore, the worst case time complexity is $O(n)$ for the `next` function.
+
+## Space Complexity
+
+Considering the space required to store pairs of `(price, span)` in the stack, the space complexity is $O(n)$, where $n$ is the number of days for which the span is calculated. This occurs if the prics are strictly decreasing during the entire period of calculation.
+
+For instance, if the prices are `[100, 80, 60, 40, 30, 13, 10]`, all pairs will be stored in the stack.
