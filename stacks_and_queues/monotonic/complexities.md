@@ -281,3 +281,48 @@ Therefore, the worst case time complexity is $O(n)$ for the `next` function.
 Considering the space required to store pairs of `(price, span)` in the stack, the space complexity is $O(n)$, where $n$ is the number of days for which the span is calculated. This occurs if the prics are strictly decreasing during the entire period of calculation.
 
 For instance, if the prices are `[100, 80, 60, 40, 30, 13, 10]`, all pairs will be stored in the stack.
+
+---
+
+# Final Prices With a Special Discount in a Shop
+
+The integer array `prices` is such that `prices[i]` represents the price of the ith item in a shop
+
+For each item, if a later item has a price less than or equal to the current item's price, a discount is applied. The discount is equal to the price of the first such item found. If no such item exists, no discount is applied.
+
+Return an integer array `output`, where `output[i]` is the final price after applying the discount, if applicable.
+
+## Explanation
+
+Consider the example `prices = [8, 4, 6, 2, 3]`:
+
+<center>
+
+| Index | Stack | Current Price | Condition Check | Action | Prices |
+|-------|-------|---------------|-----------------|--------|------------------------|
+| 0     | []    | 8             | -               | Push index 0 onto the stack | [8, 4, 6, 2, 3]        |
+| 1     | [0]   | 4             | 4 < 8           | - Pop index 0 from the stack and apply discount <br> - Push index 1 onto the stack | [8 - 4 = 4, 4, 6, 2, 3]        |
+| 2     | [1]   | 6             | 6 > 4           | - Push index 2 onto the stack | [4, 4, 6, 2, 3]        |
+| 3     | [1, 2]| 2             | 2 < 6 and 2 < 4          | - Pop index 2 from the stack and apply discount <br> - Pop index 1 from the stack and apply discount <br> - Push index 3 onto the stack | [4, 4 - 2 = 2, 6 - 2 = 4, 2, 3]        |
+| 4     | [3]   | 3             | 3 > 2           | - Push index 4 onto the stack | [4, 2, 4, 2, 3]        |
+| NA   | [3, 4]| -             | -               | NA | [4, 2, 4, 2, 3]        |
+
+</center>
+
+The final prices after applying discounts are `[4, 2, 4, 2, 3]`.
+
+## Time Complexity
+
+Given $n$ prices in the input array `prices`, the algorithm carries out the following operations for each price:
+
+1. `While` the stack is not empty and the current price is less than the price at the top of the stack (i.e., a discount can be applied):
+
+   - Pop the top of the stack and apply the discount both in $O(1)$ time.
+
+2. Push the current price onto the stack in $O(1)$ time.
+
+When the input prices are strictly non-increasing, every index is pushed and popped from the stack except for the last index. This results in $O(n + n - 1) = O(2n - 1) = O(n)$ time complexity.
+
+## Space Complexity
+
+In the worst case, i.e., when the input prices are strictly increasing, every index will be pushed onto the stack and no pop operations will be performed. The space complexity of the stack is therefore $O(n)$.
