@@ -70,7 +70,8 @@
         "fstream": "cpp",
         "shared_mutex": "cpp",
         "dense": "cpp",
-        "sparse": "cpp"
+        "sparse": "cpp",
+        "memory_resource": "cpp"
     },
     "python.analysis.typeCheckingMode": "standard"
 }
