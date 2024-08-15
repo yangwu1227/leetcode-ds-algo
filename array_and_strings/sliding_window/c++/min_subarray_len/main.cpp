@@ -1,5 +1,5 @@
 // main.cpp
-#include "min_subarray_len.h"
+#include "min_subarray_len.hpp"
 #include <iostream>
 #include <vector>
 #include <boost/range/combine.hpp>

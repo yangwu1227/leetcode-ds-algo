@@ -1,6 +1,6 @@
-// min_subarray_len.h
-#ifndef MIN_SUBARRAY_LEN_H
-#define MIN_SUBARRAY_LEN_H
+// min_subarray_len.hpp
+#ifndef MIN_SUBARRAY_LEN_HPP
+#define MIN_SUBARRAY_LEN_HPP
 #include <vector>
 
 /**
