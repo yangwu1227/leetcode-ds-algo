@@ -1,10 +1,7 @@
 CXX = /usr/bin/g++
 
 # Compiler flags
-CXXFLAGS = -std=c++17 -fdiagnostics-color=always -I/opt/homebrew/Cellar/boost/1.85.0/include -I/opt/homebrew/Cellar/eigen/3.4.0_1/include/eigen3
-
-# Linker flags
-LDFLAGS = -L/opt/homebrew/Cellar/boost/1.85.0/lib -lboost_system
+CXXFLAGS = -std=c++17 -fdiagnostics-color=always -I/opt/homebrew/Cellar/boost/1.85.0/include 
 
 # Source and object files
 TARGET = main
@@ -13,7 +10,7 @@ OBJS = custom_bn_rng.o max_ones_k_flips.o
 
 # Rule to build the target executable from main.cpp and object files
 $(TARGET): $(MAIN_SRC) $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(MAIN_SRC) $(OBJS) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(MAIN_SRC) $(OBJS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
