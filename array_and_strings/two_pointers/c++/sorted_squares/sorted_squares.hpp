@@ -1,6 +1,6 @@
-// sorted_squares.h
-#ifndef SORTED_SQUARES_H
-#define SORTED_SQUARES_H
+// sorted_squares.hpp
+#ifndef SORTED_SQUARES_HPP
+#define SORTED_SQUARES_HPP
 #include <vector>
 
 /**

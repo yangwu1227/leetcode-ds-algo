@@ -1,6 +1,6 @@
-// max_ones_k_flips.h
-#ifndef MAX_ONES_K_FLIPS_H
-#define MAX_ONES_K_FLIPS_H
+// max_ones_k_flips.hpp
+#ifndef MAX_ONES_K_FLIPS_HPP
+#define MAX_ONES_K_FLIPS_HPP
 #include <vector>
 
 /**

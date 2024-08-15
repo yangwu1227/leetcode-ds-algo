@@ -1,7 +1,7 @@
 // main.cpp
 #include <iostream>
 #include <vector>
-#include "sorted_two_sum.h"
+#include "sorted_two_sum.hpp"
 #include <boost/range/combine.hpp> // Requires brew install boost (default location '/usr/local/include' must be added to includePath)
 
 int main()

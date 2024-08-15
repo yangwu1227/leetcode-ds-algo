@@ -1,5 +1,5 @@
 // main.cpp
-#include "move_zeros.h"
+#include "move_zeros.hpp"
 #include <vector>
 #include <iostream>
 

@@ -1,5 +1,5 @@
 // move_zeros.cpp
-#include "move_zeros.h"
+#include "move_zeros.hpp"
 #include <vector>
 
 void moveZeros(std::vector<int> &nums)

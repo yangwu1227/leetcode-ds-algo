@@ -1,6 +1,6 @@
-// custom_bn_rng.h
-#ifndef CUSTOM_BN_RNG_H
-#define CUSTOM_BN_RNG_H
+// custom_bn_rng.hpp
+#ifndef CUSTOM_BN_RNG_HPP
+#define CUSTOM_BN_RNG_HPP
 #include <vector>
 
 /**

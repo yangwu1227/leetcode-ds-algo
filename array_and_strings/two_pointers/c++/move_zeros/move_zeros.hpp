@@ -1,6 +1,6 @@
-// move_zeros.h
-#ifndef MOVE_ZEROS_H
-#define MOVE_ZEROS_H
+// move_zeros.hpp
+#ifndef MOVE_ZEROS_HPP
+#define MOVE_ZEROS_HPP
 #include <vector>
 
 /**

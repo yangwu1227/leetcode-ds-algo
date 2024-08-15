@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "reverse_words.h"
+#include "reverse_words.hpp"
 
 int main()
 {

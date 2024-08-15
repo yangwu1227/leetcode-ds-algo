@@ -1,5 +1,5 @@
 // main.cpp
-#include "minimum_common_integer.h"
+#include "minimum_common_integer.hpp"
 #include <vector>
 #include <iostream>
 #include <boost/range/combine.hpp>

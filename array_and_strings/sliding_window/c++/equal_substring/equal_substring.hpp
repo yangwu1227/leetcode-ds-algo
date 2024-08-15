@@ -1,6 +1,6 @@
-// equal_substring.h
-#ifndef EQUAL_SUBSTRING_H
-#define EQUAL_SUBSTRING_H
+// equal_substring.hpp
+#ifndef EQUAL_SUBSTRING_HPP
+#define EQUAL_SUBSTRING_HPP
 #include <string>
 
 /**

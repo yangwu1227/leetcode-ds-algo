@@ -1,6 +1,6 @@
-// reverse_prefix.h
-#ifndef REVERSE_PREFIX_H
-#define REVERSE_PREFIX_H
+// reverse_prefix.hpp
+#ifndef REVERSE_PREFIX_HPP
+#define REVERSE_PREFIX_HPP
 #include <string>
 
 /**

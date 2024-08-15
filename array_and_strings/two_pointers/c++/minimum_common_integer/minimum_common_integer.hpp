@@ -1,6 +1,6 @@
-// minimum_common_integer.h
-#ifndef MINIMUM_COMMON_INTEGER_H
-#define MINIMUM_COMMON_INTEGER_H
+// minimum_common_integer.hpp
+#ifndef MINIMUM_COMMON_INTEGER_HPP
+#define MINIMUM_COMMON_INTEGER_HPP
 #include <vector>
 
 /**

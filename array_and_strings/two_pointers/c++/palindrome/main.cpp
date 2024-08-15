@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string> // Explicitly include string, even if the header file already includes it
 #include <vector>
-#include "palindrome.h"
+#include "palindrome.hpp"
 
 int main()
 {

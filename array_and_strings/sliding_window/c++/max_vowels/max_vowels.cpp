@@ -1,5 +1,5 @@
 // max_vowels.cpp
-#include "max_vowels.h"
+#include "max_vowels.hpp"
 #include <string>
 #include <limits.h>
 #include <vector>

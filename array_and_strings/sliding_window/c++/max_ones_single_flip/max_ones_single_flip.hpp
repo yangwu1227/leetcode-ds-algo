@@ -1,6 +1,6 @@
-// binary_string.h
-#ifndef BINARY_STRING_H
-#define BINARY_STRING_H
+// binary_string.hpp
+#ifndef BINARY_STRING_HPP
+#define BINARY_STRING_HPP
 #include <string>
 
 /**

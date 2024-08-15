@@ -1,5 +1,5 @@
 // max_ones_k_flips.cpp
-#include "max_ones_k_flips.h"
+#include "max_ones_k_flips.hpp"
 #include <vector>
 
 int longestOnes(const std::vector<int> &nums, const int &k)

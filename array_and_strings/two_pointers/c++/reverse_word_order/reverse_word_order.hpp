@@ -1,6 +1,6 @@
-// reverse_word_order.h
-#ifndef REVERSE_WORD_ORDER_H
-#define REVERSE_WORD_ORDER_H
+// reverse_word_order.hpp
+#ifndef REVERSE_WORD_ORDER_HPP
+#define REVERSE_WORD_ORDER_HPP
 #include <string>
 
 /**

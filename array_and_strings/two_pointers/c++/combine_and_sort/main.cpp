@@ -2,8 +2,8 @@
 #include <iostream>
 #include <vector>
 #include <random>
-#include "combine_and_sort.h"
-#include "custom_rng.h"
+#include "combine_and_sort.hpp"
+#include "custom_rng.hpp"
 
 int main()
 {

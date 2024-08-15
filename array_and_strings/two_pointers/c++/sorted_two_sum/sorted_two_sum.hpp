@@ -1,6 +1,6 @@
-// sorted_two_sum.h
-#ifndef SORTED_TWO_SUM_H
-#define SORTED_TWO_SUM_H
+// sorted_two_sum.hpp
+#ifndef SORTED_TWO_SUM_HPP
+#define SORTED_TWO_SUM_HPP
 
 #include <vector>
 

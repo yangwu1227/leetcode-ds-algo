@@ -1,6 +1,6 @@
 // main.cpp
-#include "max_ones_k_flips.h"
-#include "custom_bn_rng.h"
+#include "max_ones_k_flips.hpp"
+#include "custom_bn_rng.hpp"
 #include <vector>
 #include <iostream>
 #include <boost/range/combine.hpp>

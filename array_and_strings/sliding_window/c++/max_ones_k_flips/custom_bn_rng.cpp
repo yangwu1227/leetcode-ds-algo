@@ -1,5 +1,5 @@
 // custom_bn_rng.cpp
-#include "custom_bn_rng.h"
+#include "custom_bn_rng.hpp"
 #include <vector>
 #include <random>
 

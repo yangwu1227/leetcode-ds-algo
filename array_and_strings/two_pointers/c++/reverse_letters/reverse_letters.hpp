@@ -1,6 +1,6 @@
-// reverse_letters.h
-#ifndef REVERSE_LETTERS_H
-#define REVERSE_LETTERS_H
+// reverse_letters.hpp
+#ifndef REVERSE_LETTERS_HPP
+#define REVERSE_LETTERS_HPP
 #include <string>
 
 /**

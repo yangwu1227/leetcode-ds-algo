@@ -1,5 +1,5 @@
 // palindrome.cpp
-#include "palindrome.h"
+#include "palindrome.hpp"
 
 bool checkIfPalindrome(const std::string &s)
 {

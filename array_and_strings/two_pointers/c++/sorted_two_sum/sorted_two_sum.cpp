@@ -1,5 +1,5 @@
-// sorted_two_sum.h
-#include "sorted_two_sum.h"
+// sorted_two_sum.cpp
+#include "sorted_two_sum.hpp"
 
 bool checkForTarget(std::vector<int> &nums, int target)
 {

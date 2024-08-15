@@ -1,6 +1,6 @@
 // is_subsequence.cpp
 #include <string>
-#include "is_subsequence.h"
+#include "is_subsequence.hpp"
 
 bool isSubsequence(const std::string &s, const std::string &t)
 {

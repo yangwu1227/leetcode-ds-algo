@@ -1,5 +1,5 @@
 // reverse_letters.cpp
-#include "reverse_letters.h"
+#include "reverse_letters.hpp"
 #include <string>
 
 std::string reverseLetters(std::string &s)

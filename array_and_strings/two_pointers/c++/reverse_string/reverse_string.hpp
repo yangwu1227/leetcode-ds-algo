@@ -1,6 +1,6 @@
-// reverse_string.h
-#ifndef REVERSE_STRING_H
-#define REVERSE_STRING_H
+// reverse_string.hpp
+#ifndef REVERSE_STRING_HPP
+#define REVERSE_STRING_HPP
 
 #include <vector>
 

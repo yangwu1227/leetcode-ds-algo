@@ -1,5 +1,5 @@
 // sorted_squares.cpp
-#include "sorted_squares.h"
+#include "sorted_squares.hpp"
 #include <vector>
 
 std::vector<int> sortedSquares(std::vector<int> nums)

@@ -1,5 +1,5 @@
 // main.cpp
-#include "equal_substring.h"
+#include "equal_substring.hpp"
 #include <string>
 #include <iostream>
 #include <boost/range/combine.hpp>

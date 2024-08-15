@@ -1,6 +1,6 @@
-// palindrome.h
-#ifndef PALINDROME_H
-#define PALINDROME_H
+// palindrome.hpp
+#ifndef PALINDROME_HPP
+#define PALINDROME_HPP
 
 #include <string>
 

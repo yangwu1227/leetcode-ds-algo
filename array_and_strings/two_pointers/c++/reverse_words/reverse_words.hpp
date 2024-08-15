@@ -1,6 +1,6 @@
-// reverse_words.h
-#ifndef REVERSE_WORDS_H
-#define REVERSE_WORDS_H
+// reverse_words.hpp
+#ifndef REVERSE_WORDS_HPP
+#define REVERSE_WORDS_HPP
 
 #include <string>
 

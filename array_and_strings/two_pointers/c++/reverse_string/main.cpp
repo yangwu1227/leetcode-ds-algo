@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "reverse_string.h"
+#include "reverse_string.hpp"
 
 int main()
 {

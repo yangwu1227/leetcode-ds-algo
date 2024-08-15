@@ -1,5 +1,5 @@
 // reverse_prefix.cpp
-#include "reverse_prefix.h"
+#include "reverse_prefix.hpp"
 #include <string>
 
 std::string reversePrefix(std::string &word, const char &ch)

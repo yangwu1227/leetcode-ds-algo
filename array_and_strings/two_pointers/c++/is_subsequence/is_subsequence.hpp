@@ -1,6 +1,6 @@
-// is_subsequence.h
-#ifndef IS_SUBSEQUENCE_H
-#define IS_SUBSEQUENCE_H
+// is_subsequence.hpp
+#ifndef IS_SUBSEQUENCE_HPP
+#define IS_SUBSEQUENCE_HPP
 
 #include <string>
 

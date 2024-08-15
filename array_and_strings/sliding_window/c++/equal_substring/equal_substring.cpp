@@ -1,5 +1,5 @@
 // equal_substring.cpp
-#include "equal_substring.h"
+#include "equal_substring.hpp"
 #include <string>
 
 int equalSubstring(const std::string &s, const std::string &t, const int maxCost)

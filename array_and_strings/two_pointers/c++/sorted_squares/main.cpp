@@ -1,5 +1,5 @@
 // main.cpp
-#include "sorted_squares.h"
+#include "sorted_squares.hpp"
 #include <vector>
 #include <iostream>
 

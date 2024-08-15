@@ -1,5 +1,5 @@
 // main.cpp
-#include "max_ones_single_flip.h"
+#include "max_ones_single_flip.hpp"
 #include <iostream>
 #include <string>
 #include <vector>

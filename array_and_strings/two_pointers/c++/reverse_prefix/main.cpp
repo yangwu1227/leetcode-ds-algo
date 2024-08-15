@@ -1,5 +1,5 @@
 // main.cpp
-#include "reverse_prefix.h"
+#include "reverse_prefix.hpp"
 #include <string>
 #include <boost/range/combine.hpp>
 #include <vector>

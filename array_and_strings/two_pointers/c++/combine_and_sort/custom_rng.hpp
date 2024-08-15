@@ -1,6 +1,6 @@
-// custom_rng.h
-#ifndef CUSTOM_RNG_H
-#define CUSTOM_RNG_H
+// custom_rng.hpp
+#ifndef CUSTOM_RNG_HPP
+#define CUSTOM_RNG_HPP
 
 #include <vector>
 

@@ -1,6 +1,6 @@
-// combine_and_sort.h
-#ifndef COMBINE_AND_SORT_H
-#define COMBINE_AND_SORT_H
+// combine_and_sort.hpp
+#ifndef COMBINE_AND_SORT_HPP
+#define COMBINE_AND_SORT_HPP
 
 #include <vector>
 

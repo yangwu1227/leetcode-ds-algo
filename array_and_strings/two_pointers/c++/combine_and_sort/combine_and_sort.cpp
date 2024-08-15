@@ -1,5 +1,5 @@
 // combine_and_sort.cpp
-#include "combine_and_sort.h"
+#include "combine_and_sort.hpp"
 #include <vector>
 
 std::vector<int> combine(const std::vector<int> &arr1, const std::vector<int> &arr2)
