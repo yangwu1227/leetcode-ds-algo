@@ -1,6 +1,6 @@
-// subarray_sum.h
-#ifndef SUBARRAY_SUM_H
-#define SUBARRAY_SUM_H
+// subarray_sum.hpp
+#ifndef SUBARRAY_SUM_HPP
+#define SUBARRAY_SUM_HPP
 #include <vector>
 
 /**

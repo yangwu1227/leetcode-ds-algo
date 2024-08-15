@@ -1,5 +1,5 @@
 // main.cpp
-#include "product_less_than_k.h"
+#include "product_less_than_k.hpp"
 #include <vector>
 #include <iostream>
 #include <boost/range/combine.hpp>

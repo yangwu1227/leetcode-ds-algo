@@ -2,7 +2,7 @@
 #include <vector>
 #include <random>
 #include <algorithm>  // Include for std::sort
-#include "custom_rng.h"
+#include "custom_rng.hpp"
 
 std::vector<int> generateRandomVector(size_t size, int min, int max)
 {

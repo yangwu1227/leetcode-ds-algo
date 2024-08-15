@@ -1,5 +1,5 @@
 // product_less_than_k.cpp
-#include "product_less_than_k.h"
+#include "product_less_than_k.hpp"
 #include <vector>
 
 int numSubarraysProductLessThanK(const std::vector<int> &nums, const int &k)

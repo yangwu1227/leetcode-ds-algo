@@ -1,5 +1,5 @@
 // subarray_sum.cpp
-#include "subarray_sum.h"
+#include "subarray_sum.hpp"
 #include <vector>
 
 int findBestSubarray(const std::vector<int> &nums, const int &k)

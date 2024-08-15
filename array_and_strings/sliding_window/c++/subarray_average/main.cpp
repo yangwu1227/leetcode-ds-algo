@@ -1,6 +1,6 @@
 // main.cpp
-#include "subarray_average.h"
-#include "custom_rng.h"
+#include "subarray_average.hpp"
+#include "custom_rng.hpp"
 #include <vector>
 #include <iostream>
 #include <boost/range/combine.hpp>

@@ -1,6 +1,6 @@
-// product_less_than_k.h
-#ifndef PRODUCT_LESS_THAN_K_H
-#define PRODUCT_LESS_THAN_K_H
+// product_less_than_k.hpp
+#ifndef PRODUCT_LESS_THAN_K_HPP
+#define PRODUCT_LESS_THAN_K_HPP
 #include <vector>
 
 /**
