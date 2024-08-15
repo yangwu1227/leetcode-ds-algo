@@ -326,3 +326,54 @@ When the input prices are strictly non-increasing, every index is pushed and pop
 ## Space Complexity
 
 In the worst case, i.e., when the input prices are strictly increasing, every index will be pushed onto the stack and no pop operations will be performed. The space complexity of the stack is therefore $O(n)$.
+
+---
+
+# Number of Visible People in a Queue
+
+Given `n` people in a queue numbered from `0` to `n-1`, each with a distinct height in the array `heights`, where `heights[i]` is the height of the `i-th` person:
+
+A person `i` can see person `j` to their right if `i < j` and `min(heights[i], heights[j]) > max(heights[i + 1], heights[i + 2], ..., heights[j - 1])`.
+
+Return an array `output` of length `n` where `output[i]` is the number of people the `i-th` person can see to their right.
+
+## Explanation
+
+Consider `heights = [9, 10, 7, 2, 12, 13, 17]`:
+
+<center>
+
+| Person | Height | Initial Stack State  | Top of Stack Comparison                                                                                 | Action                                                                                                          | Final Visible Count | Stack After Processing |
+|--------|--------|----------------------|-----------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|---------------------|------------------------|
+| 6      | 17     | []                   | N/A                                                                                                       | - The only visible person to person at index 6 is themselves. <br> - Push person with height 17 to the top of the stack. | 0                   | [17]                   |
+| 5      | 13     | [17]                 | Person at index 5 with height 13 is shorter than top of the stack person with height 17; no pop operations | - The only visible person to person at index 5 is the person at index 6 with height 17. <br> - Push person with height 13 to the top of the stack. | 1                   | [17, 13]               |
+| 4      | 12     | [17, 13]             | Person at index 4 with height 12 is shorter than top of the stack person with height 13; no pop operations | - The only visible person to person at index 4 is the person at index 5 with height 13. <br> - Push person with height 12 to the top of the stack. | 1                   | [17, 13, 12]           |
+| 3      | 2      | [17, 13, 12]         | Person at index 3 with height 2 is shorter than top of the stack person with height 12; no pop operations  | - The only visible person to person at index 3 is the person at index 4 with height 12. <br> - Push person with height 2 to the top of the stack. | 1                   | [17, 13, 12, 2]        |
+| 2      | 7      | [17, 13, 12, 2]      | Person at index 2 with height 7 is taller than top of the stack person with height 2; pop person with height 2 | - The second visible person to person at index 2 is the person at index 4 with height 12. <br> - Push person with height 7 to the top of the stack. | 2                   | [17, 13, 12, 7]        |
+| 1      | 10     | [17, 13, 12, 7]      | Person at index 1 with height 10 is taller than top of the stack person with height 7; pop person with height 7 | - The second visible person to person at index 1 is the person at index 4 with height 12. <br> - Push person with height 10 to the top of the stack. | 2                   | [17, 13, 12, 10]       |
+| 0      | 9      | [17, 13, 12, 10]     | Person at index 0 with height 9 is shorter than top of the stack person with height 10; no pop operations | - The only visible person to person at index 0 is the person at index 1 with height 10. <br> - Push person with height 9 to the top of the stack. | 1                   | [17, 13, 12, 10, 9]    |
+
+</center>
+
+## Time Complexity
+
+Given $n$ people in the queue, the algorithm processes each person from left to right. For each person, the algorithm performs the following operations:
+
+* Initialize the visible count to 0 in $O(1)$ time.
+
+* `While` the stack is not empty and the current person is taller than the person at the top of the stack:
+
+  - Increment the visible count of the current person in $O(1)$ time.
+  - Pop the top of the stack in $O(1)$ time because this person is seen by the current person now.
+
+* Check if the stack is non-empty, and if so, increment the visible count of the current person in $O(1)$ time; this accounts for the fact that, even if the current person is shorter than the top of the stack, this person is still the last visible person to the current person.
+
+* Update the output array with the visible count of the current person in $O(1)$ time.
+
+* Push the current person onto the stack in $O(1)$ time.
+
+In the worst case, such that the heights are strictly decreasing, there would be $n$ push operations and $n - 1$ pop operations (i.e., the first person is pushed but never popped). Therefore, the total amount of work done inside the `for` loop is proportional to $O(2n - 1) = O(n)$.
+
+## Space Complexity
+
+In the worst case, such that the heights are strictly increasing, the stack would store all $n$ heights as there would be no pop operations. The space complexity of the stack is therefore $O(n)$.
