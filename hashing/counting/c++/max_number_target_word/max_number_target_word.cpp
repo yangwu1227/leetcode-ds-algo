@@ -95,11 +95,11 @@ int MaxNumberTargetWord::transformReduce(const std::string &text, const std::str
         // Reduce function applied to each consecutive output of the transform function below
         [](int currentMax, int nextMax)
         { return std::min(currentMax, nextMax); },
-        // Transform function applied to each pair of (targetCharacter, targetCount)
-        [&textCounts](const auto &targetCount)
+        // Transform function applied to each pair of (targetCharacter, targetCountPair)
+        [&textCounts](const auto &targetCountPair)
         {
-            const auto &[targetCharacter, targetCount] = targetCount;
-            // If the targetCharater is not found in textCounts hash map, we cannot form the target word using characters in `text`
+            const auto &[targetCharacter, targetCount] = targetCountPair;
+            // If the targetCharacter is not found in textCounts hash map, we cannot form the target word using characters in `text`
             if (textCounts.find(targetCharacter) == textCounts.end())
             {
                 return 0;
