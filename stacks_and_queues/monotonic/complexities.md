@@ -386,88 +386,49 @@ Given an array of integers `x`, find the sum of the minimum elements of each sub
 
 ## Explanation
 
-```python
-def sum_subarray_mins(x: MutableSequence) -> int:
-   mod = 10**9 + 7
-   n = len(x)
-   left_spans: List[int] = [0] * n
-   right_spans: List[int] = [0] * n 
-
-   print(f"Initial left minimum spans = {left_spans}")
-   print(f"Initial right minimum spans = {right_spans}")
-
-   monotonic_increasing: Deque[int] = deque()
-   print(f"Initialized monotonic increasing stack = {monotonic_increasing}")
-      
-   # For each x[i], find its minimum span to its left
-   for i in range(n):
-      print(f"\nProcessing element {x[i]} at index {i}")
-      while monotonic_increasing and x[monotonic_increasing[-1]] >= x[i]:
-         print(f"  Popping index {monotonic_increasing[-1]} (value: {x[monotonic_increasing[-1]]}) because it's >= {x[i]}")
-         monotonic_increasing.pop()
-      
-      left_spans[i] = i + 1 if not monotonic_increasing else i - monotonic_increasing[-1]
-      monotonic_increasing.append(i)
-      print(f"  Updated left_spans[{i}] = {left_spans[i]}")
-      print(f"  Stack after processing {x[i]}: {list(monotonic_increasing)}")
-
-   monotonic_increasing.clear()
-      
-   # For each x[i], find its minimum span to its right
-   for i in range(n - 1, -1, -1):
-      print(f"\nProcessing element {x[i]} at index {i}")
-      while monotonic_increasing and x[monotonic_increasing[-1]] > x[i]:
-         print(f"Popping index {monotonic_increasing[-1]} (value: {x[monotonic_increasing[-1]]}) because it's > {x[i]}")
-         monotonic_increasing.pop()
-      
-      right_spans[i] = n - i if not monotonic_increasing else monotonic_increasing[-1] - i
-      monotonic_increasing.append(i)
-      print(f"Updated right_spans[{i}] = {right_spans[i]}")
-      print(f"Stack after processing {x[i]}: {list(monotonic_increasing)}")
-
-   output = 0
-   for i in range(n):
-      contribution = x[i] * left_spans[i] * right_spans[i]
-      output = (output + contribution) % mod
-      print(f"Contribution of element {x[i]} at index {i}: {x[i]} * {left_spans[i]} * {right_spans[i]} = {contribution}")
-      print(f"Updated output: {output}")
-
-   return output
-```
-
 Given `x = [11, 81, 94, 43, 3]`:
 
 ### Left Span Calculation
+
+The left minimum span of each element is calculated by finding the distance to the previous smaller element to the left of the current element. In other words, it represents the number of subarrays that end with the current element and have the current element as the minimum.
 
 <center>
 
 | Element | Index | Stack Before | Condition | Stack After | Left Span Calculation | Left Span Value |
 |---------|-------|--------------|-----------|-------------|-----------------------|-----------------|
-| 11      | 0     | []           | -         | [0]         | `left_spans[0] = 0 + 1` | 1               |
-| 81      | 1     | [0]          | 11 >= 81  | [0, 1]      | `left_spans[1] = 1 - 0` | 1               |
-| 94      | 2     | [0, 1]       | 81 >= 94  | [0, 1, 2]   | `left_spans[2] = 2 - 1` | 1               |
-| 43      | 3     | [0, 1, 2]    | 94 >= 43  | [0, 3]      | `left_spans[3] = 3 - 0` | 3               |
-| 3       | 4     | [0, 3]       | 43 >= 3   | [4]         | `left_spans[4] = 4 - (-1)` | 5           |
+| 11      | 0     | []           | -         | [0]         | `left_spans[0] = 0 + 1` since stack is empty at this point | 1               |
+| 81      | 1     | [0]          | 11 >= 81 is `False`  | [0, 1]      | `left_spans[1] = 1 - 0` | 1               |
+| 94      | 2     | [0, 1]       | 81 >= 94 is `False`  | [0, 1, 2]   | `left_spans[2] = 2 - 1` | 1               |
+| 43      | 3     | [0, 1, 2]    | 94 >= 43 and 81 >= 43 are both `True` so pop index 2 and 1 | [0, 3]      | `left_spans[3] = 3 - 0` | 3               |
+| 3       | 4     | [0, 3]       | 43 >= 3 and 11 >= 3 are both `True` so pop index 3 and 0   | [4]         | `left_spans[4] = 4 + 1` since stack is empty at this point | 5           |
 
 </center>
 
 ### Right Span Calculation
 
+Similarly, the right minimum span of each element is calculated by finding the distance to the next smaller element to the right of the current element. This span represents the number of subarrays that start with the current element and have the current element as the minimum.
+
 <center>
 
 | Element | Index | Stack Before | Condition          | Stack After | Right Span Calculation | Right Span Value |
 |---------|-------|--------------|--------------------|-------------|------------------------|------------------|
-| 3       | 4     | []           | -                  | [4]         | `right_spans[4] = 5 - 4` | 1               |
-| 43      | 3     | [4]          | 3 > 43             | [4, 3]      | `right_spans[3] = 4 - 3` | 1               |
-| 94      | 2     | [4, 3]       | 43 > 94            | [4, 3, 2]   | `right_spans[2] = 3 - 2` | 1               |
-| 81      | 1     | [4, 3, 2]    | 94 > 81            | [4, 3, 1]   | `right_spans[1] = 3 - 1` | 2               |
-| 11      | 0     | [4, 3, 1]    | 81 > 11, 43 > 11   | [4, 0]      | `right_spans[0] = 4 - 0` | 4               |
+| 3       | 4     | []           | -                  | [4]         | `right_spans[4] = 5 - 4` since the stack is empty at this point | 1               |
+| 43      | 3     | [4]          | 3 > 43 is `False`             | [4, 3]      | `right_spans[3] = 4 - 3` | 1               |
+| 94      | 2     | [4, 3]       | 43 > 94 is `False`            | [4, 3, 2]   | `right_spans[2] = 3 - 2` | 1               |
+| 81      | 1     | [4, 3, 2]    | 94 > 81 is `True`            | [4, 3, 1]   | `right_spans[1] = 3 - 1` | 2               |
+| 11      | 0     | [4, 3, 1]    | 81 > 11 and 43 > 11 are both `True` so pop index 1 and 3   | [4, 0]      | `right_spans[0] = 4 - 0` | 4               |
 
 </center>
 
 ### Final Contribution and Output Calculation
 
-<center>
+The contribution of each element to the final output is calculated as the product of the element, its left span, and its right span. The cumulative output is updated after each element is processed.
+
+$$
+\begin{aligned}
+\text{Contribution of element x[i] to the minimum sum} &= \text{x[i]} \times \text{left spans[i]} \times \text{right spans[i]} 
+\end{aligned}
+$$
 
 | Element | Index | Left Span | Right Span | Contribution Formula | Contribution Value | Cumulative Output |
 |---------|-------|-----------|------------|----------------------|--------------------|-------------------|
@@ -483,7 +444,7 @@ The sum of the minimum elements of each subarray of `x` is `444`.
 
 ## Time Complexity
 
-The time complexity of the left and right minimum span calculations is $O(n)$, where $n$ is the number of elements in the input array `x`. 
+The time complexity of the left and right minimum span calculations are $O(n)$, where $n$ is the number of elements in the input array `x`. 
 
 The time complexity of the final contribution and output calculation is also $O(n)$.
 
@@ -493,10 +454,12 @@ The total time complexity of the algorithm is therefore $O(n)$.
 
 The following data structures are used in the algorithm:
 
-* Two arrays of size $n$ to store the left and right minimum spans, respectively.
+* Two arrays of size $n$ to store the left and right minimum spans, respectively, costing $O(n)$ space.
 
-* A deque to store the indices of the elements in the input array `x`.
+* A deque to store the indices of the elements in the input array `x`. In the worst case, the deque stores all indices from the input array during either the left or right span calculations. This happens when the input array is strictly increasing or decreasing. 
 
-In the worst case, the deque stores all indices from the input array during either the left or right span calculation. This happens when the input array is strictly increasing or decreasing. 
+   - For example, if the input array is `[1, 2, 3, 4, 5]`, the deque after the left span calculation will contain all indices from the input array `[0, 1, 2, 3, 4]`.
 
-The space complexity of the algorithm is therefore $O(n)$.
+   - If the input array is `[5, 4, 3, 2, 1]`, the deque after the left span calculation will contain all indices from the input array `[4, 3, 2, 1, 0]`.
+
+Therefore, the overall space complexity of the algorithm is therefore $O(n)$.
