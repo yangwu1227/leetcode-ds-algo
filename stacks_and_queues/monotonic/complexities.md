@@ -442,6 +442,75 @@ $$
 
 The sum of the minimum elements of each subarray of `x` is `444`.
 
+### Condition Checks for Left and Right Spans
+
+To calculate the left and right spans of an element, the following conditions are used:
+
+- **Left Span:** `x[stack[-1]] >= x[i]` — This ensures the top of the stack is always the first element to the left that is less than the current element `x[i]`.
+- **Right Span:** `x[stack[-1]] > x[i]` — This ensures the top of the stack is always the first element to the right that is less than or equal to `x[i]`.
+
+This approach avoids double counting by ensuring that subarray intervals are unique for each element.
+
+### Example with Array `x = [1, 7, 3, 9, 4, 3, 0]`
+
+#### Double Counting Issue
+
+Consider the element `3` at index `2`:
+
+- **Left Span:** The previous smaller element is at index `0` because `1 < 3`.
+- **Right Span:** The next smaller element is at index `6` because `0 < 3`.
+
+If both checks use "less than," the subarray where `3` is the minimum is incorrectly calculated as `x[0:-1]`:
+
+```
+[1, 7, 3, 9, 4, 3, 0]
+ *     ^           *
+```
+
+For the element `3` at index `5`:
+
+- **Left Span:** The previous smaller element is again at index `0` because `1 < 3`.
+- **Right Span:** The next smaller element is at index `6` because `0 < 3`.
+
+This results in the same subarray `x[0:6]`:
+
+```
+[1, 7, 3, 9, 4, 3, 0]
+ *              ^  *
+```
+
+Therefore, we would be double counting the subarray where `3` is the minimum.
+
+#### Avoiding Double Counting
+
+To avoid double counting, use "less than" for the left span (i.e., pop if the top of the stack is $>= x[i]$) and "less than or equal to" for the right span (i.e., pop if the top of the stack is $> x[i]$).
+
+For the element `3` at index `2`:
+
+- **Left Span:** The previous smaller element is at index `0`.
+- **Right Span:** The next smaller element is at index `5` because `3 <= 3`.
+
+The correct subarray where the first `3` is the minimum is `x[0:5]`:
+
+```
+[1, 7, 3, 9, 4, 3, 0]
+ *     ^        *   
+```
+
+For the element `3` at index `5`:
+
+- **Left Span:** The previous smaller element is at index `0`.
+- **Right Span:** The next smaller element is at index `6` because `0 <= 3`.
+
+The subarray where the second `3` is the minimum is `x[0:6]`:
+
+```
+[1, 7, 3, 9, 4, 3, 0]
+ *              ^  *
+```
+
+Using these conditions ensures each subarray interval is unique and accurately represents where each element is the minimum.
+
 ## Time Complexity
 
 The time complexity of the left and right minimum span calculations are $O(n)$, where $n$ is the number of elements in the input array `x`. 
