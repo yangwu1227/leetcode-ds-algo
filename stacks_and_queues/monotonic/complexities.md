@@ -532,3 +532,140 @@ The following data structures are used in the algorithm:
    - If the input array is `[5, 4, 3, 2, 1]`, the deque after the left span calculation will contain all indices from the input array `[4, 3, 2, 1, 0]`.
 
 Therefore, the overall space complexity of the algorithm is therefore $O(n)$.
+
+---
+
+# Sum of Subarray Ranges
+
+Given an integer array `nums`, find the sum of all subarray ranges. A subarray range is defined as the difference bewteen the maximum and minimum elements in a subarray.
+
+## Explanation
+
+Consider the example `nums = [4, -2, -3, 4, 1]` with $k$ continuous subarrays, the sum of all subarray ranges can be calculated as follows:
+
+$$
+\begin{aligned}
+\sum_{k} \text{subarray range} &= \sum_{k} (\text{max value of kth subarray} - \text{min of kth subarray}) \\
+&= \sum_{k} \text{max value of kth subarray} - \sum_{k} \text{min of kth subarray}
+\end{aligned}
+$$
+
+The sum of all subarray ranges is the difference between the sum of the differences between the maximum and minimum values of all subarrays.
+
+Using the linearity of the summations operator, we can calculate the sum of the maximum and minimum values of all subarrays separately before taking the difference between the two sums.
+
+### Minimum Span Calculation
+
+The minimum span of each element is the number of continuous subarrays that has the current element as the minimum. 
+
+$$
+\begin{aligned}
+\sum_{k} \text{min of kth subarray} &= \sum_{i = 1}^{n} \text{min span of element i} \times \text{element i}
+\end{aligned}
+$$
+
+where $n$ is the number of elements in the input array `nums`. In words, this means that the sum of minimum values of all $k$ subarrays is the sum of the products between each element and the number of times it is the minimum value of a unique subarray.
+
+We can use a monotonic increasing stack to calculate the minimum span of each element, using it update the sum of the minimum values of all subarrays. Each time a index needs to be popped to maintain the monotonic increasing property, the number of subarrays that end with the current element and have the popped element as the minimum is calculated.
+
+Define the following variables:
+
+* `i` is the index of the element at the top of the stack
+
+* `right` is the current index, whose corresponding element is less than the element at the top of the stack
+
+* `left` is the index of the element that is the previous smaller element to the element at the top of the stack
+
+* `(i - left)` is the number of possible starting positions of unique subarrays with element $i$ as the minimum
+
+* `(right - i)` is the number of possible ending positions of unique subarrays with element $i$ as the minimum
+
+Therefore, the number of continous subarrays that has element $i$ as the minimum is `(i - left)` $\times$ `(right - i)` using the multiplication principle of counting:
+
+$$
+\begin{aligned}
+\text{min span of element i} &= (i - left) \times (right - i)
+\end{aligned}
+$$
+
+<center>
+
+| Iteration | Details | Stack | Condition | Equation | Output |
+|-----------|---------|-------|-----------|----------|--------|
+| **Initialization** | Initialized output to 0 | - Indices: `[]` <br> - Elements: `[]` |  |  | 0 |
+| **Processing index 0** | nums[0] = 4 | - Indices: `[]` <br> - Elements: `[]`  | Stack is non-empty? False |  | 0 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[0]` <br> - Elements: `[4]` |  |  | 0 |
+| **Processing index 1** | nums[1] = -2 | - Indices: `[0]` <br> - Elements: `[4]` | Stack is non-empty? True and (top of stack: 4) >= (current element: -2)? True |  | 0 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 0, which corresponds to 4 | - Indices: `[]` <br> - Elements: `[]` |  | `output -= 4 * (0 - -1) * (1 - 0)` | -4 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[1]` <br> - Elements: `[-2]` |  |  | -4 |
+| **Processing index 2** | nums[2] = -3 | - Indices: `[1]` <br> - Elements: `[-2]` | Stack is non-empty? True and (top of stack: -2) >= (current element: -3)? True |  | -4 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 1, which corresponds to -2 | - Indices: `[]` <br> - Elements: `[]` |  | `output -= -2 * (1 - -1) * (2 - 1)` | 0 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[2]` <br> - Elements: `[-3]` |  |  | 0 |
+| **Processing index 3** | nums[3] = 4 | - Indices: `[2]` <br> - Elements: `[-3]` | Stack is non-empty? True and (top of stack: -3) >= (current element: 4)? False |  | 0 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[2, 3]` <br> - Elements: `[-3, 4]` |  |  | 0 |
+| **Processing index 4** | nums[4] = 1 | - Indices: `[2, 3]` <br> - Elements: `[-3, 4]` | Stack is non-empty? True and (top of stack: 4) >= (current element: 1)? True |  | 0 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 3, which corresponds to 4 | - Indices: `[2]` <br> - Elements: `[-3]` |  | `output -= 4 * (3 - 2) * (4 - 3)` | -4 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[2, 4]` <br> - Elements: `[-3, 1]` |  |  | -4 |
+| **Processing index 5** | end of array | - Indices: `[2, 4]` <br> - Elements: `[-3, 1]` | Stack is non-empty? True and end of array? True |  | -4 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 4, which corresponds to 1 | - Indices: `[2]` <br> - Elements: `[-3]` |  | `output -= 1 * (4 - 2) * (5 - 4)` | -6 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 2, which corresponds to -3 | - Indices: `[]` <br> - Elements: `[]` |  | `output -= -3 * (2 - -1) * (5 - 2)` | 21 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[5]` <br> - Elements: `[NA]` (Dummy index 5) |  |  | 21 |
+
+</center>
+
+### Maximum Span Calculation
+
+Similarly, the maximum span of each element is the number of continuous subarrays that has the current element as the maximum.
+
+$$
+\begin{aligned}
+\sum_{k} \text{max of kth subarray} &= \sum_{i = 1}^{n} \text{max span of element i} \times \text{element i}
+\end{aligned}
+$$
+
+In words, this means that the sum of maximum values of all $k$ subarrays is the sum of the products between each element and the number of times it is the maximum value of a unique subarray. Given the same set of variables:
+
+* `i` is the index of the element at the top of the stack
+
+* `right` is the current index, whose corresponding element is greater than the element at the top of the stack
+
+* `left` is the index of the element that is the previous greater element to the element at the top of the stack
+
+$$
+\begin{aligned}
+\text{max span of element i} &= (i - left) \times (right - i)
+\end{aligned}
+$$
+
+<center>
+
+| Iteration | Details | Stack | Condition | Equation | Output |
+|-----------|---------|-------|-----------|----------|--------|
+| **Initialization** | Initialized output to 21 | - Indices: `[]` <br> - Elements: `[]` |  |  | 21 |
+| **Processing index 0** | nums[0] = 4 | - Indices: `[]` <br> - Elements: `[]` | Stack is non-empty? False |  | 21 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[0]` <br> - Elements: `[4]` |  |  | 21 |
+| **Processing index 1** | nums[1] = -2 | - Indices: `[0]` <br> - Elements: `[4]` | Stack is non-empty? True and (top of stack: 4) <= (current element: -2)? False |  | 21 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[0, 1]` <br> - Elements: `[4, -2]` |  |  | 21 |
+| **Processing index 2** | nums[2] = -3 | - Indices: `[0, 1]` <br> - Elements: `[4, -2]` | Stack is non-empty? True and (top of stack: -2) <= (current element: -3)? False |  | 21 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[0, 1, 2]` <br> - Elements: `[4, -2, -3]` |  |  | 21 |
+| **Processing index 3** | nums[3] = 4 | - Indices: `[0, 1, 2]` <br> - Elements: `[4, -2, -3]` | Stack is non-empty? True and (top of stack: -3) <= (current element: 4)? True |  | 21 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 2 since (top of stack: -3) <= (current element: 4) | - Indices: `[0, 1]` <br> - Elements: `[4, -2]` |  | `output += -3 * (2 - 1) * (3 - 2)` | 18 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 1 since (top of stack: -2) <= (current element: 4) | - Indices: `[0]` <br> - Elements: `[4]` |  | `output += -2 * (1 - 0) * (3 - 1)` | 14 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 0 since (top of stack: 4) <= (current element: 4) | - Indices: `[]` <br> - Elements: `[]` |  | `output += 4 * (0 - -1) * (3 - 0)` | 26 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[3]` <br> - Elements: `[4]` |  |  | 26 |
+| **Processing index 4** | nums[4] = 1 | - Indices: `[3]` <br> - Elements: `[4]` | Stack is non-empty? True and (top of stack: 4) <= (current element: 1)? False |  | 26 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[3, 4]` <br> - Elements: `[4, 1]` |  |  | 26 |
+| **Processing index 5** | end of array | - Indices: `[3, 4]` <br> - Elements: `[4, 1]` | Stack is non-empty? True and end of array? True |  | 26 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 4, which corresponds to 1 | - Indices: `[3]` <br> - Elements: `[4]` |  | `output += 1 * (4 - 3) * (5 - 4)` | 27 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**While Loop** | Popping index 3, which corresponds to 4 | - Indices: `[]` <br> - Elements: `[]` |  | `output += 4 * (3 - -1) * (5 - 3)` | 59 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Push to stack** | | - Indices: `[5]` <br> - Elements: `[NA]` (Dummy index 5) |  |  | 59 |
+
+</center>
+
+## Time Complexity
+
+The time complexity of the minimum and maximum span calculations are both $O(n)$, where $n$ is the number of elements in the input array `nums`. Therefore, the overall time complexity of the algorithm is $O(n)$.
+
+## Space Complexity
+
+Two stacks are used to store the indices of the elements in the input array `nums`. If the input array is strictly increasing or decreasing, the space complexity of the stack is $O(n)$ in the worst case.
