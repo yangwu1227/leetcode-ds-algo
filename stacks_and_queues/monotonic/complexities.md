@@ -743,3 +743,83 @@ Two data structures are used to store the indices of the elements:
 * An array to store the next smaller index for each element, which is always $o(n)$
 
 Therefore, the overall space complexity of the algorithm is $O(n)$.
+
+---
+
+# Maximum Number of Robots Within Budget
+
+Given $n$ machines, each with a **charge cost** and **running cost** represented by two integer arrays, `charge_times` and `running_costs`, and an integer `budget`, the task is to determine the maximum number of consecutive machines that can be operated without exceeding the budget.
+
+For any group of **k** consecutive machines, the **total cost** is calculated as:
+
+- Total Cost = max(charge_times) + k $\times$ sum(running_costs)
+
+Where:
+
+- max(charge_times) is the highest charge cost among the selected **k** machines
+- sum(running_costs) is the sum of the running costs of those **k** machines
+
+Find the maximum length of consecutive machines that can be run without the total cost exceeding the given budget.
+
+## Explanation
+
+Given `charge_times = [3, 6, 1, 3, 4]`, `running_costs = [2, 1, 3, 4, 5]`, and `budget = 25`, the problem can be solved using a sliding window approach combined with a monotonic non-increasing deque.
+
+The monotonic deque is maintained by removing elements from the back if the current element is greater than the back of the deque. This ensures that the deque remains in non-increasing order.
+
+The front of the deque always contains the index of the machine with the maximum charge time in the current window. This allows efficient calculation of the total cost at each step. If the total cost exceeds the budget, the window is shrunk, and the front of the deque is *removed only if it's no longer within the window*.
+
+<center>
+
+| Iteration              | Details                                                                                               | Deque - Indices        | Deque - Charge Times | Sum of Running Costs | k   | Condition                                                                                                     | Max Window Size |
+|------------------------|-------------------------------------------------------------------------------------------------------|------------------------|----------------------|----------------------|-----|---------------------------------------------------------------------------------------------------------------|-----------------|
+| **Initialization**     | Initialize deque, sum_running_cost, and k                                                             | `[]`                   | `[]`                 | `0`                  | `0` |                                                                                                               | `0`             |
+| **Processing index 0** | Processing charge_times[0] = 3 and running_costs[0] = 2                                               | `[]`                   | `[]`                 | `2`                  | `1` | Deque is empty, so no popping. Push index 0 to the deque.                                                     |                 |
+|                        |                                                                                                       | `[0]`                  | `[3]`                | `2`                  | `1` | Deque is non-empty and total (5) <= budget (25) is True, so no shrinking.                                     | `1`             |
+| **Processing index 1** | Processing charge_times[1] = 6 and running_costs[1] = 1                                               | `[0]`                  | `[3]`                | `3`                  | `2` | Deque is non-empty and (back of the deque charge time: 3) < (current charge time: 6) is True.                 |                 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Pop index 0**             | Popping index 0 since (back of the deque charge time: 3) < (current charge time: 6) is True.    | `[]`                   | `[]`                 | `3`                  | `2` |                                                                                                               |                 |
+|                        | Push index 1 to deque                                                                                 | `[1]`                  | `[6]`                | `3`                  | `2` | Deque is non-empty and total (12) <= budget (25) is True, so no shrinking.                                     | `2`             |
+| **Processing index 2** | Processing charge_times[2] = 1 and running_costs[2] = 3                                               | `[1]`                  | `[6]`                | `6`                  | `3` | Deque is non-empty and (back of the deque charge time: 6) < (current charge time: 1) is False.                |                 |
+|                        | Push index 2 to deque                                                                                 | `[1, 2]`               | `[6, 1]`             | `6`                  | `3` | Deque is non-empty and total (24) <= budget (25) is True, so no shrinking.                                     | `3`             |
+| **Processing index 3** | Processing charge_times[3] = 3 and running_costs[3] = 4                                               | `[1, 2]`               | `[6, 1]`             | `10`                 | `4` | Deque is non-empty and (back of the deque charge time: 1) < (current charge time: 3) is True.                 |                 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Pop index 2**             | Popping index 2 since (back of the deque charge time: 1) < (current charge time: 3) is True.    | `[1]`                  | `[6]`                | `10`                 | `4` |                                                                                                               |                 |
+|                        | Push index 3 to deque                                                                                 | `[1, 3]`               | `[6, 3]`             | `10`                 | `4` | Deque is non-empty and total (46) > budget (25) is True. Shrink window by moving left pointer to index 1.      |                 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Shrink window**           | Shrink window since (total = 46) > (budget = 25). The front of the deque index 1 is still in the window, no pop. | `[1, 3]`               | `[6, 3]`             | `8`                  | `3` |                                                                                                               |                 |
+|                        | Deque is non-empty and total (30) > budget (25) is True. Shrink window again by moving left pointer to index 2, pop index 1. | `[3]`                  | `[3]`                | `7`                  | `2` |                                                                                                               | `3`             |
+| **Processing index 4** | Processing charge_times[4] = 4 and running_costs[4] = 5                                               | `[3]`                  | `[3]`                | `12`                 | `3` | Deque is non-empty and (back of the deque charge time: 3) < (current charge time: 4) is True.                 |                 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Pop index 3**             | Popping index 3 since (back of the deque charge time: 3) < (current charge time: 4) is True.    | `[]`                   | `[]`                 | `12`                 | `3` |                                                                                                               |                 |
+|                        | Push index 4 to deque                                                                                 | `[4]`                  | `[4]`                | `12`                 | `3` | Deque is non-empty and total (40) > budget (25) is True. Shrink window by moving left pointer to index 3.      |                 |
+| &nbsp;&nbsp;&nbsp;&nbsp;**Shrink window**           | Shrink window since (total = 40) > (budget = 25). The front of the deque index 4 is still in the window, no pop. | `[4]`                  | `[4]`                | `9`                  | `2` |                                                                                                               | `3`             |
+| **End of array**       | Finished processing array, max machines calculated                                                    | `[4]`                  | `[4]`                | `9`                  | `2` | Final max window size achieved.                                                                               | `3`             |
+
+</center>
+
+## Time Complexity
+
+Given $n$ machines, each charge cost and running cost are processed in parallel from index $0$ to $n-1$.
+
+1. **First While Loop (Maintaining the Monotonic Deque):**
+
+   - Each element is pushed to and popped from the deque at most once.
+
+   - **Time Complexity:** $O(n)$ across the entire run, since every element is processed at most twice (once when added, once when removed).
+
+2. **Second While Loop (Shrinking the Window):**
+
+   - The `left` pointer moves right, and each element is added and removed from the window at most once.
+
+   - **Time Complexity:** $O(n)$ across the entire run, as each element is visited at most twice.
+
+3. **Other Operations:**
+
+   - Appending, popping, arithmetic, and updating the max window size are all $O(1)$ operations.
+
+The overall time complexity is $O(n)$.
+
+## Space Complexity
+
+Not considering the constant variables, the space complexity is $O(n)$ due to the monotonic deque storing at most $n$ elements. This happens when two conditions are met:
+
+* The charge costs are in non-increasing order, e.g., `[17, 12, 12, 2, 1]`, which means that no elements are popped from the back of the deque.
+
+* The budget is such that the all consecutive machines can be run without exceeding the budget, which means that no elements are popped from the front of the deque.

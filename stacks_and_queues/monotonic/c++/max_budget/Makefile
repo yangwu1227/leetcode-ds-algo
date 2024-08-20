@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++17 -fdiagnostics-color=always
 # Source and object files
 TARGET = main
 MAIN_SRC = main.cpp
-OBJS = num_valid_subarrays.o
+OBJS = custom_rng.o max_budget.o
 
 # Rule to build the target executable from main.cpp and object files
 $(TARGET): $(MAIN_SRC) $(OBJS)
