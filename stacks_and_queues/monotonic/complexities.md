@@ -669,3 +669,77 @@ The time complexity of the minimum and maximum span calculations are both $O(n)$
 ## Space Complexity
 
 Two stacks are used to store the indices of the elements in the input array `nums`. If the input array is strictly increasing or decreasing, the space complexity of the stack is $O(n)$ in the worst case.
+
+---
+
+# Number of Valid Subarrays
+
+Returns the number of non-empty subarrays where the leftmost element is not larger than any other elements in the subarray.
+
+## Explanation
+
+Given `nums = [1, 4, 2, 5, 3]`, the number of valid subarrays can be calculated as follows:
+
+### Stack Processing
+
+<center>
+
+| Iteration           | Details                                            | Stack - Indices       | Stack - Elements     | Next Smaller Array          | Condition                                                                                   |
+|---------------------|----------------------------------------------------|-----------------------|----------------------|-----------------------------|---------------------------------------------------------------------------------------------|
+| **Initialization**  | Initialize stack and next_smaller array            | `[]`                  | `[]`                 | `[5, 5, 5, 5, 5]`            |                                                                                             |
+| **Processing index 0** | nums[0] = 1                                       | `[]`                  | `[]`                 | `[5, 5, 5, 5, 5]`            | Stack is empty, so no popping. Push index 0 to the stack.                                   |
+|                     | Push to stack                                      | `[0]`                 | `[1]`                | `[5, 5, 5, 5, 5]`            |                                                                                             |
+| **Processing index 1** | nums[1] = 4                                       | `[0]`                 | `[1]`                | `[5, 5, 5, 5, 5]`            | Stack is non-empty and top of stack (1) is not greater than current element (4), so no pop. |
+|                     | Push to stack                                      | `[0, 1]`              | `[1, 4]`             | `[5, 5, 5, 5, 5]`            |                                                                                             |
+| **Processing index 2** | nums[2] = 2                                       | `[0, 1]`              | `[1, 4]`             | `[5, 5, 5, 5, 5]`            | Stack is non-empty and top of stack (4) is greater than current element (2), so pop index 1.|
+|                     | Pop index 1, set next_smaller[1] = 2               | `[0]`                 | `[1]`                | `[5, 2, 5, 5, 5]`            | Update `next_smaller[1]` to 2 because 2 is the next smaller element after 4.                |
+|                     | Push to stack                                      | `[0, 2]`              | `[1, 2]`             | `[5, 2, 5, 5, 5]`            |                                                                                             |
+| **Processing index 3** | nums[3] = 5                                       | `[0, 2]`              | `[1, 2]`             | `[5, 2, 5, 5, 5]`            | Stack is non-empty and top of stack (2) is not greater than current element (5), so no pop. |
+|                     | Push to stack                                      | `[0, 2, 3]`           | `[1, 2, 5]`          | `[5, 2, 5, 5, 5]`            |                                                                                             |
+| **Processing index 4** | nums[4] = 3                                       | `[0, 2, 3]`           | `[1, 2, 5]`          | `[5, 2, 5, 5, 5]`            | Stack is non-empty and top of stack (5) is greater than current element (3), so pop index 3.|
+|                     | Pop index 3, set next_smaller[3] = 4               | `[0, 2]`              | `[1, 2]`             | `[5, 2, 5, 4, 5]`            | Update `next_smaller[3]` to 4 because 3 is the next smaller element after 5.                |
+|                     | Push to stack                                      | `[0, 2, 4]`           | `[1, 2, 3]`          | `[5, 2, 5, 4, 5]`            |                                                                                             |
+| **End of array**    | Finished processing array                          | `[0, 2, 4]`           | `[1, 2, 3]`          | `[5, 2, 5, 4, 5]`            | No more elements to process, stack processing is complete.                                  |
+
+</center>
+
+### Counting Valid Subarrays
+
+For each element `nums[i]` in the array, we determine how far to the right we can extend a subarray such that nums[i] remains the smallest element in that subarray. This is achieved by using the `next_smaller` array, which was previously populated during the stack processing.
+
+* `next_smaller[i]`: This value tells us the index of the first element to the right of `nums[i]` that is smaller than `nums[i]`. If no such element exists, it is set to $n$ (the length of the array), indicating that `nums[i]` is the smallest element in all subarrays extending from $i$ to the end of the array.
+
+* The difference `next_smaller[i] - i` gives us the number of elements in the subarray that starts at `nums[i]` and ends just before the element that is smaller than `nums[i]`. This distance directly translates into the number of valid subarrays where `nums[i]` is the smallest element.
+
+<center>
+
+| Iteration           | Index | Next Smaller Index | Calculation                 | Subarray Count | Cumulative Count |
+|---------------------|-------|--------------------|-----------------------------|----------------|------------------|
+| **Initialization**  |       |                    | Initialize count to 0        |                | 0                |
+| **Subarrays from 0** | 0     | 5                  | `5 - 0 = 5`                  | 5              | 5                |
+| **Subarrays from 1** | 1     | 2                  | `2 - 1 = 1`                  | 1              | 6                |
+| **Subarrays from 2** | 2     | 5                  | `5 - 2 = 3`                  | 3              | 9                |
+| **Subarrays from 3** | 3     | 4                  | `4 - 3 = 1`                  | 1              | 10               |
+| **Subarrays from 4** | 4     | 5                  | `5 - 4 = 1`                  | 1              | 11               |
+
+</center>
+
+The total number of valid subarrays is `11`.
+
+## Time Complexity
+
+Let $n$ be the number of elements in the input array `nums`. In the worst case, i.e., the input array is strictly decreasing, every element except for the last element will be pushed and then popped from the stack. This leads to $O(n + (n - 1)) = O(2n - 1) = O(2n) = O(n)$ operations. 
+
+The calculation of the number of valid subarrays also takes $O(n)$ time since we iterate over the `next_smaller` array, which has $n$ elements.
+
+Therefore, the overall time complexity of the algorithm is $O(n)$.
+
+## Space Complexity
+
+Two data structures are used to store the indices of the elements:
+
+* A monotonic increasing stack, which can be $O(n)$ in the worst case if the input array is strictly increasing (i.e., no elements are popped)
+
+* An array to store the next smaller index for each element, which is always $o(n)$
+
+Therefore, the overall space complexity of the algorithm is $O(n)$.
