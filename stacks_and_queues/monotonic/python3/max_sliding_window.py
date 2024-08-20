@@ -47,7 +47,7 @@ def main() -> int:
     data = [([1, 3, -1, -3, 5, 3, 6, 7], 3), ([2, 12, 17, 27, 77, 7, 72], 2), ([12], 1)]
     for nums, k in data:
         output = max_sliding_window(nums, k)
-        print(f"Input = {nums} | Max sliding window = {output}")
+        print(f"Input = {nums} & k = {k} | Max sliding window = {output}")
 
     return 0
 
