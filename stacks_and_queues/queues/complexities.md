@@ -52,3 +52,132 @@ The time complexity of each call to `next` is $O(1)$.
 ## Space Complexity
 
 The space complexity depends on the window size. The space complexity is $O(window_size)$, as the queue will store at most `window_size` elements.
+
+---
+
+# Implement Stack using Queues
+
+## Python
+
+The `Stack` class in Python uses a `deque` from the `collections` module to implement a stack data structure, providing efficient LIFO (Last In, First Out) operations.
+
+### Push
+
+```python
+def push(self, x: int) -> None:
+    self.internal_deque.append(x)
+```
+
+The `push` method adds an element `x` to the top of the stack. 
+
+- **Time Complexity**: $O(1)$, because the `append` operation on a `deque` is constant time from both ends. Here, we are adding to the right end of the `deque`.
+
+### Pop
+
+```python
+def pop(self) -> int:
+    if self.internal_deque:
+        return self.internal_deque.pop()
+    else:
+        raise IndexError('Stack is empty')
+```
+
+The `pop` method removes and returns the top element of the stack.
+
+- **Time Complexity**: $O(1)$, as `pop` from the end of a `deque` is a constant time operation.
+- **Exception Handling**: Raises an `IndexError` if the stack is empty.
+
+### Top
+
+```python
+def top(self) -> int:
+    if self.internal_deque:
+        return self.internal_deque[-1]
+    else:
+        raise IndexError('Stack is empty')
+```
+
+The `top` method returns the top element of the stack without removing it.
+
+- **Time Complexity**: $O(1)$, because accessing the last element of a `deque` is constant time.
+- **Exception Handling**: Raises an `IndexError` if the stack is empty.
+
+### Empty
+
+```python
+@property
+def empty(self) -> bool:
+    return len(self.internal_deque) == 0
+```
+
+The `empty` method checks if the stack is empty. We use a property decorator to make it look like an attribute, abstracting away the fact that it is a method.
+
+- **Time Complexity**: $O(1)$, as it only involves checking the length of the `deque`.
+
+---
+
+## C++
+
+### Push
+
+```cpp
+void Stack::push(int x)
+{
+    this->internalDeque.push_back(x);
+}
+```
+
+The `push` method adds an element `x` to the top of the stack.
+
+- **Time Complexity**: $O(1)$, since `push_back` on `std::deque` is a constant time operation.
+
+### Pop
+
+```cpp
+int Stack::pop()
+{
+    if (this->empty())
+    {
+        throw std::out_of_range("Stack is empty");
+    }
+    int popped = this->internalDeque.back();
+    this->internalDeque.pop_back();
+    return popped;
+}
+```
+
+The `pop` method removes and returns the top element of the stack.
+
+- **Time Complexity**: $O(1)$, as `pop_back` from `std::deque` is constant time.
+- **Exception Handling**: Throws `std::out_of_range` if the stack is empty.
+
+### Top
+
+```cpp
+int Stack::top()
+{
+    if (this->empty())
+    {
+        throw std::out_of_range("Stack is empty");
+    }
+    return this->internalDeque.back();
+}
+```
+
+The `top` method returns the top element of the stack without removing it.
+
+- **Time Complexity**: $O(1)$, because accessing the last element of a `std::deque` is constant time.
+- **Exception Handling**: Throws `std::out_of_range` if the stack is empty.
+
+### Empty
+
+```cpp
+bool Stack::empty()
+{
+    return this->internalDeque.empty();
+}
+```
+
+The `empty` method checks if the stack is empty.
+
+- **Time Complexity**: $O(1)$, as it only checks if the `deque` is empty.
