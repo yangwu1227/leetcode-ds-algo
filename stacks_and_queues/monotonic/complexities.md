@@ -823,3 +823,75 @@ Not considering the constant variables, the space complexity is $O(n)$ due to th
 * The charge costs are in non-increasing order, e.g., `[17, 12, 12, 2, 1]`, which means that no elements are popped from the back of the deque.
 
 * The budget is such that the all consecutive machines can be run without exceeding the budget, which means that no elements are popped from the front of the deque.
+
+---
+
+# Remove K Digits
+
+Given `num`, which is a string representing a non-negative integer, remove $k$ digits from `num` to produce the smallest possible number.
+
+## Explanation
+
+A monotonic non-decreasing stack can be used to build the smallest number. This is because if the number is as small as possible, the digits should be in non-decreasing order from left to right. 
+
+The top of the stack is popped if the current digit is smaller than the top of the stack and if there are still digits that need to be removed. Once we have removed $k$ digits, we append the remaining digits to the result. If by the end of the iteration, we have not removed $k$ digits, we remove the last $k$ digits from the stack.
+
+If the result contains leading zeros, we remove them. If the result is empty, we return $0$.
+
+Consider the example `num = "1432219"` and `k = 3`:
+
+<center>
+
+| Iteration              | Details                                                                                               | Stack State           | k    | Condition                                                                                                    |
+|------------------------|-------------------------------------------------------------------------------------------------------|-----------------------|------|--------------------------------------------------------------------------------------------------------------|
+| **Initialization**     | Initialize the stack and set k value                                                                  | `[]`                  | `3`  | Stack is empty                                                                                                |
+| **Processing digit 1** | Processing digit = 1                                                                                  | `[]`                  | `3`  | Stack is empty, so no popping. Push digit 1 to the stack.                                                     |
+| **Push digit 1**       | Push digit = 1 to the top of the stack                                                                | `[1]`                 | `3`  |                                                                                                              |
+| **Processing digit 4** | Processing digit = 4                                                                                  | `[1]`                 | `3`  | Stack is non-empty and (top of stack: 1) < (current digit: 4) is True. No popping required.                  |
+| **Push digit 4**       | Push digit = 4 to the top of the stack                                                                | `[1, 4]`              | `3`  |                                                                                                              |
+| **Processing digit 3** | Processing digit = 3                                                                                  | `[1, 4]`              | `3`  | Stack is non-empty and (top of stack: 4) > (current digit: 3) is True. Pop digit 4 and decrement k.          |
+| **Pop digit 4**        | Popping digit = 4 from stack since (top of stack: 4) > (current digit: 3)                             | `[1]`                 | `2`  |                                                                                                              |
+| **Push digit 3**       | Push digit = 3 to the top of the stack                                                                | `[1, 3]`              | `2`  |                                                                                                              |
+| **Processing digit 2** | Processing digit = 2                                                                                  | `[1, 3]`              | `2`  | Stack is non-empty and (top of stack: 3) > (current digit: 2) is True. Pop digit 3 and decrement k.          |
+| **Pop digit 3**        | Popping digit = 3 from stack since (top of stack: 3) > (current digit: 2)                             | `[1]`                 | `1`  |                                                                                                              |
+| **Push digit 2**       | Push digit = 2 to the top of the stack                                                                | `[1, 2]`              | `1`  |                                                                                                              |
+| **Processing digit 2** | Processing digit = 2                                                                                  | `[1, 2]`              | `1`  | Stack is non-empty but (top of stack: 2) > (current digit: 2) is False. No popping required.                 |
+| **Push digit 2**       | Push digit = 2 to the top of the stack                                                                | `[1, 2, 2]`           | `1`  |                                                                                                              |
+| **Processing digit 1** | Processing digit = 1                                                                                  | `[1, 2, 2]`           | `1`  | Stack is non-empty and (top of stack: 2) > (current digit: 1) is True. Pop digit 2 and decrement k.          |
+| **Pop digit 2**        | Popping digit = 2 from stack since (top of stack: 2) > (current digit: 1)                             | `[1, 2]`              | `0`  |                                                                                                              |
+| **Push digit 1**       | Push digit = 1 to the top of the stack                                                                | `[1, 2, 1]`           | `0`  |                                                                                                              |
+| **Processing digit 9** | Processing digit = 9                                                                                  | `[1, 2, 1]`           | `0`  | Stack is non-empty but k = 0. No popping allowed.                                                            |
+| **Push digit 9**       | Push digit = 9 to the top of the stack                                                                | `[1, 2, 1, 9]`        | `0`  |                                                                                                              |
+| **Final Output**       | Given num = 1432219, the smallest possible number after removing 3 digits is 1219                     | `[1, 2, 1, 9]`        | `0`  |                                                                                                              |
+
+</center>
+
+## Time Complexity
+
+1. **Main Loop (Processing Each Digit)**:
+
+   - **Push Operations**: Each of the $n$ digits from the input string `num` is pushed onto the stack exactly once. Thus, in the worst case, there are $n$ push operations, contributing $O(n)$ to the time complexity.
+
+   - **Pop Operations**: The pop operations occur when the current digit is smaller than the top of the stack. In the worst-case scenario, such as when the input number is **strictly decreasing** and $k = n - 1$, each digit would be pushed and then immediately popped in the next iteration. This results in up to $n - 1$ pop operations. The total time complexity for the popping operations is $O(n - 1)$, which simplifies to $O(n)$.
+
+   - **Combined Cost of Push and Pop**: Across the entire loop, the combined time complexity for the push and pop operations is $O(n + n - 1) = O(2n - 1)$, which simplifies to $O(n)$.
+
+2. **Handling Remaining Digits (Post-Processing)**:
+
+   - After processing all the digits, if $k$ digits have not been removed yet, the algorithm will pop the remaining digits from the stack. The maximum value for $k$ is $n - 1$, so the first two steps are bounded by $O(k) = O(n - 1) = O(n)$. A special case can happen if the input number is **strictly increasing** and $k = n - 1$ (i.e. zero digits are removed during the main loop), then all $n - 1$ digits will be popped in the post-processing step.
+
+3. **String Concatenation and Leading Zero Removal**:
+
+   - **String Concatenation**: After all digits have been processed, the stack, which contains at most $n - 1$ digits, is joined into a string. The concatenation operation for $n - 1$ elements is $O(n - 2) = O(n)$. *This step is only needed in Python; in C++, an `std::string` can be used directly since it supports push and pop operations, avoiding the need for additional concatenation.*
+   
+   - **Leading Zero Removal**: The leading zero removal operation may need to scan and process up to $n - 1$. For example `num = 100000` and `k = 1`, the stack will contain `[0, 0, 0, 0, 0]` after the first two steps; stripping the leading zeros therefore costs $O(n - 1) = O(n)$.
+
+4. **Edge Case Considerations**:
+
+   - The algorithm starts by checking if $k = n$. If so, it immediately returns `'0'`, which makes the entire algorithm run in $O(1)$. This also ensures that $k$ can at most be $n - 1$.
+
+Since all these steps contribute $O(n)$ individually, the overall time complexity of the algorithm remains $O(n)$. 
+
+## Space Complexity
+
+In the worst case, i.e., when the input number is **strictly increasing** and $k = 1$, the stack will contain $n - 1$ elements. This is because no digits are removed during the main loop, and only the last digit is removed during post-processing step. Therefore, the space complexity of the algorithm is $O(n - 1) = O(n)$.
