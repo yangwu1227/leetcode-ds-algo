@@ -181,3 +181,130 @@ bool Stack::empty()
 The `empty` method checks if the stack is empty.
 
 - **Time Complexity**: $O(1)$, as it only checks if the `deque` is empty.
+
+---
+
+# Find Consecutive Integers from a Data Stream
+
+Given a stream of integers, design a data structure that supports the following operation:
+
+- `DataStream(int value, int k)`: Initializes the data structure with the target value and the number of consecutive integers to check for.
+
+- `consec(int num)`: `True` if the last `k` values in the stream are equal to the target value, `False` otherwise.
+
+## Python 
+
+### Constructor
+
+```python
+def __init__(self, value: int, k: int) -> None:
+    self.value = value
+    self.k = k
+    self._internal_deque: Deque[int] = deque()
+    self._invalid_value_counts: MutableMapping[int, int] = defaultdict(int)
+```
+
+The following instance variables are initialized:
+
+* `value`: The target value to check for.
+
+* `k`: The number of consecutive integers to check for.
+
+* `_internal_deque`: A `deque` to store the last `k` values in the stream.
+
+* `_invalid_value_counts`: A dictionary to store the count of invalid values in the stream.
+
+### Consec
+
+```python
+def consec(self, num: int) -> bool:
+    self._internal_deque.append(num)
+    n = len(self._internal_deque)
+    # If the number does not match the target value, increment its count
+    if num != self.value:
+        self._invalid_value_counts[num] += 1
+    # Return early if not enough numbers has been seen yet
+    if n < self.k:
+        return False
+    if n > self.k:
+        popped_value = self._internal_deque.popleft()
+        # If the removed value does not match the target value, update its count in the invalid count map
+        if popped_value != self.value:
+            # If the count of this invalid value is more than 1, simply decrement its count
+            if self._invalid_value_counts[popped_value] > 1:
+                self._invalid_value_counts[popped_value] -= 1
+            else:
+                # If the count is not above 1, it means this was the last occurrence, so we remove it from the map
+                self._invalid_value_counts.pop(popped_value)
+    # If the invalid count map is empty, it indicates the last k numbers all match the target value, so return True
+    return not self._invalid_value_counts
+```
+
+The time complexity of each call to `consec` is $O(1)$.
+
+* Appending and popping from either end of the `deque` is $O(1)$.
+
+* Lookup, insertion, and deletion in a dictionary are amortized $O(1)$ operations.
+
+* Any condition checks can also be considered $O(1)$.
+
+## C++
+
+### Constructor
+
+Initialization list is used to initialize the member variables.
+
+```cpp
+DataStream::DataStream(int value, int k) : value(value), k(k) {};
+```
+
+All member variables are equivalent to the Python implementation.
+
+### Consec
+
+```cpp
+bool DataStream::consec(int num)
+{
+    // Push to the back of the deque
+    this->internalDeque.push_back(num);
+    // If the number does not match the target value, increment its count
+    if (num != this->value)
+    {
+        this->invalidValueCounts[num] += 1;
+    }
+    // Return early if the stream size is less than k
+    if (this->internalDeque.size() < this->k)
+    {
+        return false;
+    }
+    if (this->internalDeque.size() > this->k)
+    {
+        // Pop the front of the deque
+        int popped = this->internalDeque.front();
+        this->internalDeque.pop_front();
+        
+        // If the popped value does not match the target value, update its count
+        if (popped != this->value)
+        {
+            // If the count is equal to 1, delete the key as it is the last occurrance of num
+            if (this->invalidValueCounts[popped] == 1)
+            {
+                this->invalidValueCounts.erase(popped);
+            }
+            else
+            {
+                // If the count is not equal to 1, then it has more than one ocurrences, simply decrement
+                this->invalidValueCounts[popped] -= 1;
+            }
+        }
+    }
+    // Return 'true' if the hash map is empty, which means that all previous k numbers are equal to the target value
+    return this->invalidValueCounts.empty();
+}
+```
+
+Again, the time complexity of each call to `consec` is $O(1)$ as in the Python implementation.
+
+## Space Complexity
+
+The space complexity of the `DataStream` class is $O(k)$, where `k` is the number of consecutive integers to check for. The `deque` will store at most `k` elements, and the dictionary will store at most `k` invalid values if all the values are different from the target value.
