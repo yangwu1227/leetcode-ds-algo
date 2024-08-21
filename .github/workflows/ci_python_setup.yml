@@ -1,7 +1,6 @@
 name: CI Python Setup
 
 on:
-  workflow_dispatch: 
   push:
     paths:
       - 'pyproject.toml'
