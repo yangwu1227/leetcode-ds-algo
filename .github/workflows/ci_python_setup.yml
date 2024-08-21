@@ -28,13 +28,6 @@ jobs:
       - name: Set up PDM
         uses: pdm-project/setup-pdm@v4
 
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-          auto-activate-base: false
-          activate-environment: leetcode_ds_algo
-
       - name: Install dependencies
         run: |
           pdm install --prod
