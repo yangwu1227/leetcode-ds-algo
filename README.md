@@ -12,6 +12,8 @@ $ conda search python
 # The specified python version in `pyproject.toml` is requires-python = ">=3.11"
 $ yes | conda create --name leetcode_ds_algo python=3.11.9
 $ conda activate leetcode_ds_algo
+# Use the conda-installed python interpreter
+$ pdm use $(which python3)
 $ pdm install --prod
 ```
 
