@@ -1,5 +1,6 @@
-from collections.abc import Sequence
 from collections import Counter
+from collections.abc import Sequence
+
 
 def num_identical_pairs(nums: Sequence[int]) -> int:
     """

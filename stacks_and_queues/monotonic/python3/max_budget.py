@@ -1,5 +1,6 @@
-from collections import deque 
+from collections import deque
 from typing import Deque, MutableSequence
+
 
 def max_bugdet(charge_times: MutableSequence[int], running_costs: MutableSequence, budget: int) -> int:
     """

@@ -1,6 +1,7 @@
 from array import array
 from typing import MutableSequence
 
+
 def remove_k_digits(num: str, k: int) -> str:
     """ 
     Remove k digits from the given number to produce the smallest possible number.

@@ -1,6 +1,7 @@
 from node import ListNode
 from singly import SinglyLinkedList
 
+
 class RemoveDuplicates(object):
     """
     Given the `head` of a sorted linked list, delete all duplicates such that each element appears only once. 

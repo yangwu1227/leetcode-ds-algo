@@ -1,5 +1,6 @@
 from node import ListNode
 
+
 class DoublyLinkedList(object):
     def __init__(self) -> None:
         """

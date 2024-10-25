@@ -1,5 +1,6 @@
 from collections import Counter
 
+
 class JewelStones(object):
     """
     Given two strings `jewewls` and `stones`, return the number of `stones` that are considered `jewels`.

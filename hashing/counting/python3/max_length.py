@@ -1,6 +1,8 @@
-from collections.abc import Sequence
 from collections import defaultdict
+from collections.abc import Sequence
+
 import numpy as np
+
 
 def find_max_length(nums: Sequence[int]) -> int:
     """

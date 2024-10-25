@@ -1,6 +1,7 @@
 from node import ListNode
-from singly import SinglyLinkedList
 from numpy.random import randint
+from singly import SinglyLinkedList
+
 
 def reverse(head: ListNode) -> ListNode:
     """

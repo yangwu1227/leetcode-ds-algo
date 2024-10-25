@@ -1,6 +1,8 @@
-from typing import Deque 
 from collections import deque
+from typing import Deque
+
 from numpy.random import randint
+
 
 class MovingAverage(object):
     """

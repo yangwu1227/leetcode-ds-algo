@@ -1,6 +1,7 @@
 from node import ListNode
 from singly import SinglyLinkedList
 
+
 def swap_pairs(head: ListNode) -> ListNode:
     """
     Given a linked list, swap every two adjacent nodes. Only the nodes can be changed and not the values of the nodes.

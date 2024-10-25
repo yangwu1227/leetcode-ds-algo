@@ -1,5 +1,6 @@
 from collections import deque
 
+
 class Solution(object):
     """
     Given a 0-indexed string word and a character ch, reverse the segment of word that starts at index 0 and ends at the 

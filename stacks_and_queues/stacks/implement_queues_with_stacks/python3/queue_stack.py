@@ -1,6 +1,6 @@
-from typing import List
 from collections import deque
 from reprlib import Repr
+from typing import List
 
 repr_instance = Repr()
 repr_instance.maxdeque = 4

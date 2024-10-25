@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from typing import List
 
+
 def find_average(nums: Sequence[int], k: int) -> List[int]:
     """
     The k-radius average for a subarray of `nums` centered at index `i` with the radius `k` is the average of all elements in `nums` between the 

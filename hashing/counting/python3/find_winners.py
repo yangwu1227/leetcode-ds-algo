@@ -1,5 +1,6 @@
-from typing import List
 from collections import defaultdict
+from typing import List
+
 
 def find_winners(matches: List[List[int]]) -> List[List[int]]:
     """

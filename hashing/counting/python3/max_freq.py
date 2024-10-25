@@ -1,5 +1,6 @@
-from collections.abc import Sequence
 from collections import Counter
+from collections.abc import Sequence
+
 
 def max_freq(nums: Sequence[int]) -> int:
     """

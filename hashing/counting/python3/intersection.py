@@ -1,6 +1,8 @@
 from collections import defaultdict
 from typing import List
+
 import numpy as np
+
 
 class Solution(object):
     """

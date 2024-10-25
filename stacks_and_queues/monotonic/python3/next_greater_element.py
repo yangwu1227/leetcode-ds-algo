@@ -1,6 +1,7 @@
-from typing import MutableSequence, List, MutableMapping
-from collections import defaultdict
 from array import array
+from collections import defaultdict
+from typing import List, MutableMapping, MutableSequence
+
 
 def next_greater_element(nums_1: MutableSequence[int], nums_2: MutableSequence[int]) -> List[int]:
     """

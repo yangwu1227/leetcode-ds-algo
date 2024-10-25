@@ -1,5 +1,6 @@
-from typing import List, Dict
 from random import randint
+from typing import Dict, List
+
 
 class RandomFlip(object):
     """

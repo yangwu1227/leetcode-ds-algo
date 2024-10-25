@@ -1,5 +1,6 @@
 from collections import Counter
 
+
 def check_inclusion(s1: str, s2: str) -> bool:
     """
     Given two strings `s1` and `s2`, return `True` if `s2` contains a permutation of `s1`.

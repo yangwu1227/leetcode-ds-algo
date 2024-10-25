@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 
+
 class Solution(object):
     """
     Given an array of integers `nums`, start with an initial positive value `start_value`. In each iteration,

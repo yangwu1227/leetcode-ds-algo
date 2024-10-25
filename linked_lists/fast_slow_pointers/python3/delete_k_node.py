@@ -1,6 +1,7 @@
 from node import ListNode
 from singly import SinglyLinkedList
 
+
 def delete_k_node(head: ListNode, k: int) -> ListNode:
     """
     Given the `head` of a singly linked list, remove the `kth` node from the end of the list.

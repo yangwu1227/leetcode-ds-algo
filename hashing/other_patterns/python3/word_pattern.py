@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 def word_pattern(pattern: str, s: str) -> bool:
     """
     Given a `pattern` and a string `s`, find if `s` follows the `pattern`.

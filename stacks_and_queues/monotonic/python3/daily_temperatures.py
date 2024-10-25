@@ -1,5 +1,6 @@
-from collections import deque 
-from typing import MutableSequence, List, Deque
+from collections import deque
+from typing import Deque, List, MutableSequence
+
 
 def daily_temperatures(temperatures: MutableSequence[int]) -> List[int]:
     """

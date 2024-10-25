@@ -1,6 +1,7 @@
 from node import ListNode
 from singly import SinglyLinkedList
 
+
 def kth_node(head: ListNode, k: int) -> ListNode:
     """
     Given `head`, the sentinel head node, of a singly linked list and `k`, return the kth node from the end of the linked list. 

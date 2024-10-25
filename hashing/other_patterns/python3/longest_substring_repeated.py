@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 class LongestSubstringRepetead(object):
     """
     Given a string `s`, find the length of the longest substring without repetaed characters.

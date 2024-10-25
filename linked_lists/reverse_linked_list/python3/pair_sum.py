@@ -1,6 +1,7 @@
 from node import ListNode
 from singly import SinglyLinkedList
 
+
 def pair_sum(head: ListNode) -> int:
     """
     Given the `head` of a linked list with even length, return the maximum twin sum of the linked list.

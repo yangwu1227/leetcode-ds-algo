@@ -1,5 +1,6 @@
 from typing import List
 
+
 def get_common(nums1: List[int], nums2: List[int]) -> int:
     """
     Given two integer arrays nums1 and nums2, sorted in non-decreasing order, return the minimum integer common to both arrays. 

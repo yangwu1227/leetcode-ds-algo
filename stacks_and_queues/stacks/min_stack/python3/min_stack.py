@@ -1,9 +1,10 @@
-from collections.abc import MutableSequence
 from array import array
-from sys import maxsize
+from collections.abc import MutableSequence
+from random import randint, uniform
 from reprlib import Repr
+from sys import maxsize
+
 from numpy.random import choice
-from random import uniform, randint
 
 repr_instance = Repr()
 repr_instance.maxdeque = 4

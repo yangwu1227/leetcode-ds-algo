@@ -1,5 +1,6 @@
 from node import ListNode
-    
+
+
 class SinglyLinkedList(object):
     def __init__(self) -> None:
         """

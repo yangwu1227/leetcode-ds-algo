@@ -1,6 +1,7 @@
 from node import ListNode
 from singly import SinglyLinkedList
 
+
 def swap_node(head: ListNode, k: int) -> ListNode:
     """
     Given the `head` node of a linked list and an integer `k`, swap the values of the `kth` node from the start and the `kth` node from the end.

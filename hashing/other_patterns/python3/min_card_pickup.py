@@ -1,6 +1,7 @@
-from sys import maxsize
-from collections.abc import Sequence
 from collections import defaultdict
+from collections.abc import Sequence
+from sys import maxsize
+
 
 def min_card_pickup(cards: Sequence[int]) -> int:
     """

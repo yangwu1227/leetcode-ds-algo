@@ -1,5 +1,6 @@
-from array import array 
+from array import array
 from typing import MutableSequence
+
 
 def sum_subarray_ranges(nums: MutableSequence[int]) -> int:
     """

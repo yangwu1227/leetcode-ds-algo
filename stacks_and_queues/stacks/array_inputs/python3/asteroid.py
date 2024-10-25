@@ -1,5 +1,6 @@
 from typing import List
 
+
 def asteroid(data: List[int]) -> List[int]:
     """
     Simulates the collision of asteroids based on their size and direction. Each asteroid moves at the same speed. If 

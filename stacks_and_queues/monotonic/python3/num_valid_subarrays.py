@@ -1,5 +1,6 @@
 from array import array
-from typing import MutableSequence, List
+from typing import List, MutableSequence
+
 
 def num_valid_subarrays(nums: MutableSequence[int]) -> int:
     """

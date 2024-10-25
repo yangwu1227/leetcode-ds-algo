@@ -1,5 +1,6 @@
-from typing import MutableSequence, List, Deque 
 from collections import deque
+from typing import Deque, List, MutableSequence
+
 
 def visible_persons(heights: MutableSequence[int]) -> List[int]:
     """

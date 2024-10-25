@@ -1,7 +1,9 @@
-from typing import List, Dict, Tuple, Union, Self, Any
+from typing import Any, Dict, List, Self, Tuple, Union
+
 import numpy as np
 from scipy.sparse import random
 from scipy.stats import norm
+
 
 class SparseMatrix(object):
     """

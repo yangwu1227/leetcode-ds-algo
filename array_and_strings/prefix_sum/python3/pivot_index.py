@@ -1,6 +1,7 @@
-from typing import List
 from itertools import accumulate
 from operator import add
+from typing import List
+
 
 class Solution(object):
     """

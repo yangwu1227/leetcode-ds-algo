@@ -1,5 +1,6 @@
-from collections.abc import Sequence
 from collections import Counter
+from collections.abc import Sequence
+
 
 def sum_unique(nums: Sequence[int]) -> int:
     """

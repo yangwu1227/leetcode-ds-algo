@@ -1,6 +1,7 @@
-from collections.abc import Sequence 
-from typing import List, Union
 from collections import defaultdict
+from collections.abc import Sequence
+from typing import List, Union
+
 
 def group_anagrams(strs: Sequence[str]) -> List[Union[List[str], str]]:
     """

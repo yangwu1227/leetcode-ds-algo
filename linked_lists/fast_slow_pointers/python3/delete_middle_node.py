@@ -1,6 +1,7 @@
 from node import ListNode
 from singly import SinglyLinkedList
 
+
 def delete_middle_node(head: ListNode) -> ListNode:
     """
     Given the `head` of a singly linked list, delete the middle node.

@@ -1,5 +1,6 @@
-from typing import List
 from math import inf, isinf
+from typing import List
+
 
 def min_subarray_len(nums: List[int], target: int) -> int:
     """

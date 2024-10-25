@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 def repeated_character(s: str) -> str:
     """
     Given a string `s` consisting of lowercase English letters, return the first letter to appear twice.

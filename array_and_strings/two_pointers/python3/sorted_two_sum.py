@@ -1,5 +1,6 @@
 from typing import List
 
+
 def check_for_target(nums: List[int], target: int) -> bool:
     """
     Given a sorted array of unique integers and a target integer, return true if there exists a pair of numbers 

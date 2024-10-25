@@ -1,5 +1,6 @@
 from collections import Counter
 
+
 class RansomNote(object):
     """
     Given two strings `ransom_note` and `magazine`, return `True` if `ransom_note` can be constructed by using the letters from `magazine`.

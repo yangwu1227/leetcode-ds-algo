@@ -1,6 +1,7 @@
-from collections import deque 
-from typing import Deque
+from collections import deque
 from random import randint
+from typing import Deque
+
 
 class RecentCounter(object):
     """

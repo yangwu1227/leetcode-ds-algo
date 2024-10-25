@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from typing import List
 
+
 def query_sum_limit(nums: Sequence[int], queries: Sequence[Sequence[int]], limit: int) -> List[bool]:
     """
     Given an integer array `nums`, an array `queries` where `queries[i] = [x, y]` and an integer `limit`, return a boolean array that represents the answer to each query.

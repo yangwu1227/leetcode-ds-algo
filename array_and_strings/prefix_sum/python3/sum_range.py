@@ -1,6 +1,7 @@
-from collections.abc import Sequence 
+from collections.abc import Sequence
 from itertools import accumulate
 from operator import add
+
 
 class NumArray(object):
     def __init__(self, nums: Sequence[int]):

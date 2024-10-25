@@ -1,6 +1,6 @@
-from collections import deque, defaultdict
-from typing import Deque, MutableMapping
+from collections import defaultdict, deque
 from reprlib import Repr
+from typing import Deque, MutableMapping
 
 repr_instance = Repr()
 repr_instance.maxdeque = 6

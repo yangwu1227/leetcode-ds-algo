@@ -1,5 +1,6 @@
 from collections import Counter
 
+
 class SortString(object):
     """
     Given two strings `order` and `s`, all the characters of `order` are unique and are sorted in some custom order.

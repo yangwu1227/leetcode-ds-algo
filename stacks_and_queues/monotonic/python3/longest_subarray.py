@@ -1,5 +1,6 @@
-from typing import MutableSequence, Deque
 from collections import deque
+from typing import Deque, MutableSequence
+
 
 def longest_subarray(nums: MutableSequence[int], limit: int) -> int:
     """

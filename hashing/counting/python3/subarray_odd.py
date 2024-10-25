@@ -1,5 +1,6 @@
-from collections.abc import Sequence
 from collections import defaultdict
+from collections.abc import Sequence
+
 
 def subarray_odd(nums: Sequence[int], k: int) -> int:
     """

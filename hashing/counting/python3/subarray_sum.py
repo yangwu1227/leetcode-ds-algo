@@ -1,6 +1,8 @@
-from typing import Sequence
 from collections import defaultdict
+from typing import Sequence
+
 import numpy as np
+
 
 def subarray_sum(nums: Sequence[int], k: int) -> int:
     """

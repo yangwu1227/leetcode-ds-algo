@@ -1,5 +1,6 @@
-from typing import MutableSequence, Deque, List, MutableMapping
-from collections import deque, defaultdict
+from collections import defaultdict, deque
+from typing import Deque, List, MutableMapping, MutableSequence
+
 
 class FinalPrices(object):
     """

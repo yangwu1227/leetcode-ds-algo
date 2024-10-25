@@ -1,5 +1,6 @@
-from typing import List
 from random import sample
+from typing import List
+
 
 def combine(arr1: List[int], arr2: List[int], exhaust_method: int) -> List[int]:
     """

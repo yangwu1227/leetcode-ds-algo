@@ -1,5 +1,6 @@
-from typing import MutableSequence, List, Deque 
-from collections import deque 
+from collections import deque
+from typing import Deque, List, MutableSequence
+
 
 def max_sliding_window(nums: MutableSequence[int], k: int) -> List[int]:
     """

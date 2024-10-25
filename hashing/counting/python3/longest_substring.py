@@ -1,6 +1,8 @@
 from collections import defaultdict
-import numpy as np
 from string import ascii_lowercase
+
+import numpy as np
+
 
 def longest_substring(s: str, k: int) -> int:
     """

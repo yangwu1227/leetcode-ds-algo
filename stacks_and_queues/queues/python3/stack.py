@@ -1,6 +1,7 @@
 from collections import deque
 from typing import Deque
 
+
 class Stack(object):
     """
     A class representing a stack using a deque for efficient LIFO opertions.

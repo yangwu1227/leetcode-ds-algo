@@ -1,5 +1,6 @@
-from collections.abc import Sequence
 from collections import defaultdict
+from collections.abc import Sequence
+
 
 def max_sum(nums: Sequence[int]) -> int:
     """

@@ -1,7 +1,9 @@
-from typing import List
-from collections.abc import MutableMapping
 from collections import defaultdict
+from collections.abc import MutableMapping
+from typing import List
+
 import numpy as np
+
 
 class MatrixPattern(object):
     """

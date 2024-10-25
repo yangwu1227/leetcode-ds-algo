@@ -1,5 +1,6 @@
-from typing import List
 from collections import defaultdict
+from typing import List
+
 
 def dest_city(paths: List[List[str]]) -> str:
     """

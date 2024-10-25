@@ -1,5 +1,6 @@
-from typing import Deque, List
 from collections import deque
+from typing import Deque, List
+
 
 def smallest_string(s: str) -> str:
     """

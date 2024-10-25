@@ -1,5 +1,6 @@
 from typing import List
 
+
 def longest_ones(nums: List[int], k: int) -> int:
     """
     Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if we can flip at most k 0's.

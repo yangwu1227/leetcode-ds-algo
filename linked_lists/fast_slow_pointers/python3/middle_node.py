@@ -1,6 +1,7 @@
 from node import ListNode
 from singly import SinglyLinkedList
 
+
 def middle_node(head: ListNode) -> ListNode:
     """
     Given the `head` of a singly linked list, return the middle node of the linked list. If there are two middle nodes,

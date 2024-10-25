@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from random import randint
 
+
 def highest_altitude(gain: Sequence[int]) -> int:
     """
     A road trip consists of `n + 1` points at different altitudes. The start point is `altitude = 0`. Given an integer array `gain` of 

@@ -1,4 +1,5 @@
-from typing import Union, Any
+from typing import Any, Union
+
 
 class ListNode(object):
     def __init__(self, data: Union[int, None]):

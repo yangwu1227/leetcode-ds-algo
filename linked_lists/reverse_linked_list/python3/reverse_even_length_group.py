@@ -1,6 +1,8 @@
-from node import ListNode 
-from singly import SinglyLinkedList
 from typing import Optional
+
+from node import ListNode
+from singly import SinglyLinkedList
+
 
 def reverse_group(start_node: ListNode, group_length: int) -> Optional[ListNode]:
     """

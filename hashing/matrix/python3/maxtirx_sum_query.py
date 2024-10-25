@@ -1,6 +1,8 @@
 from typing import List, Set, Tuple
+
 import numpy as np
 from scipy.sparse import lil_matrix
+
 
 class MatrixSumQueries(object):
     """

@@ -1,5 +1,6 @@
-from functools import reduce
 from collections.abc import Sequence
+from functools import reduce
+
 
 class MissingNumber(object):
     """

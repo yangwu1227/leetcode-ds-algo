@@ -1,5 +1,6 @@
 from typing import List
 
+
 def num_subarrays_product_less_than_k(nums: List[int], k: int) -> int:
     """
     Given an array of positive integers nums and an integer k, return the number of subarrays where the product of all the elements in the subarray is strictly less than k.

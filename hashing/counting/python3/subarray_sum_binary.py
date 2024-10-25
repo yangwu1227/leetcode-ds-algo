@@ -1,6 +1,7 @@
-from collections.abc import Sequence 
 from collections import defaultdict
+from collections.abc import Sequence
 from random import randint
+
 
 def subarray_sum_binary(nums: Sequence[int], k: int) -> int:
     """

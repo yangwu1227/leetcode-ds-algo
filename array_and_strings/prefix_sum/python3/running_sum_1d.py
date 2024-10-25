@@ -1,5 +1,6 @@
 from typing import List
 
+
 def running_sum(nums: List[int]) -> List[int]:
     """
     Given an array `nums`, the running sum of the array is defined as `runningSum[i] = sum(nums[0]…nums[i])`.

@@ -1,5 +1,6 @@
 from typing import List
 
+
 def validate_stack(pushed: List[int], popped: List[int]) -> bool:
     """
     Determine if `pushed` and `popped` can be obtained from a series of stack push and pop operations.

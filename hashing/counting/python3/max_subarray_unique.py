@@ -1,6 +1,8 @@
-from collections.abc import Sequence 
 from collections import defaultdict
+from collections.abc import Sequence
+
 import numpy as np
+
 
 def max_subarray_unique(nums: Sequence[int]) -> int:
     """

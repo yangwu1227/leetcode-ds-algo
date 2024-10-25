@@ -1,6 +1,7 @@
 from collections import Counter
 from sys import maxsize
 
+
 def max_number_target_word(text: str, target_word: str) -> int:
     """
     Given a string `text`, use the characters of `text` to form as many instances of the word `target_word` as possible.

@@ -1,5 +1,6 @@
 from typing import List
 
+
 def find_max_average(nums: List[int], k: int) -> int:
     """
     Given an integer array nums consisting of n elements, and an integer k. Find a contiguous subarray whose length is equal to k that has 

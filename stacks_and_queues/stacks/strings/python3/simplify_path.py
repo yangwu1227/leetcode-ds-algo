@@ -1,5 +1,6 @@
 from typing import List
 
+
 def simplify_path(path: str) -> str:
     """
     Given an absolute path for a Unix-style file system, which begins with a slash '/', transform 

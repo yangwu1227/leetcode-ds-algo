@@ -1,5 +1,6 @@
 from collections import Counter
 
+
 def close_strings(first: str, second: str) -> bool:
     """
     Check if two strings are considered close. Two strings are close if one can be transformed into the other using the following operations:

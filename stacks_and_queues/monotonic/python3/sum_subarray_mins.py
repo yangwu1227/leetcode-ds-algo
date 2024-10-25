@@ -1,5 +1,6 @@
-from typing import MutableSequence, List, Deque
 from collections import deque
+from typing import Deque, List, MutableSequence
+
 
 def sum_subarray_mins(x: MutableSequence) -> int:
     """

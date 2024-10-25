@@ -1,7 +1,9 @@
 import os
-import numpy as np
-import matplotlib.pyplot as plt
 from typing import Callable, List, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 def generate_n_values(max_n: int) -> np.ndarray:
     """

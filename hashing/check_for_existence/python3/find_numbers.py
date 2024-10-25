@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from typing import List
 
+
 def find_numbers(nums: Sequence[int]) -> List[int]:
     """
     Given an integer array `nums`, find all the unique numbers `x` in nums that satisfy the following: `x + 1` is not in `nums`, and `x - 1 `is not in `nums`.

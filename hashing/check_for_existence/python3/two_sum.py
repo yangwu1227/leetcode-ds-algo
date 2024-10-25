@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from typing import List
 
+
 class Solution(object):
     """
     Given an array of integers `nums` and an integer `target`, return indices of two numbers such that they add up to `target`. We cannot use 

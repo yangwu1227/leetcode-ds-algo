@@ -1,5 +1,6 @@
-from node import ListNode 
+from node import ListNode
 from singly import SinglyLinkedList
+
 
 def is_palindrome(head: ListNode) -> bool:
     """
