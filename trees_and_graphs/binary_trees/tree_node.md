@@ -123,6 +123,12 @@ root = TreeNode.construct_binary_tree(values)
 
 ---
 
+### `visualize_binary_tree`
+
+This static method visualizes a binary tree using `matplotlib` and `networkx`. It draws the tree structure, placing each node at the appropriate level and adding edges to represent parent-child relationships.
+
+---
+
 # C++ Implementation
 
 The header file `tree_node.hpp` defines the `TreeNode` class structure, data members, and public methods. It also includes key type aliases and uses `std::variant` to store various types of data.
