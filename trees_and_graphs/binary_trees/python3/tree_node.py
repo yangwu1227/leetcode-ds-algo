@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 from collections import deque
-from typing import List, Optional, Union
+from typing import List, MutableMapping, Optional, Sequence, Tuple, Union
+
+import matplotlib.pyplot as plt
+import networkx as nx
 
 
 class TreeNode(object):
@@ -37,13 +40,13 @@ class TreeNode(object):
         return f"TreeNode(data = {self.data})"
 
     @staticmethod
-    def construct_binary_tree(values: List[Optional[Union[int, float, str]]]) -> Optional[TreeNode]:
+    def construct_binary_tree(values: Sequence[Optional[Union[int, float, str]]]) -> Optional[TreeNode]:
         """
         Constructs a binary tree from a list of values representing level-order traversal.
 
         Parameters
         ----------
-        values : List[Optional[Union[int, float, str]]]
+        values : Sequence[Optional[Union[int, float, str]]]
             A list where each element represents a node's data in level-order; 
             `None` represents a missing node
 
@@ -76,3 +79,36 @@ class TreeNode(object):
             index += 1
 
         return root
+    
+    @staticmethod
+    def visualize_binary_tree(root: TreeNode) -> None:
+        """
+        Visualizes a binary tree using matplotlib and networkx.
+
+        Parameters
+        ----------
+        root : TreeNode
+            The root node of the binary tree
+        """
+        def add_edges(graph: nx.DiGraph, node: TreeNode, pos: MutableMapping[TreeNode, Tuple[float, float]], 
+                      x: float = 0, y: float = 0, layer: int = 1, dx: float = 1.5) -> None:
+            if not node:
+                return
+            pos[node] = (x, y)
+            if node.left:
+                graph.add_edge(node, node.left)
+                add_edges(graph, node.left, pos, x - dx / layer, y - 1, layer + 1, dx)
+            if node.right:
+                graph.add_edge(node, node.right)
+                add_edges(graph, node.right, pos, x + dx / layer, y - 1, layer + 1, dx)
+
+        graph = nx.DiGraph()
+        pos: MutableMapping[TreeNode, Tuple[float, float]] = {}
+        add_edges(graph, root, pos)
+
+        plt.figure(figsize=(10, 8))
+        nx.draw(graph, pos, with_labels=False, node_size=800, node_color="skyblue", edge_color="gray", font_size=10)
+        nx.draw_networkx_labels(graph, pos, labels={node: str(node.data) for node in pos})
+        plt.title("Binary Tree Visualization")
+        plt.axis("off")
+        plt.show()
