@@ -5,10 +5,12 @@ on:
     paths:
       - 'pyproject.toml'
       - 'pdm.lock'
+      - '.github/workflows/ci_python_setup.yml'
   pull_request:
     paths:
       - 'pyproject.toml'
       - 'pdm.lock'
+      - '.github/workflows/ci_python_setup.yml'
 
 jobs:
   test:
@@ -26,6 +28,11 @@ jobs:
 
       - name: Set up PDM
         uses: pdm-project/setup-pdm@v4
+
+      - name: Install dependencies for macOS
+        if: runner.os == 'macOS'
+        run: |
+          brew install gfortran
 
       - name: Install dependencies
         run: |
