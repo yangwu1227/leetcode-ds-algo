@@ -72,7 +72,9 @@
         "dense": "cpp",
         "sparse": "cpp",
         "memory_resource": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "forward_list": "cpp",
+        "print": "cpp"
     },
     "python.analysis.typeCheckingMode": "standard"
 }
