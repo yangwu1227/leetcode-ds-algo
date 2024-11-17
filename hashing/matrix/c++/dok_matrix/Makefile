@@ -1,7 +1,7 @@
 CXX = /usr/bin/g++
 
 # Compiler flags
-CXXFLAGS = -std=c++17 -fdiagnostics-color=always -I/opt/homebrew/Cellar/eigen/3.4.0_1/include/eigen3 -I/opt/homebrew/Cellar/boost/1.85.0/include
+CXXFLAGS = -std=c++17 -fdiagnostics-color=always -I/opt/homebrew/include/eigen3
 
 # Source and object files
 TARGET = main

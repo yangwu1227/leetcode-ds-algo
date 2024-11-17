@@ -37,4 +37,16 @@ The C++ setup is tailored for the ARM64 architecture on macOS. It can be adapted
 
 ### External Libraries
 
-Some C++ solutions utilize both the [Boost](https://www.boost.org/) and [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page) libraries. 
+Some C++ solutions utilize both the [Boost](https://www.boost.org/) and [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page) libraries. For consistency and flexibility across different build systems, the include path `-I/opt/homebrew/include` is specified in the build configurations. This approach ensures compatibility across both the vs code setup (using `tasks.json`) and `Makefile` builds, automatically incorporating updates to library versions installed via Homebrew.
+
+#### Verifying Symlinked Paths
+
+To confirm that the symlinked paths for Boost and Eigen are correctly set up, run the following commands:
+
+```bash
+ls -l /opt/homebrew/include/boost
+# lrwxr-xr-x  1 user  admin  38 Nov  5 01:20 /opt/homebrew/include/boost -> ../Cellar/boost/1.86.0_2/include/boost
+
+ls -l /opt/homebrew/include/eigen3
+# lrwxr-xr-x  1 user  admin  38 Jul 19 00:24 /opt/homebrew/include/eigen3 -> ../Cellar/eigen/3.4.0_1/include/eigen3
+```
