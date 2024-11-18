@@ -1,0 +1,30 @@
+name: CI Python Setup
+on:
+  push:
+    paths:
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/ci_python_setup.yml'
+  pull_request:
+    paths:
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/ci_python_setup.yml'
+jobs:
+  test:
+    name: Test on ${{ matrix.os }} with Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.11.9]
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Install dependencies
+        run: |
+          uv sync --group notebook --group lint-fmt
