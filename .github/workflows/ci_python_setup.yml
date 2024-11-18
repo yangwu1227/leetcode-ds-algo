@@ -27,4 +27,4 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv sync --group notebook --group lint-fmt
+          uv sync --frozen --group notebook --group lint-fmt

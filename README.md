@@ -8,7 +8,7 @@ The Python dependencies are managed using [uv](https://docs.astral.sh/uv/):
 
 ```bash
 # The specified python version in `pyproject.toml` is requires-python = ">=3.11"
-$ uv sync
+$ uv sync --frozen
 ```
 
 ## C++
