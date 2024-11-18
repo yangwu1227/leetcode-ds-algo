@@ -6,10 +6,10 @@ class DoublyLinkedList(object):
         """
         Initializes an empty doubly linked list with sentinel head and tail nodes.
         """
-        self.head: ListNode = ListNode(None) # Sentinel node
-        self.tail: ListNode = ListNode(None) # Sentinel node
-        self.head.next = self.tail # The next pointer of the head points to the tail
-        self.tail.prev = self.head # The prev pointer of the tail points to the head
+        self.head: ListNode = ListNode(None)  # Sentinel node
+        self.tail: ListNode = ListNode(None)  # Sentinel node
+        self.head.next = self.tail  # The next pointer of the head points to the tail
+        self.tail.prev = self.head  # The prev pointer of the tail points to the head
 
     def add_to_end(self, node_to_add: ListNode) -> None:
         """
@@ -47,7 +47,7 @@ class DoublyLinkedList(object):
             The node to be added to the start of the list.
         """
         node_to_add.prev = self.head
-        node_to_add.next = self.head.next 
+        node_to_add.next = self.head.next
         self.head.next.prev = node_to_add
         self.head.next = node_to_add
 
@@ -131,8 +131,8 @@ class DoublyLinkedList(object):
             current = current.next
         print("None")
 
-def main() -> int:
 
+def main() -> int:
     dll = DoublyLinkedList()
     nodes = [ListNode(i) for i in range(1, 6)]
 
@@ -145,11 +145,11 @@ def main() -> int:
 
     print("Removing the first node")
     dll.remove_from_start()
-    dll.display() 
+    dll.display()
 
     print("Removing the last node")
     dll.remove_from_end()
-    dll.display() 
+    dll.display()
 
     print("Adding a new node to the start")
     dll.add_to_start(ListNode(23))
@@ -165,6 +165,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

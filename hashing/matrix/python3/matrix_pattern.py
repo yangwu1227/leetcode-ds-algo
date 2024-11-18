@@ -9,6 +9,7 @@ class MatrixPattern(object):
     """
     A class to to search for valid submatrices in a board matrix that match a pattern matrix.
     """
+
     def __init__(self, board: List[List[int]], pattern: List[str]) -> None:
         """
         Initialize the MatrixPattern instance with the board and pattern matrices.
@@ -20,10 +21,10 @@ class MatrixPattern(object):
         pattern : List[str]
             The pattern matrix to search for in the board matrix
         """
-        self.board = board 
+        self.board = board
         self.board_nrows = len(self.board)
         self.board_ncols = len(self.board[0])
-        self.pattern = pattern 
+        self.pattern = pattern
         self.pattern_nrows = len(self.pattern)
         self.pattern_ncols = len(self.pattern[0])
 
@@ -43,8 +44,8 @@ class MatrixPattern(object):
         bool
             `True` if the submatrix matches the pattern matrix, `False` otherwise
         """
-        board_int_to_pattern_str: MutableMapping[int, str]  = defaultdict(str)
-        pattern_str_to_board_int: MutableMapping[str, int]  = defaultdict(int)
+        board_int_to_pattern_str: MutableMapping[int, str] = defaultdict(str)
+        pattern_str_to_board_int: MutableMapping[str, int] = defaultdict(int)
         for pattern_row in range(self.pattern_nrows):
             for pattern_col in range(self.pattern_ncols):
                 board_row, board_col = i + pattern_row, j + pattern_col
@@ -58,11 +59,15 @@ class MatrixPattern(object):
                         return False
                 else:
                     # Check if 'board_int' is already mapped to a 'pattern_str', and if it is not the same as the current 'pattern_str'
-                    if (board_int in board_int_to_pattern_str) and (board_int_to_pattern_str[board_int] != pattern_str):
-                        return False 
+                    if (board_int in board_int_to_pattern_str) and (
+                        board_int_to_pattern_str[board_int] != pattern_str
+                    ):
+                        return False
                     # Check if 'pattern_str' is already mapped to by a 'board_int', and if it is not the same as the current 'board_int'
-                    if (pattern_str in pattern_str_to_board_int) and (pattern_str_to_board_int[pattern_str] != board_int):
-                        return False 
+                    if (pattern_str in pattern_str_to_board_int) and (
+                        pattern_str_to_board_int[pattern_str] != board_int
+                    ):
+                        return False
                     # Update bidirectional maps
                     board_int_to_pattern_str[board_int] = pattern_str
                     pattern_str_to_board_int[pattern_str] = board_int
@@ -84,52 +89,46 @@ class MatrixPattern(object):
                 if self.check_pattern(i=i, j=j):
                     return [i, j]
         return [-1, -1]
-        
-def main() -> int:
 
+
+def main() -> int:
     test_cases = [
         (
             # Test board 1
-            [[1, 2, 2],
-             [2, 2, 3],
-             [2, 3, 3]],
+            [[1, 2, 2], [2, 2, 3], [2, 3, 3]],
             # Test pattern matrix 1
-            ["ab", "bb"]
+            ["ab", "bb"],
         ),
         (
             # Test board 2
-            [[1, 1, 2],
-             [3, 3, 4],
-             [6, 6, 6]],
+            [[1, 1, 2], [3, 3, 4], [6, 6, 6]],
             # Test pattern matrix 2
-            ["ab", "66"]
+            ["ab", "66"],
         ),
         (
             # Test board 3
-            [[1, 2],
-             [2, 1]],
+            [[1, 2], [2, 1]],
             # Test pattern matrix 3
-            ["xx"]
+            ["xx"],
         ),
         (
-            # Test board 4 
-            [[1, 2, 3, 4],
-             [5, 6, 1, 2],
-             [3, 4, 5, 6],
-             [7, 8, 9, 1]],
+            # Test board 4
+            [[1, 2, 3, 4], [5, 6, 1, 2], [3, 4, 5, 6], [7, 8, 9, 1]],
             # Test pattern matrix 4
-            ["12", "34"]
+            ["12", "34"],
         ),
         (
-            # Test board 5 
-            [[5, 5, 5, 5, 5],
-             [5, 1, 2, 3, 5],
-             [5, 4, 5, 6, 5],
-             [5, 7, 8, 9, 5],
-             [5, 5, 5, 5, 5]],
+            # Test board 5
+            [
+                [5, 5, 5, 5, 5],
+                [5, 1, 2, 3, 5],
+                [5, 4, 5, 6, 5],
+                [5, 7, 8, 9, 5],
+                [5, 5, 5, 5, 5],
+            ],
             # Test pattern matrix 5
-            ["12", "45"]
-        )
+            ["12", "45"],
+        ),
     ]
     for board, pattern in test_cases:
         matrix_pattern = MatrixPattern(board=board, pattern=pattern)
@@ -137,10 +136,10 @@ def main() -> int:
         print(f"Board: \n {np.array(board)}")
         print(f"Pattern: \n {pattern}")
         print(f"Indices: \n {indices}")
-        print('\n')
+        print("\n")
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

@@ -23,10 +23,10 @@ def valid_parentheses(s: str) -> bool:
         return False
 
     parentheses_stack: List[str] = []
-    matching_bracket: Dict[str, str] = {"(": ")", "[": "]", "{": "}"} 
+    matching_bracket: Dict[str, str] = {"(": ")", "[": "]", "{": "}"}
 
     for curent_bracket in s:
-        # If the current bracket is an open bracket, push it onto the stack 
+        # If the current bracket is an open bracket, push it onto the stack
         if curent_bracket in matching_bracket:
             parentheses_stack.append(curent_bracket)
         else:
@@ -42,8 +42,8 @@ def valid_parentheses(s: str) -> bool:
     # If there are any remaining open brackets in the stack after the loop, the string is invalid
     return not parentheses_stack
 
-def main() -> int:
 
+def main() -> int:
     test_strings = ["()[]{}", "()", "(}", "]", "){"]
     for s in test_strings:
         is_valid = valid_parentheses(s)
@@ -51,6 +51,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

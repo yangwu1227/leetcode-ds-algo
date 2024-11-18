@@ -4,9 +4,9 @@ from typing import List
 
 def dest_city(paths: List[List[str]]) -> str:
     """
-    Given an array of paths, where `paths[i] = [cityA_i, cityB_i]` means there exists a direct path going from `cityA_i` to `cityB_i`. Return the destination city, 
+    Given an array of paths, where `paths[i] = [cityA_i, cityB_i]` means there exists a direct path going from `cityA_i` to `cityB_i`. Return the destination city,
     that is, the city without any path outgoing to another city.
-    
+
     Note: It is guaranteed that the graph of paths forms a line without any loop, therefore, there will be exactly one destination city.
 
     Parameters
@@ -26,24 +26,23 @@ def dest_city(paths: List[List[str]]) -> str:
         dest_count[dep] -= 1
         # Increment if city is a destination
         dest_count[dest] += 1
-    
+
     # Find the city that has > 0 count, that is the destination
     for dep, dest in paths:
         # Access is O(1)
         if dest_count[dest] > 0:
             return dest
     # Never gets here if solution is guaranteed
-    return ''
-    
-    
+    return ""
+
+
 def main() -> int:
-    
     paths = [["London", "New York"], ["New York", "Lima"], ["Lima", "Sao Paulo"]]
     destination = dest_city(paths)
     print(f"Given paths {paths}, the destination city is {destination}")
-    
+
     return 0
-    
+
+
 if __name__ == "__main__":
-    
     main()

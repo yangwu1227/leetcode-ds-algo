@@ -18,7 +18,13 @@ class SparseMatrix(object):
     sparse_matrix : Dict[Tuple[int, int], Union[int, float]]
         A dictionary of keys sparse matrix representation
     """
-    def __init__(self, nrows: int, ncols: int, sparse_matrix: Dict[Tuple[int, int], Union[int, float]]) -> None:
+
+    def __init__(
+        self,
+        nrows: int,
+        ncols: int,
+        sparse_matrix: Dict[Tuple[int, int], Union[int, float]],
+    ) -> None:
         """
         Initializes the sparse matrix instance.
 
@@ -29,9 +35,9 @@ class SparseMatrix(object):
         ncols : int
             The number of columns in the matrix
         sparse_matrix : Dict[Tuple[int, int], Union[int, float]]
-            A dictionary of keys sparse matrix representation 
+            A dictionary of keys sparse matrix representation
         """
-        self.nrows = nrows 
+        self.nrows = nrows
         self.ncols = ncols
         self.sparse_matrix = sparse_matrix
 
@@ -47,7 +53,9 @@ class SparseMatrix(object):
         return f"Sparse Matrix with shape ({self.nrows}, {self.ncols})"
 
     @staticmethod
-    def to_sparse(dense_matrix: List[List[Union[int, float]]]) -> Dict[Tuple[int, int], Union[int, float]]:
+    def to_sparse(
+        dense_matrix: List[List[Union[int, float]]],
+    ) -> Dict[Tuple[int, int], Union[int, float]]:
         """
         Converts a dense matrix to a sparse matrix representation.
 
@@ -59,15 +67,15 @@ class SparseMatrix(object):
         Returns
         -------
         Dict[Tuple[int, int], Union[int, float]]
-            The sparse matrix representation of the dense matrix 
+            The sparse matrix representation of the dense matrix
         """
         sparse_matrix = {}
         for row_idx, row in enumerate(dense_matrix):
             for col_idx, cell_value in enumerate(row):
                 if cell_value:
-                    sparse_matrix[(row_idx, col_idx)] = cell_value 
+                    sparse_matrix[(row_idx, col_idx)] = cell_value
         return sparse_matrix
-    
+
     def to_dense(self) -> List[List[Union[int, float]]]:
         """
         Converts the sparse matrix to a dense matrix representation.
@@ -75,14 +83,14 @@ class SparseMatrix(object):
         Returns
         -------
         List[List[Union[int, float]]]
-            The dense matrix representation of the sparse matrix 
+            The dense matrix representation of the sparse matrix
         """
         dense_matrix = [[0] * self.ncols for _ in range(self.nrows)]
         for (row_idx, col_idx), cell_value in self.sparse_matrix.items():
-            dense_matrix[row_idx][col_idx] = cell_value # type: ignore
-        return dense_matrix # type: ignore
+            dense_matrix[row_idx][col_idx] = cell_value  # type: ignore
+        return dense_matrix  # type: ignore
 
-    @classmethod 
+    @classmethod
     def from_dense(cls, dense_matrix: List[List[Union[int, float]]]) -> Self:
         """
         Creates a sparse matrix instance from a dense matrix.
@@ -95,14 +103,19 @@ class SparseMatrix(object):
         Returns
         -------
         SparseMatrix
-            The sparse matrix instance created from the dense matrix 
+            The sparse matrix instance created from the dense matrix
         """
         nrows, ncols = len(dense_matrix), len(dense_matrix[0])
         sparse_matrix = cls.to_sparse(dense_matrix)
         return cls(nrows, ncols, sparse_matrix)
-    
+
     @classmethod
-    def from_sparse(cls, nrows: int, ncols: int, sparse_matrix: Dict[Tuple[int, int], Union[int, float]]) -> Self:
+    def from_sparse(
+        cls,
+        nrows: int,
+        ncols: int,
+        sparse_matrix: Dict[Tuple[int, int], Union[int, float]],
+    ) -> Self:
         """
         Creates a sparse matrix instance from a sparse matrix representation.
 
@@ -118,11 +131,11 @@ class SparseMatrix(object):
         Returns
         -------
         SparseMatrix
-            The sparse matrix instance created from the sparse matrix representation 
+            The sparse matrix instance created from the sparse matrix representation
         """
         return cls(nrows, ncols, sparse_matrix)
-    
-    def __matmul__(self, other: Any) -> 'SparseMatrix':
+
+    def __matmul__(self, other: Any) -> "SparseMatrix":
         """
         Performs matrix multiplication between two sparse matrices.
 
@@ -130,7 +143,7 @@ class SparseMatrix(object):
         ----------
         other : SparseMatrix
             The other sparse matrix to multiply with
-        
+
         Returns
         -------
         SparseMatrix
@@ -138,7 +151,9 @@ class SparseMatrix(object):
         """
         if isinstance(other, SparseMatrix):
             if self.ncols != other.nrows:
-                raise ValueError("The number of columns in the left matrix must be equal to the number of rows in the right matrix")
+                raise ValueError(
+                    "The number of columns in the left matrix must be equal to the number of rows in the right matrix"
+                )
 
             result_sparse_matrix: Dict[Tuple[int, int], Union[int, float]] = {}
             # For each non-zero element in A[this_row_idx, common_idx]
@@ -149,13 +164,16 @@ class SparseMatrix(object):
                     if (common_idx, other_col_idx) in other.sparse_matrix:
                         other_value = other.sparse_matrix[(common_idx, other_col_idx)]
                         # Each C[this_row_idx, other_col_idx] entry should be `np.dot(A[this_row_idx, :], B[:, other_col_idx])`
-                        result_sparse_matrix[(this_row_idx, other_col_idx)] = result_sparse_matrix.get((this_row_idx, other_col_idx), 0) + self_value * other_value
+                        result_sparse_matrix[(this_row_idx, other_col_idx)] = (
+                            result_sparse_matrix.get((this_row_idx, other_col_idx), 0)
+                            + self_value * other_value
+                        )
 
             return self.from_sparse(self.nrows, other.ncols, result_sparse_matrix)
         else:
-            raise NotImplemented
-    
-    def __rmatmul__(self, other: Any) -> 'SparseMatrix':
+            raise NotImplementedError
+
+    def __rmatmul__(self, other: Any) -> "SparseMatrix":
         """
         Performs matrix multiplication where the sparse matrix is on the right-hand side of the operator.
 
@@ -171,15 +189,16 @@ class SparseMatrix(object):
         """
         if isinstance(other, SparseMatrix):
             if other.ncols != self.nrows:
-                raise ValueError("The number of columns in the left matrix must be equal to the number of rows in the right matrix")
+                raise ValueError(
+                    "The number of columns in the left matrix must be equal to the number of rows in the right matrix"
+                )
             return other.__matmul__(self)
         else:
-            raise NotImplemented
+            raise NotImplementedError
+
 
 def main() -> int:
-
     for i in range(5):
-
         dtype = np.random.choice(np.array([np.float64, np.int64]), size=1)[0]
         mean = np.random.randint(0, 100, 1)[0]
         sd = np.random.randint(0, 100, 1)[0]
@@ -188,10 +207,14 @@ def main() -> int:
         ncols_a = np.random.randint(1, 100, 1)[0]
         nrows_b = ncols_a
         ncols_b = np.random.randint(1, 100, 1)[0]
-        sparse_matrix_a = random(m=nrows_a, n=ncols_a, format='dok', dtype=dtype, data_rvs=rvs)
-        sparse_matrix_b = random(m=nrows_b, n=ncols_b, format='dok', dtype=dtype, data_rvs=rvs)
+        sparse_matrix_a = random(
+            m=nrows_a, n=ncols_a, format="dok", dtype=dtype, data_rvs=rvs
+        )
+        sparse_matrix_b = random(
+            m=nrows_b, n=ncols_b, format="dok", dtype=dtype, data_rvs=rvs
+        )
         reference_output = sparse_matrix_a @ sparse_matrix_b
-        reference_output = np.array(reference_output.todense()) # type: ignore
+        reference_output = np.array(reference_output.todense())  # type: ignore
 
         # Convert to list of lists
         dense_matrix_a = sparse_matrix_a.todense().tolist()
@@ -212,14 +235,14 @@ def main() -> int:
             # Compare output with reference output
             np.testing.assert_allclose(reference_output, output)
             print("The output matches the reference implementation")
-        except AssertionError as error:
+        except AssertionError:
             print("The output does not match the reference implementation")
             exit(1)
-        
-        print('\n')
+
+        print("\n")
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

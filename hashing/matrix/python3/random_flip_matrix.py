@@ -4,8 +4,8 @@ from typing import Dict, List
 
 class RandomFlip(object):
     """
-    Given a `m x n` binary grid matrix with all the values set 0 initially. 
-    Design an algorithm to randomly pick an index `(i, j)` where `matrix[i][j] 
+    Given a `m x n` binary grid matrix with all the values set 0 initially.
+    Design an algorithm to randomly pick an index `(i, j)` where `matrix[i][j]
     == 0` and flips it to 1. All the indices `(i, j)` where `matrix[i][j] == 0`
     should be equally likely to be returned.
 
@@ -34,7 +34,8 @@ class RandomFlip(object):
     List[int]
         Returns the index `(i, j)` that needs to be flipped to 1
     """
-    def __init__(self, m: int, n : int) -> None:
+
+    def __init__(self, m: int, n: int) -> None:
         """
         Initialize the `RandomFlip` class with the given `m x n` matrix.
 
@@ -73,7 +74,9 @@ class RandomFlip(object):
 
         # The current 'random_index' should not be chosen again, so map it to the last available index
         # If the next 'random_index' is the same, then 'index_to_flip' would be the last available index instead
-        self.flipped_indices[random_index] = self.flipped_indices.get(self.available_indices, self.available_indices)
+        self.flipped_indices[random_index] = self.flipped_indices.get(
+            self.available_indices, self.available_indices
+        )
 
         # Convert from single 'index_to_flip' to [i, j]
         return [index_to_flip // self.n, index_to_flip % self.n]
@@ -89,15 +92,14 @@ class RandomFlip(object):
         self.flipped_indices.clear()
         self.available_indices = self.total
 
-def main() -> int:
 
+def main() -> int:
     test_cases = [
         ((3, 1), ["flip", "flip", "flip", "flip", "reset", "flip"]),
-        ((2, 4), ["flip", "flip", "flip", "flip", "flip", "reset", "flip"])
+        ((2, 4), ["flip", "flip", "flip", "flip", "flip", "reset", "flip"]),
     ]
 
     for (m, n), actions in test_cases:
-
         random_flip = RandomFlip(m=m, n=n)
         print(f"Matrix has shape: ({m}, {n})")
         for action in actions:
@@ -106,12 +108,12 @@ def main() -> int:
                 print(random_flip.flip())
                 print(f"Total available indices = {random_flip.available_indices}")
             elif action == "reset":
-                print(f"Resetting")
+                print("Resetting")
                 random_flip.reset()
                 print(f"Total available indices = {random_flip.available_indices}")
-        print('\n')
+        print("\n")
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

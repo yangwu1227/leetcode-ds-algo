@@ -16,16 +16,16 @@ class Solution(object):
     List[int]
         Squares of each number sorted in non-decreasing order.
     """
+
     def sorted_squares_while(self, nums: List[int]) -> List[int]:
         left_index = 0
         right_index = len(nums) - 1
-        
+
         result = []
         while left_index < right_index:
-            
-            left_squared = nums[left_index]**2
-            right_squared = nums[right_index]**2
-            
+            left_squared = nums[left_index] ** 2
+            right_squared = nums[right_index] ** 2
+
             # Always insert from the left since 'result' must be increasing order
             if left_squared < right_squared:
                 # Insert the larger squared value and move right index towards left
@@ -41,25 +41,25 @@ class Solution(object):
                 result.insert(0, right_squared)
                 right_index -= 1
                 left_index += 1
-                
+
         # Once the loop completes, check if there is any remaining element
         # Append this smallest squared value (both indices point to it so use either)
         if len(result) == len(nums) - 1:
-            result.insert(0, nums[left_index]**2)
-        
+            result.insert(0, nums[left_index] ** 2)
+
         return result
-    
+
     def sorted_squares_for(self, nums: List[int]) -> List[int]:
         left_index = 0
         right_index = len(nums) - 1
         n = len(nums)
-        
+
         result = [0] * n
         # Loop in reverse (stop at -1 so 0 is included and step is -1)
         for i in range(n - 1, -1, -1):
             left_abs = abs(nums[left_index])
             right_abs = abs(nums[right_index])
-            
+
             if left_abs < right_abs:
                 # If the right element's abs is larger, its squared value is larger
                 right_index -= 1
@@ -70,11 +70,11 @@ class Solution(object):
                 left_index += 1
                 squares = left_abs**2
             result[i] = squares
-        
-        return result    
-            
+
+        return result
+
+
 def main() -> int:
-    
     nums_1 = [-7, -3, 2, 3, 11]
     nums_2 = [-4, -1, 0, 3, 10]
 
@@ -84,11 +84,11 @@ def main() -> int:
         solution_1 = solution.sorted_squares_while(nums)
         solution_2 = solution.sorted_squares_for(nums)
         assert solution_1 == solution_2
-        
-        print(f'Input {nums} becomes {solution_1}')
-    
+
+        print(f"Input {nums} becomes {solution_1}")
+
     return 0
 
-if __name__ == '__main__':
-    
+
+if __name__ == "__main__":
     main()

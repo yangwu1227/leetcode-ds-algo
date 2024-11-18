@@ -32,14 +32,21 @@ def close_strings(first: str, second: str) -> bool:
     check_two = sorted(first_counts.values()) == sorted(second_counts.values())
     return check_one and check_two
 
-def main() -> int:
 
-    for first, second in [("abc", "bca"), ("a", "aa"), ("cabbba", "abbccc"), ("yangwucpp", "pythoncpp")]:
+def main() -> int:
+    for first, second in [
+        ("abc", "bca"),
+        ("a", "aa"),
+        ("cabbba", "abbccc"),
+        ("yangwucpp", "pythoncpp"),
+    ]:
         close = close_strings(first, second)
-        print(f"Given '{first}' and '{second}', the strings are{' ' if close else ' not '}close")
+        print(
+            f"Given '{first}' and '{second}', the strings are{' ' if close else ' not '}close"
+        )
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

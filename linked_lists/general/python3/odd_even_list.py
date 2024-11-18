@@ -22,10 +22,10 @@ def odd_even_list(head: ListNode) -> ListNode:
         return head
     # Single node case or two nodes
     if head.next.next is None or head.next.next.next is None:
-        return head 
-    
-    prev = head 
-    current = head.next 
+        return head
+
+    prev = head
+    current = head.next
     # Keep a reference to the second node, first node of the even section
     first_even_node = head.next.next
     length = 0
@@ -47,27 +47,27 @@ def odd_even_list(head: ListNode) -> ListNode:
     else:
         # If length is even, then prev is pointing at the last odd node
         prev.next = first_even_node
-    
+
     return head
 
-def main() -> int:
 
+def main() -> int:
     data_arrays = [range(1, 5), range(1, 10), [1], [12, 27]]
     for data_array in data_arrays:
         nodes = (ListNode(data=data) for data in data_array)
         sll = SinglyLinkedList()
         for node in nodes:
             sll.add_to_end(node)
-        
-        print(f"Before reordering")
+
+        print("Before reordering")
         sll.display()
         new_head = odd_even_list(sll.head)
-        print(f"After reordering")
+        print("After reordering")
         sll.display()
-        print('\n')
+        print("\n")
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

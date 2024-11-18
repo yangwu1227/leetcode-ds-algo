@@ -4,7 +4,7 @@ from typing import Deque, List, MutableSequence
 
 def daily_temperatures(temperatures: MutableSequence[int]) -> List[int]:
     """
-    Given an array of integers `temperatures` representing daily temperatures, return an array `output` where `output[i]` 
+    Given an array of integers `temperatures` representing daily temperatures, return an array `output` where `output[i]`
     indicates the number of days after the `i`-th day that a warmer temperature occurs. If no such day exists, set `out[i]` to 0.
 
     Parameters
@@ -34,12 +34,12 @@ def daily_temperatures(temperatures: MutableSequence[int]) -> List[int]:
 
     return output
 
-def main() -> int:
 
+def main() -> int:
     temperatures_data = [
         [73, 74, 75, 71, 69, 72, 76, 73],
         [30, 35, 53, 62, 70, 90],
-        [35]
+        [35],
     ]
 
     for temperatures in temperatures_data:
@@ -48,6 +48,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

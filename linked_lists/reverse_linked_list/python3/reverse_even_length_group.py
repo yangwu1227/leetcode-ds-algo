@@ -33,7 +33,8 @@ def reverse_group(start_node: ListNode, group_length: int) -> Optional[ListNode]
     # Connect current and next group: (prev = current_group_c) -> current_group_b -> (start_node = current_group_a) -> (current = next_group_a) -> ...
     start_node.next = current
     # Return the new first node of the current group, so we can connect the last node of the previous group to this node
-    return prev 
+    return prev
+
 
 def reverse_even_length_group(head: ListNode) -> ListNode:
     """
@@ -56,10 +57,10 @@ def reverse_even_length_group(head: ListNode) -> ListNode:
     # Two nodes
     if head.next.next.next is None:
         return head
-    
+
     # Initialize pointers to sentinel head and first real node
-    last_node_prev_group = head 
-    current = head.next 
+    last_node_prev_group = head
+    current = head.next
     expected_group_length = 1
     while current:
         # Determine the actual length of the current group
@@ -73,7 +74,9 @@ def reverse_even_length_group(head: ListNode) -> ListNode:
         # If the actual group length is even, reverse the group
         if actual_group_length % 2 == 0:
             # Connect the previous group to the new first node of the current group (which has been reversed)
-            last_node_prev_group.next = reverse_group(start_node=start_node, group_length=actual_group_length) 
+            last_node_prev_group.next = reverse_group(
+                start_node=start_node, group_length=actual_group_length
+            )
 
         # Move the last_node_prev_group pointer to the end of the current group
         for _ in range(actual_group_length):
@@ -83,24 +86,24 @@ def reverse_even_length_group(head: ListNode) -> ListNode:
 
     return head
 
-def main() -> int:
 
+def main() -> int:
     data_arrays = [[5, 2, 6, 3, 9, 1, 7, 3, 8, 4], [5, 2], [1], [1, 1, 0, 6, 5]]
     for data_array in data_arrays:
         nodes = (ListNode(data=data) for data in data_array)
         sll = SinglyLinkedList()
         for node in nodes:
             sll.add_to_end(node)
-        
+
         print("Before reversing")
         sll.display()
         new_head = reverse_even_length_group(sll.head)
         print("After reversing")
         sll.display()
-        print('\n')
+        print("\n")
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

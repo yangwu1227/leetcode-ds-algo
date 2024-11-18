@@ -22,17 +22,17 @@ def repeated_character(s: str) -> str:
         if d[char] > 1:
             return char
     # Will never get here if `s` is guaranteed to contain at least one solution
-    return ''
+    return ""
+
 
 def main() -> int:
-    
     strings = ["abccbaacz", "abcdd", "yangwulovespythonandcpp"]
     for s in strings:
         char = repeated_character(s)
         print(f"Given the string {s}, the first letter to appear twice is {char}")
-    
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

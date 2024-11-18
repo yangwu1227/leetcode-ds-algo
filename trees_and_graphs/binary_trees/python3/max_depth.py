@@ -15,7 +15,7 @@ def max_depth(root: Optional[TreeNode]) -> int:
     Returns
     -------
     int
-        The maximum depth of the binary tree. Depth is defined as the number 
+        The maximum depth of the binary tree. Depth is defined as the number
         of nodes along the longest path from the root node down to the farthest leaf node.
     """
     if not root:
@@ -26,12 +26,12 @@ def max_depth(root: Optional[TreeNode]) -> int:
 
     return max(left_depth, right_depth) + 1
 
-def main() -> int:
 
+def main() -> int:
     test_cases = [
-        [3, 9, 20, None, None,15, 7],
+        [3, 9, 20, None, None, 15, 7],
         [1, None, 2],
-        [1, None, 2, 9, 10, 23, None, 8, 7, None, 12]
+        [1, None, 2, 9, 10, 23, None, 8, 7, None, 12],
     ]
     for node_data in test_cases:
         root = TreeNode.construct_binary_tree(values=node_data)
@@ -39,6 +39,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

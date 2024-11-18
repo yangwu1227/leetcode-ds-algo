@@ -3,7 +3,7 @@ from typing import List
 
 def asteroid(data: List[int]) -> List[int]:
     """
-    Simulates the collision of asteroids based on their size and direction. Each asteroid moves at the same speed. If 
+    Simulates the collision of asteroids based on their size and direction. Each asteroid moves at the same speed. If
     two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Asteroids moving in
     the same direction will never meet.
 
@@ -38,7 +38,7 @@ def asteroid(data: List[int]) -> List[int]:
                 elif top_abs == val_abs:
                     data_stack.pop()
                     break
-                # If the top of the stack is larger in size, simply break out of the loop 
+                # If the top of the stack is larger in size, simply break out of the loop
                 else:
                     break
             else:
@@ -46,8 +46,8 @@ def asteroid(data: List[int]) -> List[int]:
                 data_stack.append(val)
     return data_stack
 
-def main() -> int:
 
+def main() -> int:
     test_data = [[-2, 1, 1, -1], [10, 2, -5], [-2, -2, -2, -1], [8, -8]]
     for data in test_data:
         processed_data = asteroid(data)
@@ -55,6 +55,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

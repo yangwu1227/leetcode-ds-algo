@@ -15,6 +15,7 @@ class LongestSubstringRepetead(object):
     int
         Length of the longest valid subarray
     """
+
     @staticmethod
     def hash_map(s: str) -> int:
         left = window_len = 0
@@ -31,8 +32,8 @@ class LongestSubstringRepetead(object):
             # Check if we have found a larger window
             window_len = max(window_len, right - left + 1)
         return window_len
-    
-    @staticmethod 
+
+    @staticmethod
     def sliding_window_optimized(s: str) -> int:
         left = window_len = 0
         character_indices = defaultdict(int)
@@ -47,16 +48,18 @@ class LongestSubstringRepetead(object):
             character_indices[s[right]] = right + 1
         return window_len
 
-def main() -> int:
 
+def main() -> int:
     for s in ["abcabcbb", "bbbbb", "Aa !@@!abdsc"]:
         length_sliding_window = LongestSubstringRepetead.sliding_window_optimized(s)
         length_hash_map = LongestSubstringRepetead.hash_map(s)
         assert length_sliding_window == length_hash_map
-        print(f"Given the string '{s}', the longest subarray without repeated characters has {length_hash_map} elements")
+        print(
+            f"Given the string '{s}', the longest subarray without repeated characters has {length_hash_map} elements"
+        )
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

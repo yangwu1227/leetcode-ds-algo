@@ -6,6 +6,7 @@ class Stack(object):
     """
     A class representing a stack using a deque for efficient LIFO opertions.
     """
+
     def __init__(self) -> None:
         """
         Initialize the Stack instance.
@@ -22,8 +23,8 @@ class Stack(object):
             The string representation of the stack
         """
         str_repr = str(self.internal_deque)
-        str_repr = str_repr[str_repr.find('['):-1]
-        return f'Stack({str_repr})'
+        str_repr = str_repr[str_repr.find("[") : -1]
+        return f"Stack({str_repr})"
 
     def push(self, x: int) -> None:
         """
@@ -57,7 +58,7 @@ class Stack(object):
         if self.internal_deque:
             return self.internal_deque.pop()
         else:
-            raise IndexError('Stack is empty')
+            raise IndexError("Stack is empty")
 
     def top(self) -> int:
         """
@@ -76,9 +77,9 @@ class Stack(object):
         if self.internal_deque:
             return self.internal_deque[-1]
         else:
-            raise IndexError('Stack is empty')
+            raise IndexError("Stack is empty")
 
-    @property 
+    @property
     def empty(self) -> bool:
         """
         Check if the stack is empty.
@@ -90,8 +91,8 @@ class Stack(object):
         """
         return len(self.internal_deque) == 0
 
+
 def main() -> int:
-    
     stack = Stack()
     num_elements = randint(0, 100)
     # Push random integers onto the stack
@@ -110,8 +111,8 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     from random import randint
 
     main()

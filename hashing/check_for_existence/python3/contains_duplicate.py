@@ -14,7 +14,7 @@ def contains_duplicates(nums: Sequence[int]) -> bool:
     Returns
     -------
     bool
-        True of there is a value that appears twice, False otherwise 
+        True of there is a value that appears twice, False otherwise
     """
     num_dict = defaultdict(int)
     # Cost O(n) at worse
@@ -24,15 +24,17 @@ def contains_duplicates(nums: Sequence[int]) -> bool:
             return True
     return False
 
+
 def main() -> int:
-    
     test_nums = [[1, 1, 1, 3, 3, 4, 3, 2, 4, 2], (1, 3, 9, 8, 10)]
     for nums in test_nums:
         result = contains_duplicates(nums)
-        print(f"The input {nums} {'contains' if result else 'does not contain'} duplicate elements")
-    
+        print(
+            f"The input {nums} {'contains' if result else 'does not contain'} duplicate elements"
+        )
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

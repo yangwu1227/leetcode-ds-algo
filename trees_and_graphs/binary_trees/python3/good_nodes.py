@@ -1,13 +1,16 @@
 from tree_node import TreeNode
 from typing import Optional, Union
 
+
 class Solution(object):
     @staticmethod
-    def depth_first_search(node: Optional[TreeNode], max_val_so_far: Union[int, float]) -> int:
+    def depth_first_search(
+        node: Optional[TreeNode], max_val_so_far: Union[int, float]
+    ) -> int:
         """
         Perform a postorder traversal to count 'good' nodes in a binary tree.
 
-        A 'good' node is defined as a node whose value is greater than or equal 
+        A 'good' node is defined as a node whose value is greater than or equal
         to the maximum value encountered on the path from the root to that node.
 
         Parameters
@@ -23,19 +26,27 @@ class Solution(object):
             The total number of 'good' nodes encountered in the subtree rooted at 'node'.
         """
         if not node or not node.data:
-            print(f"    Empty tree node, returning 0\n")
+            print("    Empty tree node, returning 0\n")
             return 0
         current_max_val_so_far = max(max_val_so_far, node.data)
-        left = Solution.depth_first_search(node=node.left, max_val_so_far=current_max_val_so_far) 
-        right = Solution.depth_first_search(node=node.right, max_val_so_far=current_max_val_so_far)
+        left = Solution.depth_first_search(
+            node=node.left, max_val_so_far=current_max_val_so_far
+        )
+        right = Solution.depth_first_search(
+            node=node.right, max_val_so_far=current_max_val_so_far
+        )
         num_good_nodes: int = left + right
         if node.data >= max_val_so_far:
             num_good_nodes += 1
-            print(f"   Current node: {node} | Good Node | Updated number of good nodes: {num_good_nodes}\n")
+            print(
+                f"   Current node: {node} | Good Node | Updated number of good nodes: {num_good_nodes}\n"
+            )
         else:
-            print(f"   Current node: {node} | Not a good Node | Number of good nodes: {num_good_nodes}\n")
+            print(
+                f"   Current node: {node} | Not a good Node | Number of good nodes: {num_good_nodes}\n"
+            )
         return num_good_nodes
-    
+
     @staticmethod
     def good_node(root: TreeNode) -> int:
         """
@@ -53,27 +64,23 @@ class Solution(object):
         """
         if root.left is None and root.right is None:
             return 1
-        Solution.depth_first_search(node=root, max_val_so_far=float('-inf'))
-        return Solution.depth_first_search(node=root, max_val_so_far=float('-inf'))\
+        Solution.depth_first_search(node=root, max_val_so_far=float("-inf"))
+        return Solution.depth_first_search(node=root, max_val_so_far=float("-inf"))
+
 
 def main() -> int:
-
-    test_cases = [
-        [3, 1, 4, 3, None, 1, 5],
-        [3, 3, None, 4, 2],
-        [1]
-    ]
+    test_cases = [[3, 1, 4, 3, None, 1, 5], [3, 3, None, 4, 2], [1]]
     for test_case in test_cases:
         print("Case " + "-" * 60, "\n")
         root = TreeNode.construct_binary_tree(values=test_case)
         if root is None:
-            print(f"The tree is empty")
+            print("The tree is empty")
         else:
             total_num_good_nodes = Solution.good_node(root)
             print(f"Total number of good nodes: {total_num_good_nodes}\n\n")
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

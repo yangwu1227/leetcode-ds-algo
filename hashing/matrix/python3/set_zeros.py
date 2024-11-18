@@ -5,13 +5,14 @@ import numpy as np
 
 class SetZeros(object):
     """
-    Given an `m x n` integer `matrix`, if an element is 0, set its entire row and column to 0's. 
+    Given an `m x n` integer `matrix`, if an element is 0, set its entire row and column to 0's.
 
     Parameters
     ----------
     matrix : Union[List[List[int]], np.ndarray]
         A 2D matrix
     """
+
     @staticmethod
     def set_approach(matrix: List[List[int]]) -> None:
         rows_to_zero: Set[int] = set()
@@ -29,7 +30,7 @@ class SetZeros(object):
                 if row in rows_to_zero or col in cols_to_zero:
                     matrix[row][col] = 0
         return None
-    
+
     @staticmethod
     def numpy_approach(matrix: np.ndarray) -> None:
         # Find all zero elements, retruning (N, matrix.ndim) where N is the number of non-zero items
@@ -45,12 +46,12 @@ class SetZeros(object):
         matrix[:, cols_to_zero] = 0
         return None
 
-def main() -> int:
 
+def main() -> int:
     test_matrices = [
-        [[0, 1, 2, 0],[3, 4, 5, 2],[1, 3, 1, 5]],
-        [[1, 1, 1],[1, 0, 1],[1, 1, 1]],
-        [[0, 2, 7, 12], [4, 2, 0, 9], [5, 0, 2, 1]]
+        [[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]],
+        [[1, 1, 1], [1, 0, 1], [1, 1, 1]],
+        [[0, 2, 7, 12], [4, 2, 0, 9], [5, 0, 2, 1]],
     ]
 
     for matrix_list in test_matrices:
@@ -61,6 +62,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

@@ -22,14 +22,19 @@ def num_identical_pairs(nums: Sequence[int]) -> int:
     num_pairs = sum(((count * (count - 1)) // 2 for count in counts.values()), 0)
     return num_pairs
 
+
 def main() -> int:
-    
-    for nums in [[1, 2, 3, 1, 1, 3], (1, 1, 1, 1), [0, 9, 7, 3, 2], (1, 2, 3, 1, 1, 3, 3)]:
+    for nums in [
+        [1, 2, 3, 1, 1, 3],
+        (1, 1, 1, 1),
+        [0, 9, 7, 3, 2],
+        (1, 2, 3, 1, 1, 3, 3),
+    ]:
         num_pairs = num_identical_pairs(nums)
         print(f"Given the input {nums}, there are {num_pairs} valid pairs")
-        
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

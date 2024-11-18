@@ -5,10 +5,12 @@ from typing import Deque, MutableMapping
 repr_instance = Repr()
 repr_instance.maxdeque = 6
 
+
 class DataStream(object):
     """
     A class to represent a data stream and evaluate consecutive occurrences of a specific value.
     """
+
     def __init__(self, value: int, k: int) -> None:
         """
         Initialize the DataStream instance.
@@ -28,11 +30,11 @@ class DataStream(object):
     @property
     def value(self) -> int:
         return self._value
-    
+
     @value.setter
     def value(self, value: int) -> None:
         if not isinstance(value, int):
-            raise TypeError('Value must be an integer')
+            raise TypeError("Value must be an integer")
         self._value = value
 
     @property
@@ -42,14 +44,14 @@ class DataStream(object):
     @k.setter
     def k(self, k: int) -> None:
         if not isinstance(k, int):
-            raise TypeError('K must be an integer')
+            raise TypeError("K must be an integer")
         self._k = k
 
     def __repr__(self) -> str:
         str_repr = repr_instance.repr(self._internal_deque)
-        str_repr = str_repr[str_repr.find('['):-1]
-        return f'DataStream({str_repr}])'
-    
+        str_repr = str_repr[str_repr.find("[") : -1]
+        return f"DataStream({str_repr}])"
+
     def consec(self, num: int) -> bool:
         """
         Process a number from the stream and check if the last `k` values are equal to the target value.
@@ -85,18 +87,23 @@ class DataStream(object):
         # If the invalid count map is empty, it indicates the last k numbers all match the target value, so return True
         return not self._invalid_value_counts
 
-def main() -> int:
 
-    data = [((4, 3), [4, 4, 3, 3, 4, 4, 4, 2, 4]), ((1, 2), [1, 2, 1, 1, 1, 2, 2, 1, 1, 2])]
+def main() -> int:
+    data = [
+        ((4, 3), [4, 4, 3, 3, 4, 4, 4, 2, 4]),
+        ((1, 2), [1, 2, 1, 1, 1, 2, 2, 1, 1, 2]),
+    ]
     for (value, k), stream in data:
-        print('\nNew data stream')
+        print("\nNew data stream")
         data_stream = DataStream(value, k)
         for num in stream:
-            print(f"Processing num = {num} in the stream, the last {k} numbers {'do' if data_stream.consec(num) else 'do not'} all match the target = {value}")
+            print(
+                f"Processing num = {num} in the stream, the last {k} numbers {'do' if data_stream.consec(num) else 'do not'} all match the target = {value}"
+            )
             print(data_stream)
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

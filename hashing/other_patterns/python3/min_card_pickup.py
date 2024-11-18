@@ -32,18 +32,52 @@ def min_card_pickup(cards: Sequence[int]) -> int:
             min_distance = min(min_distance, dist)
         # Record the index of most recent occurrence of 'card'
         card_indices[card] = index
-        
+
     return min_distance if min_distance < maxsize else -1
-        
+
+
 def main() -> int:
-    
-    for cards in [[3, 4, 2, 3, 4, 7], [1, 0, 5, 3], [95, 11, 8, 65, 5, 86, 30, 27, 30, 73, 15, 91, 30, 7, 37, 26, 55, 76, 60, 43, 36, 85, 47, 96, 6]]:
+    for cards in [
+        [3, 4, 2, 3, 4, 7],
+        [1, 0, 5, 3],
+        [
+            95,
+            11,
+            8,
+            65,
+            5,
+            86,
+            30,
+            27,
+            30,
+            73,
+            15,
+            91,
+            30,
+            7,
+            37,
+            26,
+            55,
+            76,
+            60,
+            43,
+            36,
+            85,
+            47,
+            96,
+            6,
+        ],
+    ]:
         min_pickups = min_card_pickup(cards)
-        message = f"we need a minimum of {min_pickups} pickups to find matching pair" if min_pickups != -1 else "there are no matching pairs"
+        message = (
+            f"we need a minimum of {min_pickups} pickups to find matching pair"
+            if min_pickups != -1
+            else "there are no matching pairs"
+        )
         print(f"Given the deck of cards {cards}, {message}")
-    
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

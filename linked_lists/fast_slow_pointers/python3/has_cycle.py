@@ -16,12 +16,12 @@ def has_cycle(head: ListNode) -> bool:
     bool
         `True` if there is a cycle, `False` otherwise
     """
-    slow = head 
-    fast = head 
+    slow = head
+    fast = head
 
     while fast and fast.next:
         # Iterate first
-        fast = fast.next.next 
+        fast = fast.next.next
         slow = slow.next
         # Check if both pointers (names) are bound to the same node
         if fast == slow:
@@ -30,8 +30,8 @@ def has_cycle(head: ListNode) -> bool:
     # If the while loop finishes, then that means there is no cycle
     return False
 
-def main() -> int:
 
+def main() -> int:
     sll_1 = SinglyLinkedList()
     nodes = [ListNode(i) for i in [3, 2, 0, -4]]
     for node in nodes:
@@ -50,6 +50,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

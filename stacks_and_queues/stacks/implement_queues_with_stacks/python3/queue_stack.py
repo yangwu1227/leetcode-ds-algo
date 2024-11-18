@@ -1,14 +1,15 @@
-from collections import deque
 from reprlib import Repr
 from typing import List
 
 repr_instance = Repr()
 repr_instance.maxdeque = 4
 
+
 class Queue(object):
     """
     A class representing a queue using two stacks for efficient FIFO operations.
     """
+
     def __init__(self) -> None:
         """
         Initializes the queue instance.
@@ -83,8 +84,8 @@ class Queue(object):
         bool
             `True` if the queue is empty, `False` otherwise.
         """
-        return len(self.stack) == len (self.stack_reversed) == 0
-    
+        return len(self.stack) == len(self.stack_reversed) == 0
+
     def __repr__(self) -> str:
         """
         Returns a string representation of the queue.
@@ -97,11 +98,11 @@ class Queue(object):
         # Before the first pop operation, self.stack is non-empty, after the first pop operation, self.stack_reversed becomes non-empty
         queue = self.stack if self.stack else self.stack_reversed[::-1]
         str_repr = repr_instance.repr(queue)
-        str_repr = str_repr[str_repr.find('['):-1]
-        return f'Queue({str_repr}])'
-    
-def main() -> int:
+        str_repr = str_repr[str_repr.find("[") : -1]
+        return f"Queue({str_repr}])"
 
+
+def main() -> int:
     queue = Queue()
     num_elements = randint(0, 1000)
     for _ in range(num_elements):
@@ -121,8 +122,8 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     from random import randint
 
     main()

@@ -24,7 +24,7 @@ def subarray_sum(nums: Sequence[int], k: int) -> int:
     # Empty subarray with sum of 0 has a count of 1
     counts[0] = 1
     subarray_with_sum_k_count = curr_sum = 0
-    
+
     # O(n)
     for num in nums:
         # Add the next element
@@ -33,20 +33,22 @@ def subarray_sum(nums: Sequence[int], k: int) -> int:
         subarray_with_sum_k_count += counts[curr_sum - k]
         # Keep track of the count of each prefix sum
         counts[curr_sum] += 1
-        
+
     return subarray_with_sum_k_count
 
+
 def main() -> int:
-    
     for _ in range(5):
         k = np.random.randint(low=0, high=10)
         nums_size = np.random.randint(low=1, high=20)
-        nums = np.random.randint(low=0, high=10, size=(nums_size, )).tolist()
+        nums = np.random.randint(low=0, high=10, size=(nums_size,)).tolist()
         ans = subarray_sum(nums, k)
-        print(f"Give the input {nums}, the number of subarrays whose sum is {k} is {ans}")
-    
+        print(
+            f"Give the input {nums}, the number of subarrays whose sum is {k} is {ans}"
+        )
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

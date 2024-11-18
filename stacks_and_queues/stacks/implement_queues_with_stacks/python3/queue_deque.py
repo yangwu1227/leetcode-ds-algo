@@ -5,10 +5,12 @@ from typing import Deque
 repr_instance = Repr()
 repr_instance.maxdeque = 4
 
+
 class Queue(object):
     """
     A class representing a queue using a deque for efficient FIFO operations.
     """
+
     def __init__(self) -> None:
         """
         Initializes the queue instance.
@@ -42,7 +44,7 @@ class Queue(object):
         """
         try:
             return self.internal_deque.popleft()
-        except IndexError as error:
+        except IndexError:
             raise IndexError("The queue is empty")
 
     def peek(self) -> int:
@@ -61,9 +63,9 @@ class Queue(object):
         """
         try:
             return self.internal_deque[0]
-        except IndexError as error:
+        except IndexError:
             raise IndexError("Cannot peek in an empty queue")
-    
+
     @property
     def empty(self) -> bool:
         """
@@ -75,7 +77,7 @@ class Queue(object):
             `True` if the queue is empty, `False` otherwise.
         """
         return len(self.internal_deque) == 0
-    
+
     def __repr__(self) -> str:
         """
         Returns a string representation of the queue.
@@ -86,11 +88,11 @@ class Queue(object):
             The string representation of the queue
         """
         str_repr = repr_instance.repr(self.internal_deque)
-        str_repr = str_repr[str_repr.find('['):-1]
-        return f'Queue({str_repr}])'
-    
-def main() -> int:
+        str_repr = str_repr[str_repr.find("[") : -1]
+        return f"Queue({str_repr}])"
 
+
+def main() -> int:
     queue = Queue()
     num_elements = randint(0, 1000)
     for _ in range(num_elements):
@@ -108,8 +110,8 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     from random import randint
 
     main()

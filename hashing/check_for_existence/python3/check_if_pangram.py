@@ -1,6 +1,6 @@
 def check_if_pangram(sentence: str) -> bool:
     """
-    A pangram is a sentence where every letter of the English alphabet appears at least once. Given a string sentence, return true if 
+    A pangram is a sentence where every letter of the English alphabet appears at least once. Given a string sentence, return true if
     sentence is a pangram, or false otherwise.
 
     Parameters
@@ -13,8 +13,9 @@ def check_if_pangram(sentence: str) -> bool:
     bool
         True if a pangram, otherwise False
     """
-    character_set = set(sentence)   
+    character_set = set(sentence)
     return len(character_set) == 26
+
 
 def main() -> int:
     sentence = "thequickbrownfoxjumpsoverthelazydog"
@@ -22,6 +23,6 @@ def main() -> int:
     print(f"The sentence '{sentence}' {'is' if result else 'is not'} a pangram")
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

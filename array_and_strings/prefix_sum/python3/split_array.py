@@ -3,7 +3,7 @@ from collections.abc import Sequence
 
 def split_array(nums: Sequence[int]) -> int:
     """
-    Given an integer array `nums`, find the number of ways to split the array into two parts so that the first section has a 
+    Given an integer array `nums`, find the number of ways to split the array into two parts so that the first section has a
     sum greater than or equal to the sum of the second section. The second section should have at least one number.
 
     Parameters
@@ -31,21 +31,21 @@ def split_array(nums: Sequence[int]) -> int:
         # Since prefix[-1] is the sum of all elements in `nums`
         # Subtract prefix[i] we get the sum of elements i + 1 through n
         right_sum = prefix[-1] - prefix[i]
-        valid_splits += (left_sum >= right_sum)
+        valid_splits += left_sum >= right_sum
 
     return valid_splits
 
 
 def main() -> int:
-
     arrays = [[10, 4, -8, 7], (2, 3, 1, 0)]
     for array in arrays:
         valid_splits = split_array(array)
-        print(f"Given input array {array}, there are {valid_splits} number of splits so that the sum of the first section is >= sum of the second section")
+        print(
+            f"Given input array {array}, there are {valid_splits} number of splits so that the sum of the first section is >= sum of the second section"
+        )
 
     return 0
 
 
 if __name__ == "__main__":
-
     main()

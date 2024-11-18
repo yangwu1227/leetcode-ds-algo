@@ -4,8 +4,8 @@ from typing import List
 def make_string_great(s: str) -> str:
     """
     Given a string `s` of lower and upper case English letters. Remove all adjacent characters that one lower case
-    letter followed by an upper case letter, or vice versa. 
-    
+    letter followed by an upper case letter, or vice versa.
+
     Parameters
     ----------
     s : str
@@ -29,18 +29,18 @@ def make_string_great(s: str) -> str:
             str_stack.append(char)
 
     return "".join(str_stack)
-    
-def main() -> int:
 
+
+def main() -> int:
     test_strings = ["leEeetcode", "abBAcC", "AdG"]
     for s in test_strings:
         new_s = make_string_great(s)
         print(f"The original string: {s}")
         print(f"The new string: {new_s if new_s else 'empty'}")
-        print('\n')
+        print("\n")
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

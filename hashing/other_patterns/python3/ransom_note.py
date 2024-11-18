@@ -17,6 +17,7 @@ class RansomNote(object):
     bool
         `True` if `magazine` contains a permutation of `magazine`, `False` if not
     """
+
     @staticmethod
     def two_hashmaps(ransom_note: str, magazine: str) -> bool:
         # O(n), where n is the length of 'magazine'
@@ -26,9 +27,9 @@ class RansomNote(object):
         for character in ransom_note:
             # If magazine contains fewer than required counts for any characters, it is not possible to reproduce 'ransom_note'
             if magazine_counts[character] < ransom_note_counts[character]:
-                return False 
+                return False
         return True
-    
+
     @staticmethod
     def one_hashmap(ransom_note: str, magazine: str) -> bool:
         # O(n), where n is the length of 'magazine'
@@ -40,17 +41,24 @@ class RansomNote(object):
             if magazine_counts[character] < 0:
                 return False
         return True
-     
-def main() -> int:
 
-    for ransom_note_, magazine in [("a", "b"), ("aa", "ab"), ("aag", "gagaz"), ("fffbfg", "effjfggbffjdgbjjhhdegh")]:
+
+def main() -> int:
+    for ransom_note_, magazine in [
+        ("a", "b"),
+        ("aa", "ab"),
+        ("aag", "gagaz"),
+        ("fffbfg", "effjfggbffjdgbjjhhdegh"),
+    ]:
         two_hashmaps = RansomNote.two_hashmaps(ransom_note_, magazine)
         one_hashmap = RansomNote.one_hashmap(ransom_note_, magazine)
         assert one_hashmap == two_hashmaps
-        print(f"Ransom note = '{ransom_note_}' {'can' if one_hashmap else 'cannot'} be constructed from magazine = '{magazine}'")
+        print(
+            f"Ransom note = '{ransom_note_}' {'can' if one_hashmap else 'cannot'} be constructed from magazine = '{magazine}'"
+        )
 
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

@@ -4,7 +4,7 @@ from singly import SinglyLinkedList
 
 def is_palindrome(head: ListNode) -> bool:
     """
-    Given the `head` of a singly linked list, determine if this is a palindrome. 
+    Given the `head` of a singly linked list, determine if this is a palindrome.
 
     Parameters
     ----------
@@ -19,12 +19,12 @@ def is_palindrome(head: ListNode) -> bool:
     # Single node case
     if head.next.next is None:
         return True
-    
+
     # ------------------------------ Find the middle ----------------------------- #
-    
+
     # Odd case: head -> 1 -> 2 -> [3] -> 2 -> 1
     # Even case: head -> 1 -> [2] -> 2 -> 1
-    slow = head 
+    slow = head
     fast = head
     fast_prev = head
     slow_prev = head
@@ -48,7 +48,7 @@ def is_palindrome(head: ListNode) -> bool:
     # Odd case: head -> 1 -> (node_before_reverse = 2) -> [(current = slow = 3) -> (fast_prev = 2) -> (fast_prev.next = last_node = 1)]
     if length % 2 != 0:
         current = slow
-        last_node = fast_prev.next 
+        last_node = fast_prev.next
         node_before_reverse = slow_prev
     # Even case: head -> 1 -> (node_before_reverse = slow = 2) -> [(current = 2) -> (fast = last_node = 1)]
     else:
@@ -58,12 +58,12 @@ def is_palindrome(head: ListNode) -> bool:
     # This pointer is used by the reverse operations during each iteration
     prev = None
     while current:
-        next_node = current.next 
+        next_node = current.next
         current.next = prev
         prev = current
         current = next_node
     # Odd case: head -> 1 -> (node_before_reverse = 2) -> (fast_prev.next = last_node = 1) -> 2 -> 3
-    # Even case: head -> 1 -> (node_before_reverse = slow = 2) -> (fast = last_node = 1) -> 2 
+    # Even case: head -> 1 -> (node_before_reverse = slow = 2) -> (fast = last_node = 1) -> 2
     node_before_reverse.next = last_node
 
     # ------------------------------- Compare nodes ------------------------------ #
@@ -72,7 +72,7 @@ def is_palindrome(head: ListNode) -> bool:
     # Odd case: 5 // 2 = 2
     # Even case: 4 // 2 = 2
     fast = head
-    slow = head 
+    slow = head
     # Move fast (length // 2) steps head
     for _ in range(length // 2):
         fast = fast.next
@@ -92,11 +92,11 @@ def is_palindrome(head: ListNode) -> bool:
                 return False
             fast = fast.next
             slow = slow.next
-        
+
     return True
 
-def main() -> int:
 
+def main() -> int:
     data_arrays = [[1, 2, 2, 3, 2, 2, 1], [1, 2, 3, 4], [1, 2, 2, 1], [1]]
     for data_array in data_arrays:
         nodes = (ListNode(data=data) for data in data_array)
@@ -110,10 +110,10 @@ def main() -> int:
         print("After reversing")
         sll.display()
         print(f"The linked list {'is' if palindrome else 'is not'} a palindrome")
-        print('\n')
+        print("\n")
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

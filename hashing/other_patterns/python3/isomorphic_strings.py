@@ -5,7 +5,7 @@ def isomorphic(s: str, t: str) -> bool:
     """
     Given two strings `s` and `t`, determine if they are isomorphic. Two strings `s` and `t` are isomorphic if the characters in `s` can be replaced to get `t`.
 
-    Note: All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same 
+    Note: All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same
     character, but a character may map to itself.
 
     Parameters
@@ -40,17 +40,24 @@ def isomorphic(s: str, t: str) -> bool:
         else:
             # Neither char_s nor char_t is currently associated with any characters, so we create a bidirectional mapping between char_s and char_t
             s_to_t[char_s] = char_t
-            t_to_s[char_t] = char_s 
+            t_to_s[char_t] = char_s
     return True
-    
-def main() -> int:
 
-    for s, t in [("egg", "add"), ("paper", "title"), ("foo", "bar"), ("bbbaaaba", "aaabbbba")]:
+
+def main() -> int:
+    for s, t in [
+        ("egg", "add"),
+        ("paper", "title"),
+        ("foo", "bar"),
+        ("bbbaaaba", "aaabbbba"),
+    ]:
         iso = isomorphic(s, t)
-        print(f"Given s = '{s}' and t = '{t}', these strings are{'' if iso else ' not'} isomorphic to each other")
+        print(
+            f"Given s = '{s}' and t = '{t}', these strings are{'' if iso else ' not'} isomorphic to each other"
+        )
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

@@ -4,7 +4,7 @@ from singly import SinglyLinkedList
 
 def kth_node(head: ListNode, k: int) -> ListNode:
     """
-    Given `head`, the sentinel head node, of a singly linked list and `k`, return the kth node from the end of the linked list. 
+    Given `head`, the sentinel head node, of a singly linked list and `k`, return the kth node from the end of the linked list.
 
     Parameters
     ----------
@@ -19,20 +19,24 @@ def kth_node(head: ListNode, k: int) -> ListNode:
         The kth node of the linked list
     """
     fast = head
-    slow = head 
+    slow = head
     # Fast forward the fast pointer
     for _ in range(k):
         fast = fast.next
     # Move both pointers at the same speed until the end
     while fast:
-        fast = fast.next 
+        fast = fast.next
         slow = slow.next
 
     return slow
 
-def main() -> int:
 
-    test_cases = [([12, 9, 6, 8, 7, 14], 3), ([12, 4, 5, 6, 7, 23, 98, 56, 0, 34, 47, 28], 6), ([9, 7, 12, 7], 2)]
+def main() -> int:
+    test_cases = [
+        ([12, 9, 6, 8, 7, 14], 3),
+        ([12, 4, 5, 6, 7, 23, 98, 56, 0, 34, 47, 28], 6),
+        ([9, 7, 12, 7], 2),
+    ]
 
     for data_array, k in test_cases:
         nodes = [ListNode(data=data) for data in data_array]
@@ -45,6 +49,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

@@ -11,7 +11,7 @@ def middle_node(head: ListNode) -> ListNode:
     ----------
     head : ListNode
         The first real node
-    
+
     Returns
     -------
     ListNode
@@ -19,15 +19,15 @@ def middle_node(head: ListNode) -> ListNode:
     """
     # Pointers
     slow = head
-    fast = head 
+    fast = head
     # Iterate the pointers
     while fast and fast.next:
-        slow = slow.next 
+        slow = slow.next
         fast = fast.next.next
     return slow
 
-def main() -> int:
 
+def main() -> int:
     test_cases = [[1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7, 8], [12, 17], [12, 17, 8, 7]]
 
     for test_case in test_cases:
@@ -41,6 +41,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

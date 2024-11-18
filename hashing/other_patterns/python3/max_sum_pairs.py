@@ -4,8 +4,8 @@ from collections.abc import Sequence
 
 def max_sum(nums: Sequence[int]) -> int:
     """
-    Given an array of integers `nums`, find the maximum value of `nums[i] + nums[j]`, where `nums[i]` and `nums[j]` 
-    have the same digit sum (the sum of their individual digits). 
+    Given an array of integers `nums`, find the maximum value of `nums[i] + nums[j]`, where `nums[i]` and `nums[j]`
+    have the same digit sum (the sum of their individual digits).
 
     Parameters
     ----------
@@ -19,7 +19,7 @@ def max_sum(nums: Sequence[int]) -> int:
     """
     hash_map = defaultdict(int)
     ans = 0
-    # O(n x k) where k is the average number of digits in an integer element 
+    # O(n x k) where k is the average number of digits in an integer element
     for num in nums:
         # Compute the sum of all digits
         digit_sum = sum(int(digit) for digit in str(num))
@@ -32,14 +32,16 @@ def max_sum(nums: Sequence[int]) -> int:
         hash_map[digit_sum] = max(hash_map[digit_sum], num)
     return ans if ans else -1
 
-def main() -> int:
 
+def main() -> int:
     for nums in [[18, 43, 36, 13, 7], (10, 12, 19, 14)]:
         ans = max_sum(nums)
-        print(f"Given the input {nums}, the maximum sum of equivalent pairs {f'is {ans}' if ans != -1 else 'does not exist'}")
+        print(
+            f"Given the input {nums}, the maximum sum of equivalent pairs {f'is {ans}' if ans != -1 else 'does not exist'}"
+        )
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

@@ -1,15 +1,15 @@
 def reverse_letters(s: str) -> str:
-    """ 
+    """
     Given a string s, reverse the string according to the following rules:
-    
+
     1. All the characters that are not English letters remain in the same position.
     2. All the English letters (lowercase or uppercase) should be reversed.
-    
+
     Parameters
     ----------
     s: str
         Input string
-        
+
     Returns
     -------
     str
@@ -17,11 +17,10 @@ def reverse_letters(s: str) -> str:
     """
     left_index = 0
     right_index = len(s) - 1
-    
+
     # List of characters
     s = list(s)
     while left_index < right_index:
-        
         if s[left_index].isalpha() and s[right_index].isalpha():
             # Both pointers point at letters, reverse and move pointers
             s[left_index], s[right_index] = s[right_index], s[left_index]
@@ -33,22 +32,22 @@ def reverse_letters(s: str) -> str:
         elif not s[right_index].isalpha():
             # If the right pointer points at a non-letter, decrement
             right_index -= 1
-        
+
     # Concatenate back to a string
-    return ''.join(s)
+    return "".join(s)
+
 
 def main() -> int:
-    
     s_1 = "ab-cd"
     s_2 = "a-bC-dEf-ghIj"
     s_3 = "Test1ng-Leet=code-Q!"
-    
+
     for s in [s_1, s_2, s_3]:
         result = reverse_letters(s)
         print(f"The input string {s} is changed to {result}")
-        
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

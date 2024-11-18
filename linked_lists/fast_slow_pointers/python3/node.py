@@ -14,7 +14,7 @@ class ListNode(object):
         self.data: Union[int, None] = data
         self.next: Any = None
         self.prev: Any = None
-        
+
     def __repr__(self) -> str:
         """
         Return a meaningful printable string describing the node instance.

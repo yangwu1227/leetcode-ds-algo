@@ -30,20 +30,20 @@ def subarray_sum_binary(nums: Sequence[int], k: int) -> int:
         # Add it to the running total count of valid subarrays seen so far
         subarray_with_sum_k_count += counts[current_sum - k]
         counts[current_sum] += 1
-    
+
     return subarray_with_sum_k_count
-        
+
+
 def main() -> int:
-    
     for _ in range(5):
         size = randint(2, 10)
         goal = randint(0, size)
         nums = tuple(randint(0, 1) for _ in range(size))
         num_subarrays = subarray_sum_binary(nums, goal)
         print(f"Given the array {nums}, there are {num_subarrays} with sum = {goal}")
-    
+
     return 0
-    
+
+
 if __name__ == "__main__":
-    
     main()

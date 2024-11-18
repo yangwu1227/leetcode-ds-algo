@@ -7,6 +7,7 @@ class RecentCounter(object):
     """
     A class to count recent pings within a given time window.
     """
+
     def __init__(self, outdated_threshold: int) -> None:
         """
         Initializes the RecentCounter instance.
@@ -41,17 +42,19 @@ class RecentCounter(object):
         self.deque.append(t)
         return len(self.deque)
 
-def main() -> int:
 
+def main() -> int:
     threshold = randint(500, 3000)
     recent_counter = RecentCounter(threshold)
     ping_timestamp = 0
     for _ in range(10):
         ping_timestamp += randint(100, 2000)
-        print(f"There were {recent_counter.ping(ping_timestamp)} prings within past {threshold} ms window")
+        print(
+            f"There were {recent_counter.ping(ping_timestamp)} prings within past {threshold} ms window"
+        )
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

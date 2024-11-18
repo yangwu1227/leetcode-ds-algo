@@ -37,11 +37,11 @@ def max_subarray_unique(nums: Sequence[int]) -> int:
             left += 1
         # See if we have found a larger sum
         max_sum = max(max_sum, current_sum)
-        
+
     return max_sum
 
+
 def main() -> int:
-    
     for _ in range(5):
         size = np.random.randint(low=1, high=23)
         random_vector = np.random.randint(low=1, high=1000, size=size)
@@ -49,9 +49,9 @@ def main() -> int:
         nums = np.random.choice(a=range(size), size=size, p=random_probs).tolist()
         max_sum = max_subarray_unique(nums)
         print(f"Given the input {nums}, the maximum sum of a subarray is {max_sum}")
-    
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

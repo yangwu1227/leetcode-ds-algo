@@ -18,17 +18,17 @@ def running_sum(nums: List[int]) -> List[int]:
     # Modifies in-place since list is mutable
     for i in range(1, len(nums)):
         nums[i] += nums[i - 1]
-        
+
     return nums
 
+
 def main() -> int:
-    
     nums = [3, 1, 2, 10, 1]
     prefix = running_sum(nums)
     print(f"Given the input {nums}, the running sum is {prefix}")
-    
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

@@ -19,19 +19,19 @@ def sort_count(s: str) -> str:
         return s
     # 0(n) to build
     char_counts = Counter(s)
-    # Counter.most_common() is O(k log k), and char * count is effectively O(1) 
+    # Counter.most_common() is O(k log k), and char * count is effectively O(1)
     repeated_chars = (char * count for char, count in char_counts.most_common())
     # For k unique characters, this is O(k)
-    return ''.join(repeated_chars)
+    return "".join(repeated_chars)
+
 
 def main() -> int:
-
     for s in ("tree", "cccaaa", "Aabb"):
         sorted_s = sort_count(s)
         print(f"Given the string {s}, the sorted version of it is {sorted_s}")
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

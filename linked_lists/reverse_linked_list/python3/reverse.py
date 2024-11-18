@@ -28,14 +28,14 @@ def reverse(head: ListNode) -> ListNode:
         # The current node should now be considered the previous node
         prev = current
         # To continue with the loop, the current pointer should now point to the original next node
-        current = next_node 
+        current = next_node
 
-    # The original head now points to the new first node 
+    # The original head now points to the new first node
     head.next = prev
     return head
- 
-def main() -> int:
 
+
+def main() -> int:
     for _ in range(5):
         size = randint(low=0, high=7, size=1)
         data_array = randint(low=0, high=5000, size=size)
@@ -49,10 +49,10 @@ def main() -> int:
         reversed_head = reverse(original_sll.head)
         print("After reversing")
         original_sll.display()
-        print('\n')
+        print("\n")
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

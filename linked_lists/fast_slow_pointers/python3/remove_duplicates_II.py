@@ -4,7 +4,7 @@ from singly import SinglyLinkedList
 
 def remove_duplicates(head: ListNode) -> ListNode:
     """
-    Given the `head` of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. 
+    Given the `head` of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
 
     Parameters
     ----------
@@ -31,23 +31,29 @@ def remove_duplicates(head: ListNode) -> ListNode:
         # Move fast to the end of duplicates
         while fast.next and fast.data == fast.next.data:
             fast = fast.next
-        
-        # Check if slow.next is fast 
+
+        # Check if slow.next is fast
         if slow.next == fast:
             # If it is, this means that fast has not skipped any nodes due to duplicates as it is one step ahead of slow
             slow = slow.next
         else:
             # If fast is more than one step ahead of slow, duplicates were detected, skip all duplicates by moving slow directly to fast.next
             slow.next = fast.next
-        
+
         # The fast pointer will now point to the next distinct node
         fast = fast.next
 
     return head
 
-def main() -> int:
 
-    test_cases = [(1, 1, 1, 2, 3, 3, 4), (1, 1, 1, 2, 3), [1], [1, 2, 3, 3, 4, 4, 5], [1, 1, 1]]
+def main() -> int:
+    test_cases = [
+        (1, 1, 1, 2, 3, 3, 4),
+        (1, 1, 1, 2, 3),
+        [1],
+        [1, 2, 3, 3, 4, 4, 5],
+        [1, 1, 1],
+    ]
 
     for data_array in test_cases:
         nodes = (ListNode(data=data) for data in data_array)
@@ -59,10 +65,10 @@ def main() -> int:
         distinct_head = remove_duplicates(sll.head)
         print("After removing all duplicates")
         sll.display()
-        print('\n')
-    
+        print("\n")
+
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

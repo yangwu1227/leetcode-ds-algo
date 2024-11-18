@@ -32,19 +32,25 @@ def max_subarray_length(nums: Sequence[int], k: int) -> int:
             left += 1
         # Check if answer should be updated
         window_len = max(window_len, right - left + 1)
-    
-    return window_len 
-    
+
+    return window_len
+
+
 def main() -> int:
-    
-    test_nums = [[1, 2, 3, 1, 2, 3, 1, 2], [1, 2, 1, 2, 1, 2, 1, 2], (5, 5, 5, 5, 5, 5, 5)]
+    test_nums = [
+        [1, 2, 3, 1, 2, 3, 1, 2],
+        [1, 2, 1, 2, 1, 2, 1, 2],
+        (5, 5, 5, 5, 5, 5, 5),
+    ]
     test_ks = (2, 1, 4)
     for nums, k in zip(test_nums, test_ks):
         max_len = max_subarray_length(nums, k)
-        print(f"Given the input {nums}, the longest subarray whose elements have counts less than or equal to {k} is {max_len}")
-        
+        print(
+            f"Given the input {nums}, the longest subarray whose elements have counts less than or equal to {k} is {max_len}"
+        )
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

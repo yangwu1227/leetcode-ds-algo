@@ -29,25 +29,27 @@ def longest_ones(nums: List[int], k: int) -> int:
                 curr_zero_count -= 1
             # Slide the window right
             left += 1
-        
+
         # Check if the current window length is greater than the previous
         window_len = max(window_len, right - left + 1)
-        
+
     return window_len
-        
+
+
 def main() -> int:
-    
     nums_1 = [0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1]
     nums_2 = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0]
     k_1 = 3
     k_2 = 2
-    
+
     for nums, k in zip([nums_1, nums_2], [k_1, k_2]):
         result = longest_ones(nums, k)
-        print(f"Given input {nums} and k = {k}, the longest consecutive subarray of 1's has length {result}")
-    
+        print(
+            f"Given input {nums} and k = {k}, the longest consecutive subarray of 1's has length {result}"
+        )
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

@@ -18,7 +18,7 @@ def word_pattern(pattern: str, s: str) -> bool:
         `True` if `s` follows `pattern`, otherwise `False`
     """
     # O(n) where n is the length of 's'
-    words = s.split(sep=' ')
+    words = s.split(sep=" ")
     if len(words) != len(pattern):
         return False
     pattern_to_word = defaultdict(str)
@@ -39,19 +39,25 @@ def word_pattern(pattern: str, s: str) -> bool:
                 return False
         else:
             # Just create the mappings
-            pattern_to_word[pat_char] = word 
+            pattern_to_word[pat_char] = word
             word_to_pattern[word] = pat_char
     # If loop completes, then 's' follows 'pattern'
     return True
 
-def main() -> int:
 
-    for pattern, s in [("abba", "dog cat cat dog"), ("aaaa", "dog cat cat dog"), ["aaa", "aa aa aa aa"]]:
+def main() -> int:
+    for pattern, s in [
+        ("abba", "dog cat cat dog"),
+        ("aaaa", "dog cat cat dog"),
+        ["aaa", "aa aa aa aa"],
+    ]:
         follows_pattern = word_pattern(pattern, s)
-        print(f"Given s = '{s}' and pattern = {pattern}, 's' {'follows' if follows_pattern else 'does not follow'} 'pattern'")
+        print(
+            f"Given s = '{s}' and pattern = {pattern}, 's' {'follows' if follows_pattern else 'does not follow'} 'pattern'"
+        )
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

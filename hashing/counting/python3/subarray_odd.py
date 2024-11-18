@@ -21,21 +21,25 @@ def subarray_odd(nums: Sequence[int], k: int) -> int:
     counts = defaultdict(int)
     counts[0] = 1
     current_odd_count = total_odd_count = 0
-    # O(n) 
+    # O(n)
     for num in nums:
         current_odd_count += num & 1
         total_odd_count += counts[current_odd_count - k]
         counts[current_odd_count] += 1
     return total_odd_count
 
+
 def main() -> int:
-    
-    for nums, k in zip([[1, 1, 2, 1, 1], [2, 2, 2, 1, 2, 2, 1, 2, 2, 2], [3, 2, 4, 5, 6, 7]], [3, 2, 2]):
+    for nums, k in zip(
+        [[1, 1, 2, 1, 1], [2, 2, 2, 1, 2, 2, 1, 2, 2, 2], [3, 2, 4, 5, 6, 7]], [3, 2, 2]
+    ):
         ans = subarray_odd(nums, k)
-        print(f"Give the input {nums} and k = {k}, there are {ans} subarrays with {k} odd numbers")
-        
+        print(
+            f"Give the input {nums} and k = {k}, there are {ans} subarrays with {k} odd numbers"
+        )
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

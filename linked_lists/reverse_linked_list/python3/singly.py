@@ -6,8 +6,8 @@ class SinglyLinkedList(object):
         """
         Initializes an empty singly linked list with a sentinel head node.
         """
-        self.head: ListNode = ListNode(None) # Sentinel node
-        self.tail: ListNode = self.head # At the beginning, head and tail are the same
+        self.head: ListNode = ListNode(None)  # Sentinel node
+        self.tail: ListNode = self.head  # At the beginning, head and tail are the same
 
     def add_to_end(self, node_to_add: ListNode) -> None:
         """
@@ -38,7 +38,7 @@ class SinglyLinkedList(object):
         current = self.head
         while current.next != self.tail:
             current = current.next
-        
+
         current.next = None
         self.tail = current
 
@@ -143,8 +143,8 @@ class SinglyLinkedList(object):
             current = current.next
         print("None")
 
-def main() -> int:
 
+def main() -> int:
     sll = SinglyLinkedList()
     nodes = [ListNode(i) for i in range(1, 6)]
 
@@ -177,6 +177,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

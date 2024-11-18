@@ -4,7 +4,7 @@ from singly import SinglyLinkedList
 
 class RemoveDuplicates(object):
     """
-    Given the `head` of a sorted linked list, delete all duplicates such that each element appears only once. 
+    Given the `head` of a sorted linked list, delete all duplicates such that each element appears only once.
 
     Parameters
     ----------
@@ -16,11 +16,12 @@ class RemoveDuplicates(object):
     ListNode
         The new sentinel head of the sorted, deduplciated linked list
     """
+
     @staticmethod
     def single_pointer(head: ListNode) -> ListNode:
         if not head:
             return head
-        
+
         # Dummy pointer for traversal
         current = head
         while current and current.next:
@@ -51,13 +52,13 @@ class RemoveDuplicates(object):
                 fast = fast.next
             else:
                 # If no duplicates detected, move the pointers
-                slow = slow.next 
+                slow = slow.next
                 fast = fast.next
 
         return head
 
-def main() -> int:
 
+def main() -> int:
     test_cases = [[1, 1, 2], [1, 1, 2, 3, 3], [9, 12, 12, 7, 3, 7, 3, 4, 4, 5], [1]]
 
     for data_array in test_cases:
@@ -73,6 +74,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

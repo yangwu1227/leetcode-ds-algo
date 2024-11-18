@@ -25,14 +25,14 @@ def find_numbers(nums: Sequence[int]) -> List[int]:
             result.append(num)
     return result
 
+
 def main() -> int:
-    
     nums = [1, 3, 2, 9, 7, 5, 4, 8, 10]
     result = find_numbers(nums)
     print(f"Give the input {nums}, the result is {result}")
-    
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

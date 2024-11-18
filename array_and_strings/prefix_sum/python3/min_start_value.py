@@ -17,6 +17,7 @@ class Solution(object):
     int
         Minimum positive `start_value` that satisfies the criteria
     """
+
     @staticmethod
     def min_start_value_approach_one(nums: Sequence[int]) -> int:
         # Build prefix O(n)
@@ -32,7 +33,7 @@ class Solution(object):
         # If min_sum is 0, start value can just be 1
         else:
             min_start_value = 1
-        
+
         return min_start_value
 
     @staticmethod
@@ -46,16 +47,18 @@ class Solution(object):
         # If min_sum is >= 0, max returns at least 1
         return max(1, 1 - min_sum)
 
-def main() -> int:
 
+def main() -> int:
     nums = [-3, 2, -3, 4, 2, 7, 5]
     min_start_value_approach_1 = Solution.min_start_value_approach_one(nums)
     min_start_value_approach_2 = Solution.min_start_value_approach_two(nums)
     assert min_start_value_approach_1 == min_start_value_approach_2
-    print(f"Given the input {nums}, the minimum positive starting value is {min_start_value_approach_1}")
-    
+    print(
+        f"Given the input {nums}, the minimum positive starting value is {min_start_value_approach_1}"
+    )
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

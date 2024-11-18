@@ -8,10 +8,16 @@ import networkx as nx
 
 
 class TreeNode(object):
-    """ 
+    """
     This class represents a node in a binary tree.
     """
-    def __init__(self, data: Optional[Union[int, float]] = None, left: Optional[TreeNode] = None, right: Optional[TreeNode] = None) -> None:
+
+    def __init__(
+        self,
+        data: Optional[Union[int, float]] = None,
+        left: Optional[TreeNode] = None,
+        right: Optional[TreeNode] = None,
+    ) -> None:
         """
         Initializes the tree node instance.
 
@@ -25,8 +31,8 @@ class TreeNode(object):
             The right child node, by default None
         """
         self.data = data
-        self.left = left 
-        self.right = right 
+        self.left = left
+        self.right = right
 
     def __repr__(self) -> str:
         """
@@ -40,14 +46,16 @@ class TreeNode(object):
         return f"TreeNode(data = {self.data})"
 
     @staticmethod
-    def construct_binary_tree(values: Sequence[Optional[Union[int, float]]]) -> Optional[TreeNode]:
+    def construct_binary_tree(
+        values: Sequence[Optional[Union[int, float]]],
+    ) -> Optional[TreeNode]:
         """
         Constructs a binary tree from a list of values representing level-order traversal.
 
         Parameters
         ----------
         values : Sequence[Optional[Union[int, float]]]
-            A list where each element represents a node's data in level-order; 
+            A list where each element represents a node's data in level-order;
             `None` represents a missing node
 
         Returns
@@ -62,9 +70,9 @@ class TreeNode(object):
         # Queue to hold nodes at each level
         queue = deque([root])
         # Start from the second element in `values`
-        index = 1       
+        index = 1
         while index < len(values):
-            current_node = queue.popleft() 
+            current_node = queue.popleft()
 
             # Add the left child
             if values[index] is not None:
@@ -79,7 +87,7 @@ class TreeNode(object):
             index += 1
 
         return root
-    
+
     @staticmethod
     def visualize_binary_tree(root: TreeNode) -> None:
         """
@@ -90,8 +98,16 @@ class TreeNode(object):
         root : TreeNode
             The root node of the binary tree
         """
-        def add_edges(graph: nx.DiGraph, node: TreeNode, pos: MutableMapping[TreeNode, Tuple[float, float]], 
-                      x: float = 0, y: float = 0, layer: int = 1, dx: float = 1.5) -> None:
+
+        def add_edges(
+            graph: nx.DiGraph,
+            node: TreeNode,
+            pos: MutableMapping[TreeNode, Tuple[float, float]],
+            x: float = 0,
+            y: float = 0,
+            layer: int = 1,
+            dx: float = 1.5,
+        ) -> None:
             if not node:
                 return
             pos[node] = (x, y)
@@ -107,8 +123,18 @@ class TreeNode(object):
         add_edges(graph, root, pos)
 
         plt.figure(figsize=(10, 8))
-        nx.draw(graph, pos, with_labels=False, node_size=800, node_color="skyblue", edge_color="gray", font_size=10)
-        nx.draw_networkx_labels(graph, pos, labels={node: str(node.data) for node in pos})
+        nx.draw(
+            graph,
+            pos,
+            with_labels=False,
+            node_size=800,
+            node_color="skyblue",
+            edge_color="gray",
+            font_size=10,
+        )
+        nx.draw_networkx_labels(
+            graph, pos, labels={node: str(node.data) for node in pos}
+        )
         plt.title("Binary Tree Visualization")
         plt.axis("off")
         plt.show()

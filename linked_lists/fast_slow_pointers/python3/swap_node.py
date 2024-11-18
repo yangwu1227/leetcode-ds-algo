@@ -15,48 +15,50 @@ def swap_node(head: ListNode, k: int) -> ListNode:
 
     Returns
     -------
-    ListNode 
+    ListNode
         The sentinel head of the modified linked list
     """
     # Single node case
     if head.next.next is None:
         return head
-    
+
     # Fast is used to move k steps ahead
-    fast = head 
-    slow = head 
+    fast = head
+    slow = head
     for _ in range(k):
-        fast = fast.next 
+        fast = fast.next
 
     # Keep a reference to the kth node from the start
     kth_from_start = fast
     while fast:
-        slow = slow.next 
+        slow = slow.next
         fast = fast.next
 
     # Swap the data values
-    kth_from_start.data, slow.data = slow.data, kth_from_start.data 
+    kth_from_start.data, slow.data = slow.data, kth_from_start.data
 
     return head
 
-def main() -> int:
 
+def main() -> int:
     test_cases = [([1, 2, 3, 4, 5], 2), ([7, 9, 6, 6, 7, 8, 3, 0, 9, 5], 5), ([7], 1)]
     for data_array, k in test_cases:
         nodes = (ListNode(data=data) for data in data_array)
         sll = SinglyLinkedList()
         for node in nodes:
             sll.add_to_end(node)
-        
-        print(f"Before swapping data values betweem the k = {k} nodes from the start and end")
+
+        print(
+            f"Before swapping data values betweem the k = {k} nodes from the start and end"
+        )
         sll.display()
         new_head = swap_node(sll.head, k)
         print("After swapping data values")
         sll.display()
-        print('\n')
+        print("\n")
 
     return 0
-    
-if __name__ == "__main__":
 
+
+if __name__ == "__main__":
     main()

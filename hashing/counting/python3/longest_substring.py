@@ -32,24 +32,26 @@ def longest_substring(s: str, k: int) -> int:
             # If this count becomes zero, remove the key from the map
             if counts[s[left]] == 0:
                 del counts[s[left]]
-            # Increment the left pointer 
+            # Increment the left pointer
             left += 1
         # Check if the answer should be updated
         window_len = max(window_len, right - left + 1)
     return window_len
-    
+
+
 def main() -> int:
-    
     letters = list(ascii_lowercase)
     for _ in range(4):
         length = np.random.randint(low=4, high=15)
-        s = ''.join(np.random.choice(a=letters, size=(length, )))
+        s = "".join(np.random.choice(a=letters, size=(length,)))
         k = np.random.randint(low=1, high=length - 2)
         ans = longest_substring(s, k)
-        print(f"Given the string {s} and k = {k}, the longest substring with {k} distinct character has length {ans}")
-        
+        print(
+            f"Given the string {s} and k = {k}, the longest substring with {k} distinct character has length {ans}"
+        )
+
     return 0
 
+
 if __name__ == "__main__":
-    
     main()

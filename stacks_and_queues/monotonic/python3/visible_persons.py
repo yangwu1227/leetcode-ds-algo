@@ -40,8 +40,8 @@ def visible_persons(heights: MutableSequence[int]) -> List[int]:
         monotonic_decreasing.append(i)
     return output
 
-def main() -> int:
 
+def main() -> int:
     data = [[9, 10, 7, 2, 12, 13, 17], [10, 6, 8, 5, 11, 9], [12]]
     for heights in data:
         output = visible_persons(heights)
@@ -49,6 +49,6 @@ def main() -> int:
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

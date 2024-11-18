@@ -36,19 +36,21 @@ def validate_stack(pushed: List[int], popped: List[int]) -> bool:
     # If stack is empty, the sequence is valid, if not, it is not valid
     return not stack
 
-def main() -> int:
 
+def main() -> int:
     test_cases = [
         ([1, 2, 3, 4, 5], [4, 5, 3, 2, 1]),
         ([1, 2, 3, 4, 5], [4, 3, 5, 1, 2]),
-        ([2], [3])
+        ([2], [3]),
     ]
     for pushed, popped in test_cases:
         valid = validate_stack(pushed, popped)
-        print(f"Given pushed = {pushed} and popped = {popped}, these sequences are {'valid' if valid else 'not valid'}")
+        print(
+            f"Given pushed = {pushed} and popped = {popped}, these sequences are {'valid' if valid else 'not valid'}"
+        )
 
     return 0
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()
