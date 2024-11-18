@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import deque
-from typing import List, MutableMapping, Optional, Sequence, Tuple, Union
+from typing import MutableMapping, Optional, Sequence, Tuple, Union
 
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -11,13 +11,13 @@ class TreeNode(object):
     """ 
     This class represents a node in a binary tree.
     """
-    def __init__(self, data: Optional[Union[int, float, str]] = None, left: Optional[TreeNode] = None, right: Optional[TreeNode] = None) -> None:
+    def __init__(self, data: Optional[Union[int, float]] = None, left: Optional[TreeNode] = None, right: Optional[TreeNode] = None) -> None:
         """
         Initializes the tree node instance.
 
         Parameters
         ----------
-        data : Optional[Union[int, float, str]]
+        data : Optional[Union[int, float]]
             The data value stored in this node, by default None
         left : Optional[TreeNode], optional
             The left child node, by default None
@@ -40,13 +40,13 @@ class TreeNode(object):
         return f"TreeNode(data = {self.data})"
 
     @staticmethod
-    def construct_binary_tree(values: Sequence[Optional[Union[int, float, str]]]) -> Optional[TreeNode]:
+    def construct_binary_tree(values: Sequence[Optional[Union[int, float]]]) -> Optional[TreeNode]:
         """
         Constructs a binary tree from a list of values representing level-order traversal.
 
         Parameters
         ----------
-        values : Sequence[Optional[Union[int, float, str]]]
+        values : Sequence[Optional[Union[int, float]]]
             A list where each element represents a node's data in level-order; 
             `None` represents a missing node
 

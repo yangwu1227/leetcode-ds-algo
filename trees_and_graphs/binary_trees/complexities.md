@@ -25,7 +25,7 @@ Given the `root` of a binary tree and an integer `target`, return `true` if the 
 Consider the following binary tree with `target = 22`:
 
 <div style="text-align: center;">
-    <img src="diagrams/path_sum.png" width="60%" height="400">
+    <img src="diagrams/path_sum.png" width="50%">
 </div>
 
 <center>
@@ -71,3 +71,53 @@ Hence, the overall space complexity is $O(h)$, where $h$ is the height of the tr
    - $O(\log n)$ in the best and average case for a balanced tree
    - $O(n)$ in the worst case for a skewed tree
 
+---
+
+# Count Good Nodes in Binary Tree
+
+Given a binary tree `root`, a node `X` in the tree is considered good if the following condition is satisfied:
+
+> From the root of the binary tree to node `X`, there is no node with a value greater than that of `X`.
+
+Find the number of good nodes in the binary tree.
+
+## Explanation
+
+Consider the following binary tree:
+
+<div style="text-align: center;">
+    <img src="diagrams/good_node.png" width="50%">
+</div>
+
+<center>
+
+| Step | Node       | Max Value So Far | Decision                           | Number of Good Nodes |
+|------|------------|------------------|------------------------------------|----------------------|
+| 1    | 3 (root)   | -∞               | Good Node (3 ≥ -∞)                 | +1                   |
+| 2    | 1 (left)   | 3                | Not a Good Node (1 < 3)            |                      |
+| 3    | 3 (left of 1) | 3             | Good Node (3 ≥ 3)                  | +1                   |
+| 4    | None       | N/A              | Empty Tree Node, returning 0       |                      |
+| 5    | None       | N/A              | Empty Tree Node, returning 0       |                      |
+| 6    | 4 (right)  | 3                | Good Node (4 ≥ 3)                  | +1                   |
+| 7    | 1 (left of 4) | 4             | Not a Good Node (1 < 4)            |                      |
+| 8    | None       | N/A              | Empty Tree Node, returning 0       |                      |
+| 9    | None       | N/A              | Empty Tree Node, returning 0       |                      |
+| 10   | 5 (right of 4) | 4            | Good Node (5 ≥ 4)                  | +1                   |
+
+</center>
+
+## Time Complexity
+
+Each node in the binary tree is visited once, and the following operations are performed at each node:
+
+* Check if the current node is not `None` or a `nullptr`, which can be considered $O(1)$
+
+* Add the number of good nodes that have been found from the left and right subtrees so far, which is $O(1)$
+
+* Check if the current node is a good node, incrementing the count if it is, which is $O(1)$
+
+The implementation uses postorder traversal. The time complexity of the algorithm is $O(n)$, where $n$ is the total number of nodes in the binary tree.
+
+## Space Complexity
+
+The space complexity of the algorithm is again $O(h)$, where $h$ is $\log n$ for a balanced tree and $n$ for a skewed tree.
