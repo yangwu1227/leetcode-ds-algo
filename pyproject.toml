@@ -1,29 +1,62 @@
 [project]
 name = "leetcode-ds-algo"
-dependencies = [
-    "numpy>=2.0.0",
-    "matplotlib>=3.9.1",
-    "scipy>=1.14.0",
-    "networkx>=3.4.2",
-]
-requires-python = ">=3.11"
+version = "0.1.0"
+description = "Add your description here"
 readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "matplotlib>=3.9.2",
+    "networkx>=3.4.2",
+    "numpy>=2.1.3",
+    "scipy>=1.14.1",
+]
 
-[tool.pdm]
-distribution = false
+[tool.uv]
+package = false
 
-[tool.pdm.dev-dependencies]
+[dependency-groups]
 notebook = [
     "ipykernel>=6.29.5",
 ]
 lint-fmt = [
-    "isort>=5.13.2",
     "mypy>=1.13.0",
+    "ruff>=0.7.4",
 ]
 
-[tool.mypy]
-python_version = "3.11"
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+line-length = 88
+indent-width = 4
+target-version = "py311"
 
-[[tool.mypy.overrides]]
-module = "networkx"
-ignore_missing_imports = true
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"

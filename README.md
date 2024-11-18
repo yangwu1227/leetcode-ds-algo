@@ -4,20 +4,12 @@ A collection of solutions to LeetCode problems, loosely grouped by concepts, tec
 
 ## Python 
 
-The Python dependencies are managed using [pdm](https://pdm-project.org/latest/) and [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html):
+The Python dependencies are managed using [uv](https://docs.astral.sh/uv/):
 
 ```bash
-# Search for python version
-$ conda search python
 # The specified python version in `pyproject.toml` is requires-python = ">=3.11"
-$ yes | conda create --name leetcode_ds_algo python=3.11.9
-$ conda activate leetcode_ds_algo
-# Use the conda-installed python interpreter
-$ pdm use $(which python3)
-$ pdm install --prod
+$ uv sync
 ```
-
-Using `conda` is not necessary, and any other tools, e.g., [pyenv](https://github.com/pyenv/pyenv), can be used to specify the Python interpreter to use for the project.
 
 ## C++
 
