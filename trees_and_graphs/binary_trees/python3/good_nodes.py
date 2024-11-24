@@ -1,5 +1,6 @@
-from tree_node import TreeNode
 from typing import Optional, Union
+
+from tree_node import TreeNode
 
 
 class Solution(object):

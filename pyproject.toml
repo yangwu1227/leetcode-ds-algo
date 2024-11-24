@@ -57,6 +57,7 @@ target-version = "py311"
 
 [tool.ruff.lint]
 ignore = ["F841"]
+select = ["I", "F401"]
 
 [tool.ruff.format]
 quote-style = "double"
