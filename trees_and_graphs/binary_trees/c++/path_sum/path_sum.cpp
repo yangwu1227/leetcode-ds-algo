@@ -3,7 +3,7 @@
 #include "tree_node.hpp"
 #include <stdexcept>
 
-bool PathSum::depthFirstSearch(const TreeNode::ptr &node, int currSum, int target)
+bool PathSum::depthFirstSearch(TreeNode::ptr &node, int currSum, int target)
 {
     // If the current node is a nullptr, return false
     if (node == nullptr)
@@ -32,7 +32,7 @@ bool PathSum::depthFirstSearch(const TreeNode::ptr &node, int currSum, int targe
     return leftResult || rightResult;
 }
 
-bool PathSum::searchPath(const TreeNode::ptr &root, int target)
+bool PathSum::searchPath(TreeNode::ptr &root, int target)
 {
     return PathSum::depthFirstSearch(root, 0, target);
 }

@@ -2,7 +2,7 @@
 #include "max_depth.hpp"
 #include "tree_node.hpp"
 
-int maxDepth(const TreeNode::ptr &root)
+int maxDepth(TreeNode::ptr &root)
 {
     // Return 0 if the node has no children
     if (root == nullptr)

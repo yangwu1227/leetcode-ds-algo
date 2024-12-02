@@ -20,7 +20,7 @@ public:
      * @return bool `true` if a path from root to a leaf node with a cumulative sum equal to `target`
      * exists; `false` otherwise.
      */
-    static bool depthFirstSearch(const TreeNode::ptr &node, int currSum, int target);
+    static bool depthFirstSearch(TreeNode::ptr &node, int currSum, int target);
 
     /**
      * @brief Initiates a search for a root-to-leaf path in the binary tree with a specified sum.
@@ -31,7 +31,7 @@ public:
      * @return bool `true` if a path from root to any leaf node exists such that the sum of node
      * values `target` exists; `false` otherwise.
      */
-    static bool searchPath(const TreeNode::ptr &root, int target);
+    static bool searchPath(TreeNode::ptr &root, int target);
 };
 
 #endif

@@ -16,7 +16,7 @@ public:
      * @param maxValSoFar The maximum value encountered from the root to this node
      * @return int The total number of 'good' nodes encountered in the subtree rooted at 'node'
      */
-    static int depthFirstSearch(const TreeNode::ptr &node, const int maxValSoFar);
+    static int depthFirstSearch(TreeNode::ptr &node, const int maxValSoFar);
 
     /**
      * @brief Count the number of 'good' nodes in the binary tree rooted at 'root'.
@@ -24,7 +24,7 @@ public:
      * @param root A unique pointer to the root node of the binary tree
      * @return int Total number of 'good' nodes in the binary tree
      */
-    static int goodNodes(const TreeNode::ptr &root);
+    static int goodNodes(TreeNode::ptr &root);
 };
 
 #endif

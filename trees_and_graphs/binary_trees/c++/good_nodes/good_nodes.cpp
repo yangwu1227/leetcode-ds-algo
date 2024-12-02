@@ -3,7 +3,7 @@
 #include "good_nodes.hpp"
 #include <algorithm>
 
-int Solution::depthFirstSearch(const TreeNode::ptr &node, const int maxValSoFar)
+int Solution::depthFirstSearch(TreeNode::ptr &node, const int maxValSoFar)
 {
     // Base case if the current node is an empty node
     if (node == nullptr)
@@ -36,7 +36,7 @@ int Solution::depthFirstSearch(const TreeNode::ptr &node, const int maxValSoFar)
     return numGoodNodes;
 }
 
-int Solution::goodNodes(const TreeNode::ptr &root)
+int Solution::goodNodes(TreeNode::ptr &root)
 {
     // Handle single node root
     if (root->left == nullptr && root->right == nullptr)

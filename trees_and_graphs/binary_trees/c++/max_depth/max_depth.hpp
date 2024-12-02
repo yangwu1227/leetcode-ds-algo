@@ -9,6 +9,6 @@
  * @param root A const reference to a pointer to the root node of the binary tree.
  * @return int The maximum depth of the binary tree.
  */
-int maxDepth(const TreeNode::ptr& root);
+int maxDepth(TreeNode::ptr& root);
 
 #endif
