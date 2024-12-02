@@ -51,7 +51,7 @@ exclude = [
     "site-packages",
     "venv",
 ]
-line-length = 88
+line-length = 100
 indent-width = 4
 target-version = "py311"
 
@@ -63,3 +63,15 @@ select = ["I", "F401"]
 quote-style = "double"
 indent-style = "space"
 line-ending = "auto"
+
+[tool.mypy]
+python_version = 3.11
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+disallow_untyped_calls = true
+explicit_package_bases = true
+disable_error_code = [
+    "import-untyped",
+    "import-not-found",
+]
