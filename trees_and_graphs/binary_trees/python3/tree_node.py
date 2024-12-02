@@ -132,9 +132,7 @@ class TreeNode(object):
             edge_color="gray",
             font_size=10,
         )
-        nx.draw_networkx_labels(
-            graph, pos, labels={node: str(node.data) for node in pos}
-        )
+        nx.draw_networkx_labels(graph, pos, labels={node: str(node.data) for node in pos})
         plt.title("Binary Tree Visualization")
         plt.axis("off")
         plt.show()

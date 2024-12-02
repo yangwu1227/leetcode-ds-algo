@@ -5,9 +5,7 @@ from tree_node import TreeNode
 
 class Solution(object):
     @staticmethod
-    def depth_first_search(
-        node: Optional[TreeNode], max_val_so_far: Union[int, float]
-    ) -> int:
+    def depth_first_search(node: Optional[TreeNode], max_val_so_far: Union[int, float]) -> int:
         """
         Perform a postorder traversal to count 'good' nodes in a binary tree.
 
@@ -30,12 +28,8 @@ class Solution(object):
             print("    Empty tree node, returning 0\n")
             return 0
         current_max_val_so_far = max(max_val_so_far, node.data)
-        left = Solution.depth_first_search(
-            node=node.left, max_val_so_far=current_max_val_so_far
-        )
-        right = Solution.depth_first_search(
-            node=node.right, max_val_so_far=current_max_val_so_far
-        )
+        left = Solution.depth_first_search(node=node.left, max_val_so_far=current_max_val_so_far)
+        right = Solution.depth_first_search(node=node.right, max_val_so_far=current_max_val_so_far)
         num_good_nodes: int = left + right
         if node.data >= max_val_so_far:
             num_good_nodes += 1

@@ -37,9 +37,7 @@ class Solution(object):
                 f"    We are at a leaf node, current sum ({curr_sum}) + node data ({node.data}) == target ({target}) is {comp}\n"
             )
             return comp
-        print(
-            f"current sum ({curr_sum}) + node.data ({node.data}) = {curr_sum + node.data}\n"
-        )
+        print(f"current sum ({curr_sum}) + node.data ({node.data}) = {curr_sum + node.data}\n")
         curr_sum += node.data
         left_result = Solution.depth_first_search(node.left, curr_sum, target)
         right_result = Solution.depth_first_search(node.right, curr_sum, target)

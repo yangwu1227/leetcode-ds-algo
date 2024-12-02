@@ -121,3 +121,54 @@ The implementation uses postorder traversal. The time complexity of the algorith
 ## Space Complexity
 
 The space complexity of the algorithm is again $O(h)$, where $h$ is $\log n$ for a balanced tree and $n$ for a skewed tree.
+
+---
+
+# Same Tree
+
+Given the roots of two binary trees `p` and `q`, check if they are the same or not.
+
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+## Explanation
+
+Consider the following binary trees:
+
+<div style="text-align: center;">
+    <img src="diagrams/same_tree_1.png" width="50%">
+</div>
+
+<div style="text-align: center;">
+    <img src="diagrams/same_tree_2.png" width="50%">
+</div>
+
+<center>
+
+| Step | Node (Tree 1) | Node (Tree 2) | Action                                  | Result   |
+|------|---------------|---------------|-----------------------------------------|----------|
+| 1    | 1             | 1             | Comparing nodes (1 == 1). Proceed deeper. | -        |
+| 2    | 3             | 3             | Comparing nodes (3 == 3). Proceed deeper. | -        |
+| 3    | 7             | 7             | Comparing nodes (7 == 7). Proceed deeper. | -        |
+|      | None          | None          | Both nodes are `None`. Returning `True`.  | `True`   |
+|      | None          | None          | Both nodes are `None`. Returning `True`.  | `True`   |
+| 4    | -             | -             | Returning `True` for nodes (7, 7).        | `True`   |
+| 5    | 10            | 9             | Comparing nodes (10 != 9). Not equal. Returning `False`. | `False` |
+|      | None          | None          | Both nodes are `None`. Returning `True`.  | `True`   |
+|      | None          | None          | Both nodes are `None`. Returning `True`.  | `True`   |
+| 6    | -             | -             | Returning `False` for nodes (10, 9).      | `False`  |
+| 7    | -             | -             | Returning `False` for nodes (3, 3).       | `False`  |
+| 8    | 5             | 5             | Comparing nodes (5 == 5). Proceed deeper. | -        |
+|      | None          | None          | Both nodes are `None`. Returning `True`.  | `True`   |
+|      | None          | None          | Both nodes are `None`. Returning `True`.  | `True`   |
+| 9    | -             | -             | Returning `True` for nodes (5, 5).        | `True`   |
+| 10   | -             | -             | Returning `False` for nodes (1, 1).       | `False`  |
+
+</center>
+
+## Time Complexity
+
+In any case, the algorithm visits each node in both trees once. All operations performed at each node can be considered $O(1)$. Thus, the time complexity of the algorithm is $O(n)$, where $n$ is the total number of nodes in the binary tree.
+
+## Space Complexity
+
+The space complexity of the algorithm is $O(h)$, where $h$ is $\log n$ for a balanced tree and $n$ for a skewed tree.
