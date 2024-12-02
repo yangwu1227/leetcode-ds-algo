@@ -36,9 +36,7 @@ def main() -> int:
     not_palindrome = "soccer"
 
     print(f"The string {palindrome} is a palindrome: {check_if_palindrome(palindrome)}")
-    print(
-        f"The string {not_palindrome} is a palindrome: {check_if_palindrome(not_palindrome)}"
-    )
+    print(f"The string {not_palindrome} is a palindrome: {check_if_palindrome(not_palindrome)}")
 
     return 0
 

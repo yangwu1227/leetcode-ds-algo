@@ -45,9 +45,7 @@ def main() -> int:
     queries = ([0, 2], [2, 5], [2, 6], (2, 9), (11, 14), [10, 12])
     limit = 13
     ans = query_sum_limit(nums, queries, limit)
-    print(
-        f"Given nums = {nums}, queries = {queries}, and limit = {limit}, the answer is {ans}"
-    )
+    print(f"Given nums = {nums}, queries = {queries}, and limit = {limit}, the answer is {ans}")
 
     return 0
 

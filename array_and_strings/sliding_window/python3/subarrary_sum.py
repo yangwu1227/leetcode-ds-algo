@@ -44,9 +44,7 @@ def main() -> int:
 
     result = find_best_subarray(nums, k)
 
-    print(
-        f"Given input {nums} and k = {k}, the largest sum of the a k-subarray is {result}"
-    )
+    print(f"Given input {nums} and k = {k}, the largest sum of the a k-subarray is {result}")
 
     return 0
 

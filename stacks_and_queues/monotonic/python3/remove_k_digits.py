@@ -23,9 +23,7 @@ def remove_k_digits(num: str, k: int) -> str:
         return "0"
     digit_stack: MutableSequence[str] = array("u")
     for digit in num:
-        print(
-            f"Processing digit = {digit} | Stack is empty"
-        ) if not digit_stack else print(
+        print(f"Processing digit = {digit} | Stack is empty") if not digit_stack else print(
             f"Processing digit = {digit} | Stack empty? {not bool(digit_stack)} | k > 0? {k > 0} | (top of stack: {digit_stack[-1]}) > (current digit: {digit})? {digit_stack[-1] > digit}"
         )
         while digit_stack and k > 0 and digit_stack[-1] > digit:

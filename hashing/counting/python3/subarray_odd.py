@@ -34,9 +34,7 @@ def main() -> int:
         [[1, 1, 2, 1, 1], [2, 2, 2, 1, 2, 2, 1, 2, 2, 2], [3, 2, 4, 5, 6, 7]], [3, 2, 2]
     ):
         ans = subarray_odd(nums, k)
-        print(
-            f"Give the input {nums} and k = {k}, there are {ans} subarrays with {k} odd numbers"
-        )
+        print(f"Give the input {nums} and k = {k}, there are {ans} subarrays with {k} odd numbers")
 
     return 0
 

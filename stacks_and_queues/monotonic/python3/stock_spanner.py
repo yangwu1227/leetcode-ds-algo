@@ -52,9 +52,7 @@ def main() -> int:
     prices = [100, 80, 60, 40, 30, 13, 102]
     stock_spanner = StockSpanner()
     for price in prices:
-        print(
-            f"The current prices is {price}, and its span is {stock_spanner.next(price)}"
-        )
+        print(f"The current prices is {price}, and its span is {stock_spanner.next(price)}")
 
     return 0
 

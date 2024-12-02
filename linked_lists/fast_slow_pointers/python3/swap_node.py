@@ -48,9 +48,7 @@ def main() -> int:
         for node in nodes:
             sll.add_to_end(node)
 
-        print(
-            f"Before swapping data values betweem the k = {k} nodes from the start and end"
-        )
+        print(f"Before swapping data values betweem the k = {k} nodes from the start and end")
         sll.display()
         new_head = swap_node(sll.head, k)
         print("After swapping data values")

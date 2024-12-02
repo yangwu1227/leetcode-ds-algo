@@ -18,9 +18,7 @@ def find_lucky_integer(nums: Sequence[int]) -> int:
     """
     # O(n) to build
     counts = Counter(nums)
-    largest_lucky_integer = max(
-        (num for num, count in counts.items() if num == count), default=-1
-    )
+    largest_lucky_integer = max((num for num, count in counts.items() if num == count), default=-1)
     return largest_lucky_integer
 
 

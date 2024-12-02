@@ -207,12 +207,8 @@ def main() -> int:
         ncols_a = np.random.randint(1, 100, 1)[0]
         nrows_b = ncols_a
         ncols_b = np.random.randint(1, 100, 1)[0]
-        sparse_matrix_a = random(
-            m=nrows_a, n=ncols_a, format="dok", dtype=dtype, data_rvs=rvs
-        )
-        sparse_matrix_b = random(
-            m=nrows_b, n=ncols_b, format="dok", dtype=dtype, data_rvs=rvs
-        )
+        sparse_matrix_a = random(m=nrows_a, n=ncols_a, format="dok", dtype=dtype, data_rvs=rvs)
+        sparse_matrix_b = random(m=nrows_b, n=ncols_b, format="dok", dtype=dtype, data_rvs=rvs)
         reference_output = sparse_matrix_a @ sparse_matrix_b
         reference_output = np.array(reference_output.todense())  # type: ignore
 

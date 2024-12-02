@@ -3,9 +3,7 @@ from collections import defaultdict
 from typing import List, MutableMapping, MutableSequence
 
 
-def next_greater_element(
-    nums_1: MutableSequence[int], nums_2: MutableSequence[int]
-) -> List[int]:
+def next_greater_element(nums_1: MutableSequence[int], nums_2: MutableSequence[int]) -> List[int]:
     """
     Given two distinct integer arrays `nums_1` and `nums_2` where `nums_1` is a subset of `nums_2`,
     find the array `output` such that for each element `nums_1[i]`, `output[i]` contains the next greater element

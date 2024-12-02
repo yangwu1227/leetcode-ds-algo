@@ -46,9 +46,7 @@ class SortString(object):
         sorted_portion = "".join(
             order_char * s_char_counts.pop(order_char, 0) for order_char in order
         )
-        non_sorted_portion = "".join(
-            s_char * count for s_char, count in s_char_counts.items()
-        )
+        non_sorted_portion = "".join(s_char * count for s_char, count in s_char_counts.items())
         # O(n)
         sorted_portion += non_sorted_portion
         return sorted_portion
@@ -59,9 +57,7 @@ def main() -> int:
         perm_str_loops = SortString.loops(order, s)
         perm_str_dict_comps = SortString.generators(order, s)
         assert perm_str_dict_comps == perm_str_loops
-        print(
-            f"Given order = '{order}', the permuated version of s = '{s}' is '{perm_str_loops}'"
-        )
+        print(f"Given order = '{order}', the permuated version of s = '{s}' is '{perm_str_loops}'")
 
     return 0
 

@@ -49,13 +49,9 @@ def main() -> int:
         starting_message = f"Given the input {text}"
         ending_message = "the word 'balloon' from its characters"
         if max_num:
-            print(
-                f"{starting_message}, there can at most {max_num} instances of {ending_message}"
-            )
+            print(f"{starting_message}, there can at most {max_num} instances of {ending_message}")
         else:
-            print(
-                f"{starting_message}, it is not possible to form the {ending_message}"
-            )
+            print(f"{starting_message}, it is not possible to form the {ending_message}")
 
     return 0
 

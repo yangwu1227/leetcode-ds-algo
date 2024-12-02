@@ -43,9 +43,7 @@ def main() -> int:
 
     window_len = find_length(nums=array, k=k)
 
-    print(
-        f"Given {array} and constraint of <= {k}, the longest subarray has length {window_len}"
-    )
+    print(f"Given {array} and constraint of <= {k}, the longest subarray has length {window_len}")
 
     return 0
 

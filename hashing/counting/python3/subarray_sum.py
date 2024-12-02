@@ -43,9 +43,7 @@ def main() -> int:
         nums_size = np.random.randint(low=1, high=20)
         nums = np.random.randint(low=0, high=10, size=(nums_size,)).tolist()
         ans = subarray_sum(nums, k)
-        print(
-            f"Give the input {nums}, the number of subarrays whose sum is {k} is {ans}"
-        )
+        print(f"Give the input {nums}, the number of subarrays whose sum is {k} is {ans}")
 
     return 0
 

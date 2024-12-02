@@ -85,9 +85,7 @@ def main() -> int:
         ("2^(2n)", lambda n: 2 ** (2 * n)),
     ]
 
-    plot_functions(
-        n_values, functions_set1, "Plot of First Set of Functions", "functions_set_1"
-    )
+    plot_functions(n_values, functions_set1, "Plot of First Set of Functions", "functions_set_1")
     # Use smaller ranges due to floating point arithmetic
     plot_functions(
         n_values[5:20],

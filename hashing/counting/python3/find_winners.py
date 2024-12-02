@@ -30,9 +30,7 @@ def find_winners(matches: List[List[int]]) -> List[List[int]]:
 
     # O(n) for each set comprehension
     winners = set(winner for winner in winner_counter if winner not in loser_counter)
-    losers = set(
-        loser for loser, loss_count in loser_counter.items() if loss_count == 1
-    )
+    losers = set(loser for loser, loss_count in loser_counter.items() if loss_count == 1)
 
     # O(n log n) sorting
     return [sorted(winners), sorted(losers)]

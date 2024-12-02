@@ -38,9 +38,7 @@ def sum_subarray_mins(x: MutableSequence) -> int:
             monotonic_increasing.pop()
         # If the stack is empty, then there is just 1 continuous subarray where x[i] is the minimum, which is x[i] itself, so 0 + 1
         # Otherwise, the minimum span is calculated as the distance between i and the index of the previous smaller element at the top of the stack
-        left_spans[i] = (
-            i + 1 if not monotonic_increasing else i - monotonic_increasing[-1]
-        )
+        left_spans[i] = i + 1 if not monotonic_increasing else i - monotonic_increasing[-1]
         monotonic_increasing.append(i)
         print(f"  Updated left_spans[{i}] = {left_spans[i]}")
         print(f"  Stack after processing {x[i]}: {list(monotonic_increasing)}")
@@ -57,9 +55,7 @@ def sum_subarray_mins(x: MutableSequence) -> int:
             monotonic_increasing.pop()
         # If the stack is empty, there is no smaller element to the right of x[i]
         # Otherwise, the minimum span is calculated as the distance between the index of the next smaller element at the top of the stack and i
-        right_spans[i] = (
-            n - i if not monotonic_increasing else monotonic_increasing[-1] - i
-        )
+        right_spans[i] = n - i if not monotonic_increasing else monotonic_increasing[-1] - i
         monotonic_increasing.append(i)
         print(f"  Updated right_spans[{i}] = {right_spans[i]}")
         print(f"  Stack after processing {x[i]}: {list(monotonic_increasing)}")

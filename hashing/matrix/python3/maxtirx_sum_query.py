@@ -75,9 +75,7 @@ def main() -> int:
         matrix_sum_efficient = MatrixSumQueries.effcient_approach(n=n, queries=queries)
         matrix_sum_scipy = MatrixSumQueries.scipy_approach(n=n, queries=queries)
         assert matrix_sum_efficient == matrix_sum_scipy
-        print(
-            f"Given n = {n} and queries = {queries}, the matrix sum is {matrix_sum_scipy}"
-        )
+        print(f"Given n = {n} and queries = {queries}, the matrix sum is {matrix_sum_scipy}")
 
     return 0
 

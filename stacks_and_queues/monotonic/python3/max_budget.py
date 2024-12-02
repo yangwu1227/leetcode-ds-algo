@@ -48,9 +48,7 @@ def max_bugdet(
         print(
             f"Deque - Indices: {monotonic_nonincreasing_deque} - Charge times: {[charge_times[i] for i in monotonic_nonincreasing_deque]}"
         )
-        print(
-            f"Sum of running costs = {sum_running_cost + running_costs[right]} | k = {k + 1}"
-        )
+        print(f"Sum of running costs = {sum_running_cost + running_costs[right]} | k = {k + 1}")
         sum_running_cost += running_costs[right]
         k += 1
         print("Deque is empty") if not monotonic_nonincreasing_deque else print(
@@ -58,8 +56,7 @@ def max_bugdet(
         )
         while (
             monotonic_nonincreasing_deque
-            and (charge_times[monotonic_nonincreasing_deque[0]] + k * sum_running_cost)
-            > budget
+            and (charge_times[monotonic_nonincreasing_deque[0]] + k * sum_running_cost) > budget
         ):
             print(
                 f"  Shrink current window since (total = {(charge_times[monotonic_nonincreasing_deque[0]] + k * sum_running_cost)}) >= (budget = {budget})"

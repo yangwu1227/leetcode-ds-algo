@@ -31,9 +31,7 @@ class Solution(object):
             # Left and right sums are 0 if i is pointing at the start or end of `nums`
             # Otherwise use the formula for computing subarray sums from prefix sum array
             left_sum = 0 if i == 0 else prefix[i - 1] - prefix[0] + nums[0]
-            right_sum = (
-                0 if i == len(nums) - 1 else prefix[-1] - prefix[i + 1] + nums[i + 1]
-            )
+            right_sum = 0 if i == len(nums) - 1 else prefix[-1] - prefix[i + 1] + nums[i + 1]
             if left_sum == right_sum:
                 return i
         # If loop completes without returning, no pivot found

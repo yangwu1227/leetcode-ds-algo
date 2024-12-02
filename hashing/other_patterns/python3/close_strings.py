@@ -41,9 +41,7 @@ def main() -> int:
         ("yangwucpp", "pythoncpp"),
     ]:
         close = close_strings(first, second)
-        print(
-            f"Given '{first}' and '{second}', the strings are{' ' if close else ' not '}close"
-        )
+        print(f"Given '{first}' and '{second}', the strings are{' ' if close else ' not '}close")
 
     return 0
 

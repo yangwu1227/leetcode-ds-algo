@@ -41,9 +41,7 @@ def num_valid_subarrays(nums: MutableSequence[int]) -> int:
         )
         print(f"Next smaller index array - {next_smaller}")
     # The number of valid subarrays that start with nums[i] is the distance to the next smaller element
-    return sum(
-        next_smaller_index - i for i, next_smaller_index in enumerate(next_smaller)
-    )
+    return sum(next_smaller_index - i for i, next_smaller_index in enumerate(next_smaller))
 
 
 def main() -> int:

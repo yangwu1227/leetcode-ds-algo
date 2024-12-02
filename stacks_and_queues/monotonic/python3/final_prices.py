@@ -38,9 +38,7 @@ class FinalPrices(object):
             price_deque.append(i)
         # If any price does not have a mapping, -1 is return, i.e., no discount
         output = [
-            prices[i] - prices[next_smaller_map[i]]
-            if next_smaller_map[i] != -1
-            else prices[i]
+            prices[i] - prices[next_smaller_map[i]] if next_smaller_map[i] != -1 else prices[i]
             for i in range(len(prices))
         ]
         return output

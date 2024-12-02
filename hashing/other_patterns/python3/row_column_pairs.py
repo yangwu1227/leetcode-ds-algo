@@ -73,9 +73,7 @@ def main() -> int:
         num_equal_pairs_numpy = EqualPairs.numpy(grid)
         num_equal_pairs_builtin = EqualPairs.builtin(grid)
         assert num_equal_pairs_numpy == num_equal_pairs_builtin
-        print(
-            f"Given the input {grid}, there are {num_equal_pairs_numpy} equal pairs (r_i, c_i)"
-        )
+        print(f"Given the input {grid}, there are {num_equal_pairs_numpy} equal pairs (r_i, c_i)")
 
     return 0
 

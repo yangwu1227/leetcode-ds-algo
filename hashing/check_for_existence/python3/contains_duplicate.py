@@ -29,9 +29,7 @@ def main() -> int:
     test_nums = [[1, 1, 1, 3, 3, 4, 3, 2, 4, 2], (1, 3, 9, 8, 10)]
     for nums in test_nums:
         result = contains_duplicates(nums)
-        print(
-            f"The input {nums} {'contains' if result else 'does not contain'} duplicate elements"
-        )
+        print(f"The input {nums} {'contains' if result else 'does not contain'} duplicate elements")
 
     return 0
 

@@ -37,13 +37,10 @@ def sum_subarray_ranges(nums: MutableSequence[int]) -> int:
             f"  Stack is non-empty? {bool(monotonic_increasing)} and (right_span_index == n? {right_span_index == n} or {nums[monotonic_increasing[-1]] if monotonic_increasing else 'N/A'} >= {nums[right_span_index] if right_span_index < n else 'end of array'}? {nums[monotonic_increasing[-1]] >= nums[right_span_index] if monotonic_increasing and right_span_index < n else 'N/A'})"
         )
         while monotonic_increasing and (
-            right_span_index == n
-            or nums[monotonic_increasing[-1]] >= nums[right_span_index]
+            right_span_index == n or nums[monotonic_increasing[-1]] >= nums[right_span_index]
         ):
             top_stack_i = monotonic_increasing.pop(-1)
-            print(
-                f"    Popping index {top_stack_i}, which corresponds to {nums[top_stack_i]}"
-            )
+            print(f"    Popping index {top_stack_i}, which corresponds to {nums[top_stack_i]}")
             left_span_index = monotonic_increasing[-1] if monotonic_increasing else -1
             print(
                 f"    The span of {nums[top_stack_i]} starts at {monotonic_increasing[-1] if monotonic_increasing else -1}"
@@ -74,13 +71,10 @@ def sum_subarray_ranges(nums: MutableSequence[int]) -> int:
             f"  Stack is non-empty? {bool(monotonic_decreasing)} and (right_span_index == n? {right_span_index == n} or {nums[monotonic_decreasing[-1]] if monotonic_decreasing else 'N/A'} <= {nums[right_span_index] if right_span_index < n else 'N/A'}? {nums[monotonic_decreasing[-1]] <= nums[right_span_index] if monotonic_decreasing and right_span_index < n else 'N/A'})"
         )
         while monotonic_decreasing and (
-            right_span_index == n
-            or nums[monotonic_decreasing[-1]] <= nums[right_span_index]
+            right_span_index == n or nums[monotonic_decreasing[-1]] <= nums[right_span_index]
         ):
             top_stack_i = monotonic_decreasing.pop(-1)
-            print(
-                f"    Popping index {top_stack_i}, which corresponds to {nums[top_stack_i]}"
-            )
+            print(f"    Popping index {top_stack_i}, which corresponds to {nums[top_stack_i]}")
             left_span_index = monotonic_decreasing[-1] if monotonic_decreasing else -1
             print(
                 f"    The span of {nums[top_stack_i]} starts at {monotonic_decreasing[-1] if monotonic_decreasing else -1}"
@@ -108,9 +102,7 @@ def main() -> int:
     data = [[4, -2, -3, 4, 1], [1, 3, 3], [1, 2, 3]]
     for nums in data:
         sum_ranges = sum_subarray_ranges(nums)
-        print(
-            f"Given nums = {nums}, nums of all subarray ranges is {sum_ranges} {'-' * 40}\n"
-        )
+        print(f"Given nums = {nums}, nums of all subarray ranges is {sum_ranges} {'-' * 40}\n")
 
     return 0
 
