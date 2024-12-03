@@ -22,16 +22,16 @@ def equal_substring(s: str, t: str, max_cost: int) -> int:
         with a cost less than or equal to `max_cost`
     """
     # O(n) operation to convert strings to lists of characters
-    s = list(s)
-    t = list(t)
+    s_list = list(s)
+    t_list = list(t)
 
     cost = left = window_len = 0
-    for right in range(len(s)):
-        cost += abs(ord(s[right]) - ord(t[right]))
+    for right in range(len(s_list)):
+        cost += abs(ord(s_list[right]) - ord(t_list[right]))
         # Check if the window has become invalid, i.e., cost > max_cost
         while cost > max_cost:
             # Shrink window by removing elements (and their costs)
-            cost -= abs(ord(s[left]) - ord(t[left]))
+            cost -= abs(ord(s_list[left]) - ord(t_list[left]))
             # Increment left pointer
             left += 1
         # If the current window length is > the previous, update answer

@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import List
+from typing import List, MutableMapping
 
 
 class Solution(object):
@@ -23,7 +23,7 @@ class Solution(object):
     @staticmethod
     def two_passes_two_sum(nums: Sequence[int], target: int) -> List[int]:
         # Keys are the elements and values are their respective indices, costing O(n)
-        hash_map = {}
+        hash_map: MutableMapping[int, int] = {}
         for i, num in enumerate(nums):
             hash_map[num] = i
 
@@ -39,7 +39,7 @@ class Solution(object):
     @staticmethod
     def one_pass_two_sum(nums: Sequence[int], target: int) -> List[int]:
         # Single pass
-        hash_map = {}
+        hash_map: MutableMapping[int, int] = {}
         for i, num in enumerate(nums):
             diff = target - num
             if diff in hash_map:

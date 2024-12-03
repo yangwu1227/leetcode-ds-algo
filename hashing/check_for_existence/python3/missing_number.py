@@ -40,7 +40,7 @@ class MissingNumber(object):
     @staticmethod
     def xor_reduce_approach(nums: Sequence[int]) -> int:
         n = len(nums)
-        return reduce(lambda x, y: x ^ y, nums + list(range(n + 1)))
+        return reduce(lambda x, y: x ^ y, list(nums) + list(range(n + 1)))
 
 
 def main() -> int:

@@ -19,7 +19,7 @@ class LongestSubstringRepetead(object):
     @staticmethod
     def hash_map(s: str) -> int:
         left = window_len = 0
-        character_counts = defaultdict(int)
+        character_counts: defaultdict[str, int] = defaultdict(int)
         # O(2n) visits to each character
         for right in range(len(s)):
             # Expand the window
@@ -36,7 +36,7 @@ class LongestSubstringRepetead(object):
     @staticmethod
     def sliding_window_optimized(s: str) -> int:
         left = window_len = 0
-        character_indices = defaultdict(int)
+        character_indices: defaultdict[str, int] = defaultdict(int)
         # May be less than O(2n) visits to each character
         for right in range(len(s)):
             # If we have already seen this character before

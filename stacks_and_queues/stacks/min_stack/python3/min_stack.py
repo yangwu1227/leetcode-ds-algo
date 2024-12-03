@@ -78,7 +78,7 @@ class MinStack(object):
         self._data_array.pop(-1)
         self._min_array.pop(-1)
 
-    def top(self):
+    def top(self) -> int | float:
         """
         Gets the top element of the stack.
 
@@ -89,7 +89,7 @@ class MinStack(object):
         """
         return self._data_array[-1]
 
-    def get_min(self):
+    def get_min(self) -> int | float:
         """
         Retrieves the minimum element in the stack.
 

@@ -19,8 +19,8 @@ def find_winners(matches: List[List[int]]) -> List[List[int]]:
     List[List[int]]
         A list of two lists where the first list contains the players who never lose once and the second list contains the players who only lost once
     """
-    winner_counter = defaultdict(int)
-    loser_counter = defaultdict(int)
+    winner_counter: defaultdict[int, int] = defaultdict(int)
+    loser_counter: defaultdict[int, int] = defaultdict(int)
 
     # O(n)
     for winner, loser in matches:

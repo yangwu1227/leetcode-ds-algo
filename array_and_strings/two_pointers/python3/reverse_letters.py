@@ -19,22 +19,22 @@ def reverse_letters(s: str) -> str:
     right_index = len(s) - 1
 
     # List of characters
-    s = list(s)
+    s_list = list(s)
     while left_index < right_index:
-        if s[left_index].isalpha() and s[right_index].isalpha():
+        if s_list[left_index].isalpha() and s_list[right_index].isalpha():
             # Both pointers point at letters, reverse and move pointers
-            s[left_index], s[right_index] = s[right_index], s[left_index]
+            s_list[left_index], s_list[right_index] = s_list[right_index], s_list[left_index]
             left_index += 1
             right_index -= 1
-        elif not s[left_index].isalpha():
+        elif not s_list[left_index].isalpha():
             # If the left pointer points at a non-letter, increment
             left_index += 1
-        elif not s[right_index].isalpha():
+        elif not s_list[right_index].isalpha():
             # If the right pointer points at a non-letter, decrement
             right_index -= 1
 
     # Concatenate back to a string
-    return "".join(s)
+    return "".join(s_list)
 
 
 def main() -> int:

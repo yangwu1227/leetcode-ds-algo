@@ -15,7 +15,7 @@ def repeated_character(s: str) -> str:
     str
         The fist character to appear twice
     """
-    d = defaultdict(int)
+    d: defaultdict[str, int] = defaultdict(int)
     for char in s:
         d[char] += 1
         # Once the count for a char becomes greater than 1, return

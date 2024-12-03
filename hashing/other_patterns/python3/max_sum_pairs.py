@@ -17,7 +17,7 @@ def max_sum(nums: Sequence[int]) -> int:
     int
         The maximum value of `nums[i] + nums[j]`, where `nums[i]` and `nums[j]` have the same digit sum, or -1 if no such pair exists
     """
-    hash_map = defaultdict(int)
+    hash_map: defaultdict[int, int] = defaultdict(int)
     ans = 0
     # O(n x k) where k is the average number of digits in an integer element
     for num in nums:

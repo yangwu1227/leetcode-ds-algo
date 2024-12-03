@@ -53,7 +53,7 @@ def smallest_string(s: str) -> str:
             # The top of temp_deque can be safely popped and pushed to output
             print(
                 f"Comparing temp_deque[-1] ({temp_deque[-1]}) <= smallest_right[{smallest_right_index}] ({comparison_char})"
-            )  # type: ignore
+            )
             output.append(temp_deque.pop())
             action = "Pop from temp_deque to output"
         else:

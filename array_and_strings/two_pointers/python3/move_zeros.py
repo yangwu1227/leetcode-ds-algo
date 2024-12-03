@@ -18,10 +18,10 @@ class Solution(object):
     """
 
     @staticmethod
-    def move_zeros_1(nums: List[int]) -> None:
-        # Single element array of zero
+    def move_zeros_approach_a(nums: List[int]) -> None:
+        # Single element array of zero, return early
         if len(nums) == 1 and nums[0] == 0:
-            return nums
+            return None
 
         left_index = 0
         right_index = len(nums) - 1
@@ -48,7 +48,7 @@ class Solution(object):
         return None
 
     @staticmethod
-    def move_zeros_2(nums: List[int]) -> None:
+    def move_zeros_approach_b(nums: List[int]) -> None:
         last_non_zero_found_at = 0
         for i in range(len(nums)):
             # If the current element does not equal to zero, run this block
@@ -66,14 +66,11 @@ class Solution(object):
 def main() -> int:
     nums_1 = [0, 1, 0]
     nums_2 = [0, 1, 0, 3, 12]
-
     solution = Solution()
-
     print(f"The inputs are {nums_1} and {nums_2}")
-    solution.move_zeros_1(nums_1)
-    solution.move_zeros_2(nums_2)
+    solution.move_zeros_approach_a(nums_1)
+    solution.move_zeros_approach_b(nums_2)
     print(f"The results are {nums_1} and {nums_2}")
-
     return 0
 
 

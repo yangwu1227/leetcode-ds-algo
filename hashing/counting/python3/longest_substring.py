@@ -20,7 +20,7 @@ def longest_substring(s: str, k: int) -> int:
     int
         The length of the longest substring that contains at most `k` distinct characters
     """
-    counts = defaultdict(int)
+    counts: defaultdict[str, int] = defaultdict(int)
     left = window_len = 0
     for right in range(len(s)):
         # Slide the window forward

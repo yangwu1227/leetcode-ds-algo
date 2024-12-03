@@ -22,23 +22,23 @@ class Solution(object):
         s = s.strip()
 
         # O(n) operation to convert string to a list of words
-        s = s.split(sep=None)
+        s_list = s.split(sep=None)
 
         left_index = 0
-        right_index = len(s) - 1
+        right_index = len(s_list) - 1
 
         while left_index < right_index:
-            s[left_index], s[right_index] = s[right_index], s[left_index]
+            s_list[left_index], s_list[right_index] = s_list[right_index], s_list[left_index]
             left_index += 1
             right_index -= 1
 
         # Another O(n) operation to join reversed words into a string
-        return " ".join(s)
+        return " ".join(s_list)
 
     @staticmethod
     def reverse_word_order_deque(s: str) -> str:
         # For memory efficient appends from either side ~ O(1)
-        result = deque(maxlen=len(s))
+        result: deque[str] = deque(maxlen=len(s))
 
         # Start index to keep track of start of each word
         start_index = -1
@@ -50,20 +50,16 @@ class Solution(object):
             if s[i] != " ":
                 # First, mark the current index as the start
                 start_index = i
-
                 # This loop break only if we are at the end i == len(s)
                 # Or, we encounter the next white space (i.e. end of word)
                 while i < len(s) and s[i] != " ":
                     # Increment the pointer to move left
                     i += 1
-
                 # The slice start_index:i (non-inclusive) gives us the entirety of a word
                 # Append the word to the container from the left
                 result.appendleft(s[start_index:i])
-
                 # Since we have a global += 1 below, we need to cancel it out so we don't skip pointers
                 i -= 1
-
             # If white space (if block does not run), skip by incrementing i
             i += 1
 

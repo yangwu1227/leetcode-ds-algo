@@ -17,7 +17,7 @@ def max_vowels(s: str, k: int) -> int:
         The maximum number of vowel letters in any substring of `s` with length `k`
     """
     # O(n) operation to convert string to list of characters
-    s = list(s)
+    s_list = list(s)
     # Use a set since checking 'x' in 'vowels' is O(1) average
     vowels = {"a", "e", "i", "o", "u"}
 
@@ -25,17 +25,17 @@ def max_vowels(s: str, k: int) -> int:
     # First fixed window
     for right in range(k):
         # If a vowel, add to the count
-        if s[right] in vowels:
+        if s_list[right] in vowels:
             vowel_count += 1
     # After first window, update the answer
     ans = vowel_count
     # Slide window towards the right
-    for right in range(k, len(s)):
+    for right in range(k, len(s_list)):
         # If a vowel, add to the count
-        if s[right] in vowels:
+        if s_list[right] in vowels:
             vowel_count += 1
         # Only subtract from the count if the element removed from the window is a vowel
-        if s[right - k] in vowels:
+        if s_list[right - k] in vowels:
             vowel_count -= 1
         # Update answer if the current vowel count is greater than the previous
         ans = max(ans, vowel_count)

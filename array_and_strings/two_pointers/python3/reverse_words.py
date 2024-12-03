@@ -21,18 +21,21 @@ def reverse_words(s: str) -> str:
         right_index = len(word) - 1
 
         # Split the word into list of characters
-        word = list(word)
+        word_list = list(word)
 
         # Loop ends when the pointer meet at middle of the array
         while left_index < right_index:
             # Effectively reversing the characters
-            word[left_index], word[right_index] = word[right_index], word[left_index]
+            word_list[left_index], word_list[right_index] = (
+                word_list[right_index],
+                word_list[left_index],
+            )
             # Move pointers towards each other
             left_index += 1
             right_index -= 1
 
         # Join reverse list of characters back as a single string
-        word = "".join(word)
+        word = "".join(word_list)
         result.append(word)
 
     return " ".join(result)

@@ -19,29 +19,32 @@ class Solution(object):
     @staticmethod
     def reverse_prefix_list(word: str, ch: str) -> str:
         # O(n) convert string to a list of characters
-        word = list(word)
+        word_list = list(word)
 
         ch_index = -1
-        for i in range(len(word)):
+        for i in range(len(word_list)):
             # If found, store the index and break out of the loop
-            if word[i] == ch:
+            if word_list[i] == ch:
                 ch_index = i
                 break
         # If no match found, return the original word
         if ch_index == -1:
-            return "".join(word)
+            return "".join(word_list)
 
         left_index = 0
         right_index = ch_index
 
         while left_index < right_index:
             # Reverse by swapping the left and right elements
-            word[left_index], word[right_index] = word[right_index], word[left_index]
+            word_list[left_index], word_list[right_index] = (
+                word_list[right_index],
+                word_list[left_index],
+            )
             left_index += 1
             right_index -= 1
 
         # O(n) to join the list of characters back
-        return "".join(word)
+        return "".join(word_list)
 
     @staticmethod
     def reverse_prefix_str(word: str, ch: str) -> str:

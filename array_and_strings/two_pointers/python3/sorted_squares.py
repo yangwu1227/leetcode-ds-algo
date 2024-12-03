@@ -21,7 +21,7 @@ class Solution(object):
         left_index = 0
         right_index = len(nums) - 1
 
-        result = []
+        result: List[int] = []
         while left_index < right_index:
             left_squared = nums[left_index] ** 2
             right_squared = nums[right_index] ** 2

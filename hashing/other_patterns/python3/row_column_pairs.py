@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import List
+from typing import List, Tuple
 
 import numpy as np
 
@@ -27,19 +27,19 @@ class EqualPairs(object):
         # Convert to numpy array
         matrix = np.array(grid)
         # Rows hash map
-        row_counts = defaultdict(int)
+        row_counts: defaultdict[Tuple[np.int64, ...], int] = defaultdict(int)
         for row in matrix:
             # Array indexing is O(1) but conversion to tuple is linear O(n)
-            row = tuple(row)
-            row_counts[row] += 1
+            row_tuple = tuple(row)
+            row_counts[row_tuple] += 1
         # For each row, check if it exists in the rows hash map
         num_equal_pairs = 0
         for column in matrix.T:
             # Again, O(n)
-            column = tuple(column)
+            column_tuple = tuple(column)
             # If the column matches with any rows, increment the answer by the number of matching rows
-            if column in row_counts:
-                num_equal_pairs += row_counts[column]
+            if column_tuple in row_counts:
+                num_equal_pairs += row_counts[column_tuple]
 
         return num_equal_pairs
 
@@ -48,18 +48,18 @@ class EqualPairs(object):
         if len(grid) == 1:
             return 1
         # Count the occurrences of each row array
-        row_counts = defaultdict(int)
+        row_counts: defaultdict[Tuple[int, ...], int] = defaultdict(int)
         for row in grid:
-            row = tuple(row)
-            row_counts[row] += 1
+            row_tuple = tuple(row)
+            row_counts[row_tuple] += 1
         # Count the occurrences of each column array
-        column_counts = defaultdict(int)
+        column_counts: defaultdict[Tuple[int, ...], int] = defaultdict(int)
         for j in range(len(grid[0])):
-            column = tuple(row[j] for row in grid)
-            column_counts[column] += 1
+            column_tuple = tuple(row[j] for row in grid)
+            column_counts[column_tuple] += 1
         num_equal_pairs = 0
-        for column in column_counts:
-            num_equal_pairs += column_counts[column] * row_counts[column]
+        for column_tuple in column_counts:
+            num_equal_pairs += column_counts[column_tuple] * row_counts[column_tuple]
 
         return num_equal_pairs
 

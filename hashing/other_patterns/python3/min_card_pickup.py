@@ -20,7 +20,7 @@ def min_card_pickup(cards: Sequence[int]) -> int:
     """
     if len(cards) == 1:
         return -1
-    card_indices = defaultdict(int)
+    card_indices: defaultdict[int, int] = defaultdict(int)
     min_distance = maxsize
     # 0(n) to compute and check
     for index, card in enumerate(cards):

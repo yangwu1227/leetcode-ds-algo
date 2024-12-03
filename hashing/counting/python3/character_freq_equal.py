@@ -18,7 +18,7 @@ class CharFrequency(object):
 
     @staticmethod
     def defaultdict_approach(s: str) -> bool:
-        counts = defaultdict(int)
+        counts: defaultdict[str, int] = defaultdict(int)
         # O(n) to build this hash map
         for char in s:
             counts[char] += 1
@@ -29,7 +29,7 @@ class CharFrequency(object):
     @staticmethod
     def counter_approach(s: str) -> bool:
         # O(n) to build this counter
-        counter = Counter(s)
+        counter: dict[str, int] = Counter(s)
         # O(n) to build a set
         freq_set = set(count for count in counter.values())
         return len(freq_set) == 1

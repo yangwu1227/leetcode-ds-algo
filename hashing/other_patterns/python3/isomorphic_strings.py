@@ -20,8 +20,8 @@ def isomorphic(s: str, t: str) -> bool:
     bool
         `True` if `s` and `t` are isomophic, other wise `False`
     """
-    s_to_t = defaultdict(str)
-    t_to_s = defaultdict(str)
+    s_to_t: defaultdict[str, str] = defaultdict(str)
+    t_to_s: defaultdict[str, str] = defaultdict(str)
     for char_s, char_t in zip(s, t):
         # Check I: If the current s_char is already mapped to a character in t
         if char_s in s_to_t:

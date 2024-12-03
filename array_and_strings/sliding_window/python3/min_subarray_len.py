@@ -34,7 +34,7 @@ def min_subarray_len(nums: List[int], target: int) -> int:
             curr_sum -= nums[left]
             left += 1
 
-    return window_len if not isinf(window_len) else 0
+    return int(window_len) if not isinf(window_len) else 0
 
 
 def main() -> int:

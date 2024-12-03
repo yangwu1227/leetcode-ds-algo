@@ -19,7 +19,7 @@ def max_subarray_length(nums: Sequence[int], k: int) -> int:
         The longest subarray whose elements have counts less than or equal to `k`
     """
     # O(n) to build
-    counts = defaultdict(int)
+    counts: defaultdict[int, int] = defaultdict(int)
     left = window_len = 0
     for right in range(len(nums)):
         # Expand the window forward

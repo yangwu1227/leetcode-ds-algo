@@ -23,7 +23,7 @@ class Solution(object):
     def intersection_np(nums: List[List[int]]) -> List[List[int]]:
         # Flatten list of lists to 1d array
         array_1d = np.concatenate(nums, axis=0)
-        counts = defaultdict(int)
+        counts: defaultdict[int, int] = defaultdict(int)
         for val in array_1d:
             counts[val] += 1
         ans = []

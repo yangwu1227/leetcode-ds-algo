@@ -19,7 +19,7 @@ def dest_city(paths: List[List[str]]) -> str:
     str
         Name of the destination city
     """
-    dest_count = defaultdict(int)
+    dest_count: defaultdict[str, int] = defaultdict(int)
     # Cost O(n) to build
     for dep, dest in paths:
         # Decrement if city is a departure

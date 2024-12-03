@@ -21,8 +21,8 @@ def word_pattern(pattern: str, s: str) -> bool:
     words = s.split(sep=" ")
     if len(words) != len(pattern):
         return False
-    pattern_to_word = defaultdict(str)
-    word_to_pattern = defaultdict(str)
+    pattern_to_word: defaultdict[str, str] = defaultdict(str)
+    word_to_pattern: defaultdict[str, str] = defaultdict(str)
     # O(m) where m is the length of 'pattern'
     for pat_char, word in zip(pattern, words):
         # If pattern character already has an associated word

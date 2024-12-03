@@ -16,7 +16,7 @@ def contains_duplicates(nums: Sequence[int]) -> bool:
     bool
         True of there is a value that appears twice, False otherwise
     """
-    num_dict = defaultdict(int)
+    num_dict: defaultdict[int, int] = defaultdict(int)
     # Cost O(n) at worse
     for num in nums:
         num_dict[num] += 1

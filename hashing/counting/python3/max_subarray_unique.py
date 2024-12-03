@@ -20,7 +20,7 @@ def max_subarray_unique(nums: Sequence[int]) -> int:
     """
     if len(nums) == 1:
         return nums[0]
-    counts = defaultdict(int)
+    counts: defaultdict[int, int] = defaultdict(int)
     left = max_sum = current_sum = 0
     # O(n) operation
     for right in range(len(nums)):
