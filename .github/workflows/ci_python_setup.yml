@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: [3.11.9]
+        python-version: [3.13]
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -27,4 +27,4 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv sync --frozen --group notebook --group lint-fmt
+          uv sync --frozen --all-groups
