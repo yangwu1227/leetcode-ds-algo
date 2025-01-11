@@ -4,13 +4,13 @@ Given a `root` node of a binary tree, return its maximum depth. A binary tree's 
 
 ## Time Complexity
 
-The `max_depth` function has a time complexity of $O(n)$, becuase the function visits each node in the tree exactly once. 
+The `max_depth` function has a time complexity of $O(n)$, becuase the function visits each node in the tree exactly once.
 
-For each node, we perform $O(1)$ operations, i.e., checking for `None` or `nullptr`. 
+For each node, we perform $O(1)$ operations, i.e., checking for `None` or `nullptr`.
 
 ## Space Complexity
 
-The space complexity of the `max_depth` function is $O(n)$, where $n$ is the number of nodes in the tree. This is because the function uses a recursive approach, which requires additional space on the call stack. The maximum depth of the call stack is equal to the height of the tree, which is $O(n)$ in the worst case. 
+The space complexity of the `max_depth` function is $O(n)$, where $n$ is the number of nodes in the tree. This is because the function uses a recursive approach, which requires additional space on the call stack. The maximum depth of the call stack is equal to the height of the tree, which is $O(n)$ in the worst case.
 
 If the tree is complete, i.e., all nodes have zero or two children, the space complexity is $O(\log_2 n)$ as a best case scenario.
 
@@ -43,7 +43,7 @@ Consider the following binary tree with `target = 22`:
 
 </center>
 
-## Time Complexity 
+## Time Complexity
 
 Each node in the binary tree is visited once as we perform a depth-first search traversal. For each node, the function:
 
@@ -51,10 +51,10 @@ Each node in the binary tree is visited once as we perform a depth-first search 
 
 * Check that the left and right children of the current node are none, both of which are ($O(1)$)
 
-    - If a leaf is encountered, a sum operation is performend `curr_sum + node.data` and it is compared
+  * If a leaf is encountered, a sum operation is performend `curr_sum + node.data` and it is compared
       to `target`, again $O(1)$
 
-    - If the current node is not a leaf, then `curr_sum += node.data`, which can be considered $O(1)$
+  * If the current node is not a leaf, then `curr_sum += node.data`, which can be considered $O(1)$
 
 In the worst case, where no path exists, and all nodes are visited, the overall time complexity of the search algorithm is $O(n)$, where $n$ is the total number of nodes in the binary tree.
 
@@ -63,13 +63,13 @@ In the worst case, where no path exists, and all nodes are visited, the overall 
 The space complexity of the algorithm is influenced by the recursion stack depth, which depends on the height of the tree:
 
 1. **Best and Average Case (Balanced Tree):** In a balanced binary tree, the height $h$ is $O(\log_2 n)$. Thus, the recursive stack will hold up to $O(\log_2 n)$ calls at any point, resulting in a space complexity of $O(\log_2 n)$.
-   
+
 2. **Worst Case (Skewed Tree):** In an unbalanced, skewed tree (e.g., all nodes on one side), the height $h$ can be $O(n)$, leading to $O(n)$ recursive calls on the stack.
 
 Hence, the overall space complexity is $O(h)$, where $h$ is the height of the tree, translating to:
 
-   - $O(\log_2 n)$ in the best and average case for a balanced tree
-   - $O(n)$ in the worst case for a skewed tree
+* $O(\log_2 n)$ in the best and average case for a balanced tree
+* $O(n)$ in the worst case for a skewed tree
 
 ---
 
@@ -172,3 +172,49 @@ In any case, the algorithm visits each node in both trees once. All operations p
 ## Space Complexity
 
 The space complexity of the algorithm is $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
+
+---
+
+# Lowest Common Ancestor
+
+Given the `root` of a binary tree and two nodes `p` and `q`, find the lowest common ancestor (LCA) node of `p` and `q`. The lowest common ancestor is defined as the deepest node in the tree that has both `p` and `q` as descendants (where we allow a node to be a descendant of itself).
+
+## Explanation
+
+Consider the following binary tree with `p = 5` and `q = 1`:
+
+<div style="text-align: center;">
+    <img src="diagrams/lowest_common_ancestor.png" width="50%">
+</div>
+
+<center>
+
+| Step | Current Node | Action | Result | Call Stack Depth |
+|------|--------------|--------|---------|-----------------|
+| 1    | 3 (root)     | Compare with targets (3 ≠ 5 and 3 ≠ 1) | Explore both subtrees | 1 |
+| 2    | 5            | Found first target (5 = 5) | Return node 5 | 2 |
+| 3    | 6            | Compare with targets (6 ≠ 5 and 6 ≠ 1) | Return null (not found) | 3 |
+| 4    | 2            | Compare with targets (2 ≠ 5 and 2 ≠ 1) | Return null (not found) | 3 |
+| 5    | 7            | Compare with targets (7 ≠ 5 and 7 ≠ 1) | Return null (not found) | 4 |
+| 6    | 4            | Compare with targets (4 ≠ 5 and 4 ≠ 1) | Return null (not found) | 4 |
+| 7    | 1            | Found second target (1 = 1) | Return node 1 | 2 |
+| 8    | 0            | Compare with targets (0 ≠ 5 and 0 ≠ 1) | Return null (not found) | 3 |
+| 9    | 8            | Compare with targets (8 ≠ 5 and 8 ≠ 1) | Return null (not found) | 3 |
+| Final | 3           | Both subtrees returned nodes, this is LCA | Return node 3 | 1 |
+
+</center>
+
+## Time Complexity
+
+The `lowestCommonAncestor` function has a time complexity of $O(n)$, where $n$ is the number of nodes in the binary tree. This is because:
+
+* Each node is visited exactly once during the **postorder** traversal
+* At each node, we perform $O(1)$ operations:
+  * Checking if the node is null
+  * Comparing the node's value with target values
+  * Making recursive calls
+  * Evaluating the results from subtrees
+
+## Space Complexity
+
+The space complexity of the algorithm is again $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
