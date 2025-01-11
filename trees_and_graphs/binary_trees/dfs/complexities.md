@@ -218,3 +218,61 @@ The `lowestCommonAncestor` function has a time complexity of $O(n)$, where $n$ i
 ## Space Complexity
 
 The space complexity of the algorithm is again $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
+
+---
+
+# Minimum Depth of Binary Tree
+
+Given a binary tree `root`, return its minimum depth. 
+
+The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node. 
+
+A leaf node is a node with no children.
+
+## Explanation
+
+Consider the following binary tree:
+
+<div style="text-align: center;">
+    <img src="diagrams/min_depth.png" width="50%">
+</div>
+
+<center>
+
+| Step | Current Node | Action | Current Path | Minimum Depth |
+|------|--------------|--------|--------------|---------------|
+| 1    | 3           | Root node, check both children | [3] | - |
+| 2    | 9           | Leaf node found (no children) | [3, 9] | 2 |
+| 3    | 20          | Has both children, continue | [3, 20] | - |
+| 4    | 15          | Leaf node found | [3, 20, 15] | 3 |
+| 5    | 7           | Leaf node found | [3, 20, 7] | 3 |
+| Final | - | Return minimum found (2) | [3, 9] | 2 |
+| **Explanation** | The shortest path from root to leaf is [3, 9], with a depth of 2 nodes | | | |
+
+</center>
+
+## Time Complexity
+
+The overall time complexity of $O(n)$, where $n$ is the number of nodes in the binary tree.
+
+* Each node is visited exactly once during the traversal
+
+* At each node, we perform $O(1)$ operations:
+  * Checking if the node is null
+  * Checking if left/right children exist
+  * Making recursive calls
+  * Computing minimum between left and right depths
+
+## Space Complexity
+
+The space complexity is $O(h)$, where $h$ is the height of the tree. In the worst case, the tree is skewed, and the height is equal to the number of nodes $n$, leading to a space complexity of $O(n)$.
+
+The modern C++ implementation using `std::optional` adds a small constant space overhead per recursive call, but this doesn't change the overall space complexity.
+
+## Implementation Notes
+
+The C++ implementation offers several advantages:
+
+1. **Type Safety:** Using `std::optional` makes null handling explicit and type-safe
+2. **Clear Intent:** The code clearly distinguishes between "no child" (`std::nullopt`) and "child with depth" cases
+3. **Exception Safety:** `value_or()` provides a safe fallback for null cases
