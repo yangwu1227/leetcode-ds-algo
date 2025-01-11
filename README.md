@@ -7,8 +7,7 @@ A collection of solutions to LeetCode problems, loosely grouped by concepts, tec
 The Python dependencies are managed using [uv](https://docs.astral.sh/uv/):
 
 ```bash
-# The specified python version in `pyproject.toml` is requires-python = ">=3.11"
-$ uv sync --frozen
+$ uv sync --frozen --all-groups
 ```
 
 ## C++
