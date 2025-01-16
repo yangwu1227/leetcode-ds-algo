@@ -6,7 +6,7 @@ class Solution(object):
     @staticmethod
     def depth_first_search(node: TreeNode, curr_sum: int, target: int) -> bool:
         """
-        Recursively checks if a path from the snode to any leaf node sums to the target.
+        Recursively checks if a path from the `node` to any leaf node sums to the target.
 
         Parameters
         ----------

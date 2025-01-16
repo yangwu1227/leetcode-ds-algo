@@ -11,7 +11,7 @@ class PathSum
 {
 public:
     /**
-     * @brief
+     * @brief Recursively checks if a path from the `node` to any leaf node sums to the target.
      *
      * @param node A constant reference to the unique pointer to the current node in the binary tree.
      * @param currSum The cumulative sum of the nodes' values from the root to the current node.
