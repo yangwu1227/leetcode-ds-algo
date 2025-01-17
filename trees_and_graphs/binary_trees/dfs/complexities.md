@@ -223,9 +223,9 @@ The space complexity of the algorithm is again $O(h)$, where $h$ is $\log_2 n$ f
 
 # Minimum Depth of Binary Tree
 
-Given a binary tree `root`, return its minimum depth. 
+Given a binary tree `root`, return its minimum depth.
 
-The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node. 
+The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
 
 A leaf node is a node with no children.
 
@@ -276,3 +276,107 @@ The C++ implementation offers several advantages:
 1. **Type Safety:** Using `std::optional` makes null handling explicit and type-safe
 2. **Clear Intent:** The code clearly distinguishes between "no child" (`std::nullopt`) and "child with depth" cases
 3. **Exception Safety:** `value_or()` provides a safe fallback for null cases
+
+---
+
+# Maximum Ancestor Difference in a Binary Tree
+
+Given the `root` of a binary tree, calculate the **maximum difference** between the values of ancestor and descendant nodes.
+
+An ancestor is any node along the path from the root to a given node (excluding the node itself). The descendant nodes are all nodes that fall under the subtree rooted at the ancestor node.
+
+## Explanation
+
+Consider the following binary tree `[8, 3, 10, 1, 6, None, 14, None, None, 4, 7, None, 13]`:
+
+<div style="text-align: center;">
+    <img src="diagrams/max_ancestor_diff.png" width="50%">
+</div>
+
+The function calculates the difference between the maximum and minimum node values along any path in the tree and returns the maximum of these differences.
+
+<center>
+
+| Step | Current Node                  | Current `(max, min)` | Updated `(max, min)`                          | Left Subtree Diff | Right Subtree Diff | Result at Node | Call Stack Depth          |
+|------|-------------------------------|-----------------------|-----------------------------------------------|-------------------|--------------------|----------------|---------------------------|
+| 1    | 8 (root)                     | (-∞, ∞)              | (8, 8), since 8 is smaller than ∞ and larger than -∞ | -                 | -                  | -              | 1                         |
+| 2    | &nbsp;&nbsp;3                | (8, 8)               | (8, 3), min is updated from 8 to 3            | -                 | -                  | -              | 2 (left subtree of root)  |
+| 3    | &nbsp;&nbsp;&nbsp;&nbsp;1 (leaf)   | (8, 3)               | (8, 1), min is updated from 3 to 1            | 7                 | 7                  | 7              | 3                         |
+| 4    | &nbsp;&nbsp;&nbsp;&nbsp;6    | (8, 3)               | (8, 3), no updates                            | -                 | -                  | -              | 3                         |
+| 5    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 (leaf) | (8, 3)               | (8, 3), no updates                            | 5                 | 5                  | 5              | 4                         |
+| 6    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7 (leaf) | (8, 3)               | (8, 3), no updates                            | 5                 | 5                  | 5              | 4                         |
+| 7    | &nbsp;&nbsp;&nbsp;&nbsp;-                             | (8, 3)               | (8, 3), no updates                            | 5                 | 5                  | 5              | 3                         |
+|      | The left subtree gives a maximum difference of 7      | -                   | -                                             | -                 | -                  | -              | -                         |
+| 8    | &nbsp;&nbsp;10               | (8, 8)               | (10, 8), max is updated from 8 to 10          | 2                 | -                  | -              | 2 (right subtree of root) |
+| 9    | &nbsp;&nbsp;&nbsp;&nbsp;14   | (10, 8)              | (14, 8), max is updated from 10 to 14         | 6                 | 6                  | 6              | 3                         |
+| 10   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;13 (leaf) | (14, 8)              | (14, 8), no updates                          | 6                 | 6                  | 6              | 4                         |
+| 11   | &nbsp;&nbsp;&nbsp;&nbsp;-                             | (14, 8)              | (14, 8)                                       | 6                 | 6                  | 6              | 3                         |
+|      | The right subtree gives a maximum difference of 6     | -                   | -                                             | -                 | -                  | -              | -                         |
+| Final| -                             | -                    | -                                             | 7                 | 6                  | **7**          | Root                      |
+
+</center>
+
+* **Starting at the root (Node 8)**:
+
+  * `(max, min)` are initialized to `(-∞, ∞)`.
+
+  * **Left Subtree (Node 3)**:
+
+    * Updates `(max, min)` to `(8, 3)`.
+    * Traverses its children (Nodes 1 and 6).
+
+      * **Left-Left Subtree (Node 1)**:
+
+        * Updates `(max, min)` to `(8, 1)`.
+        * As it is a leaf, calculates `|8 - 1| = 7`.
+
+      * **Left-Right Subtree (Node 6)**:
+
+        * Updates `(max, min)` to `(8, 3)`.
+        * Traverses its children (Nodes 4 and 7).
+
+          * **Left-Right-Left Subtree (Node 4)**:
+
+            * Updates `(max, min)` to `(8, 3)`.
+            * As it is a leaf, calculates `|8 - 3| = 5`.
+
+          * **Left-Right-Right Subtree (Node 7)**:
+
+            * Updates `(max, min)` to `(8, 3)`.
+            * As it is a leaf, calculates `|8 - 3| = 5`.
+
+  * **Right Subtree (Node 10)**:
+
+    * Updates `(max, min)` to `(10, 8)`.
+    * Traverses its child (Node 14).
+
+      * **Right-Right Subtree (Node 14)**:
+        * Updates `(max, min)` to `(14, 8)`.
+        * Traverses its child (Node 13).
+
+          * **Right-Right-Left Subtree (Node 13)**:
+            * Updates `(max, min)` to `(14, 8)`.
+            * As it is a leaf, calculates `|14 - 8| = 6`.
+
+* **Final Calculation**:
+
+  * The left subtree gives a maximum difference of **7**.
+  * The right subtree gives a maximum difference of **6**.
+  * The overall maximum difference is **7**.
+
+---
+
+## Time Complexity
+
+The algorithm maintains some states (i.e., the `min` and `max`) going down the tree (pre-order) and computes the maximum differences of left and right subtrees on the way back up (post-order). Each node is visited exactly once, and the following operations are performed at each node:
+
+* Checking if the node is not `None` or `nullptr`, which can be considered $O(1)$
+* Per node operations (updating `max` and `min`), which can also be considered $O(1)$
+
+Hence, the overall time complexity of the algorithm is $O(n)$, where $n$ is the number of nodes in the binary tree.
+
+---
+
+## Space Complexity
+
+The space complexity of the algorithm is again $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
