@@ -380,3 +380,75 @@ Hence, the overall time complexity of the algorithm is $O(n)$, where $n$ is the 
 ## Space Complexity
 
 The space complexity of the algorithm is again $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
+
+---
+
+# Diameter of Binary Tree
+
+Given the `root` of a binary tree, return the length of the diameter of the tree.
+
+The *diameter* of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the `root`.
+
+The length of a path between two nodes is represented by the number of edges between them.
+
+---
+
+## Explanation
+
+Consider the following binary tree `[, 7, 9, None, 7, None, 8, 9, 10, 233, 17, None, 23]`:
+
+<div style="text-align: center;">
+    <img src="diagrams/tree_diameter.png" width="50%">
+</div>
+
+<center>
+
+| Step | Current Node | Action                                       | Left Subtree Height | Right Subtree Height | Current Diameter (Equation) | Previous Diameter | Updated Diameter (Equation)            | Height Returned (Equation)            | Call Stack Depth |
+|------|--------------|----------------------------------------------|---------------------|----------------------|-----------------------------|-------------------|----------------------------------------|----------------------------------------|-----------------|
+| 1    | 3 (root)     | Starting diameter calculation.               | -                   | -                    | -                           | -                 | -                                      | -                                      | 1               |
+| 2    | 7            | Processing left child of 3.                  | -                   | -                    | -                           | -                 | -                                      | -                                      | 2               |
+| 3    | None         | Reached a leaf node (left child of 7).       | 0                   | -                    | -                           | -                 | -                                      | `0`                                    | 3               |
+| 4    | 7            | Processing right child of 7.                 | -                   | -                    | -                           | -                 | -                                      | -                                      | 3               |
+| 5    | 9            | Processing left child of 7.                  | -                   | -                    | -                           | -                 | -                                      | -                                      | 4               |
+| 6    | None         | Reached a leaf node (left child of 9).       | 0                   | -                    | -                           | -                 | -                                      | `0`                                    | 5               |
+| 7    | 23           | Processing right child of 9.                 | -                   | -                    | -                           | -                 | -                                      | -                                      | 5               |
+| 8    | None         | Reached a leaf node (left child of 23).      | 0                   | -                    | -                           | -                 | -                                      | `0`                                    | 6               |
+| 9    | None         | Reached a leaf node (right child of 23).     | 0                   | 0                    | `0 + 0 = 0`                 | `0`               | `max(0, 0) = 0`                        | `max(0, 0) + 1 = 1`                    | 6               |
+| 10   | 9            | Returning from 23. Updating heights.         | 1                   | -                    | -                           | -                 | -                                      | -                                      | 5               |
+| 11   | 9            | Returning from 9. Calculating diameter.      | 0                   | 1                    | `0 + 1 = 1`                 | `0`               | `max(0, 1) = 1`                        | `max(0, 1) + 1 = 2`                    | 4               |
+| 12   | 10           | Processing right child of 7.                 | -                   | -                    | -                           | -                 | -                                      | -                                      | 5               |
+| 13   | None         | Reached a leaf node (left child of 10).      | 0                   | -                    | -                           | -                 | -                                      | `0`                                    | 6               |
+| 14   | None         | Reached a leaf node (right child of 10).     | 0                   | 0                    | `0 + 0 = 0`                 | `1`               | `max(1, 0) = 1`                        | `max(0, 0) + 1 = 1`                    | 6               |
+| 15   | 7            | Returning to 7 after processing 10.          | 2                   | 1                    | `2 + 1 = 3`                 | `1`               | `max(1, 3) = 3`                        | `max(2, 1) + 1 = 3`                    | 2               |
+| 16   | 7            | Returning to root (3) after processing 7.    | 4                   | -                    | -                           | -                 | -                                      | `max(4, 3) + 1 = 4`                    | 1               |
+| 17   | 9            | Processing right child of 3.                 | -                   | -                    | -                           | -                 | -                                      | -                                      | 2               |
+| 18   | 8            | Processing left child of 9.                  | -                   | -                    | -                           | -                 | -                                      | -                                      | 3               |
+| 19   | 233          | Processing left child of 8.                  | -                   | -                    | -                           | -                 | -                                      | -                                      | 4               |
+| 20   | None         | Reached a leaf node (left child of 233).     | 0                   | -                    | -                           | -                 | -                                      | `0`                                    | 5               |
+| 21   | None         | Reached a leaf node (right child of 233).    | 0                   | 0                    | `0 + 0 = 0`                 | `3`               | `max(3, 0) = 3`                        | `max(0, 0) + 1 = 1`                    | 5               |
+| 22   | 17           | Processing right child of 8.                 | -                   | -                    | -                           | -                 | -                                      | -                                      | 4               |
+| 23   | None         | Reached a leaf node (left child of 17).      | 0                   | -                    | -                           | -                 | -                                      | `0`                                    | 5               |
+| 24   | None         | Reached a leaf node (right child of 17).     | 0                   | 0                    | `0 + 0 = 0`                 | `3`               | `max(3, 0) = 3`                        | `max(0, 0) + 1 = 1`                    | 5               |
+| 25   | 8            | Returning from 17 to 8. Updating heights.    | 1                   | 1                    | `1 + 1 = 2`                 | `3`               | `max(3, 2) = 3`                        | `max(1, 1) + 1 = 2`                    | 3               |
+| 26   | 3 (root)     | Final update to diameter.                    | 4                   | 3                    | `4 + 3 = 7`                 | `3`               | `max(3, 7) = 7`                        | `max(4, 3) + 1 = 5`                    | 1               |
+
+</center>
+
+---
+
+## Time Complexity
+
+The algorithm visits each node exactly once, and the following operations are performed at each node:
+
+* Checking if the node is not `None` or `nullptr`, which can be considered $O(1)$
+* Per node operations (calculating and updating diameters and heights), which can all be considered $O(1)$
+
+Hence, the overall time complexity of the algorithm is $O(n)$, where $n$ is the number of nodes in the binary tree.
+
+---
+
+## Space Complexity
+
+The space complexity of the algorithm is again $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
+
+---
