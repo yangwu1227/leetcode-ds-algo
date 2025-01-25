@@ -1,5 +1,5 @@
 # type: ignore
-from tree_node import TreeNode
+from tree_node import Optional, TreeNode
 
 
 class Solution(object):
@@ -73,8 +73,8 @@ def main() -> int:
     ]
     for node_data, target in test_cases:
         print("Case " + "-" * 60, "\n")
-        root = TreeNode.construct_binary_tree(values=node_data)
-        path_exists = Solution.path_sum(root, target)
+        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=node_data)
+        path_exists: bool = Solution.path_sum(root, target)
         print(
             f"There exists {'a' if path_exists else 'no'} path such that sum of all data values equals target = {target}\n\n"
         )

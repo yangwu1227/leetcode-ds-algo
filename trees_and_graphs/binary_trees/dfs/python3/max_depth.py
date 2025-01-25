@@ -34,7 +34,7 @@ def main() -> int:
         [1, None, 2, 9, 10, 23, None, 8, 7, None, 12],
     ]
     for node_data in test_cases:
-        root = TreeNode.construct_binary_tree(values=node_data)
+        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=node_data)
         print(f"The max depth of the tree is {max_depth(root)}")
 
     return 0

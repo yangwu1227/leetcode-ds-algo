@@ -43,13 +43,13 @@ class Solution(object):
         return num_good_nodes
 
     @staticmethod
-    def good_node(root: TreeNode) -> int:
+    def good_node(root: Optional[TreeNode]) -> int:
         """
         Count the number of 'good' nodes in the binary tree rooted at 'root'.
 
         Parameters
         ----------
-        root : TreeNode
+        root : Optional[TreeNode]
             The root node of the binary tree.
 
         Returns
@@ -57,6 +57,8 @@ class Solution(object):
         int
             Total number of 'good' nodes in the binary tree.
         """
+        if not root:
+            return 0
         if root.left is None and root.right is None:
             return 1
         Solution.depth_first_search(node=root, max_val_so_far=float("-inf"))
@@ -67,12 +69,9 @@ def main() -> int:
     test_cases = [[3, 1, 4, 3, None, 1, 5], [3, 3, None, 4, 2], [1]]
     for test_case in test_cases:
         print("Case " + "-" * 60, "\n")
-        root = TreeNode.construct_binary_tree(values=test_case)
-        if root is None:
-            print("The tree is empty")
-        else:
-            total_num_good_nodes = Solution.good_node(root)
-            print(f"Total number of good nodes: {total_num_good_nodes}\n\n")
+        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=test_case)
+        total_num_good_nodes: int = Solution.good_node(root)
+        print(f"Total number of good nodes: {total_num_good_nodes}\n\n")
 
     return 0
 

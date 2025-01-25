@@ -71,9 +71,9 @@ def main() -> int:
     ]
     for first_tree_vals, second_tree_vals in test_cases:
         print("Case " + "-" * 60, "\n")
-        first_tree = TreeNode.construct_binary_tree(first_tree_vals)
-        second_tree = TreeNode.construct_binary_tree(second_tree_vals)
-        same_tree = Solution.same_tree(first_tree, second_tree)
+        first_tree: Optional[TreeNode] = TreeNode.construct_binary_tree(first_tree_vals)
+        second_tree: Optional[TreeNode] = TreeNode.construct_binary_tree(second_tree_vals)
+        same_tree: bool = Solution.same_tree(first_tree, second_tree)
         print(
             f"The two trees {first_tree_vals} and {second_tree_vals} are{f' not ' if not same_tree else ' '}the same\n\n"
         )

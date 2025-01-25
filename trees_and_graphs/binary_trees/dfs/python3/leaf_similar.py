@@ -97,7 +97,7 @@ def main() -> int:
         root_1: Optional[TreeNode] = TreeNode.construct_binary_tree(node_data_1)
         root_2: Optional[TreeNode] = TreeNode.construct_binary_tree(node_data_2)
         leaf_similar: LeafSimilar = LeafSimilar()
-        similar = leaf_similar.check(root_1, root_2)
+        similar: bool = leaf_similar.check(root_1, root_2)
         print(
             f"\nThe two trees {root_1} and {root_2} {f'are not' if not similar else 'are'} leaf-similar\n\n"
         )
