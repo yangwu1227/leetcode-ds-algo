@@ -115,11 +115,11 @@ root = TreeNode.construct_binary_tree(values)
 
 #### Complexity Analysis
 
-- **Time Complexity**: `O(n)`  
+- **Time Complexity**: $O(n)$  
   Each node is created and processed once.
   
-- **Space Complexity**: `O(n)`  
-  The queue may hold up to `n/2` nodes in a complete binary tree, where `n` is the total number of elements in `values`.
+- **Space Complexity**: $O(n)$  
+  The queue may hold up to `n/2` nodes in a complete binary tree, where $n$ is the total number of elements in `values`.
 
 ---
 
@@ -190,31 +190,119 @@ Overloading the stream insertion `<<` operator provides an easy way to print a `
 friend std::ostream &operator<<(std::ostream &os, const TreeNode &tree_node);
 ```
 
-- **os**: `std::ostream&`  
-  The output stream to write data.
+- **`std::ostream &os`**: The output stream where the data will be written (e.g., `std::cout`).
 
-- **tree_node**: `TreeNode`  
-  The `TreeNode` to print.
+- **`const TreeNode &tree_node`**: A constant reference to the `TreeNode` being printed. It is passed as `const` to ensure the function does not modify the object.
+
+- The function returns `os` to allow chaining, so you can write expressions like: `std::cout << node1 << node2`.
 
 **Implementation Details**
 
-`std::visit` accepts a lambda function to handle each possible type in `data`. If the type is `std::monostate`, it prints `"null"`; otherwise, it prints the stored value directly.
-
-Example:
+**1. Using `std::visit` to Handle `std::variant`**
 
 ```cpp
-TreeNode node(5);
-std::cout << node; // Output: 5
+std::visit(
+    [&os](auto &&arg) { /* lambda body */ },
+    tree_node.data
+);
+```
+
+- **`std::visit`**: A standard library function used to access and process the value inside a `std::variant`. It takes:
+
+  - A **visitor**: A callable object (in this case, a lambda function).
+
+  - The `std::variant` instance (`tree_node.data`).
+
+`std::visit` ensures that the correct type inside the `std::variant` is processed.
+
+### **3. The Lambda Visitor**
+
+```cpp
+[&os](auto &&arg)
+```
+
+- **`[&os]`**: Captures the `os` output stream by reference so it can be accessed inside the lambda without copying.
+
+- **`auto &&arg`**: A **forwarding reference** (or universal reference) that allows the lambda to generically handle any type and value category stored in the `std::variant`. This means:
+  - If the variant holds an lvalue (e.g., `int&` or `std::string&`), `arg` will be deduced as an lvalue reference.
+  - If the variant holds an rvalue (e.g., `int&&` or `std::string&&`), `arg` will be deduced as an rvalue reference.
+  - This avoids unnecessary copies and ensures efficient handling of both temporary (rvalue) and persistent (lvalue) data.
+
+- **Why use `auto &&arg`?**
+  - **Generic**: Supports any type stored in the `std::variant` (`int`, `double`, `std::string`, `std::monostate`).
+  - **Efficient**: Avoids unnecessary copies by binding directly to the value in the variant.
+  - **Flexible**: Preserves the value category ([lvalue/rvalue](https://www.youtube.com/watch?v=fbYknr-HPYE)) of the data.
+
+In this context, `auto &&arg` ensures the lambda seamlessly processes all possible data types stored in the `TreeNode`'s `data` member. It's the most efficient and generic choice for this use case.
+
+**4. Handling Each Type in `std::variant`**
+
+The lambda processes each possible type stored in the `std::variant` instance `data`. The `std::variant` in `TreeNode` is defined as:
+
+```cpp
+using datatype = std::variant<std::monostate, int, double, std::string>;
+```
+
+This means `data` can hold one of the following:
+
+- `std::monostate`: Represents a "null" or empty value.
+- `int`: An integer.
+- `double`: A floating-point number.
+- `std::string`: A string.
+
+The lambda uses `if constexpr` and type traits to differentiate between these types.
+
+**5. Type Deduction**
+
+```cpp
+using T = std::decay_t<decltype(arg)>;
+```
+
+- **`decltype(arg)`**: Determines the exact type of `arg`, including references and `const` qualifiers.
+- **`std::decay_t`**: Removes references, `const`, and `volatile` qualifiers, leaving the "base type." For example:
+  - If `arg` is `const int&`, `std::decay_t<decltype(arg)>` resolves to `int`.
+
+`T` is used to perform compile-time checks on the type of `arg`.
+
+**6. Checking for `std::monostate`**
+
+```cpp
+if constexpr (std::is_same_v<T, std::monostate>)
+{
+    os << "null";
+}
+```
+
+- **`if constexpr`**: A compile-time conditional that enables branching based on type traits.
+- **`std::is_same_v<T, std::monostate>`**: Checks if `T` is `std::monostate`, which indicates a "null" value in the `std::variant`.
+- If `T` is `std::monostate`, the lambda writes `"null"` to the output stream.
+
+**7. Handling Other Types**
+
+```cpp
+else
+{
+    os << arg;
+}
+```
+
+- For all other types (`int`, `double`, `std::string`), the lambda directly writes `arg` to the output stream.
+- Since the `<<` operator is already overloaded for these types, the lambda simply delegates to the existing functionality.
+
+**8. Returning the Stream**
+
+```cpp
+return os;
 ```
 
 ---
 
-## `construct_binary_tree`
+## `constructBinaryTree`
 
 Constructs a binary tree from a vector of values in level-order. Uses `std::queue` to manage node levels as children are added.
 
 ```cpp
-static ptr construct_binary_tree(const std::vector<datatype> &values);
+static ptr constructBinaryTree(const std::vector<datatype> &values);
 ```
 
 ### Parameters
@@ -239,8 +327,8 @@ static ptr construct_binary_tree(const std::vector<datatype> &values);
      - If the next value is not `std::monostate`, it creates a new child node, assigns it to the current node's left or right pointer, and adds the child to the queue.
 
 3. **Complexity Analysis**:
-   - **Time Complexity**: `O(n)`, where `n` is the number of elements in `values`.
-   - **Space Complexity**: `O(n)`, since `queue` holds up to `n/2` nodes at any point.
+   - **Time Complexity**: $O(n)$, where $n$ is the number of elements in `values`.
+   - **Space Complexity**: $O(n)$, since `queue` holds up to $\frac{n}{2}$ nodes at any point.
 
 ### Example Usage
 
