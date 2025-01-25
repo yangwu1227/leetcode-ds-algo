@@ -452,3 +452,101 @@ Hence, the overall time complexity of the algorithm is $O(n)$, where $n$ is the 
 The space complexity of the algorithm is again $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
 
 ---
+
+# Leaf-Similar Trees
+
+Consider all the leaves of a binary tree, from left to right order, the values of those leaves form a leaf value sequence.
+
+Two binary trees are considered **leaf-similar** if their leaf value sequence is the same.
+
+## Explanation
+
+Consider the following binary trees:
+
+<div style="text-align: center;">
+    <img src="diagrams/leaf_similar_1.png" width="50%">
+</div>
+
+<div style="text-align: center;">
+    <img src="diagrams/leaf_similar_2.png" width="50%">
+</div>
+
+<center>
+
+| **Step** | **Mode**    | **Node Value** | **Queue State Before** | **Queue State After** | **Action**                            | **Similar Flag** |
+|----------|-------------|----------------|-------------------------|------------------------|----------------------------------------|--------------------|
+| 1        | Enqueue     | 6              | `[]`                    | `[6]`                 | Enqueued leaf node 6                   | True               |
+| 2        | Enqueue     | 7              | `[6]`                   | `[6, 7]`              | Enqueued leaf node 7                   | True               |
+| 3        | Enqueue     | 4              | `[6, 7]`                | `[6, 7, 4]`           | Enqueued leaf node 4                   | True               |
+| 4        | Enqueue     | 9              | `[6, 7, 4]`             | `[6, 7, 4, 9]`        | Enqueued leaf node 9                   | True               |
+| 5        | Enqueue     | 8              | `[6, 7, 4, 9]`          | `[6, 7, 4, 9, 8]`     | Enqueued leaf node 8                   | True               |
+| 6        | Dequeue     | 6              | `[6, 7, 4, 9, 8]`       | `[7, 4, 9, 8]`        | Matched and dequeued 6                 | True               |
+| 7        | Dequeue     | 7              | `[7, 4, 9, 8]`          | `[4, 9, 8]`           | Matched and dequeued 7                 | True               |
+| 8        | Dequeue     | 4              | `[4, 9, 8]`             | `[9, 8]`              | Matched and dequeued 4                 | True               |
+| 9        | Dequeue     | 9              | `[9, 8]`                | `[8]`                 | Matched and dequeued 9                 | True               |
+| 10       | Dequeue     | 8              | `[8]`                   | `[]`                  | Matched and dequeued 8                 | True               |
+| 11       | Dequeue     | 10             | `[]`                    | `[]`                  | **Mismatch found! Queue is empty. This means that one tree has more leaf nodes and the trees cannot be leaf-similar**    | **False**          |
+
+</center>
+
+### C++ Implementation
+
+The C++ implementation uses a **recursive lambda function** to perform a depth-first search (DFS) on the binary trees.
+
+```cpp
+std::function<bool(TreeNode::ptr &, bool)> depthFirstSearch = [&internalDeque](TreeNode::ptr &node, bool enqueueMode) -> bool
+```
+
+* **Purpose**:
+  [std::function](https://en.cppreference.com/w/cpp/utility/functional/function) is a polymorphic, type-safe wrapper for callable objects. It is used here to define a lambda function that supports recursion. Without `std::function`, a lambda cannot refer to itself recursively.
+
+* **Type Signature**:
+
+  1. **`std::function<bool(TreeNode::ptr &, bool)>`**:
+    A type-safe wrapper for the recursive lambda.
+
+  2. **`depthFirstSearch`**:
+    The variable holding the lambda function.
+
+  3. **`[&internalDeque, &depthFirstSearch]`**:
+    Captures `internalDeque` and itself by reference for modification within the lambda and recursive calls.
+
+  4. **`(TreeNode::ptr &node, bool enqueueMode)`**:
+    The parameter list defining inputs for each recursive call.
+
+  5. **`-> bool`**:
+    Specifies the lambda’s return type.
+
+* **Why `std::function` is Required**:
+  Normally, a lambda cannot refer to itself because its type is anonymous. `std::function` provides an explicit, named type that allows recursive calls to the lambda.
+
+---
+
+## Time Complexity
+
+For each tree, the algorithm visits each leaf node once, and the following operations are performed at each node:
+
+* Checking if the node is not `None` or `nullptr`, which can be considered $O(1)$
+* If the left and right children are `None`, the node is a leaf:
+
+  * If the `mode` is `Enqueue`, the leaf node is added to the queue, which is $O(1)$
+
+  * If the `mode` is `Dequeue`:
+
+    * Check if the internal queue is non-empty and that the current node data matches the front of the queue, both of which are $O(1)$
+
+      * If the conditions are met, the front of the queue is dequeued, which is $O(1)$
+
+      * If the conditions are not met, set the `similar` flag to `False`
+
+Let $n$ and $m$ be the number of nodes in the two trees. The overall time complexity of the algorithm is $O(n + m)$.
+
+---
+
+## Space Complexity
+
+For a balanced binary tree, the number of leaf nodes is $ O(\frac{n}{2})$ and $ O(\frac{m}{2})$ for the two respective trees.
+
+This implementation uses a single `std::deque` (in C++) and `collections.deque` (in Python) to store the leaf nodes.
+
+In the worst-case scenario, the space complexity is $ O(\max(\frac{n}{2}, \frac{m}{2})) $. This can be simplified to $ O(\max(n, m)) $, as the constant factor $\frac{1}{2}$ does not affect the asymptotic complexity.
