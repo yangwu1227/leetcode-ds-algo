@@ -13,7 +13,7 @@ int main()
 
     for (auto &nodeData : testCases)
     {
-        TreeNode::ptr root = TreeNode::construct_binary_tree(nodeData);
+        TreeNode::ptr root = TreeNode::constructBinaryTree(nodeData);
         int maxDiff = Solution::maxAncestorDiff(root);
         std::cout << "The maximum difference between a node and its ancestor in the binary tree is " << maxDiff << '\n';
     }

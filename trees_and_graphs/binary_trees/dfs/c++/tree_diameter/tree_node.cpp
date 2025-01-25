@@ -29,7 +29,7 @@ std::ostream &operator<<(std::ostream &os, const TreeNode &tree_node)
     return os;
 }
 
-TreeNode::ptr TreeNode::construct_binary_tree(const std::vector<datatype> &values)
+TreeNode::ptr TreeNode::constructBinaryTree(const std::vector<datatype> &values)
 {
     // Check if the input vector is empty or "null", return nullptr if so
     if (values.empty() || std::holds_alternative<std::monostate>(values[0]))

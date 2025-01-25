@@ -16,8 +16,8 @@ int main()
 
     for (auto &[nodeData1, nodeData2] : testCases)
     {
-        TreeNode::ptr root1 = TreeNode::construct_binary_tree(nodeData1);
-        TreeNode::ptr root2 = TreeNode::construct_binary_tree(nodeData2);
+        TreeNode::ptr root1 = TreeNode::constructBinaryTree(nodeData1);
+        TreeNode::ptr root2 = TreeNode::constructBinaryTree(nodeData2);
 
         bool similar = LeafSimilar::check(root1, root2);
         std::cout << "The two trees " << *root1 << " and " << *root2 << (similar ? " are " : " are not ") << "leaf-similar" << '\n';

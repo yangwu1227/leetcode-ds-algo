@@ -16,7 +16,7 @@ int main()
     for (const auto &nodeData : testCases)
     {
         // Construct binary tree
-        TreeNode::ptr root = TreeNode::construct_binary_tree(nodeData);
+        TreeNode::ptr root = TreeNode::constructBinaryTree(nodeData);
 
         // Calculate and print the max depth
         std::cout << "The max depth of the tree is " << maxDepth(root) << '\n';

@@ -55,8 +55,8 @@ int main()
 
     for (const auto &[firstTreeVals, secondTreeVals] : testCases)
     {
-        TreeNode::ptr firstTree = TreeNode::construct_binary_tree(firstTreeVals);
-        TreeNode::ptr secondTree = TreeNode::construct_binary_tree(secondTreeVals);
+        TreeNode::ptr firstTree = TreeNode::constructBinaryTree(firstTreeVals);
+        TreeNode::ptr secondTree = TreeNode::constructBinaryTree(secondTreeVals);
         bool sameTree = Solution::sameTree(firstTree, secondTree);
         std::cout << "The two trees ";
         printVector(firstTreeVals);

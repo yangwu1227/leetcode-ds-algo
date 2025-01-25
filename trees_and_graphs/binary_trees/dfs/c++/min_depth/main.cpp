@@ -15,7 +15,7 @@ int main()
 
     for (const auto &nodeData : testCases)
     {
-        TreeNode::ptr root = TreeNode::construct_binary_tree(nodeData);
+        TreeNode::ptr root = TreeNode::constructBinaryTree(nodeData);
         int depth = minDepth(root);
         std::cout << "The minimum depth of the binary tree is " << depth << '\n';
     }

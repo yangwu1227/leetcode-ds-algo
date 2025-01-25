@@ -15,7 +15,7 @@ int main()
 
     for (const auto &nodeData : testCases)
     {
-        TreeNode::ptr root = TreeNode::construct_binary_tree(nodeData);
+        TreeNode::ptr root = TreeNode::constructBinaryTree(nodeData);
         int totalNumGoodNodes = Solution::goodNodes(root);
         std::cout << "The total number of good nodes in the binary tree is " << totalNumGoodNodes << '\n';
     }

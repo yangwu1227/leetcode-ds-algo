@@ -46,7 +46,7 @@ public:
      * @param values A vector where each element represents a node's data in level-order; std::monostate{} represents a missing node.
      * @return A unique pointer to the root of the constructed binary tree.
      */
-    static ptr construct_binary_tree(const std::vector<datatype> &values);
+    static ptr constructBinaryTree(const std::vector<datatype> &values);
 };
 
 #endif

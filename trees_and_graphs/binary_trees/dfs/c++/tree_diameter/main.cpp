@@ -15,7 +15,7 @@ int main()
 
     for (auto &nodeData : testCases)
     {
-        TreeNode::ptr root = TreeNode::construct_binary_tree(nodeData);
+        TreeNode::ptr root = TreeNode::constructBinaryTree(nodeData);
         TreeDiameterCalculator calculator = TreeDiameterCalculator();
         int treeDiameter = calculator.findDiameter(root);
         std::cout << "The tree diameter of the binary tree is " << treeDiameter << '\n';

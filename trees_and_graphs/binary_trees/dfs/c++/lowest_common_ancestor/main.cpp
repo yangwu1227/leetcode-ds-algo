@@ -17,7 +17,7 @@ int main()
     for (const auto &[nodeData, pData, qData] : testCases)
     {
         // Root node
-        TreeNode::ptr root = TreeNode::construct_binary_tree(nodeData);
+        TreeNode::ptr root = TreeNode::constructBinaryTree(nodeData);
         // Raw pointers
         TreeNode::ptr pPointer = std::make_unique<TreeNode>(pData);
         TreeNode *p = pPointer.get();

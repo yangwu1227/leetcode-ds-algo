@@ -550,3 +550,63 @@ For a balanced binary tree, the number of leaf nodes is $ O(\frac{n}{2})$ and $ 
 This implementation uses a single `std::deque` (in C++) and `collections.deque` (in Python) to store the leaf nodes.
 
 In the worst-case scenario, the space complexity is $ O(\max(\frac{n}{2}, \frac{m}{2})) $. This can be simplified to $ O(\max(n, m)) $, as the constant factor $\frac{1}{2}$ does not affect the asymptotic complexity.
+
+---
+
+# Invert Binary Tree
+
+Given the `root` of a binary tree, invert the tree, i.e., swap the left and right children of all nodes.
+
+## Explanation
+
+Consider the following binary tree:
+
+<div style="text-align: center;">
+    <img src="diagrams/invert_tree.png" width="80%">
+</div>
+
+The implementations uses **post-order** traversal to invert the binary tree:
+
+<center>
+
+| Step | Depth | Current Node | Left Subtree Before      | Right Subtree Before     | Action                                                                                   | Left Subtree After      | Right Subtree After     |
+|------|-------|--------------|--------------------------|--------------------------|------------------------------------------------------------------------------------------|--------------------------|--------------------------|
+| 1    | 0     | 9 (root)     | 12                       | 7                        | Visiting root. Recursively inverting left and right subtrees.                            | -                        | -                       |
+| 2    | 1     | 12           | None                     | 9                        | Visiting left child of root. Recursively inverting left and right.                       | -                        | -                     |
+| 3    | 2     | None         | -                        | -                        | Reached a leaf node. Returning None.                                                     | -                        | -                        |
+| 4    | 2     | 9            | 8                        | None                     | Visiting node. Recursively inverting left and right.                                     | -                     | -                        |
+| 5    | 3     | 8            | None                     | None                     | Visiting node. Recursively inverting left and right.                                     | -                     | -                    |
+| 6    | 4     | None         | -                        | -                        | Reached a leaf node. Returning None.                                                     | -                        | -                        |
+| 7    | 4     | None         | -                        | -                        | Reached a leaf node. Returning None.                                                     | -                        | -                        |
+| 8    | 3     | 8            | None                     | None                     | Swapping left and right.                                                                 | None                     | None                     |
+| 9    | 2     | 9            | 8                        | None                     | Swapping left and right.                                                                 | None                     | 8                        |
+| 10   | 1     | 12           | None                     | 9                        | Swapping left and right.                                                                 | 9                        | None                     |
+| 11   | 1     | 7            | 20                       | None                     | Visiting right child of root. Recursively inverting left and right.                      | -                     | -                       |
+| 12   | 2     | 20           | None                     | None                     | Visiting node. Recursively inverting left and right.                                     | -                     | -                     |
+| 13   | 3     | None         | -                        | -                        | Reached a leaf node. Returning None.                                                     | -                        | -                        |
+| 14   | 3     | None         | -                        | -                        | Reached a leaf node. Returning None.                                                     | -                        | -                        |
+| 15   | 2     | 20           | None                     | None                     | Swapping left and right.                                                                 | None                     | None                     |
+| 16   | 1     | 7            | 20                       | None                     | Swapping left and right.                                                                 | None                     | 20                       |
+| 17   | 0     | 9 (root)     | 12                       | 7                        | Swapping left and right.                                                                 | 7                        | 12                       |
+
+</center>
+
+Due to the **post-order** traversal, the left and right subtrees are inverted from the bottom up.
+
+---
+
+## Time Complexity
+
+The algorithm visits each node exactly once, and the following operations are performed at each node:
+
+* Checking if the node is not `None` or `nullptr`, which can be considered $O(1)$
+
+* Swap the left and right children of the current node, which can also be considered $O(1)$
+
+Hence, the overall time complexity of the algorithm is $O(n)$, where $n$ is the number of nodes in the binary tree.
+
+---
+
+## Space Complexity
+
+The space complexity of the algorithm is $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.

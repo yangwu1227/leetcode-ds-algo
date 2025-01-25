@@ -15,7 +15,7 @@ int main()
 
     for (const auto &[nodeData, target] : testCases)
     {
-        TreeNode::ptr root = TreeNode::construct_binary_tree(nodeData);
+        TreeNode::ptr root = TreeNode::constructBinaryTree(nodeData);
         bool pathExists = PathSum::searchPath(root, target);
         std::cout << "There exists " << (pathExists ? "a" : "no") << " path such that sum of all data values equals target = ";
         std::cout << target << '\n';
