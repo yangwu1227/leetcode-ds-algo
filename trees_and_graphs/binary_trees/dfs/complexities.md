@@ -610,3 +610,67 @@ Hence, the overall time complexity of the algorithm is $O(n)$, where $n$ is the 
 ## Space Complexity
 
 The space complexity of the algorithm is $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
+
+---
+
+# Symmetric Tree
+
+Given the `root` of a binary tree, check whether the tree is symmetric around its center.
+
+A binary tree is symmetric if the left subtree is a mirror reflection of the right subtree at the root.
+
+## Explanation
+
+Consider the following binary tree:
+
+<div style="text-align: center;">
+    <img src="diagrams/symmetric_tree.png" width="50%">
+</div>
+
+<center>
+
+| Step | Recursion Depth | Node 1       | Node 2       | Action                                   | Result        |
+|------|-----------------|--------------|--------------|------------------------------------------|---------------|
+| 1    | 0               | 1            | 1            | Comparing root nodes                    | Proceed       |
+| 2    | 1               | 2            | 2            | Comparing left and right children       | Proceed       |
+| 3    | 2               | 8            | 7            | Values do not match                     | **False**     |
+| 4    | 2               | 4            | 4            | Comparing left and right children       | Proceed       |
+| 5    | 3               | None         | None         | Both nodes are `None`                   | **True**      |
+| 6    | 3               | None         | None         | Both nodes are `None`                   | **True**      |
+| 7    | 2               | -            | -            | Left subtree comparison result: `True` | Return False  |
+| 8    | 1               | 2            | 2            | Comparing left and right children       | Proceed       |
+| 9    | 2               | 4            | 4            | Comparing left and right children       | Proceed       |
+| 10   | 3               | None         | None         | Both nodes are `None`                   | **True**      |
+| 11   | 3               | None         | None         | Both nodes are `None`                   | **True**      |
+| 12   | 2               | 7            | 8            | Values do not match                     | **False**     |
+| 13   | 1               | -            | -            | Right subtree comparison result: `False`| Return False  |
+| Final| 0               | -            | -            | Tree is not symmetric                   | **False**     |
+
+</center>
+
+1. The algorithm starts by comparing the root node `1` with itself at depth `0`.
+2. It then compares the left and right children of the root node (`2` and `2`) at depth `1`.
+3. At depth `2`, the left subtree's left child (`8`) is compared to the right subtree's right child (`7`). Since the values do not match, the algorithm immediately returns `False` for this branch.
+4. It then continues to compare the left subtree's right child (`4`) with the right subtree's left child (`4`). Both subtrees are symmetric for this branch, resulting in `True`.
+5. At depth `1`, it proceeds to the right subtree of the root and performs similar comparisons. However, the subtree's values also mismatch (`7` vs `8`), resulting in `False`.
+6. Since one of the branches returned `False`, the overall result is that the tree is **not symmetric**.
+
+---
+
+## Time Complexity
+
+The algorithm visits each node exactly once, and the following operations are performed at each node:
+
+1. Check if both nodes are not `None` or `nullptr`, which can be considered $O(1)$
+
+2. Check if one of the nodes is `None` or `nullptr`, which can also be considered $O(1)$
+
+3. Compare the values of the two nodes, which can be considered $O(1)$
+
+Because two nodes are passed and processed at each recursive step simultaneously, the time complexity of the algorithm is $O(n)$, where $n$ is the number of nodes in the binary tree.
+
+---
+
+## Space Complexity
+
+The space complexity of the algorithm is $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
