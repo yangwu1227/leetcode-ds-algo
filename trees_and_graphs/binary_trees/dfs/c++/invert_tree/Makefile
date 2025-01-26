@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++17 -fdiagnostics-color=always
 # Source and object files
 TARGET = main
 MAIN_SRC = main.cpp
-OBJS = tree_node.o invert_tree.o
+OBJS = tree_node.o tree_utils.o invert_tree.o
 
 # Rule to build the target executable from main.cpp and object files
 $(TARGET): $(MAIN_SRC) $(OBJS)
