@@ -674,3 +674,128 @@ Because two nodes are passed and processed at each recursive step simultaneously
 ## Space Complexity
 
 The space complexity of the algorithm is $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
+
+---
+
+# Path Sum II
+
+Given the `root` of a binary tree and an integer `target`, return all **root-to-leaf** paths where the sum of the node values in the path equals `target`. Each path should be returned as a list of the node values, not node references.
+
+A **root-to-leaf** path is a path starting from the root and ending at any leaf node. A leaf is a node with no children.
+
+## Explanation
+
+Consider the following binary tree:
+
+<div style="text-align: center;">
+    <img src="diagrams/path_sum_ii.png" width="50%">
+</div>
+
+<center>
+
+| **Step** | **Depth** | **Node Value** | **Current Path**       | **Current Sum** | **Action**                                                                                   | **Output**                  |
+|----------|-----------|----------------|------------------------|-----------------|----------------------------------------------------------------------------------------------|-----------------------------|
+| 1        | 0         | 5              | `[]`                  | `0`             | Start at root, add 5 to path                                                                 | -                           |
+| 2        | 1         | 4              | `[5]`                 | `5`             | Move to left child, add 4 to path                                                            | -                           |
+| 3        | 2         | 11             | `[5, 4]`              | `9`             | Move to left child, add 11 to path                                                           | -                           |
+| 4        | 3         | 7              | `[5, 4, 11]`          | `20`            | Move to left child, sum becomes 27 (not target), backtrack                                   | -                           |
+| 5        | 3         | 2              | `[5, 4, 11]`          | `20`            | Move to right child, sum becomes 22 (matches target), add path `[5, 4, 11, 2]`              | `[[5, 4, 11, 2]]`          |
+| 6        | 2         | None           | `[5, 4]`              | `9`             | No right child, backtrack                                                                    | -                           |
+| 7        | 1         | None           | `[5]`                 | `5`             | No right child, backtrack                                                                    | -                           |
+| 8        | 1         | 8              | `[5]`                 | `5`             | Move to right child, add 8 to path                                                           | -                           |
+| 9        | 2         | 13             | `[5, 8]`              | `13`            | Move to left child, sum becomes 26 (not target), backtrack                                   | -                           |
+| 10       | 2         | 4              | `[5, 8]`              | `13`            | Move to right child, add 4 to path                                                           | -                           |
+| 11       | 3         | 5              | `[5, 8, 4]`           | `17`            | Move to left child, sum becomes 22 (matches target), add path `[5, 8, 4, 5]`                | `[[5, 4, 11, 2], [5, 8, 4, 5]]` |
+| 12       | 3         | 1              | `[5, 8, 4]`           | `17`            | Move to right child, sum becomes 18 (not target), backtrack                                  | -                           |
+| 13       | 2         | None           | `[5, 8]`              | `13`            | No right child, backtrack                                                                    | -                           |
+| 14       | 1         | None           | `[5]`                 | `5`             | No right child, backtrack                                                                    | -                           |
+| 15       | 0         | None           | `[]`                  | `0`             | Back to root, traversal complete                                                            | `[[5, 4, 11, 2], [5, 8, 4, 5]]` |
+
+</center>
+
+---
+
+## Time Complexity
+
+### Work Per Node
+
+1. **Basic DFS Checks / Updates**  
+   * Checking for `nullptr` or `None` nodes, updating the running sum, appending/popping a node value to the current path, etc., are all $O(1)$ work *per node*.  
+   * Over $n$ nodes, this accumulates to $O(n)$.
+
+2. **Copying the Path at a Leaf**  
+   * When the current path is appended to the list of “valid paths,” it is copied. If the path length is $h$ at that moment (where $h$ can be up to the tree’s height), then this copy takes $O(h)$ time.
+
+Hence, the total cost is roughly:
+
+$$
+  O(n) \;+\; \bigl(\text{number of leaves}\bigr) \;\times\; \bigl(\text{cost of copying each path}\bigr)
+$$
+
+### Why $O(n^2)$ in the Worst Case
+
+A well‐known “worst‐case” time‐complexity statement for **root‐to‐leaf** path‐sum problems is $O(n^2)$. The usual rationale is:
+
+* Up to $O(n)$ leaf‐to‐root paths (if the tree branches a lot).
+* Each path can be up to length $O(n)$ (if the tree is very tall).
+* Therefore, in a completely unconstrained scenario, one might end up doing $O(n)$ copies of length $O(n)$ each $\Rightarrow O(n^2)$.
+
+However, that simple $O(n^2)$ rule of thumb conflates two extremes that cannot both happen simultaneously in a strict binary tree with a fixed $n$.
+
+### Balanced vs. Skewed Binary Trees
+
+1. **Balanced Binary Tree**  
+   * Height $h = O(\log n)$.  
+   * Leaf count $L = O(n)$ (in a perfectly full tree, $L \approx n/2$).  
+   * Copying each path takes $O(h) = O(\log n)$.  
+   * Total cost of copying = $L \times O(h) = O(n \log n)$.  
+   * Plus the $O(n)$ from visiting nodes = $O(n \log n)$ overall.
+
+2. **Completely Skewed (“Linked‐List”) Tree**  
+   * Height $h \approx n$.  
+   * Number of leaves $L = 1$ (just the bottom node is a leaf).  
+   * One path copy of length $n$ = $O(n)$.  
+   * Plus the $O(n)$ from visiting nodes = $O(n)$ overall.
+
+Hence, if the discussion is strictly about a binary tree and only about root‐to‐leaf paths, the maximum total cost is $O(n \log n)$ (the balanced shape) rather than $O(n^2)$. The skewed shape yields fewer leaves, so less path‐copy overhead—only $O(n)$.
+
+* Many references simply take a worst‐case stance that “each path can be $O(n)$ long, and there can be $O(n)$ such paths,” leading to $O(n^2)$. Strictly speaking, for a binary tree of size $n$, the tree cannot achieve both extremes at once. Nonetheless, that $O(n^2)$ claim is still used as an upper bound—since $\max(n,\,n\log n)$ is still $\le n^2$.
+
+* In more general trees (with branching factor > 2), the situation can lead to many leaves and large path length at the same time, so $O(n^2)$ (or worse) is possible.
+
+### Bottom Line
+
+* For a binary tree of $n$ nodes, the copying‐paths step is bounded by $O(n \log n)$ in the genuinely “worst” shape (balanced).  
+* A purely skewed binary tree has only 1 leaf, giving $O(n)$ total.  
+* The common $O(n^2)$ statement is a looser upper bound that some authors/solutions cite (especially when not restricting branching to 2) or simply as a “safe” bound without dissecting balanced vs. skewed configurations.
+
+Hence, for a binary tree, the most precise statement is:
+
+> **Time Complexity** = $O(n + L \cdot h)$.  
+>
+> * $n$ is the total number of nodes (for the DFS itself).  
+> * $L$ is the number of leaves.  
+> * $h$ is the height of the tree.
+
+And in a binary tree of size $n$, the following always hold:  
+
+* $L \le O(n)$  
+* $h \le n$ but they trade off:
+
+  * Balanced $\to$ $L = O(n)$, $h = O(\log n)$ $\Rightarrow O(n\log n)$.
+  * Skewed $\to$ $L = 1$, $h \approx n$ $\Rightarrow O(n)$.
+  
+  The analysis does not truly reach $O(n^2)$ in a strict binary tree scenario.
+
+---
+
+## Space Complexity
+
+1. **Call Stack:** Depth‐first traversal uses up to $O(h)$ space on the call stack, where $h$ is the tree height.  
+2. **Current Path:** Storing the current path also costs $O(h)$.  
+3. **Output Storage:** Collecting valid paths can require up to $O(L \times h)$ space, where $L$ is the number of leaves.
+
+* **Balanced Binary Tree:** $h = O(\log n)$ and $L = O(n)$ $\Rightarrow O(n \log n)$ space for all paths.  
+* **Skewed Tree:** $h = n$ and $L = 1$ $\Rightarrow O(n)$ total space.
+
+Hence overall additional space beyond the input tree is $O(h + L \times h)$. For a binary tree of $n$ nodes, this is at most $O(n \log n)$ in a balanced case and $O(n)$ in a skewed case.
