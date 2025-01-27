@@ -1,3 +1,22 @@
+### Table of Contents
+
+1. [TreeNode Class](#treenode-class)  
+   - [Python Implementation](#python-implementation)  
+      - [Class Definition Python](#class-definition-python)  
+      - [Attributes Python](#attributes-python)
+      - [Initializer](#initializer)  
+      - [Methods](#methods)  
+         - [__repr__](#__repr__)  
+         - [construct_binary_tree](#construct_binary_tree)  
+         - [visualize_binary_tree](#visualize_binary_tree)  
+   - [C++ Implementation](#cpp-implementation)  
+      - [Class Definition C++](#class-definition-cpp)  
+      - [Type Aliases](#type-aliases)  
+      - [Attributes C++](#attributes-cpp)  
+      - [Constructor](#constructor)  
+      - [Operator Overload `operator<<`](#operator-overload-operator)  
+      - [constructBinaryTree](#constructbinarytree)  
+
 # TreeNode Class
 
 This `TreeNode` class represents a single node in a binary tree. Each node can contain data and may have references to a left and right child. Additionally, the class provides a static method to construct a binary tree from a level-order list representation.
@@ -6,19 +25,19 @@ This `TreeNode` class represents a single node in a binary tree. Each node can c
 
 # Python Implementation
 
-## Class Definition
+## Class Definition Python
 
 ```python
 class TreeNode(object)
 ```
 
-### Attributes
+### Attributes Python
 
-- **data**: `Optional[Union[int, float, str]]`  
+- __data__: `Optional[Union[int, float, str]]`  
   Stores the data value for this node (e.g., `int`, `float`, `str`).
-- **left**: `Optional[TreeNode]`  
+- __left__: `Optional[TreeNode]`  
   Reference to the left child node.
-- **right**: `Optional[TreeNode]`  
+- __right__: `Optional[TreeNode]`  
   Reference to the right child node.
 
 ---
@@ -31,11 +50,11 @@ __init__(self, data: Optional[Union[int, float, str]] = None, left: Optional[Tre
 
 ### Parameters
 
-- **data**: `Optional[Union[int, float, str]]`  
+- __data__: `Optional[Union[int, float, str]]`  
   The value to store in the node. Defaults to `None`.
-- **left**: `Optional[TreeNode]`  
+- __left__: `Optional[TreeNode]`  
   A reference to the left child. Defaults to `None`.
-- **right**: `Optional[TreeNode]`  
+- __right__: `Optional[TreeNode]`  
   A reference to the right child. Defaults to `None`.
 
 ---
@@ -50,7 +69,7 @@ Returns a string representation of the `TreeNode` instance.
 __repr__(self) -> str
 ```
 
-**Returns**: `str`  
+__Returns__: `str`  
 A string in the format: `TreeNode(data = <data>)`.
 
 ---
@@ -66,14 +85,14 @@ construct_binary_tree(values: List[Optional[Union[int, float, str]]]) -> Optiona
 
 #### Parameters
 
-- **values**: `List[Optional[Union[int, float, str]]]`  
+- __values__: `List[Optional[Union[int, float, str]]]`  
   A list of node values in level-order.  
   - `values[i]` represents the node at the `i`-th position in a complete binary tree.
   - `None` represents a missing node (e.g., for trees that are not perfect or complete).
 
 #### Returns
 
-- **TreeNode**: The root node of the constructed binary tree. If the input list is empty or starts with `None`, it returns `None`.
+- __TreeNode__: The root node of the constructed binary tree. If the input list is empty or starts with `None`, it returns `None`.
 
 #### Example Usages
 
@@ -115,10 +134,10 @@ root = TreeNode.construct_binary_tree(values)
 
 #### Complexity Analysis
 
-- **Time Complexity**: $O(n)$  
+- __Time Complexity__: $O(n)$  
   Each node is created and processed once.
   
-- **Space Complexity**: $O(n)$  
+- __Space Complexity__: $O(n)$  
   The queue may hold up to `n/2` nodes in a complete binary tree, where $n$ is the total number of elements in `values`.
 
 ---
@@ -129,11 +148,11 @@ This static method visualizes a binary tree using `matplotlib` and `networkx`. I
 
 ---
 
-# C++ Implementation
+# C++ Implementation {#cpp-implementation}
 
 The header file `tree_node.hpp` defines the `TreeNode` class structure, data members, and public methods. It also includes key type aliases and uses `std::variant` to store various types of data.
 
-## Class Definition
+## Class Definition C++ {#class-definition-cpp}
 
 ```cpp
 class TreeNode
@@ -141,22 +160,22 @@ class TreeNode
 
 ### Type Aliases
 
-- **ptr**: `std::unique_ptr<TreeNode>`  
+- __ptr__: `std::unique_ptr<TreeNode>`  
   A unique pointer type to manage `TreeNode` instances automatically. Using `unique_ptr` ensures that each `TreeNode` object has one owner, allowing safe memory management without manual deletion.
 
-- **datatype**: `std::variant<std::monostate, int, double, std::string>`  
+- __datatype__: `std::variant<std::monostate, int, double, std::string>`  
   A variant type that can hold one of several types (`int`, `double`, `std::string`, or `std::monostate`). This provides flexibility for node data types:
-  - **`std::monostate`** represents a "null" value, indicating an empty or missing node.
+  - __`std::monostate`__ represents a "null" value, indicating an empty or missing node.
 
-### Attributes
+### Attributes C++ {#attributes-cpp}
 
-- **data**: `datatype`  
+- __data__: `datatype`  
   The data value for this node, which can be an `int`, `double`, `std::string`, or `null`.
 
-- **left**: `ptr`  
+- __left__: `ptr`  
   A unique pointer to the left child node.
 
-- **right**: `ptr`  
+- __right__: `ptr`  
   A unique pointer to the right child node.
 
 ---
@@ -169,13 +188,13 @@ explicit TreeNode(datatype data = std::monostate{}, ptr left = nullptr, ptr righ
 
 ### Parameters
 
-- **data**: `datatype`  
+- __data__: `datatype`  
   The value to store in the node. Defaults to `std::monostate`, which represents `null`.
 
-- **left**: `ptr`  
+- __left__: `ptr`  
   A unique pointer to the left child node, initialized to `nullptr`.
 
-- **right**: `ptr`  
+- __right__: `ptr`  
   A unique pointer to the right child node, initialized to `nullptr`.
 
 This constructor initializes `data`, `left`, and `right` attributes for a `TreeNode`. Defaulting to `std::monostate` supports creating empty nodes with no data. The `explicit` keyword prevents implicit conversions such as `TreeNode node = 5` (i.e., from `int` to `TreeNode`).
@@ -190,15 +209,15 @@ Overloading the stream insertion `<<` operator provides an easy way to print a `
 friend std::ostream &operator<<(std::ostream &os, const TreeNode &tree_node);
 ```
 
-- **`std::ostream &os`**: The output stream where the data will be written (e.g., `std::cout`).
+- __`std::ostream &os`__: The output stream where the data will be written (e.g., `std::cout`).
 
-- **`const TreeNode &tree_node`**: A constant reference to the `TreeNode` being printed. It is passed as `const` to ensure the function does not modify the object.
+- __`const TreeNode &tree_node`__: A constant reference to the `TreeNode` being printed. It is passed as `const` to ensure the function does not modify the object.
 
 - The function returns `os` to allow chaining, so you can write expressions like: `std::cout << node1 << node2`.
 
-**Implementation Details**
+__Implementation Details__
 
-**1. Using `std::visit` to Handle `std::variant`**
+__1. Using `std::visit` to Handle `std::variant`__
 
 ```cpp
 std::visit(
@@ -207,35 +226,35 @@ std::visit(
 );
 ```
 
-- **`std::visit`**: A standard library function used to access and process the value inside a `std::variant`. It takes:
+- __`std::visit`__: A standard library function used to access and process the value inside a `std::variant`. It takes:
 
-  - A **visitor**: A callable object (in this case, a lambda function).
+  - A __visitor__: A callable object (in this case, a lambda function).
 
   - The `std::variant` instance (`tree_node.data`).
 
 `std::visit` ensures that the correct type inside the `std::variant` is processed.
 
-### **3. The Lambda Visitor**
+### __3. The Lambda Visitor__
 
 ```cpp
 [&os](auto &&arg)
 ```
 
-- **`[&os]`**: Captures the `os` output stream by reference so it can be accessed inside the lambda without copying.
+- __`[&os]`__: Captures the `os` output stream by reference so it can be accessed inside the lambda without copying.
 
-- **`auto &&arg`**: A **forwarding reference** (or universal reference) that allows the lambda to generically handle any type and value category stored in the `std::variant`. This means:
+- __`auto &&arg`__: A __forwarding reference__ (or universal reference) that allows the lambda to generically handle any type and value category stored in the `std::variant`. This means:
   - If the variant holds an lvalue (e.g., `int&` or `std::string&`), `arg` will be deduced as an lvalue reference.
   - If the variant holds an rvalue (e.g., `int&&` or `std::string&&`), `arg` will be deduced as an rvalue reference.
   - This avoids unnecessary copies and ensures efficient handling of both temporary (rvalue) and persistent (lvalue) data.
 
-- **Why use `auto &&arg`?**
-  - **Generic**: Supports any type stored in the `std::variant` (`int`, `double`, `std::string`, `std::monostate`).
-  - **Efficient**: Avoids unnecessary copies by binding directly to the value in the variant.
-  - **Flexible**: Preserves the value category ([lvalue/rvalue](https://www.youtube.com/watch?v=fbYknr-HPYE)) of the data.
+- __Why use `auto &&arg`?__
+  - __Generic__: Supports any type stored in the `std::variant` (`int`, `double`, `std::string`, `std::monostate`).
+  - __Efficient__: Avoids unnecessary copies by binding directly to the value in the variant.
+  - __Flexible__: Preserves the value category ([lvalue/rvalue](https://www.youtube.com/watch?v=fbYknr-HPYE)) of the data.
 
 In this context, `auto &&arg` ensures the lambda seamlessly processes all possible data types stored in the `TreeNode`'s `data` member. It's the most efficient and generic choice for this use case.
 
-**4. Handling Each Type in `std::variant`**
+__4. Handling Each Type in `std::variant`__
 
 The lambda processes each possible type stored in the `std::variant` instance `data`. The `std::variant` in `TreeNode` is defined as:
 
@@ -252,19 +271,19 @@ This means `data` can hold one of the following:
 
 The lambda uses `if constexpr` and type traits to differentiate between these types.
 
-**5. Type Deduction**
+__5. Type Deduction__
 
 ```cpp
 using T = std::decay_t<decltype(arg)>;
 ```
 
-- **`decltype(arg)`**: Determines the exact type of `arg`, including references and `const` qualifiers.
-- **`std::decay_t`**: Removes references, `const`, and `volatile` qualifiers, leaving the "base type." For example:
+- __`decltype(arg)`__: Determines the exact type of `arg`, including references and `const` qualifiers.
+- __`std::decay_t`__: Removes references, `const`, and `volatile` qualifiers, leaving the "base type." For example:
   - If `arg` is `const int&`, `std::decay_t<decltype(arg)>` resolves to `int`.
 
 `T` is used to perform compile-time checks on the type of `arg`.
 
-**6. Checking for `std::monostate`**
+__6. Checking for `std::monostate`__
 
 ```cpp
 if constexpr (std::is_same_v<T, std::monostate>)
@@ -273,11 +292,11 @@ if constexpr (std::is_same_v<T, std::monostate>)
 }
 ```
 
-- **`if constexpr`**: A compile-time conditional that enables branching based on type traits.
-- **`std::is_same_v<T, std::monostate>`**: Checks if `T` is `std::monostate`, which indicates a "null" value in the `std::variant`.
+- __`if constexpr`__: A compile-time conditional that enables branching based on type traits.
+- __`std::is_same_v<T, std::monostate>`__: Checks if `T` is `std::monostate`, which indicates a "null" value in the `std::variant`.
 - If `T` is `std::monostate`, the lambda writes `"null"` to the output stream.
 
-**7. Handling Other Types**
+__7. Handling Other Types__
 
 ```cpp
 else
@@ -289,7 +308,7 @@ else
 - For all other types (`int`, `double`, `std::string`), the lambda directly writes `arg` to the output stream.
 - Since the `<<` operator is already overloaded for these types, the lambda simply delegates to the existing functionality.
 
-**8. Returning the Stream**
+__8. Returning the Stream__
 
 ```cpp
 return os;
@@ -307,28 +326,28 @@ static ptr constructBinaryTree(const std::vector<datatype> &values);
 
 ### Parameters
 
-- **values**: `std::vector<datatype>`  
+- __values__: `std::vector<datatype>`  
   A list representing node values in level-order:
   - `std::monostate` represents missing nodes.
 
 ### Returns
 
-- **ptr**: A unique pointer to the root of the constructed binary tree. Returns `nullptr` if the list is empty or starts with `std::monostate`.
+- __ptr__: A unique pointer to the root of the constructed binary tree. Returns `nullptr` if the list is empty or starts with `std::monostate`.
 
 ### Implementation Steps
 
-1. **Initialize Root**:  
+1. __Initialize Root__:  
    - Checks if `values` is empty or starts with `std::monostate`. If true, returns `nullptr`.
    - Creates the root node and initializes a `std::queue` to handle nodes at each level.
 
-2. **Level-by-Level Construction**:
+2. __Level-by-Level Construction__:
    - Uses `queue` to manage the order in which nodes receive children. It pops nodes as it assigns their children.
-   - **Left and Right Children**:
+   - __Left and Right Children__:
      - If the next value is not `std::monostate`, it creates a new child node, assigns it to the current node's left or right pointer, and adds the child to the queue.
 
-3. **Complexity Analysis**:
-   - **Time Complexity**: $O(n)$, where $n$ is the number of elements in `values`.
-   - **Space Complexity**: $O(n)$, since `queue` holds up to $\frac{n}{2}$ nodes at any point.
+3. __Complexity Analysis__:
+   - __Time Complexity__: $O(n)$, where $n$ is the number of elements in `values`.
+   - __Space Complexity__: $O(n)$, since `queue` holds up to $\frac{n}{2}$ nodes at any point.
 
 ### Example Usage
 
