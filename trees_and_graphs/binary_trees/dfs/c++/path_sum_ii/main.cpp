@@ -5,7 +5,7 @@
 #include <map>
 #include <iostream>
 
-void printVectorOfVectors(const std::vector<std::vector<int>> &vectors)
+void printVectors2D(const std::vector<std::vector<int>> &vectors)
 {
     std::cout << "{";
     for (size_t i = 0; i < vectors.size(); ++i)
@@ -13,17 +13,9 @@ void printVectorOfVectors(const std::vector<std::vector<int>> &vectors)
         std::cout << "{";
         for (size_t j = 0; j < vectors[i].size(); ++j)
         {
-            std::cout << vectors[i][j];
-            if (j < vectors[i].size() - 1)
-            {
-                std::cout << ", ";
-            }
+            std::cout << vectors[i][j] << (j < vectors[i].size() - 1 ? ", " : "");
         }
-        std::cout << "}";
-        if (i < vectors.size() - 1)
-        {
-            std::cout << ", ";
-        }
+        std::cout << "}" << (i < vectors.size() - 1 ? ", " : "");
     }
     std::cout << "}" << '\n';
 }
@@ -42,7 +34,7 @@ int main()
         TreeNode::ptr root = TreeNode::constructBinaryTree(nodeData);
         std::vector<std::vector<int>> paths = pathSum(root, target);
         std::cout << "Searched paths = ";
-        printVectorOfVectors(paths);
+        printVectors2D(paths);
     }
     std::cout << std::endl;
 
