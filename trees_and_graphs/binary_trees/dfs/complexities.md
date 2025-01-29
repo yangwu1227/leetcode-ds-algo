@@ -799,3 +799,104 @@ And in a binary tree of size $n$, the following always hold:
 * **Skewed Tree:** $h = n$ and $L = 1$ $\Rightarrow O(n)$ total space.
 
 Hence overall additional space beyond the input tree is $O(h + L \times h)$. For a binary tree of $n$ nodes, this is at most $O(n \log n)$ in a balanced case and $O(n)$ in a skewed case.
+
+---
+
+# Path Sum III
+
+Given the `root` of a binary tree and an integer `target`, return the number of paths in the tree such that the sum of the node values in the path equals `target`.
+
+The path does not need to start or end at the root or a leaf but must go downwards (traveling only from parent nodes to child nodes).
+
+## Explanation
+
+Consider the following binary tree with a target sum of `22`:
+
+<div style="text-align: center;">
+    <img src="diagrams/path_sum_iii.png" width="50%">
+</div>
+
+<center>
+
+| Depth | Node Value | Current Sum Calculation | Current Sum == Target (22) | (Current Sum - Target) in Map? | Count Updated | Hash Map Before | Hash Map After |
+|-------|------------|------------------------|-----------------------|-----------------------------|---------------|----------------|---------------|
+| 0     | 5         | 0 + 5 = 5               | False                 | -17 in map? False           | No            | {}             | {5: 1}       |
+|       |           |                          |                        |                              |               |                |               |
+| 1     | 4         | 5 + 4 = 9               | False                 | -13 in map? False           | No            | {5: 1}         | {5: 1, 9: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 2     | 11        | 9 + 11 = 20             | False                 | -2 in map? False            | No            | {5: 1, 9: 1}   | {5: 1, 9: 1, 20: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 3     | 7         | 20 + 7 = 27             | False                 | 5 in map? True              | **+1**        | {5: 1, 9: 1, 20: 1} | {5: 1, 9: 1, 20: 1, 27: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 4     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+| 4     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+|       |           |                          |                        |                              |               |                |               |
+| 3     | Backtrack | 27 - 7 = 20             | -                     | -                           | -             | {5: 1, 9: 1, 20: 1, 27: 1} | {5: 1, 9: 1, 20: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 3     | 2         | 20 + 2 = 22             | **True**               | 0 in map? False             | **+1**        | {5: 1, 9: 1, 20: 1} | {5: 1, 9: 1, 20: 1, 22: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 4     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+| 4     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+|       |           |                          |                        |                              |               |                |               |
+| 3     | Backtrack | 22 - 2 = 20             | -                     | -                           | -             | {5: 1, 9: 1, 20: 1, 22: 1} | {5: 1, 9: 1, 20: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 2     | Backtrack | 20 - 11 = 9             | -                     | -                           | -             | {5: 1, 9: 1, 20: 1} | {5: 1, 9: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 1     | Backtrack | 9 - 4 = 5               | -                     | -                           | -             | {5: 1, 9: 1}   | {5: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 1     | 8         | 5 + 8 = 13              | False                 | -9 in map? False            | No            | {5: 1}         | {5: 1, 13: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 2     | 13        | 13 + 13 = 26            | False                 | 4 in map? False             | No            | {5: 1, 13: 1}  | {5: 1, 13: 1, 26: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 3     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+| 3     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+|       |           |                          |                        |                              |               |                |               |
+| 2     | Backtrack | 26 - 13 = 13            | -                     | -                           | -             | {5: 1, 13: 1, 26: 1} | {5: 1, 13: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 2     | 4         | 13 + 4 = 17             | False                 | -5 in map? False            | No            | {5: 1, 13: 1}  | {5: 1, 13: 1, 17: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 3     | 5         | 17 + 5 = 22             | **True**               | 0 in map? False             | **+1**        | {5: 1, 13: 1, 17: 1} | {5: 1, 13: 1, 17: 1, 22: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 4     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+| 4     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+|       |           |                          |                        |                              |               |                |               |
+| 3     | Backtrack | 22 - 5 = 17             | -                     | -                           | -             | {5: 1, 13: 1, 17: 1, 22: 1} | {5: 1, 13: 1, 17: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 3     | 1         | 17 + 1 = 18             | False                 | -4 in map? False            | No            | {5: 1, 13: 1, 17: 1} | {5: 1, 13: 1, 17: 1, 18: 1} |
+|       |           |                          |                        |                              |               |                |               |
+| 4     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+| 4     | NULL      | -                        | -                     | -                           | -             | -              | -             |
+|       |           |                          |                        |                              |               |                |               |
+| 3     | Backtrack | 18 - 1 = 17             | -                     | -                           | -             | {5: 1, 13: 1, 17: 1, 18: 1} | {5: 1, 13: 1, 17: 1} |
+
+</center>
+
+---
+
+## Time Complexity
+
+1. **Depth-First Search (DFS)**  
+   The solution performs a DFS over all nodes in the tree. Each node is visited exactly once, contributing $O(n)$ for $n$ total nodes.
+
+2. **Prefix-Sum Hash Map Operations**: For each node:
+   * We calculate the new running sum in $O(1)$.
+   * Check if $(\text{current\_sum} == \text{target})$ in $O(1)$.
+   * We query the hash map for $(\text{current\_sum} - \text{target})$ in $O(1)$.
+   * We update the hash map by incrementing or decrementing frequencies in $O(1)$.
+
+3. **Backtracking**: After exploring a node’s children, we perform the following operations on the way back up the recursion stack:
+   * Decrement the node’s contribution to the running sum in $O(1)$.
+   * Adjust the hash map’s frequency count in $O(1)$.
+   * Subtract the node’s contribution from the current path in $O(1)$.
+
+Since each of the steps above takes $O(1)$ time per node and we process $n$ nodes, the overall time complexity is $O(n)$.
+
+---
+
+## Space Complexity
+
+1. **Hash Map**: In the worst case (e.g., a path with strictly increasing partial sums), the hash map can store up to $O(n)$ distinct prefix sums.
+
+2. **Call Stack**: The recursion depth can be $O(n)$ in the worst case of a skewed (completely unbalanced) tree. In a balanced tree, it would be $O(\log n)$. We express the worst-case height as $O(n)$.
+
+Hence, adding hash map storage $O(n)$ and recursion stack $O(n)$, the total auxiliary space in the worst case is $O(n + n) = O(2n) = O(n)$.
