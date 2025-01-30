@@ -1,5 +1,6 @@
 from collections import defaultdict
 from collections.abc import Sequence
+from typing import List
 
 import numpy as np
 
@@ -43,11 +44,11 @@ def max_subarray_unique(nums: Sequence[int]) -> int:
 
 def main() -> int:
     for _ in range(5):
-        size = np.random.randint(low=1, high=23)
-        random_vector = np.random.randint(low=1, high=1000, size=size)
-        random_probs = random_vector / np.sum(random_vector)
-        nums = np.random.choice(a=range(size), size=size, p=random_probs).tolist()
-        max_sum = max_subarray_unique(nums)
+        size: int = np.random.randint(low=1, high=23)
+        random_vector: np.ndarray = np.random.randint(low=1, high=1000, size=size)
+        random_probs: np.ndarray = random_vector / np.sum(random_vector)
+        nums: List[int] = list(np.random.choice(a=range(size), size=size, p=random_probs))
+        max_sum: int = max_subarray_unique(nums)
         print(f"Given the input {nums}, the maximum sum of a subarray is {max_sum}")
 
     return 0

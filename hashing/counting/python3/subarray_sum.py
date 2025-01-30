@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Sequence
+from typing import List, Sequence
 
 import numpy as np
 
@@ -39,10 +39,10 @@ def subarray_sum(nums: Sequence[int], k: int) -> int:
 
 def main() -> int:
     for _ in range(5):
-        k = np.random.randint(low=0, high=10)
-        nums_size = np.random.randint(low=1, high=20)
-        nums = np.random.randint(low=0, high=10, size=(nums_size,)).tolist()
-        ans = subarray_sum(nums, k)
+        k: int = np.random.randint(low=0, high=10)
+        nums_size: int = np.random.randint(low=1, high=20)
+        nums: List[int] = list(np.random.randint(low=0, high=10, size=nums_size))
+        ans: int = subarray_sum(nums, k)
         print(f"Give the input {nums}, the number of subarrays whose sum is {k} is {ans}")
 
     return 0
