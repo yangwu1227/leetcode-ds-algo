@@ -8,9 +8,6 @@
 #include <limits>
 #include <cstdint>
 
-// Forward declaration of helper function for large number paths
-void handleLargePath(std::int64_t initialSum, TreeNode::ptr &node, int &count, const int target);
-
 int pathSum(TreeNode::ptr &root, int target)
 {
     // Total paths found
@@ -96,7 +93,6 @@ int pathSum(TreeNode::ptr &root, int target)
     return count;
 }
 
-// Handler for paths that involve large numbers using 64-bit arithmetic
 void handleLargePath(std::int64_t initialSum, TreeNode::ptr &node, int &count, const int target)
 {
     // Switch to 64-bit arithmetic for paths with large numbers
@@ -115,16 +111,15 @@ void handleLargePath(std::int64_t initialSum, TreeNode::ptr &node, int &count, c
         return false;
     };
 
-    std::function<void(TreeNode::ptr &)> largeDFS =
-        [&](TreeNode::ptr &n)
+    std::function<void(TreeNode::ptr &)> largeDFS = [&](TreeNode::ptr &node)
     {
-        if (!n)
+        if (!node)
             return;
 
-        if (!std::holds_alternative<int>(n->data))
+        if (!std::holds_alternative<int>(node->data))
             throw std::runtime_error("Non-integer data encountered in TreeNode");
 
-        int currData = std::get<int>(n->data);
+        int currData = std::get<int>(node->data);
 
         // Check for overflow even in 64-bit path
         if (wouldOverflow64(currSum, currData))
@@ -138,15 +133,15 @@ void handleLargePath(std::int64_t initialSum, TreeNode::ptr &node, int &count, c
             count++;
 
         BigSum diff = currSum - bigTarget;
-        if (auto it = largeSumCounts.find(diff); it != largeSumCounts.end())
+        if (auto searchResults = largeSumCounts.find(diff); searchResults != largeSumCounts.end())
         {
-            count += it->second;
+            count += searchResults->second;
         }
 
         largeSumCounts[currSum]++;
 
-        largeDFS(n->left);
-        largeDFS(n->right);
+        largeDFS(node->left);
+        largeDFS(node->right);
 
         largeSumCounts[currSum]--;
         if (!largeSumCounts[currSum])
