@@ -47,8 +47,8 @@ void printVector(const std::vector<TreeNode::datatype> &vector)
 
 int main()
 {
-    using vectorDataType = std::vector<TreeNode::datatype>;
-    std::map<vectorDataType, vectorDataType> testCases = {
+    using VectorDataType = std::vector<TreeNode::datatype>;
+    std::map<VectorDataType, VectorDataType> testCases = {
         {{1, 3, 2}, {1, 3, 2}},
         {{1, 2}, {1, std::monostate{}, 2}},
         {{1, 2, 1}, {1, 1, 2}},

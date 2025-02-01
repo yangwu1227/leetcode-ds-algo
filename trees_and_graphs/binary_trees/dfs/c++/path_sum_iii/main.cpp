@@ -7,8 +7,8 @@
 
 int main()
 {
-    using vectorDataType = std::vector<TreeNode::datatype>;
-    std::map<vectorDataType, int> testCases = {
+    using VectorDataType = std::vector<TreeNode::datatype>;
+    std::map<VectorDataType, int> testCases = {
         {{5, 4, 8, 11, std::monostate{}, 13, 4, 7, 2, std::monostate{}, std::monostate{}, 5, 1}, 22},
         {{1, 2, 3}, 5},
         {{1, 2, 2, 2, 2, 2, 2}, 5},

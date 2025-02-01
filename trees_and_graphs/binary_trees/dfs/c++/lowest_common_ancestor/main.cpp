@@ -7,8 +7,8 @@
 
 int main()
 {
-    using vectorDataType = std::vector<TreeNode::datatype>;
-    using testCase = std::tuple<vectorDataType, int, int>;
+    using VectorDataType = std::vector<TreeNode::datatype>;
+    using testCase = std::tuple<VectorDataType, int, int>;
     std::vector<testCase> testCases = {
         {{3, 5, 1, 6, 2, 0, 8, std::monostate{}, std::monostate{}, 7, 4}, 5, 1},
         {{3, 5, 1, 7, 2, 0, 8, std::monostate{}, std::monostate{}, 8, 4}, 5, 4},
