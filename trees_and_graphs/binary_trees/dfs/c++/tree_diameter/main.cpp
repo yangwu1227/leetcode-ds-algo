@@ -6,9 +6,9 @@
 
 int main()
 {
-    using vectorDataType = std::vector<TreeNode::datatype>;
+    using VectorDataType = std::vector<TreeNode::datatype>;
 
-    std::vector<vectorDataType> testCases = {
+    std::vector<VectorDataType> testCases = {
         {1, 2, 3, 4, 5},
         {1, 2},
         {3, 7, 9, std::monostate{}, 7, std::monostate{}, 8, 9, 10, 233, 17, std::monostate{}, 23}};
