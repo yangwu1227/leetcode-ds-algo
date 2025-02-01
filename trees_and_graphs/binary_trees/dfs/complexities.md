@@ -900,3 +900,90 @@ Since each of the steps above takes $O(1)$ time per node and we process $n$ node
 2. **Call Stack**: The recursion depth can be $O(n)$ in the worst case of a skewed (completely unbalanced) tree. In a balanced tree, it would be $O(\log n)$. We express the worst-case height as $O(n)$.
 
 Hence, adding hash map storage $O(n)$ and recursion stack $O(n)$, the total auxiliary space in the worst case is $O(n + n) = O(2n) = O(n)$.
+
+---
+
+# Delete Leaves With a Given Value
+
+Given the `root` of a binary tree and an integer `target`, delete all leaf nodes with a value equal to `target`.
+
+After deleting the leaf nodes with the target value, if the resulting tree is empty, return `None`.
+
+## Explanation
+
+Consider the following binary tree with a target value of `2`:
+
+<div style="text-align: center;">
+    <img src="diagrams/remove_leaves.png" width="90%">
+</div>
+
+1. **Steps 1–7 (Left Subtree of Root):**  
+   * **Step 1:** We start at the root (node **1** at depth 0).  
+   * **Step 2:** The DFS moves to the left child (node **2** at depth 1).  
+   * **Steps 3–7:** In the left subtree of node **2** (node **2** at depth 2), both children are `None` (steps 4–5). Since this node is a leaf and its value equals the target (2), it is pruned (step 7).
+
+2. **Steps 8–10 (Back to Node at Depth 1):**  
+   * The right child of the node at depth 1 is `None` (step 8).  
+   * After processing both children, node **2** at depth 1 becomes a leaf (step 9) and, since its value equals 2, it too is pruned (step 10).
+
+3. **Steps 11–16 (Right Subtree – Left Branch):**  
+   * **Step 11:** The DFS now visits the right subtree of the root; node **3** at depth 1 is processed.  
+   * **Steps 12–16:** The left child of node **3** is node **2** at depth 2. Its children are both `None` (steps 13–14), so it is pruned (steps 15–16) because its value equals 2.
+
+4. **Steps 17–21 (Right Subtree – Right Branch):**  
+   * **Step 17:** The DFS processes the right child of node **3**, which is node **4** at depth 2.  
+   * **Steps 18–19:** Both children of node **4** are `None` (steps 18–19).  
+   * **Step 20:** After processing its children, node **4** is identified as a leaf but its value does not equal the target, so it is kept (step 21).
+
+5. **Steps 22–25 (Finishing the Root):**  
+   * **Step 22:** Returning to node **3** (depth 1), its children have been processed (left pruned, right kept).  
+   * **Step 23:** Node **3** is not a leaf, so it is kept.  
+   * **Steps 24–25:** Back at the root (node **1**), after processing its children (left pruned, right preserved), node **1** is kept.
+
+<center>
+
+| Step | Depth | Node Value | Action                           | Result                              |
+|------|-------|------------|----------------------------------|-------------------------------------|
+| 1    | 0     | 1          | Visit root node                       | Processing children                 |
+| 2    | 1     | 2          | Visit node                       | Processing children                 |
+| 3    | 2     | 2          | Visit node                       | Processing children                 |
+| 4    | 3     | None       | Skip (None node)                 | Return None                         |
+| 5    | 3     | None       | Skip (None node)                 | Return None                         |
+| 6    | 2     | 2          | After processing children        | Left: None, Right: None              |
+| 7    | 2     | 2          | Leaf with target 2               | Prune (Return None)                 |
+| 8    | 2     | None       | (Right child of node 2)          | Skip (None node), Return None       |
+| 9    | 1     | 2          | After processing children        | Left: None, Right: None              |
+| 10   | 1     | 2          | Leaf with target 2               | Prune (Return None)                 |
+| 11   | 1     | 3          | Visit node                       | Processing children                 |
+| 12   | 2     | 2          | Visit node                       | Processing children                 |
+| 13   | 3     | None       | Skip (None node)                 | Return None                         |
+| 14   | 3     | None       | Skip (None node)                 | Return None                         |
+| 15   | 2     | 2          | After processing children        | Left: None, Right: None              |
+| 16   | 2     | 2          | Leaf with target 2               | Prune (Return None)                 |
+| 17   | 2     | 4          | Visit node                       | Processing children                 |
+| 18   | 3     | None       | Skip (None node)                 | Return None                         |
+| 19   | 3     | None       | Skip (None node)                 | Return None                         |
+| 20   | 2     | 4          | After processing children        | Left: None, Right: None              |
+| 21   | 2     | 4          | Not a target leaf                | Keep node                           |
+| 22   | 1     | 3          | After processing children        | Left: None, Right: 4                 |
+| 23   | 1     | 3          | Not a target leaf                | Keep node                           |
+| 24   | 0     | 1          | After processing children        | Left: None, Right: 3                 |
+| 25   | 0     | 1          | Not a target leaf                | Keep node                           |
+
+</center>
+
+---
+
+## Time Complexity
+
+The overall time complexity of the algorithm is $O(n)$, where $n$ is the number of nodes in the binary tree. The algorithm visits each node exactly once and performs the following operations at each node:
+
+1. Check if the node is not `None` or `nullptr`, which can be considered $O(1)$
+
+2. Check if the node is a leaf and has the target value, which can all be considered $O(1)$
+
+---
+
+## Space Complexity
+
+The space complexity of the algorithm is $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
