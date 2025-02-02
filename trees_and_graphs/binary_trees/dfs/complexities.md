@@ -987,3 +987,105 @@ The overall time complexity of the algorithm is $O(n)$, where $n$ is the number 
 ## Space Complexity
 
 The space complexity of the algorithm is $O(h)$, where $h$ is $\log_2 n$ for a balanced tree and $n$ for a skewed tree.
+
+---
+
+# Longest ZigZag Path in a Binary Tree
+
+Given the `root` of a binary tree, the goal is to determine the length of the longest ZigZag path contained in that tree. A **ZigZag path** is defined as follows:
+
+1. **Start:** Choose any node in the binary tree and pick an initial direction (either left or right).
+2. **Alternate:** If the current move is in a given direction, the next move must be in the opposite direction (i.e., after moving left, one must move right, and vice versa).
+3. **Terminate:** Continue this alternating process until no further move is possible.
+4. **Measure:** The length of the path is the number of nodes visited minus one (so a single node has a length of 0).
+
+The solution uses a recursive depth-first search (DFS) that, at each node, computes the longest ZigZag path that can be achieved if the path reached that node via a left turn and similarly if it reached via a right turn.
+
+---
+
+## Explanation
+
+The depth-first search (DFS) works as follows:
+
+* **Base Case:**
+  * If the node is `None` or `nullptr`, the function returns `{"turn_left": -1, "turn_right": -1}` or `(-1, -1)`.
+  * This choice of `-1` ensures that when the parent's computation adds 1 (to account for the edge from the parent to a child), a leaf node will yield a path length of `0`.
+
+* **Recursive Case:**
+
+  * For a non-null node, the function recurses on both the left and right children:
+
+    * Depth first search on the left child
+    * Depth first search on the right child
+
+  * **Path Extension:**
+
+    * When moving **left** from the current node, the path is continued by taking the right-turn value from the left child:
+
+      $$
+      \text{left max len} = \text{max len if the next move was to turn right} + 1
+      $$
+
+    * Similarly, when moving **right**, it uses the left-turn value from the right child:
+
+      $$
+      \texttt{right max len} = \text{max len if the next move was to turn left} + 1
+      $$
+
+  * **Global Update:**
+
+    * A global or instance attribute (`max len`) is maintained and updated with the maximum value among the current node’s computed `left_len` and `right_len`.
+
+  * **Return Value:**
+
+    * Each depth first search function returns a dictionary or tuple with the computed `left_len` and `right_len` values
+
+Consider a simplified binary tree as follows:
+
+<div style="text-align: center;">
+    <img src="diagrams/longest_zigzag.png" width="50%">
+</div>
+
+<center>
+
+| **Depth** | **Current Node** | **Operation** | **Calculation / Returned Value** | **Global Max Update** |
+|-----------|------------------|---------------|----------------------------------|-----------------------|
+| **0**     | **Root (1)**     | Start DFS and traverse **left subtree** | – | – |
+| **1**     | Left Child (1)   | Traverse left child (None: base case) | Returns `{L: -1, R: -1}` | – |
+| **1**     | Left Child (1)   | Traverse **right subtree** (continue DFS) | – | – |
+| **2**     | Node (1)         | Traverse left child (None: base case) | Returns `{L: -1, R: -1}` | – |
+| **2**     | Node (1)         | Traverse **right subtree** (continue DFS) | – | – |
+| **3**     | Node (1)         | Traverse left child (None: base case) | Returns `{L: -1, R: -1}` | – |
+| **3**     | Node (1)         | Traverse **right subtree** (continue DFS) | – | – |
+| **4**     | Node (1)         | Traverse left child (None: base case) | Returns `{L: -1, R: -1}` | – |
+| **4**     | Node (1)         | Traverse right child (None: base case) | Returns `{L: -1, R: -1}` | – |
+| **4**     | Node (1)         | **Calculate at leaf node** | <ul><li>Left: `-1 + 1 = 0`</li><li>Right: `-1 + 1 = 0`</li></ul> Returns `{L: 0, R: 0}` | Global Max = **0** |
+| **3**     | Node (1)         | **Backtrack & calculate** at this node | <ul><li>Left: `-1 + 1 = 0`</li><li>Right: `0 + 1 = 1`</li></ul> Returns `{L: 0, R: 1}` | Global Max = **1** |
+| **2**     | Node (1)         | **Traverse right subtree’s children** (both are base cases) | Each returns `{L: -1, R: -1}` | – |
+| **2**     | Node (1)         | **Calculate at this node** after right subtree calls | <ul><li>Left (from left child): already computed</li><li>Right: `-1 + 1 = 0`</li></ul> (For this branch, the calculation continues below) | – |
+| **2**     | Node (1)         | **Combine results** from left and right calls:  | <ul><li>From left subtree: value `1` (for a turn that alternates from left)</li><li>New Left: `1 + 1 = 2`</li><li>New Right: `0 + 1 = 1`</li></ul> Returns `{L: 2, R: 1}` | Global Max = **2** |
+| **1**     | Left Child (1)   | **Backtrack & calculate** at this node using results from both subtrees | <ul><li>Left: `-1 + 1 = 0`</li><li>Right: `2 + 1 = 3`</li></ul> Returns `{L: 0, R: 3}` | Global Max = **3** |
+| **0**     | **Root (1)**     | Now, traverse **right subtree** of the root | (Similar DFS steps occur on the right; base cases return `{L: -1, R: -1}` and calculations yield `{L: 0, R: 0}` for those nodes.) | Global Max remains **3** |
+| **0**     | **Root (1)**     | **Final calculation at the root** combining both subtrees | <ul><li>Left: from left subtree, `3 + 1 = 4`</li><li>Right: from right subtree, `0 + 1 = 1`</li></ul> Returns `{L: 4, R: 1}` | Global Max updated to **4** |
+
+</center>
+
+---
+
+## Time Complexity
+
+* **Traversal:** The DFS visits each node exactly once.
+* **Per-Node Operations:** At each node, only a constant number of operations is performed (retrieving dictionary values, arithmetic additions, comparisons, and updating the global maximum).
+
+Thus, the overall time complexity is $O(n)$, where $n$ is the number of nodes in the binary tree.
+
+---
+
+## Space Complexity
+
+* **Call Stack:** The depth of the recursion is at most the height $h$ of the tree.
+  * **Worst Case (Skewed Tree):** $h = O(n)$
+  * **Average/Best Case (Balanced Tree):** $h = O(\log n)$
+* **Auxiliary Space:** Only a constant amount of extra space is used per recursive call such as a dictionary or tuple to store the computed values.
+
+Therefore, the space complexity is $O(h)$, where $h$ is the height of the tree.
