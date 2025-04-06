@@ -263,3 +263,132 @@ For any binary tree structure:
 Therefore, the general space complexity is $O(w + h)$, which in worst-case scenarios simplifies to $O(n)$.
 
 The $O(w + h)$ notation is valuable because it precisely captures how the space usage varies with different tree structures, even though asymptotically it's equivalent to $O(n)$.
+
+---
+
+# Deepest Leaves Sum
+
+Given the `root` of a binary tree, return the sum of values of its deepest leaves.
+
+## Explanation
+
+Consider the binary tree `[6, 7, 8, 2, 7, 1, 3, 9, None, 1, 4, None, None, None, 5]`:
+
+<div style="text-align: center;">
+    <img src="diagrams/deepest_leaves_sum.png" width="50%">
+</div>
+
+The breadth-first search (BFS) algorithm explores the tree level by level, keeping track of the sum of node values at each level. The deepest leaves are identified by being the last level of nodes processed in the BFS traversal.
+
+### Level 1
+
+| Step | Current Queue | Action | Running Sum | Result |
+|------|---------------|--------|-------------|--------|
+| 1    | [6]           | Dequeue node 6 | 0 + 6 = 6 | Sum = 6 |
+| 2    | []            | Enqueue left child 7 | - | Queue = [7] |
+| 3    | [7]           | Enqueue right child 8 | - | Queue = [7, 8] |
+
+### Level 2
+
+| Step | Current Queue | Action | Running Sum | Result |
+|------|---------------|--------|-------------|--------|
+| 1    | [7, 8]        | Dequeue node 7 | 0 + 7 = 7 | Sum = 7 |
+| 2    | [8]           | Enqueue left child 2 | - | Queue = [8, 2] |
+| 3    | [8, 2]        | Enqueue right child 7 | - | Queue = [8, 2, 7] |
+| 4    | [8, 2, 7]     | Dequeue node 8 | 7 + 8 = 15 | Sum = 15 |
+| 5    | [2, 7]        | Enqueue left child 1 | - | Queue = [2, 7, 1] |
+| 6    | [2, 7, 1]     | Enqueue right child 3 | - | Queue = [2, 7, 1, 3] |
+
+### Level 3
+
+| Step | Current Queue | Action | Running Sum | Result |
+|------|---------------|--------|-------------|--------|
+| 1    | [2, 7, 1, 3]  | Dequeue node 2 | 0 + 2 = 2 | Sum = 2 |
+| 2    | [7, 1, 3]     | Enqueue left child 9 | - | Queue = [7, 1, 3, 9] |
+| 3    | [7, 1, 3, 9]  | Dequeue node 7 | 2 + 7 = 9 | Sum = 9 |
+| 4    | [1, 3, 9]     | Enqueue left child 1 | - | Queue = [1, 3, 9, 1] |
+| 5    | [1, 3, 9, 1]  | Enqueue right child 4 | - | Queue = [1, 3, 9, 1, 4] |
+| 6    | [1, 3, 9, 1, 4] | Dequeue node 1 | 9 + 1 = 10 | Sum = 10 |
+| 7    | [3, 9, 1, 4]  | Dequeue node 3 | 10 + 3 = 13 | Sum = 13 |
+| 8    | [9, 1, 4]     | Enqueue right child 5 | - | Queue = [9, 1, 4, 5] |
+
+### Level 4 (Deepest Level)
+
+| Step | Current Queue | Action | Running Sum | Result |
+|------|---------------|--------|-------------|--------|
+| 1    | [9, 1, 4, 5]  | Dequeue node 9 | 0 + 9 = 9 | Sum = 9 |
+| 2    | [1, 4, 5]     | Dequeue node 1 | 9 + 1 = 10 | Sum = 10 |
+| 3    | [4, 5]        | Dequeue node 4 | 10 + 4 = 14 | Sum = 14 |
+| 4    | [5]           | Dequeue node 5 | 14 + 5 = 19 | Sum = 19 |
+| 5    | []            | Queue empty | - | Final Sum = 19 |
+
+The deepest leaves sum for this binary tree is 19, representing the sum of all leaf nodes at the deepest level (level 4).
+
+## Time Complexity
+
+### Parameters
+
+- $n$: Total number of nodes in the binary tree
+- $h$: Height of the binary tree (number of levels)
+- $n_i$: Number of nodes at level $i$ (where $1 \leq i \leq h$)
+
+### Operation Costs
+
+1. **Node Processing**: Each node is processed exactly once
+
+    - Dequeue operation: $O(1)$ per node
+    - Value addition `+`: $O(1)$ per node
+    - Child existence check: $O(1)$ per node
+    - Child enqueue: $O(1)$ per child node
+
+2. **Level Management**: Operations performed once per level
+
+   - Setting level sum to 0: $O(1)$ per level
+   - Calculate number of nodes: $O(1)$ per level
+
+### Total Time Complexity
+
+Similar to all previous problems, the time complexity can be expressed as:
+
+$$T(n) = \sum_{i=1}^{h} \left( c_1 \cdot n_i + c_2 \right)$$
+
+Where:
+
+- $c_1$ represents constant time for per-node operations
+- $c_2$ represents constant time for per-level operations
+
+Again, this asymptotically simplifies to $O(n)$.
+
+## Space Complexity
+
+The space complexity of the algorithm can be analyzed based on its memory requirements:
+
+### Space Components
+
+1. **Queue Storage**:
+
+   - The queue stores nodes waiting to be processed at each level
+   - Maximum queue size at any point equals the maximum width of the tree: $O(w)$
+
+2. **Result Storage**:
+
+   - Unlike previous problems that store values for each level, this algorithm only maintains a single sum variable that gets overwritten with each new level
+   - This requires only $O(1)$ auxiliary space
+
+3. **Control Variables**: Level counter and nodes-per-level counter: $O(1)$
+
+### Total Space Complexity
+
+$$S(n) = O(w + 1) = O(w)$$
+
+Where $w$ represents the maximum width of the binary tree.
+
+### Tree Shape Analysis
+
+- **Perfect/Complete Binary Tree**: Maximum width at the lowest level is approximately $\frac{n}{2}$, giving $O(n)$ space
+- **Skewed Tree**: Width is consistently 1, giving $O(1)$ space
+- **Balanced Non-Complete Tree**: Width is bounded by $O(n)$ in the worst case
+
+Since we only need to maintain the queue and a constant number of variables (regardless of height), the space complexity is more precisely $O(w)$ rather than $O(w + h)$ as seen in previous problems that required level-by-level result storage.
+
+For asymptotic analysis, since $w$ is bounded by $n$, the worst-case space complexity simplifies to $O(n)$.
