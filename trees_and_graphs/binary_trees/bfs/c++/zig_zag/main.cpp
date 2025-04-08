@@ -28,17 +28,17 @@ std::ostream &operator<<(std::ostream &os, const TreeNode::datatype &data)
     return os;
 }
 
-void print2DVector(const std::vector<std::vector<TreeNode::datatype>> &vector)
+void print2DVector(const std::vector<std::vector<TreeNode::datatype>> &vectors)
 {
     std::cout << "{";
-    for (auto &nodeData : vector)
+    for (auto &vector : vectors)
     {
         std::cout << "{";
-        for (auto &value : nodeData)
+        for (auto &element : vector)
         {
-            std::cout << value << (value != nodeData.back() ? ", " : "");
+            std::cout << element << (&element != &vector.back() ? ", " : "");
         }
-        std::cout << (nodeData != vector.back() ? "}, " : "}");
+        std::cout << (vector != vectors.back() ? "}, " : "}");
     }
     std::cout << "}";
 }

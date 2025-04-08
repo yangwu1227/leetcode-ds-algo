@@ -8,14 +8,14 @@
 void printVectors2D(const std::vector<std::vector<int>> &vectors)
 {
     std::cout << "{";
-    for (size_t i = 0; i < vectors.size(); ++i)
+    for (auto &vector : vectors)
     {
         std::cout << "{";
-        for (size_t j = 0; j < vectors[i].size(); ++j)
+        for (auto &element : vector)
         {
-            std::cout << vectors[i][j] << (j < vectors[i].size() - 1 ? ", " : "");
+            std::cout << element << (&element != &vector.back() ? ", " : "");
         }
-        std::cout << "}" << (i < vectors.size() - 1 ? ", " : "");
+        std::cout << "}" << (&vector != &vectors.back() ? ", " : "");
     }
     std::cout << "}" << '\n';
 }

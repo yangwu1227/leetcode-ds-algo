@@ -7,13 +7,9 @@
 void printVector(const std::vector<int> &vector)
 {
     std::cout << "{";
-    for (size_t i = 0; i < vector.size(); ++i)
+    for (auto const &element : vector)
     {
-        std::cout << vector[i];
-        if (i != vector.size() - 1)
-        {
-            std::cout << ", ";
-        }
+        std::cout << element << (&element != &vector.back() ? ", " : "");
     }
     std::cout << "}";
 }

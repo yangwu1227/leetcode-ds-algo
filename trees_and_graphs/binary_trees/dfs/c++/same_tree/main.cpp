@@ -5,45 +5,6 @@
 #include <map>
 #include <vector>
 #include <iostream>
-#include <variant>
-#include <memory>
-#include <string>
-
-// Overload for std::ostream to handle std::variant
-std::ostream &operator<<(std::ostream &os, const TreeNode::datatype &data)
-{
-    std::visit(
-
-        // Lambda function, auto &&value is a generic param that deduces the type of the currently active value in std::variant
-        [&os](auto &&value)
-        {
-        // Deduce the actual type of the value stored in std::variant
-        using T = std::decay_t<decltype(value)>;
-        // Compile-time if checking if T is monostate, if so output null, else sent value to the stream
-        if constexpr (std::is_same_v<T, std::monostate>) {
-            os << "null";
-        } else {
-            os << value;
-        } },
-
-        // List of variants to pass to the visitor
-        data);
-    return os;
-}
-
-void printVector(const std::vector<TreeNode::datatype> &vector)
-{
-    std::cout << "{";
-    for (size_t i = 0; i < vector.size(); ++i)
-    {
-        std::cout << vector[i];
-        if (i != vector.size() - 1)
-        {
-            std::cout << ", ";
-        }
-    }
-    std::cout << "}";
-}
 
 int main()
 {
@@ -64,9 +25,9 @@ int main()
 
         std::cout << "The two trees ";
         printer.printLevelOrder(firstTree);
-        std::cout << " and ";
+        std::cout << "and ";
         printer.printLevelOrder(secondTree);
-        std::cout << " are" << (sameTree ? " " : " not ") << "the same" << "\n\n";
+        std::cout << "are" << (sameTree ? " " : " not ") << "the same" << "\n\n";
     }
     std::cout << std::endl;
 
