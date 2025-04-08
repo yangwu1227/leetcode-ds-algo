@@ -392,3 +392,140 @@ Where $w$ represents the maximum width of the binary tree.
 Since we only need to maintain the queue and a constant number of variables (regardless of height), the space complexity is more precisely $O(w)$ rather than $O(w + h)$ as seen in previous problems that required level-by-level result storage.
 
 For asymptotic analysis, since $w$ is bounded by $n$, the worst-case space complexity simplifies to $O(n)$.
+
+---
+
+# Binary Tree Zigzag Level Order Traversal
+
+Given the `root` of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+
+## Explanation
+
+Consider the binary tree `[3, 9, 20, None, None, 15, 7]`:
+
+<div style="text-align: center;">
+    <img src="diagrams/zig_zag.png" width="50%">
+</div>
+
+The zig-zag traversal algorithm explores each level of the tree, alternating between left-to-right and right-to-left order. For even-indexed levels (starting at 0), nodes are processed left-to-right. For odd-indexed levels, nodes are processed right-to-left.
+
+### Detailed Processing
+
+<center>
+
+| Level | Nodes at Level | Queue Before Processing | Current Deque | Node Processing | Queue After Level | Result |
+|-------|----------------|-------------------------|---------------|-----------------|-------------------|--------|
+| 0 (even) | 3 | `[3]` | `[]` | Node 3: Append to end → `[3]`<br>Enqueue left child 9<br>Enqueue right child 20 | `[9, 20]` | `[[3]]` |
+| 1 (odd) | 9, 20 | `[9, 20]` | `[]` | Node 9: Append to front → `[9]`<br>No children<br>Node 20: Append to front → `[20, 9]`<br>Enqueue left child 15<br>Enqueue right child 7 | `[15, 7]` | `[[3], [20, 9]]` |
+| 2 (even) | 15, 7 | `[15, 7]` | `[]` | Node 15: Append to end → `[15]`<br>No children<br>Node 7: Append to end → `[15, 7]`<br>No children | `[]` | `[[3], [20, 9], [15, 7]]` |
+
+</center>
+
+### Execution Steps
+
+1. **Initialize**:
+   - Create empty queue and add root node
+   - Start with level = 0 (even)
+
+2. **Level 0 (even order: left-to-right)**:
+   - Process node 3
+   - Append 3 to current level deque: `[3]`
+   - Enqueue children: 9 (left) and 20 (right)
+   - Queue becomes: `[9, 20]`
+   - Add level result to output: `[[3]]`
+
+3. **Level 1 (odd order: right-to-left)**:
+   - Process node 9
+   - Append 9 to front of current level deque: `[9]`
+   - No children to enqueue
+   - Process node 20
+   - Append 20 to front of current level deque: `[20, 9]`
+   - Enqueue children: 15 (left) and 7 (right)
+   - Queue becomes: `[15, 7]`
+   - Add level result to output: `[[3], [20, 9]]`
+
+4. **Level 2 (even order: left-to-right)**:
+   - Process node 15
+   - Append 15 to current level deque: `[15]`
+   - No children to enqueue
+   - Process node 7
+   - Append 7 to current level deque: `[15, 7]`
+   - No children to enqueue
+   - Queue becomes empty
+   - Add level result to output: `[[3], [20, 9], [15, 7]]`
+
+The final result is `[[3], [20, 9], [15, 7]]`, representing the zigzag traversal of the tree.
+
+## Time Complexity
+
+The algorithm performs a breadth-first traversal of the tree:
+
+### Parameters
+
+- $n$: Total number of nodes in the binary tree
+- $h$: Height of the binary tree (number of levels)
+- $n_i$: Number of nodes at level $i$ (where $0 \leq i < h$)
+
+### Operation Costs
+
+1. **Node Processing**: Each node is processed exactly once
+   - Dequeue operation: $O(1)$ per node
+   - Append/appendleft to deque: $O(1)$ per node
+   - Child existence check: $O(1)$ per node
+   - Child enqueue: $O(1)$ per child
+
+2. **Level Management**: Operations performed once per level
+   - Create new deque: $O(1)$ per level
+   - Level counter increment: $O(1)$ per level
+   - Add level result to output: $O(1)$ per level
+
+Again, since $h$ is bounded by $n$ and the node processing dominates level management costs for large trees, the asymptotic time complexity simplifies to:
+
+$$T(n) = O(n)$$
+
+## Space Complexity
+
+### Parameters
+
+- $n$: Total number of nodes in the binary tree
+- $h$: Height of the binary tree (number of levels)
+- $w$: Maximum width of the binary tree (maximum number of nodes at any level)
+
+### Space Components
+
+1. **Queue Storage**:
+   - The queue stores nodes waiting to be processed at each level
+   - Maximum queue size equals the maximum width of the tree: $O(w)$
+
+2. **Result Storage**:
+   - The output stores one deque per level, with each deque containing node values for that level
+   - Total space for results: $O(n)$ as each node value appears exactly once
+
+3. **Auxiliary Variables**:
+   - Level counter and temporary deques: $O(h)$
+
+### Total Space Complexity
+
+$$S(n) = O(w + n + h)$$
+
+Since both $w$ and $h$ are bounded by $n$, the space complexity simplifies to:
+
+$$S(n) = O(n)$$
+
+### Tree Shape Analysis
+
+The space complexity varies based on tree shape:
+
+- **Complete Binary Tree**:
+  - Width at the lowest level is approximately $\frac{n}{2}$
+  - Queue size: $O(n)$
+  - Result storage: $O(n)$
+  - Space complexity: $O(n)$
+
+- **Skewed Tree**:
+  - Width is consistently 1
+  - Queue size: $O(1)$
+  - Result storage still requires $O(n)$ for all node values
+  - Space complexity: $O(n)$
+
+In all cases, the asymptotic space complexity remains $O(n)$.
