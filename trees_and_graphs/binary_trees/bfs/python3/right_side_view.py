@@ -1,10 +1,10 @@
 from collections import deque
-from typing import List, Optional, Union
+from typing import List, Optional
 
-from tree_node import TreeNode
+from tree_node import NodeData, TreeNode
 
 
-def right_side(root: Optional[TreeNode]) -> List[Optional[Union[int, float]]]:
+def right_side(root: Optional[TreeNode]) -> List[NodeData]:
     """
     Find the rightmost node's value at each level of a binary tree.
 
@@ -15,14 +15,14 @@ def right_side(root: Optional[TreeNode]) -> List[Optional[Union[int, float]]]:
 
     Returns
     -------
-    List[Optional[Union[int, float]]]
+    List[NodeData]
         A list containing the values of the rightmost node at each level
         of the tree.
     """
     if not root:
         return []
     level: int = 1
-    right_side_nodes: List[Optional[Union[int, float]]] = []
+    right_side_nodes: List[NodeData] = []
     queue: deque[TreeNode] = deque([root])
     print(f"Initial state of the queue: {queue}")
     print(f"Initial state of the output array: {right_side_nodes}")
@@ -64,7 +64,7 @@ def main() -> int:
     for test_case in test_cases:
         print(f"Case " + "-" * 60, "\n")
         root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=test_case)
-        right_side_nodes: List[Optional[Union[int, float]]] = right_side(root=root)
+        right_side_nodes: List[NodeData] = right_side(root=root)
         print(f"Output array: {right_side_nodes}\n")
 
     return 0

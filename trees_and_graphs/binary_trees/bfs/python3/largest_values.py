@@ -1,11 +1,11 @@
 from collections import deque
 from sys import maxsize
-from typing import List, Optional, Union
+from typing import List, Optional
 
-from tree_node import TreeNode
+from tree_node import NodeData, TreeNode
 
 
-def largest_values(root: Optional[TreeNode]) -> List[Optional[Union[int, float]]]:
+def largest_values(root: Optional[TreeNode]) -> List[NodeData]:
     """
     Find the largest data in each level of a binary tree using BFS.
 
@@ -16,13 +16,13 @@ def largest_values(root: Optional[TreeNode]) -> List[Optional[Union[int, float]]
 
     Returns
     -------
-    List[Optional[Union[int, float]]]
+    List[NodeData]
         List of maximum values for each level of the tree.
     """
     if not root:
         return []
     queue: deque[TreeNode] = deque([root])
-    largest_data: List[Optional[Union[int, float]]] = []
+    largest_data: List[NodeData] = []
     level: int = 1
     print(f"Initial state of the queue: {queue}")
     print(f"Initial state of the output array: {largest_data}")
@@ -66,7 +66,7 @@ def main() -> int:
     for test_case in test_cases:
         print(f"Case " + "-" * 60, "\n")
         root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=test_case)
-        result: List[Optional[Union[int, float]]] = largest_values(root=root)
+        result: List[NodeData] = largest_values(root=root)
         print(f"Array containing largest data values at each level: {result}\n")
 
     return 0
