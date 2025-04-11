@@ -529,3 +529,94 @@ The space complexity varies based on tree shape:
   - Space complexity: $O(n)$
 
 In all cases, the asymptotic space complexity remains $O(n)$.
+
+---
+
+# Even Odd Tree
+
+A binary tree is considered an **Even-Odd Tree** if it satisfies all of the following conditions:
+
+1. **Level Indexing**: The root node is at level index 0, its children are at level index 1, their children are at level index 2, and so on.
+
+2. **Even-Indexed Levels (0, 2, 4, ...)**:
+   - All nodes must have **odd integer values** (1, 3, 5, ...)
+   - Values must be in **strictly increasing order** from left to right
+
+3. **Odd-Indexed Levels (1, 3, 5, ...)**:
+   - All nodes must have **even integer values** (2, 4, 6, ...)
+   - Values must be in **strictly decreasing order** from left to right
+
+## Explanation
+
+Consider the binary tree `[1, 10, 4, 3, None, 7, 9, 12, 8, 6, None, None, 2]`:
+
+<div style="text-align: center;">
+    <img src="diagrams/even_odd_tree.png" width="50%">
+</div>
+
+The BFS algorithm traverses each level, validating:
+
+1. The correct value parity (odd at even levels, even at odd levels)
+2. The correct ordering (increasing at even levels, decreasing at odd levels)
+
+#### Level 0 (Even Level)
+
+| Step | Current Queue | Node Processing | Validation | Result |
+|------|---------------|-----------------|------------|--------|
+| 1    | [1]           | Process node 1 | Value = 1 (odd) ✓<br>First node, no ordering check | Enqueue children: 10, 4<br>Queue = [10, 4] |
+
+#### Level 1 (Odd Level)
+
+| Step | Current Queue | Node Processing | Validation | Result |
+|------|---------------|-----------------|------------|--------|
+| 1    | [10, 4]       | Process node 10 | Value = 10 (even) ✓<br>First node, no ordering check | Enqueue left child: 3<br>Queue = [4, 3] |
+| 2    | [4, 3]        | Process node 4  | Value = 4 (even) ✓<br>Ordering: 4 < 10 ✓ (decreasing) | Enqueue children: 7, 9<br>Queue = [3, 7, 9] |
+
+#### Level 2 (Even Level)
+
+| Step | Current Queue | Node Processing | Validation | Result |
+|------|---------------|-----------------|------------|--------|
+| 1    | [3, 7, 9]     | Process node 3  | Value = 3 (odd) ✓<br>First node, no ordering check | Enqueue children: 12, 8<br>Queue = [7, 9, 12, 8] |
+| 2    | [7, 9, 12, 8] | Process node 7  | Value = 7 (odd) ✓<br>Ordering: 7 > 3 ✓ (increasing) | Enqueue child: 6<br>Queue = [9, 12, 8, 6] |
+| 3    | [9, 12, 8, 6] | Process node 9  | Value = 9 (odd) ✓<br>Ordering: 9 > 7 ✓ (increasing) | Enqueue child: 2<br>Queue = [12, 8, 6, 2] |
+
+#### Level 3 (Odd Level)
+
+| Step | Current Queue | Node Processing | Validation | Result |
+|------|---------------|-----------------|------------|--------|
+| 1    | [12, 8, 6, 2] | Process node 12 | Value = 12 (even) ✓<br>First node, no ordering check | No children<br>Queue = [8, 6, 2] |
+| 2    | [8, 6, 2]     | Process node 8  | Value = 8 (even) ✓<br>Ordering: 8 < 12 ✓ (decreasing) | No children<br>Queue = [6, 2] |
+| 3    | [6, 2]        | Process node 6  | Value = 6 (even) ✓<br>Ordering: 6 < 8 ✓ (decreasing) | No children<br>Queue = [2] |
+| 4    | [2]           | Process node 2  | Value = 2 (even) ✓<br>Ordering: 2 < 6 ✓ (decreasing) | No children<br>Queue = [] |
+
+Since all levels satisfy the even-odd tree conditions, the tree is a valid even-odd tree.
+
+## Time Complexity
+
+Similar to other BFS traversals, the algorithm visits each node exactly once:
+
+- Each node undergoes constant-time operations:
+  - Dequeue from queue
+  - Check value parity
+  - Compare with previous node (if not first in level)
+  - Enqueue children
+
+Since these operations are constant time and performed once per node, the overall time complexity is $O(n)$, where $n$ is the number of nodes in the tree.
+
+## Space Complexity
+
+The space requirements are determined by:
+
+- **Queue Storage**: At most contains all nodes at the widest level: $O(w)$
+- **Previous Value Tracking**: Constant space per level: $O(1)$
+- **Level Management**: Level counter and even/odd tracking: $O(1)$
+
+Where $w$ is the maximum width of the binary tree. This gives an overall space complexity of $O(w)$, which in the worst case (for a complete binary tree) is $O(n)$.
+
+For different tree structures:
+
+- Complete/perfect binary tree: Maximum width approximately $\frac{n}{2}$, giving space complexity $O(n)$
+
+- Skewed tree: Width always 1, giving space complexity $O(1)$
+
+Therefore, the space complexity is more precisely stated as $O(w)$.

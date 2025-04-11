@@ -4,36 +4,35 @@ from typing import Deque, List, Optional
 from tree_node import TreeNode
 
 
-def deepest_leaves_sum(root: Optional[TreeNode]) -> int:
+def check_even_odd(root: Optional[TreeNode]) -> bool:
     """
-    Given a binary tree, return the sum of values of its deepest leaves.
+    Check if a binary tree is an Even-Odd tree.
 
     Parameters
     ----------
     root : Optional[TreeNode]
-        The root of the binary tree.
+        Root node of the binary tree.
 
     Returns
     -------
-    int
-        The sum of values of the deepest leaves.
+    bool
+        `True` if the tree is an Even-Odd tree, `False` otherwise.
     """
     if not root:
-        print(f"Empty tree")
-        return 0
+        return False
     if not (root.left or root.right):
-        print(f"Single node binary tree")
         assert isinstance(root.data, int)
-        return root.data
+        return root.data % 2 != 0
 
     queue: Deque[TreeNode] = deque([root])
     level: int = 0
-    sum_curr_level: int = 0
+    print(f"Initial state of the queue: {queue}")
 
     while queue:
         prefix: str = f"{level * ' '}Level {level} | "
         num_nodes_curr_level: int = len(queue)
-        sum_curr_level = 0
+        previous_data: Optional[int] = None
+        is_even_level: bool = level % 2 == 0
         print(f"{prefix}Number of nodes = {num_nodes_curr_level}")
 
         for _ in range(num_nodes_curr_level):
@@ -41,38 +40,38 @@ def deepest_leaves_sum(root: Optional[TreeNode]) -> int:
             curr_node: TreeNode = queue.popleft()
             print(f"{prefix}Dequeue and process {curr_node}")
             assert isinstance(curr_node.data, int)
-            print(
-                f"{prefix}{sum_curr_level} + {curr_node.data} = {sum_curr_level + curr_node.data}"
-            )
-            sum_curr_level += curr_node.data
+            curr_data: int = curr_node.data
 
+            if is_even_level == (curr_data % 2 == 0):
+                return False
+
+            if previous_data is not None:
+                is_decreasing: bool = curr_data < previous_data
+                is_increasing: bool = curr_data > previous_data
+                if not ((is_even_level and is_increasing) or (not is_even_level and is_decreasing)):
+                    return False
             if curr_node.left:
-                print(f"{prefix}Enque left child of {curr_node}: {curr_node.left}")
                 queue.append(curr_node.left)
-            else:
-                print(f"{prefix}Left child of {curr_node} is empty")
             if curr_node.right:
-                print(f"{prefix}Enque right child of {curr_node}: {curr_node.right}")
                 queue.append(curr_node.right)
-            else:
-                print(f"{prefix}Right child of {curr_node} is empty")
+            previous_data = curr_data
         level += 1
-
-    return sum_curr_level
+    return True
 
 
 def main() -> int:
     test_cases: List[List[Optional[int]]] = [
-        [1, 2, 3, 4, 5, None, 6, 7, None, None, None, None, 8],
-        [6, 7, 8, 2, 7, 1, 3, 9, None, 1, 4, None, None, None, 5],
+        [1, 10, 4, 3, None, 7, 9, 12, 8, 6, None, None, 2],
+        [5, 4, 2, 3, 3, 7],
         [],
-        [3],
+        [5],
+        [5, 9, 1, 3, 5, 7],
     ]
     for node_data in test_cases:
         print(f"Case " + "-" * 60, "\n")
         root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=node_data)
-        leaves_sum: int = deepest_leaves_sum(root=root)
-        print(f"The leaves sum at the deepest leve of the tree is: {leaves_sum}\n")
+        is_even_odd: bool = check_even_odd(root=root)
+        print(f"The binary tree is{' ' if is_even_odd else ' not '}an even odd tree\n")
 
     return 0
 

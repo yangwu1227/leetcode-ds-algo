@@ -23,7 +23,7 @@ def largest_values(root: Optional[TreeNode]) -> List[NodeData]:
         return []
     queue: deque[TreeNode] = deque([root])
     largest_data: List[NodeData] = []
-    level: int = 1
+    level: int = 0
     print(f"Initial state of the queue: {queue}")
     print(f"Initial state of the output array: {largest_data}")
 

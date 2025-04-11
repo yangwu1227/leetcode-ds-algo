@@ -21,7 +21,7 @@ def right_side(root: Optional[TreeNode]) -> List[NodeData]:
     """
     if not root:
         return []
-    level: int = 1
+    level: int = 0
     right_side_nodes: List[NodeData] = []
     queue: deque[TreeNode] = deque([root])
     print(f"Initial state of the queue: {queue}")
