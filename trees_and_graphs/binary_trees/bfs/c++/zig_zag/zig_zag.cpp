@@ -17,7 +17,7 @@ std::vector<std::vector<TreeNode::datatype>> zigZag(TreeNode::ptr &root)
 
     while (!queue.empty())
     {
-        int numNodesCurrLevel = queue.size();
+        const size_t numNodesCurrLevel = queue.size();
         std::deque<TreeNode::datatype> nodeData;
 
         for (size_t i = 0; i < numNodesCurrLevel; i++)

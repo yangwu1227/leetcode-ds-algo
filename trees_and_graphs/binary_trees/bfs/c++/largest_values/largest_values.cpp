@@ -19,7 +19,7 @@ std::vector<int> largestValues(TreeNode::ptr &root)
 
     while (!queue.empty())
     {
-        int numNodesCurrLevel = queue.size();
+        const size_t numNodesCurrLevel = queue.size();
         maxCurrLevel = std::numeric_limits<int>::min();
 
         for (size_t i = 0; i < numNodesCurrLevel; ++i)
@@ -29,7 +29,7 @@ std::vector<int> largestValues(TreeNode::ptr &root)
 
             if (std::holds_alternative<int>(currNode->data))
             {
-                int currData = std::get<int>(currNode->data);
+                const int currData = std::get<int>(currNode->data);
                 maxCurrLevel = std::max(maxCurrLevel, currData);
             }
             else

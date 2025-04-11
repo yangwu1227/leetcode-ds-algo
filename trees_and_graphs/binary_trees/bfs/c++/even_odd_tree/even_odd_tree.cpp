@@ -10,25 +10,23 @@ bool checkEvenOdd(TreeNode::ptr &root)
 {
     if (root == nullptr)
         return false;
+    // Check if single-node tree has an odd value at level 0
     if (root->left == nullptr && root->right == nullptr)
     {
         if (std::holds_alternative<int>(root->data))
         {
             int rootData = std::get<int>(root->data);
-            // Return true if rootData (level 0) is odd, return false if it is even
             return rootData % 2 != 0;
         }
     }
 
     std::deque<TreeNode *> queue = {root.get()};
     int level = 0;
-    int currData, numNodesCurrLevel;
-    bool isDecreasing, isIncreasing, isEvenLevel;
 
     while (!queue.empty())
     {
-        numNodesCurrLevel = queue.size();
-        isEvenLevel = level % 2 == 0;
+        const size_t numNodesCurrLevel = queue.size();
+        const bool isEvenLevel = (level % 2 == 0);
         // Set as optional before traversing each level
         std::optional<int> previousData;
 
@@ -36,26 +34,23 @@ bool checkEvenOdd(TreeNode::ptr &root)
         {
             TreeNode *currNode = queue.front();
             queue.pop_front();
-            if (std::holds_alternative<int>(currNode->data))
-            {
-                currData = std::get<int>(currNode->data);
-            }
-            else
+            if (!std::holds_alternative<int>(currNode->data))
             {
                 throw std::invalid_argument("TreeNode data should be int for this algorithm");
             }
 
-            // If odd (even) level matchs with odd (even) data, return false
+            const int currData = std::get<int>(currNode->data);
+
+            // Check value parity: even levels need odd values, odd levels need even values
             if (isEvenLevel == (currData % 2 == 0))
                 return false;
 
             // The first node of each level has no values, so this is not run
             if (previousData.has_value())
             {
-                isDecreasing = currData < previousData;
-                isIncreasing = currData > previousData;
-                // The only valid even odd conditions are (even && increasing) or (odd && decreasing)
-                if (!((isEvenLevel && isIncreasing) || (!isEvenLevel && isDecreasing)))
+                const bool validOrder = isEvenLevel ? currData > *previousData : // Even level: strictly increasing
+                                            currData < *previousData;            // Odd level: strictly decreasing
+                if (!validOrder)
                     return false;
             }
 
