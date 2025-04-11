@@ -23,6 +23,5 @@ repos:
       - id: uv-sync
         args: ["--locked", "--all-packages"]
         stages: [post-checkout, post-merge, post-rewrite]
-        always_run: true
       - id: uv-export
         args: ["--frozen", "--output-file=requirements.txt"]
