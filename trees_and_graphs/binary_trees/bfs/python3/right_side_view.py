@@ -61,9 +61,9 @@ def main() -> int:
         [],
         [1, None, 3],
     ]
-    for test_case in test_cases:
+    for node_data in test_cases:
         print(f"Case " + "-" * 60, "\n")
-        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=test_case)
+        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=node_data)
         right_side_nodes: List[NodeData] = right_side(root=root)
         print(f"Output array: {right_side_nodes}\n")
 

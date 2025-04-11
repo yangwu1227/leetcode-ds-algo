@@ -63,9 +63,9 @@ def main() -> int:
         [],
         [1, None, 3, 9, 7, 12, None, 8, None, 17, None, None, 27, None, 4, 3, 6, 5, 2],
     ]
-    for test_case in test_cases:
+    for node_data in test_cases:
         print(f"Case " + "-" * 60, "\n")
-        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=test_case)
+        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=node_data)
         result: List[NodeData] = largest_values(root=root)
         print(f"Array containing largest data values at each level: {result}\n")
 

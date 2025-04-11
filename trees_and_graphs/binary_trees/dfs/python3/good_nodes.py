@@ -67,9 +67,9 @@ class Solution(object):
 
 def main() -> int:
     test_cases = [[3, 1, 4, 3, None, 1, 5], [3, 3, None, 4, 2], [1]]
-    for test_case in test_cases:
+    for node_data in test_cases:
         print("Case " + "-" * 60, "\n")
-        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=test_case)
+        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=node_data)
         total_num_good_nodes: int = Solution.good_node(root)
         print(f"Total number of good nodes: {total_num_good_nodes}\n\n")
 

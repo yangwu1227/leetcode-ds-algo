@@ -68,9 +68,9 @@ def main() -> int:
         [],
         [3],
     ]
-    for test_case in test_cases:
+    for node_data in test_cases:
         print(f"Case " + "-" * 60, "\n")
-        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=test_case)
+        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=node_data)
         leaves_sum: int = deepest_leaves_sum(root=root)
         print(f"The leaves sum at the deepest leve of the tree is: {leaves_sum}\n")
 

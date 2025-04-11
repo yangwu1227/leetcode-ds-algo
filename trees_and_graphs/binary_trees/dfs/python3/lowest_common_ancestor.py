@@ -54,9 +54,9 @@ def main() -> int:
         ([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4], 5, 4),
         ([1, 2], 1, 2),
     ]
-    for test_case, p_data, q_data in test_cases:
+    for node_data, p_data, q_data in test_cases:
         print("Case " + "-" * 60, "\n")
-        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=test_case)
+        root: Optional[TreeNode] = TreeNode.construct_binary_tree(values=node_data)
         p: TreeNode = TreeNode(data=p_data)
         q: TreeNode = TreeNode(data=q_data)
         lca: Optional[TreeNode] = lowest_common_ancestor(p=p, q=q, root=root)
