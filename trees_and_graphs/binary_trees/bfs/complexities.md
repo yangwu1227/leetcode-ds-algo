@@ -897,3 +897,155 @@ $$S(n) = O(w + n + h)$$
 Where $w$ is the maximum width of the binary tree. Since both $w$ and $h$ are bounded by $n$, the space complexity simplifies to:
 
 $$S(n) = O(3n) = O(n)$$
+
+---
+
+# Maximum Level Sum of a Binary Tree
+
+Given the `root` of a binary tree, find the level with the largest sum of node values.
+
+## Explanation
+
+Consider the binary tree `[989, None, 10250, 98693, -89388, None, None, None, -32127]`:
+
+<div style="text-align: center;">
+    <img src="diagrams/max_level_sum.png" width="50%">
+</div>
+
+<center>
+
+| Level | Nodes at Level | Queue Before Processing | Running Sum | Comparison | Max Level | Max Sum |
+|-------|----------------|-------------------------|-------------|------------|-----------|---------|
+| 1     | 989            | `[989]`                 | 989         | 989 > -∞   | 1         | 989     |
+| 2     | 10250          | `[10250]`               | 10250       | 10250 > 989| 2         | 10250   |
+| 3     | 98693, -89388  | `[98693, -89388]`       | 9305        | 9305 < 10250| 2        | 10250   |
+| 4     | -32127         | `[-32127]`              | -32127      | -32127 < 10250| 2       | 10250   |
+
+</center>
+
+### Execution Steps
+
+1. **Initialize**:
+   - Create empty queue and add root node (989)
+   - Set maximum sum to negative infinity
+   - Set maximum level to 1 (smallest possible level)
+   - Start with level = 1
+
+2. **Level 1**:
+   - Process node 989
+   - Running sum = 0 + 989 = 989
+   - Enqueue right child 10250
+   - Compare: 989 > -∞
+   - Update max level to 1
+   - Update max sum to 989
+
+3. **Level 2**:
+   - Process node 10250
+   - Running sum = 0 + 10250 = 10250
+   - Enqueue children: 98693 (left) and -89388 (right)
+   - Compare: 10250 > 989
+   - Update max level to 2
+   - Update max sum to 10250
+
+4. **Level 3**:
+   - Process node 98693
+   - Running sum = 0 + 98693 = 98693
+   - No children to enqueue
+   - Process node -89388
+   - Running sum = 98693 + (-89388) = 9305
+   - Enqueue right child -32127
+   - Compare: 9305 < 10250
+   - Keep max level at 2
+   - Keep max sum at 10250
+
+5. **Level 4**:
+   - Process node -32127
+   - Running sum = 0 + (-32127) = -32127
+   - No children to enqueue
+   - Compare: -32127 < 10250
+   - Keep max level at 2
+   - Keep max sum at 10250
+
+The final result is level 2, which has the maximum sum of 10250.
+
+## Time Complexity
+
+### Parameters
+
+- $n$: Total number of nodes in the binary tree
+- $h$: Height of the binary tree (number of levels)
+- $n_i$: Number of nodes at level $i$ (where $1 \leq i \leq h$)
+
+### Operation Costs
+
+1. **Node Processing**: Each node is processed exactly once
+   - Dequeue operation: $O(1)$ per node
+   - Value addition: $O(1)$ per node
+   - Child existence check: $O(1)$ per node
+   - Child enqueue: $O(1)$ per child node
+
+2. **Level Management**: Operations performed once per level
+   - Reset running sum: $O(1)$ per level
+   - Calculate number of nodes: $O(1)$ per level
+   - Compare level sum with max sum: $O(1)$ per level
+   - Update max level/sum if needed: $O(1)$ per level
+
+### Total Time Complexity
+
+The time complexity can be expressed as:
+
+$$T(n) = \sum_{i=1}^{h} \left( c_1 \cdot n_i + c_2 \right)$$
+
+Where:
+
+- $c_1$ represents constant time for per-node operations
+- $c_2$ represents constant time for per-level operations
+- $\sum_{i=1}^{h} n_i = n$ (sum of nodes across all levels equals total nodes)
+
+This simplifies to:
+
+$$T(n) = c_1 \cdot n + c_2 \cdot h = O(n + h)$$
+
+Since the height $h$ is bounded by the number of nodes $n$ (in the worst case of a skewed tree, $h = n$), the overall time complexity is:
+
+$$T(n) = O(n)$$
+
+### Bounds Analysis
+
+- **Balanced Tree**: Height $h = O(\log n)$, giving time complexity $O(n)$
+- **Skewed Tree**: Height $h = O(n)$, giving time complexity $O(n)$
+
+## Space Complexity
+
+### Space Components
+
+1. **Queue Storage**: The BFS queue stores nodes awaiting processing
+   - Maximum queue size equals the maximum width of the tree: $O(w)$
+
+2. **Tracking Variables**:
+   - Max sum: $O(1)$
+   - Max level: $O(1)$
+   - Current level: $O(1)$
+   - Running level sum: $O(1)$
+
+### Total Space Complexity
+
+$$S(n) = O(w + 1) = O(w)$$
+
+Where $w$ is the maximum width of the binary tree (maximum number of nodes at any level).
+
+### Tree Shape Analysis
+
+- **Perfect/Complete Binary Tree**:
+  - Maximum width occurs at the lowest level: $w = O(n/2) = O(n)$
+  - Space complexity: $O(n)$
+
+- **Skewed Tree**:
+  - Width is consistently 1: $w = O(1)$
+  - Space complexity: $O(1)$
+
+- **Example Tree (Mostly Skewed)**:
+  - Maximum width is 2 (at level 3)
+  - Space complexity: $O(1)$
+
+Therefore, the space complexity more precisely is $O(w)$, which in the worst case is $O(n)$ but can be as efficient as $O(1)$ for skewed trees.
