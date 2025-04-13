@@ -6,7 +6,7 @@
       - [Attributes Python](#attributes-python)
       - [Initializer](#initializer)  
       - [Methods](#methods)  
-         - [__repr__](#__repr__)  
+         - [`__repr__`](#__repr__)  
          - [construct_binary_tree](#construct_binary_tree)  
          - [visualize_binary_tree](#visualize_binary_tree)  
    - [C++ Implementation](#cpp-implementation)  
@@ -148,11 +148,11 @@ This static method visualizes a binary tree using `matplotlib` and `networkx`. I
 
 ---
 
-# C++ Implementation {#cpp-implementation}
+# CPP Implementation
 
 The header file `tree_node.hpp` defines the `TreeNode` class structure, data members, and public methods. It also includes key type aliases and uses `std::variant` to store various types of data.
 
-## Class Definition C++ {#class-definition-cpp}
+## Class Definition CPP
 
 ```cpp
 class TreeNode
@@ -167,10 +167,10 @@ class TreeNode
   A variant type that can hold one of several types (`int`, `double`, `std::string`, or `std::monostate`). This provides flexibility for node data types:
   - __`std::monostate`__ represents a "null" value, indicating an empty or missing node.
 
-### Attributes C++ {#attributes-cpp}
+### Attributes
 
 - __data__: `datatype`  
-  The data value for this node, which can be an `int`, `double`, `std::string`, or `null`.
+  The data value for this node, which can be an `int`, `double`, `std::string`, or `std::monostate`.
 
 - __left__: `ptr`  
   A unique pointer to the left child node.

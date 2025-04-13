@@ -19,12 +19,12 @@ This integrates with the `TreeNode` class, which represents a node in a binary t
 
 ## Overview
 
-This library consists of:
+The utility consists of:
 
 1. **`TreePrinter` Class**: Handles tree traversal and printing in different orders.
 2. **`utils` Namespace**: Provides utility functions for tree analysis (e.g., comparison, height, and node count).
 
-The design leverages modern C++ features such as `std::variant` for node data representation, smart pointers (`std::shared_ptr`), and template metaprogramming (`if constexpr`).
+The design leverages features such as `std::variant` for node data representation, smart pointers (`std::shared_ptr`), and template metaprogramming (`if constexpr`).
 
 ---
 
@@ -190,4 +190,43 @@ size_t getNodeCount(const TreeNode::ptr &root);
 
 3. **Template Metaprogramming with `if constexpr`**
    - **What**: Used in `nodeToString` to handle type-specific logic at compile time.
-   - **Why**: Ensures efficient and type-safe operations without runtime overhead.
+
+    ```cpp
+    // In TreePrinter::nodeToString method
+    std::string TreePrinter::nodeToString(const TreeNode::datatype &data)
+    {
+        return std::visit(
+            [](const auto &value) -> std::string
+            {
+                using T = std::decay_t<decltype(value)>;
+                if constexpr (std::is_same_v<T, std::monostate>)
+                    return "null";
+                else if constexpr (std::is_same_v<T, int> || std::is_same_v<T, double>)
+                    return std::to_string(value);
+                else if constexpr (std::is_same_v<T, std::string>)
+                    return value;
+                else
+                    return "unknown";
+            },
+            data);
+    }
+    ```
+
+    The `if constexpr` (introduced in C++17) is a compile-time conditional statement that evaluates conditions during compilation rather than at runtime. Unlike regular `if` statements, code in branches that don't match the condition is completely discarded during compilation.
+
+    1. **Compile-Time Type Resolution**
+
+      - Each variant type (`int`, `double`, `string`, etc.) gets exactly the code path it needs
+      - Invalid operations for specific types are eliminated during compilation
+      - For example, calling `std::to_string()` on a string would be a compile error, but `if constexpr` prevents that code from being compiled for string types
+
+    2. **Performance Optimization**
+
+      - No runtime type checking overhead - all type decisions are made at compile time
+      - Generated assembly code contains only the relevant code path for each type
+
+    3. **Type Safety**
+
+      - Ensures type-specific operations are only compiled for compatible types
+      - Prevents potential runtime errors from incompatible type operations
+      - Compiler verifies each branch independently for its specific type
