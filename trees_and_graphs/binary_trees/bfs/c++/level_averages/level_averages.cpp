@@ -2,8 +2,9 @@
 #include "level_averages.hpp"
 #include "tree_node.hpp"
 #include <vector>
-#include <variant>
 #include <deque>
+#include <variant> // std::hold_alternative 
+#include <stdexcept> // std::invalid_argument
 
 std::vector<double> computeLevelAverages(TreeNode::ptr &root)
 {

@@ -3,7 +3,6 @@
 #include "tree_node.hpp"
 #include <vector>
 #include <deque>
-#include <utility> // For std::move
 
 std::vector<TreeNode::datatype> rightSide(TreeNode::ptr &root)
 {
