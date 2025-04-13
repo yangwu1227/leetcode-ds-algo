@@ -282,13 +282,19 @@ The breadth-first search (BFS) algorithm explores the tree level by level, keepi
 
 ### Level 1
 
+<center>
+
 | Step | Current Queue | Action | Running Sum | Result |
 |------|---------------|--------|-------------|--------|
 | 1    | [6]           | Dequeue node 6 | 0 + 6 = 6 | Sum = 6 |
 | 2    | []            | Enqueue left child 7 | - | Queue = [7] |
 | 3    | [7]           | Enqueue right child 8 | - | Queue = [7, 8] |
 
+</center>
+
 ### Level 2
+
+<center>
 
 | Step | Current Queue | Action | Running Sum | Result |
 |------|---------------|--------|-------------|--------|
@@ -299,7 +305,11 @@ The breadth-first search (BFS) algorithm explores the tree level by level, keepi
 | 5    | [2, 7]        | Enqueue left child 1 | - | Queue = [2, 7, 1] |
 | 6    | [2, 7, 1]     | Enqueue right child 3 | - | Queue = [2, 7, 1, 3] |
 
+</center>
+
 ### Level 3
+
+<center>
 
 | Step | Current Queue | Action | Running Sum | Result |
 |------|---------------|--------|-------------|--------|
@@ -312,6 +322,8 @@ The breadth-first search (BFS) algorithm explores the tree level by level, keepi
 | 7    | [3, 9, 1, 4]  | Dequeue node 3 | 10 + 3 = 13 | Sum = 13 |
 | 8    | [9, 1, 4]     | Enqueue right child 5 | - | Queue = [9, 1, 4, 5] |
 
+</center>
+
 ### Level 4 (Deepest Level)
 
 | Step | Current Queue | Action | Running Sum | Result |
@@ -321,6 +333,8 @@ The breadth-first search (BFS) algorithm explores the tree level by level, keepi
 | 3    | [4, 5]        | Dequeue node 4 | 10 + 4 = 14 | Sum = 14 |
 | 4    | [5]           | Dequeue node 5 | 14 + 5 = 19 | Sum = 19 |
 | 5    | []            | Queue empty | - | Final Sum = 19 |
+
+</center>
 
 The deepest leaves sum for this binary tree is 19, representing the sum of all leaf nodes at the deepest level (level 4).
 
@@ -561,18 +575,28 @@ The BFS algorithm traverses each level, validating:
 
 #### Level 0 (Even Level)
 
+<center>
+
 | Step | Current Queue | Node Processing | Validation | Result |
 |------|---------------|-----------------|------------|--------|
 | 1    | [1]           | Process node 1 | Value = 1 (odd) ✓<br>First node, no ordering check | Enqueue children: 10, 4<br>Queue = [10, 4] |
 
+</center>
+
 #### Level 1 (Odd Level)
+
+<center>
 
 | Step | Current Queue | Node Processing | Validation | Result |
 |------|---------------|-----------------|------------|--------|
 | 1    | [10, 4]       | Process node 10 | Value = 10 (even) ✓<br>First node, no ordering check | Enqueue left child: 3<br>Queue = [4, 3] |
 | 2    | [4, 3]        | Process node 4  | Value = 4 (even) ✓<br>Ordering: 4 < 10 ✓ (decreasing) | Enqueue children: 7, 9<br>Queue = [3, 7, 9] |
 
+</center>
+
 #### Level 2 (Even Level)
+
+<center>
 
 | Step | Current Queue | Node Processing | Validation | Result |
 |------|---------------|-----------------|------------|--------|
@@ -580,7 +604,11 @@ The BFS algorithm traverses each level, validating:
 | 2    | [7, 9, 12, 8] | Process node 7  | Value = 7 (odd) ✓<br>Ordering: 7 > 3 ✓ (increasing) | Enqueue child: 6<br>Queue = [9, 12, 8, 6] |
 | 3    | [9, 12, 8, 6] | Process node 9  | Value = 9 (odd) ✓<br>Ordering: 9 > 7 ✓ (increasing) | Enqueue child: 2<br>Queue = [12, 8, 6, 2] |
 
+</center>
+
 #### Level 3 (Odd Level)
+
+<center>
 
 | Step | Current Queue | Node Processing | Validation | Result |
 |------|---------------|-----------------|------------|--------|
@@ -588,6 +616,8 @@ The BFS algorithm traverses each level, validating:
 | 2    | [8, 6, 2]     | Process node 8  | Value = 8 (even) ✓<br>Ordering: 8 < 12 ✓ (decreasing) | No children<br>Queue = [6, 2] |
 | 3    | [6, 2]        | Process node 6  | Value = 6 (even) ✓<br>Ordering: 6 < 8 ✓ (decreasing) | No children<br>Queue = [2] |
 | 4    | [2]           | Process node 2  | Value = 2 (even) ✓<br>Ordering: 2 < 6 ✓ (decreasing) | No children<br>Queue = [] |
+
+</center>
 
 Since all levels satisfy the even-odd tree conditions, the tree is a valid even-odd tree.
 
@@ -731,3 +761,139 @@ Where $w$ is the maximum width of the tree and $h$ is the height.
   - Space complexity: $O(1 + n) = O(n)$
 
 Therefore, the general space complexity is $O(w + h)$, which in the worst case simplifies to $O(n)$.
+
+---
+
+# Binary Tree Level Order Traversal
+
+# Level Order Traversal of Binary Tree
+
+Given the `root` of a binary tree, return the level order traversal of its nodes' values (i.e., from left to right, level by level).
+
+## Explanation
+
+Consider the binary tree `[6, 7, 8, 3, 9, None, 1, 4, None, None, None, 5]`:
+
+<div style="text-align: center;">
+    <img src="diagrams/level_order_traversal.png" width="50%">
+</div>
+
+<center>
+
+| Level | Nodes at Level | Queue Before Processing | Current Level Data | Queue After Processing |
+|-------|----------------|-------------------------|-------------------|------------------------|
+| 0     | 6              | `[6]`                   | `[6]`             | `[7, 8]`               |
+| 1     | 7, 8           | `[7, 8]`                | `[7, 8]`          | `[3, 9, 1]`            |
+| 2     | 3, 9, 1        | `[3, 9, 1]`             | `[3, 9, 1]`       | `[4, 5]`               |
+| 3     | 4, 5           | `[4, 5]`                | `[4, 5]`          | `[]` (Empty)           |
+
+</center>
+
+#### Level 0
+
+<center>
+
+| Step | Current Queue | Action | Result |
+|------|---------------|--------|--------|
+| 1    | [6]           | Dequeue node 6 | Level data = [6] |
+| 2    | []            | Enqueue left child 7 | Queue = [7] |
+| 3    | [7]           | Enqueue right child 8 | Queue = [7, 8] |
+| 4    | [7, 8]        | Add level data to output | Output = [[6]] |
+
+</center>
+
+#### Level 1
+
+<center>
+
+| Step | Current Queue | Action | Result |
+|------|---------------|--------|--------|
+| 1    | [7, 8]        | Dequeue node 7 | Level data = [7] |
+| 2    | [8]           | Enqueue left child 3 | Queue = [8, 3] |
+| 3    | [8, 3]        | Enqueue right child 9 | Queue = [8, 3, 9] |
+| 4    | [8, 3, 9]     | Dequeue node 8 | Level data = [7, 8] |
+| 5    | [3, 9]        | No left child | Queue unchanged |
+| 6    | [3, 9]        | Enqueue right child 1 | Queue = [3, 9, 1] |
+| 7    | [3, 9, 1]     | Add level data to output | Output = [[6], [7, 8]] |
+
+</center>
+
+#### Level 2
+
+<center>
+
+| Step | Current Queue | Action | Result |
+|------|---------------|--------|--------|
+| 1    | [3, 9, 1]     | Dequeue node 3 | Level data = [3] |
+| 2    | [9, 1]        | Enqueue left child 4 | Queue = [9, 1, 4] |
+| 3    | [9, 1, 4]     | No right child | Queue unchanged |
+| 4    | [9, 1, 4]     | Dequeue node 9 | Level data = [3, 9] |
+| 5    | [1, 4]        | No children | Queue unchanged |
+| 6    | [1, 4]        | Dequeue node 1 | Level data = [3, 9, 1] |
+| 7    | [4]           | Enqueue left child 5 | Queue = [4, 5] |
+| 8    | [4, 5]        | No right child | Queue unchanged |
+| 9    | [4, 5]        | Add level data to output | Output = [[6], [7, 8], [3, 9, 1]] |
+
+</center>
+
+#### Level 3
+
+<center>
+
+| Step | Current Queue | Action | Result |
+|------|---------------|--------|--------|
+| 1    | [4, 5]        | Dequeue node 4 | Level data = [4] |
+| 2    | [5]           | No children | Queue unchanged |
+| 3    | [5]           | Dequeue node 5 | Level data = [4, 5] |
+| 4    | []            | No children | Queue empty |
+| 5    | []            | Add level data to output | Output = [[6], [7, 8], [3, 9, 1], [4, 5]] |
+
+</center>
+
+The final result is `[[6], [7, 8], [3, 9, 1], [4, 5]]`, representing the values at each level of the binary tree.
+
+## Time Complexity
+
+### Parameters
+
+- $n$: Total number of nodes in the binary tree
+- $h$: Height of the binary tree (number of levels)
+- $n_i$: Number of nodes at level $i$ (where $0 \leq i < h$)
+
+### Operation Costs
+
+1. **Node Processing**: Each node is processed exactly once
+   - Dequeue operation: $O(1)$ per node
+   - Append to level data array: $O(1)$ per node
+   - Child existence check: $O(1)$ per node
+   - Child enqueue: $O(1)$ per child node
+
+2. **Level Management**: Operations performed once per level
+   - Calculate number of nodes: $O(1)$ per level
+   - Create node data array: $O(1)$ per level
+   - Append to output array: $O(1)$ per level
+
+The overall time complexity is $O(n)$.
+
+## Space Complexity
+
+### Space Components
+
+1. **Queue Storage**:
+   - The queue stores nodes awaiting processing at each level
+   - Maximum queue size equals the maximum width of the tree: $O(w)$
+
+2. **Result Storage**:
+   - The output array stores one array per level, with each array containing node values for that level
+   - Total space for results: $O(n)$ since each node appears exactly once
+
+3. **Auxiliary Variables**:
+   - Level counter and temporary arrays: $O(h)$
+
+### Total Space Complexity
+
+$$S(n) = O(w + n + h)$$
+
+Where $w$ is the maximum width of the binary tree. Since both $w$ and $h$ are bounded by $n$, the space complexity simplifies to:
+
+$$S(n) = O(3n) = O(n)$$
