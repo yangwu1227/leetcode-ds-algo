@@ -620,3 +620,114 @@ For different tree structures:
 - Skewed tree: Width always 1, giving space complexity $O(1)$
 
 Therefore, the space complexity is more precisely stated as $O(w)$.
+
+---
+
+# Average of Levels in Binary Tree
+
+Given the `root` of a binary tree, return an array of the average values at each level of the tree.
+
+## Explanation
+
+Consider the binary tree `[3, 9, 20, 15, 7]`:
+
+<div style="text-align: center;">
+    <img src="diagrams/level_averages.png" width="50%">
+</div>
+
+<center>
+
+| Level | Nodes at Level | Queue Before Processing | Running Sum | Average | Queue After Level |
+|-------|----------------|-------------------------|-------------|---------|-------------------|
+| 0     | 3              | `[3]`                   | 3           | 3.0     | `[9, 20]`         |
+| 1     | 9, 20          | `[9, 20]`               | 9 + 20 = 29 | 14.5    | `[15, 7]`         |
+| 2     | 15, 7          | `[15, 7]`               | 15 + 7 = 22 | 11.0    | `[]`              |
+
+</center>
+
+- **Level 0:**
+  - Process node 3 (root)
+  - Running sum = 3
+  - Average = 3.0
+  - Enqueue children: 9 (left) and 20 (right)
+  
+- **Level 1:**
+  - Process node 9
+  - Running sum = 9
+  - Process node 20
+  - Running sum = 9 + 20 = 29
+  - Average = 29 / 2 = 14.5
+  - Enqueue children: 15 and 7 (from node 20)
+  
+- **Level 2:**
+  - Process node 15
+  - Running sum = 15
+  - Process node 7
+  - Running sum = 15 + 7 = 22
+  - Average = 22 / 2 = 11.0
+  
+The final result is an array `[3.0, 14.5, 11.0]`, representing the average at each level.
+
+## Time Complexity
+
+### Parameters
+
+- $n$: Total number of nodes in the binary tree
+- $h$: Height of the binary tree (number of levels)
+- $n_i$: Number of nodes at level $i$ (where $1 \leq i \leq h$)
+
+### Operation Costs
+
+1. **Node Processing**: Each node is processed exactly once
+   - Dequeue operation: $O(1)$ per node
+   - Value addition: $O(1)$ per node
+   - Child existence check: $O(1)$ per node
+   - Child enqueue: $O(1)$ per child node
+
+2. **Level Management**: Operations performed once per level
+   - Calculate number of nodes: $O(1)$ per level
+   - Compute average: $O(1)$ per level
+   - Append to result array: $O(1)$ per level
+
+### Total Time Complexity
+
+$$T(n) = O(n + h)$$
+
+For any binary tree:
+
+- Best case (balanced): $h = O(\log n)$, giving $T(n) = O(n + \log n) = O(n)$
+- Worst case (skewed): $h = O(n)$, giving $T(n) = O(n)$
+
+The overall time complexity is $O(n)$.
+
+## Space Complexity
+
+### Space Components
+
+1. **Queue Storage**: The BFS queue stores nodes awaiting processing
+   - Maximum queue size equals the maximum width of the tree: $O(w)$
+
+2. **Result Storage**: The output array stores one value per level
+   - Size of the output array equals the number of levels: $O(h)$
+
+3. **Auxiliary Variables**: Constant space for counters and running sums: $O(1)$
+
+### Total Space Complexity
+
+$$S(n) = O(w + h)$$
+
+Where $w$ is the maximum width of the tree and $h$ is the height.
+
+### Tree Shape Analysis
+
+- **Complete/Perfect Binary Tree**:
+  - Maximum width at the lowest level: $w = O(n/2) = O(n)$
+  - Height: $h = O(\log n)$
+  - Space complexity: $O(n + \log n) = O(n)$
+
+- **Skewed Tree**:
+  - Maximum width: $w = 1$
+  - Height equals number of nodes: $h = n$
+  - Space complexity: $O(1 + n) = O(n)$
+
+Therefore, the general space complexity is $O(w + h)$, which in the worst case simplifies to $O(n)$.
