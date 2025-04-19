@@ -21,7 +21,10 @@ repos:
     hooks:
       - id: uv-lock
       - id: uv-sync
-        args: ["--locked", "--all-packages"]
+        # Use the active venv instead of recreating it
+        entry: uv sync --active
+        # Install everything (default + dependency groups)
+        args: ["--locked", "--all-groups"]
         stages: [post-checkout, post-merge, post-rewrite]
         always_run: true
       - id: uv-export
