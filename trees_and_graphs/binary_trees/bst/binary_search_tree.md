@@ -62,28 +62,32 @@ Let *n* be the number of nodes, *h* the tree height ($h\approxΘ(log n)$ if bal
 
 > [Reed 2003](https://dl.acm.org/doi/10.1145/765568.765571) If $n$ distinct keys are inserted into a binary search tree in random order, the expected height of the tree is $h \approx 4.311\ln n$.
 
-| Operation      | Time (expected)        | Time (worst)           | Aux. Space (recursion) |
-|----------------|------------------------|------------------------|------------------------|
-| **Search**     | Θ(log *n*)¹           | Θ(*n*)²               | Θ(*h*)                 |
-| **Insert**     | Θ(log *n*)¹           | Θ(*n*)²               | Θ(*h*)                 |
-| **Delete**     | Θ(log *n*)¹           | Θ(*n*)²               | Θ(*h*)                 |
-| **Find Min/Max** | Θ(log *n*)          | Θ(*n*)                 | Θ(*h*)                 |
-| **Rank**       | Θ(log *n*)                 | Θ(*n*)                 | Θ(*h*)                 |
+| Operation          | Time (expected)¹ | Time (worst)² | Aux. Space (recursion) |
+|--------------------|------------------|---------------|------------------------|
+| **Search**         | Θ(log *n*)       | Θ(*n*)        | Θ(*h*)                 |
+| **Insert**         | Θ(log *n*)       | Θ(*n*)        | Θ(*h*)                 |
+| **Delete**         | Θ(log *n*)†      | Θ(*n*)        | Θ(*h*)                 |
+| **Min/Max**        | Θ(log *n*)       | Θ(*n*)        | Θ(*h*)                 |
+| **Floor/Ceiling**  | Θ(log *n*)       | Θ(*n*)        | Θ(*h*)                 |
+| **Select**         | Θ(log *n*)       | Θ(*n*)        | Θ(*h*)                 |
+| **Rank**           | Θ(log *n*)       | Θ(*n*)        | Θ(*h*)                 |
 
 1. Expected cost for all operations in a **plain BST** when keys are inserted in *random order*.  
 2. Worst‑case cost for all operations in a **plain BST** when the tree degenerates (e.g. sorted insertions).
+† Hibbard deletion keeps each *individual* delete in **O(log n)** on the current tree, but a long sequence of random insertions and Hibbard deletions is known to *unbalance* the tree. After roughly $Θ(n)$ mixed operations, the expected height degrades to $Θ(√n)$, so the average cost of **search/insert/delete** likewise rises to $Θ(√n)$.
 
 ---
 
 ## Comparison with Other Data Structures
 
-| Structure                      | Search       | Insert       | Delete       | Aux. Space        | Maintains Order |
-|--------------------------------|--------------|--------------|--------------|-------------------|-----------------|
-| **Self‑balancing BST**         | Θ(log n)     | Θ(log n)     | Θ(log n)     | Θ(log n) stack    | ✔               |
-| **Plain BST (worst‑case)**     | Θ(n)         | Θ(n)         | Θ(n)         | Θ(n) stack        | ✔               |
-| **Array (unsorted)**           | Θ(n)         | Θ(1)         | Θ(n)         | Θ(1)              | ✖               |
-| **Array (sorted)**             | Θ(log n)     | Θ(n)         | Θ(n)         | Θ(1)              | ✔               |
-| **Hash Table***                | Θ(1)         | Θ(1)         | Θ(1)         | Θ(1)              | ✖               |
-| **Linked List**                | Θ(n)         | Θ(1)         | Θ(n)         | Θ(1)              | ✖               |
+| Structure                      | Search       | Insert       | Delete       | Aux. Space stack | Maintains Order? |
+|--------------------------------|--------------|--------------|--------------|------------------|------------------|
+| **Self‑balancing BST** (AVL, RB‑tree, etc.)   | Θ(log n)     | Θ(log n)     | Θ(log n)         | Θ(log n) | ✔     |
+| **Plain BST (average)**        | Θ(log n) | Θ(log n) | Θ(log n) | Θ(log n) | ✔ |
+| **Plain BST (worst)**          | Θ(n) | Θ(n) | Θ(n) | Θ(n) | ✔ |
+| **Array (unsorted)**           | Θ(n) | Θ(1) | Θ(n) | Θ(1) | ✖ |
+| **Array (sorted)**             | Θ(log n) | Θ(n) | Θ(n) | Θ(1) | ✔ |
+| **Hash Table***                | Θ(1) | Θ(1) | Θ(1) | Θ(1) | ✖ |
+| **Linked List**                | Θ(n) | Θ(1) | Θ(n) | Θ(1) | ✖ |
 
 \* Average‑case with a good hash function; worst‑case Θ(n).
