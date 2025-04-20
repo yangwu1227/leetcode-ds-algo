@@ -77,5 +77,8 @@
         "print": "cpp",
         "*.ipp": "cpp"
     },
-    "python.analysis.typeCheckingMode": "standard"
+    "python.analysis.typeCheckingMode": "standard",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportOperatorIssue": "none"
+    },
 }
