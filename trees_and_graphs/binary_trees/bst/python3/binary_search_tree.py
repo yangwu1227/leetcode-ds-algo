@@ -128,7 +128,7 @@ class BinarySearchTree(object):
         Returns
         -------
         Optional[TreeNode]
-            The node containing the data, or None if not found.
+            The node containing the data, or `None` if not found.
         """
         if data is None:
             return None
@@ -150,7 +150,7 @@ class BinarySearchTree(object):
         Returns
         -------
         Optional[TreeNode]
-            The node containing the data, or None if not found.
+            The node containing the data, or `None` if not found.
         """
         # Base case: search miss (None) or search hit
         if node is None or node.data == data_to_search:
@@ -214,7 +214,7 @@ class BinarySearchTree(object):
         Returns
         -------
         bool
-            True if a node was deleted, False otherwise.
+            `True` if a node was deleted, `False` otherwise.
         """
         # If data to be deleted or tree is empty, return False
         if data_to_delete is None or self.is_empty():
@@ -252,7 +252,7 @@ class BinarySearchTree(object):
         if data_to_delete < node.data:
             node.left, deleted = self._delete_recursive(node.left, data_to_delete)
         elif data_to_delete > node.data:
-            node.left, deleted = self._delete_recursive(node.right, data_to_delete)
+            node.right, deleted = self._delete_recursive(node.right, data_to_delete)
         # This branch runs when node to delete is found, i.e., data_to_delete == node.data
         else:
             # Case I: leaf node with no children
@@ -286,7 +286,7 @@ class BinarySearchTree(object):
         Returns
         -------
         Optional[TreeNode]
-            The node with the minimum data, or None if the tree is empty.
+            The node with the minimum data, or `None` if the tree is empty.
         """
         if self.is_empty():
             return None
@@ -305,7 +305,7 @@ class BinarySearchTree(object):
         Returns
         -------
         Optional[TreeNode]
-            The node with the maximum data, or None if the tree is empty
+            The node with the maximum data, or `None` if the tree is empty.
         """
         if self.is_empty():
             return None
@@ -329,7 +329,7 @@ class BinarySearchTree(object):
         Returns
         -------
         Optional[NodeData]
-            The floor of the given data, or None if no such data exists.
+            The floor of the given data, or `None` if no such data exists.
         """
         if target is None or self.is_empty():
             return None
@@ -351,7 +351,7 @@ class BinarySearchTree(object):
         Returns
         -------
         Optional[TreeNode]
-            The node containing the floor of the given target, or None if no such target exists
+            The node containing the floor of the given target, or `None` if no such target exists.
         """
         if node is None:
             return None
@@ -382,7 +382,7 @@ class BinarySearchTree(object):
         Returns
         -------
         Optional[NodeData]
-            The ceiling of the given target, or None if no such target exists
+            The ceiling of the given target, or `None` if no such target exists
         """
         if target is None or self.is_empty():
             return None
@@ -404,7 +404,7 @@ class BinarySearchTree(object):
         Returns
         -------
         Optional[TreeNode]
-            The node containing the ceiling of the given target, or None if no such target exists.
+            The node containing the ceiling of the given target, or `None` if no such target exists.
         """
         if node is None:
             return None
@@ -571,18 +571,19 @@ class BinarySearchTree(object):
         Returns
         -------
         bool
-            True if the subtree is a valid binary search tree, False otherwise.
+            `True` if the subtree is a valid binary search tree, `False` otherwise.
         """
         if node is None:
             return True
 
         assert node.data
-        # Check if current node's data is within valid range
+        # Check if current node's data is within valid range, starting with [-inf, inf]
         if node.data <= min_value or node.data >= max_value:
             return False
 
-        # Recursively check left and right subtrees
+        # All left substree nodes must be less than the current node, so max value becomes the current node's data
         valid_left: bool = self._is_valid_bst_recursive(node.left, min_value, node.data)
+        # All right substree nodes must be greater than the current node, so min value becomes the current node's data
         valid_right: bool = self._is_valid_bst_recursive(node.right, node.data, max_value)
         return valid_left and valid_right
 
@@ -609,7 +610,7 @@ class BinarySearchTree(object):
         Returns
         -------
         int
-            The height of the subtree, -1 if the subtree is empty.
+            The height of the subtree, `-1` if the subtree is empty.
         """
         if node is None:
             return -1
@@ -659,7 +660,7 @@ class BinarySearchTree(object):
         Returns
         -------
         List[NodeData]
-            The datas in preorder traversal order
+            The datas in preorder traversal order.
         """
         result: List[NodeData] = []
         self._preorder_recursive(self.root, result)
@@ -672,9 +673,9 @@ class BinarySearchTree(object):
         Parameters
         ----------
         node : Optional[TreeNode]
-            The current node being examined
+            The current node being examined.
         result : List[NodeData]
-            The list to append datas to
+            The list to append datas to.
         """
         if node is not None:
             result.append(node.data)
@@ -704,6 +705,10 @@ class BinarySearchTree(object):
             The current node being examined.
         result : List[NodeData]
             The list to append datas to.
+
+        Returns
+        -------
+        None
         """
         if node is not None:
             self._postorder_recursive(node.left, result)
@@ -793,7 +798,6 @@ def main() -> int:
     print(f"Height: {bst.height()}")
     print()
 
-    # Test insertion
     print("=== Insertion ===\n")
     values = [50, 30, 70, 20, 40, 60, 80]
     print(f"Inserting values: {values}")
@@ -805,7 +809,6 @@ def main() -> int:
     print(f"Height: {bst.height()}")
     print()
 
-    # Test traversals
     print("=== Traversals ===\n")
     print(f"Inorder traversal: {bst.inorder_traversal()}")
     print(f"Preorder traversal: {bst.preorder_traversal()}")
@@ -813,7 +816,6 @@ def main() -> int:
     print(f"Level order traversal: {bst.level_order_traversal()}")
     print()
 
-    # Test searching
     print("=== Search ===\n")
     value_to_search = 40
     print(f"Searching for {value_to_search}")
@@ -828,7 +830,6 @@ def main() -> int:
     print(f"Contains {value_to_search}: {bst.contains(value_to_search)}")
     print()
 
-    # Test min and max
     print("=== Min & Maxs ===")
     min_node = bst.find_min_node()
     max_node = bst.find_max_node()
