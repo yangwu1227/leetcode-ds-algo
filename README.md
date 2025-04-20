@@ -2,7 +2,7 @@
 
 A collection of solutions to LeetCode problems, loosely grouped by concepts, techniques, and data structures.
 
-## Python 
+## Python
 
 The Python dependencies are managed using [uv](https://docs.astral.sh/uv/):
 
@@ -21,26 +21,32 @@ The C++ setup supports both ARM64 architecture on MacOS and x86_64 on Debian Lin
 - **Debian GNU/Linux 12 (Bookworm)**: Replace the default files with those in the `.vscode_debian` configuration
 
 ### Tools and Dependencies
- 
+
 - **Compiler**: The code is compiled using `g++` with support for C++17 standard features.
 
-- **Debugger**: 
+- **Debugger**:
 
   - MacOS: [lldb](https://lldb.llvm.org/) with [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb) VSCode extension
 
   - Debian: [gdb](https://sourceware.org/gdb/) with native VSCode debugging support
 
-- **Build Configuration**: The build system is set up using the `tasks.json` and `launch.json` files in the respective `.vscode` directories. Additionally, each solution has a corresponding `Makefile` for compiling the code without debugging if preferred. Ensure that the include paths in the `Makefile` are updated to match the system configuration.
+- **Build Workflows**: 
 
-- **IntelliSense**: The [c_cpp_properties.json](https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference) file is used to configure include paths and other settings for IntelliSense in Visual Studio Code.
+  - IDE: The build workflow involves the `tasks.json` and `launch.json` files in the respective `.vscode` and `.vscode_debian` directories. 
+  
+  - CLI: Each solution has a corresponding `Makefile` for compiling the code without debugging if preferred. Ensure that the include path flags in the `Makefile` are updated to match the installed paths on the system.
+
+- **IntelliSense**: The [c_cpp_properties.json](https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference) file is used to configure (global level) include paths and other settings for IntelliSense in Visual Studio Code.
 
 ### External Libraries
 
-Some C++ solutions utilize both the [Boost](https://www.boost.org/) and [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page) libraries. The include paths are platform-specific:
+Some C++ solutions utilize both the [Boost](https://www.boost.org/) and [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page) libraries. The include paths flags in `task.json` are platform-specific:
 
 #### MacOS
 
-For consistency and flexibility across different build systems, the include paths `-I/opt/homebrew/include` and `-I/opt/homebrew/include/eigen3` are specified in the build configurations. This ensures compatibility across both the vs code setup (using `tasks.json`) and `Makefile` builds, automatically incorporating updates to library versions installed via [homebrew](https://brew.sh/).
+For consistency and flexibility across different build workflows, the include path flags `-I/opt/homebrew/include` and `-I/opt/homebrew/include/eigen3` are specified in `.vscode/tasks.json` and all `Makefile`. This ensures that the compiler’s header search path consistently resolves Boost and Eigen headers across both the IDE‑driven (`tasks.json`) and command‑line (`Makefile`) build workflows.
+
+Note: The directories `/opt/homebrew/include` and `/opt/homebrew/include/eigen3` are Homebrew‑managed symlinks that point to the currently installed versions of Boost and Eigen, so upgrading those libraries should not require manually adjusting the include paths.
 
 ```bash
 $ brew install boost eigen
@@ -60,7 +66,7 @@ $ ls -l /opt/homebrew/include/eigen3
 
 #### Debian GNU/Linux 12 (Bookworm)
 
-The include paths are set to `-I/usr/include` and `-I/usr/include/eigen3` in the `.vscode_debian/c_cpp_properties.json` file. 
+The include paths are set to `-I/usr/include` and `-I/usr/include/eigen3` in the `.vscode_debian/tasks.json` file.
 
 ```bash
 $ sudo apt-get install libboost-all-dev libeigen3-dev
@@ -70,8 +76,8 @@ $ sudo apt-get install libboost-all-dev libeigen3-dev
 
 ```bash
 $ ls -l /usr/include/boost
-$ readlink -f /usr/include/boost
+  readlink -f /usr/include/boost
 
 $ ls -l /usr/include/eigen3
-$ readlink -f /usr/include/eigen3
+  readlink -f /usr/include/eigen3
 ```
