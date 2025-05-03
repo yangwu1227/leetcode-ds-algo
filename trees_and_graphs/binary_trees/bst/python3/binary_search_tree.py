@@ -268,7 +268,7 @@ class BinarySearchTree(object):
                 return node.left, True
 
             # Case III: two children
-            # Find the inorder successor (smallest data in the rigth subtree of the matched node)
+            # Find the inorder successor (smallest data in the right subtree of the matched node)
             successor_data: NodeData = self._find_min_data(node.right)
             node.data = successor_data
 
