@@ -220,7 +220,6 @@ class BinarySearchTree(object):
         if data_to_delete is None or self.is_empty():
             return False
 
-        original_size: int = self._size
         self.root, deleted = self._delete_recursive(self.root, data_to_delete)
         return deleted
 
