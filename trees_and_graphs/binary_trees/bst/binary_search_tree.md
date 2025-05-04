@@ -133,7 +133,7 @@ Let *n* be the number of nodes, *h* the tree height ($h\approxΘ(log n)$ if bal
 Consider the following binary tree illustration from [stackoverflow](https://stackoverflow.com/a/2603707/12923148):
 
 <div style="text-align: center;">
-    <img src="diagrams/bst_height_depth_width.png" width="50%">
+    <img src="diagrams/bst_height_depth_width.png" width="35%">
 </div>
 
 In this diagram:
