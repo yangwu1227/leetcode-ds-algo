@@ -359,7 +359,7 @@ class BinarySearchTree(object):
         if node.data == target:
             return node
 
-        # If target is less than current node's data, floor must be in left subtree
+        # If target is less than current node's data, floor may be in left subtree
         if target < node.data:
             return self._floor_recursive(node.left, target)
 
@@ -412,7 +412,7 @@ class BinarySearchTree(object):
         if node.data == target:
             return node
 
-        # If target is greater than current node's data, ceiling must be in right subtree
+        # If target is greater than current node's data, ceiling may be in right subtree
         if target > node.data:
             return self._ceiling_recursive(node.right, target)
 
@@ -494,7 +494,7 @@ class BinarySearchTree(object):
 
     def select(self, k: int) -> Optional[NodeData]:
         """
-        Find the node of rank `k` in the binary search tree (i.e., the kth smallest key).
+        Find the node of rank `k` in the binary search tree (i.e., the kth smallest node).
 
         Parameters
         ----------
@@ -531,13 +531,19 @@ class BinarySearchTree(object):
         if node is None:
             return None
 
+        # Compute size of left subtree to determine where the k-th element lies
         left_size = self._size_recursive(node.left)
 
+        # Case 1: desired rank is in the left subtree
+        # If k < left_size, then the k-th smallest lies entirely in left subtree
         if k < left_size:
             return self._select_recursive(node.left, k)
+        # Case 2: desired rank is in the right subtree
+        # If k > left_size, skip over left subtree (left_size nodes) and current node (1 node)
+        # So the new rank for right subtree is k - (left_size + 1)
         elif k > left_size:
             return self._select_recursive(node.right, k - left_size - 1)
-        # Handles the case when k == left_size
+        # Handles the case when k == left_size, i.e., the current ndoe is the kth smallest
         else:
             return node
 
