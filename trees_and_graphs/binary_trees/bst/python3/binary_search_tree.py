@@ -801,9 +801,8 @@ def main() -> int:
     print(f"Is empty: {bst.is_empty()}")
     print(f"Size: {len(bst)}")
     print(f"Height: {bst.height()}")
-    print()
 
-    print("=== Insertion ===\n")
+    print("\n=== Insertion ===\n")
     values = [50, 30, 70, 20, 40, 60, 80]
     print(f"Inserting values: {values}")
     for val in values:
@@ -812,57 +811,45 @@ def main() -> int:
     print(f"Is empty: {bst.is_empty()}")
     print(f"Size: {len(bst)}")
     print(f"Height: {bst.height()}")
-    print()
 
-    print("=== Traversals ===\n")
+    print("\n=== Traversals ===\n")
     print(f"Inorder traversal: {bst.inorder_traversal()}")
     print(f"Preorder traversal: {bst.preorder_traversal()}")
     print(f"Postorder traversal: {bst.postorder_traversal()}")
     print(f"Level order traversal: {bst.level_order_traversal()}")
-    print()
 
-    print("=== Search ===\n")
-    value_to_search = 40
-    print(f"Searching for {value_to_search}")
-    node = bst.search(value_to_search)
-    print(f"Found: {node is not None}")
-    print(f"Contains {value_to_search}: {bst.contains(value_to_search)}")
+    print("\n=== Search ===\n")
+    values_to_search = [40, 45]
+    for value_to_search in values_to_search:
+        print(f"Searching for {value_to_search}")
+        node = bst.search(value_to_search)
+        print(f"Found: {node is not None}")
+        print(f"Contains {value_to_search}: {bst.contains(value_to_search)}")
 
-    value_to_search = 45
-    print(f"Searching for {value_to_search}")
-    node = bst.search(value_to_search)
-    print(f"Found: {node is not None}")
-    print(f"Contains {value_to_search}: {bst.contains(value_to_search)}")
-    print()
-
-    print("=== Min & Maxs ===")
+    print("\n=== Min & Max ===")
     min_node = bst.find_min_node()
     max_node = bst.find_max_node()
     print(f"Minimum value: {min_node.data if min_node else None}")
     print(f"Maximum value: {max_node.data if max_node else None}")
-    print()
 
-    print("=== Floor & Ceiling ===\n")
+    print("\n=== Floor & Ceiling ===\n")
     test_values = [25, 30, 45, 90]
     for val in test_values:
         print(f"Floor of {val}: {bst.floor(val)}")
         print(f"Ceiling of {val}: {bst.ceiling(val)}")
-    print()
 
-    print("=== Rank & Select ===\n")
+    print("\n=== Rank & Select ===\n")
     for val in [20, 50, 80]:
         print(f"Rank of {val}: {bst.rank(val)}")
 
-    print("\nSelect tests:")
+    print("\nSelect by rank:")
     for k in range(len(bst)):
-        print(f"Select {k}: {bst.select(k)}")
-    print()
+        print(f"Select rank {k}: {bst.select(k)}")
 
-    print("=== Structure ===\n")
+    print("\n=== Structure ===\n")
     print(f"Is valid BST: {bst.is_valid_bst()}")
-    print()
 
-    print("=== Deletion ===\n")
+    print("\n=== Deletion ===\n")
     values_to_delete = [20, 30, 50]  # Leaf, one child, root
 
     for val in values_to_delete:
@@ -877,9 +864,8 @@ def main() -> int:
         print(f"Size: {len(bst)}")
         print(f"Inorder traversal: {bst.inorder_traversal()}")
         print(f"Is valid BST: {bst.is_valid_bst()}")
-        print()
 
-    print("=== Duplicate Data ===\n")
+    print("\n=== Duplicate Data ===\n")
     dup_bst = BinarySearchTree()
     dup_values = [50, 30, 70, 30, 50, 70]
     print(f"Inserting values (with duplicates): {dup_values}")
@@ -887,7 +873,6 @@ def main() -> int:
         dup_bst.insert(val)
     print(f"Size after inserting duplicates: {len(dup_bst)}")
     print(f"Inorder traversal: {dup_bst.inorder_traversal()}")
-    print()
 
     print("Empty tree checks:")
     empty_bst = BinarySearchTree()
@@ -896,7 +881,7 @@ def main() -> int:
     print(f"Floor of 50 in empty tree: {empty_bst.floor(50)}")
     print(f"Inorder traversal of empty tree: {empty_bst.inorder_traversal()}\n")
 
-    print("=== Visualization ===\n")
+    print("\n=== Visualization ===\n")
     bst.visualize()
 
     return 0
