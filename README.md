@@ -12,7 +12,7 @@ $ uv sync --frozen --all-groups
 
 ## C++
 
-### Platform
+#### Platform
 
 The C++ setup supports both ARM64 architecture on MacOS and x86_64 on Debian Linux. Platform-specific configurations are managed through VS Code [workspace](https://code.visualstudio.com/docs/editor/workspaces#_workspace-tasks-and-launch-configurations) settings:
 
@@ -20,7 +20,7 @@ The C++ setup supports both ARM64 architecture on MacOS and x86_64 on Debian Lin
 
 - **Debian GNU/Linux 12 (Bookworm)**: Replace the default files with those in the `.vscode_debian` configuration
 
-### Tools and Dependencies
+#### Tools and Dependencies
 
 - **Compiler**: The code is compiled using `g++` with support for C++17 standard features.
 
@@ -34,11 +34,11 @@ The C++ setup supports both ARM64 architecture on MacOS and x86_64 on Debian Lin
 
   - IDE: The build workflow involves the `tasks.json` and `launch.json` files in the respective `.vscode` and `.vscode_debian` directories. 
   
-  - CLI: Each solution has a corresponding `Makefile` for compiling the code without debugging if preferred. Ensure that the include path flags in the `Makefile` are updated to match the installed paths on the system.
+  - CLI: Each solution has a corresponding `Makefile` for compiling the code without debugging. Ensure that the include path flags in the `Makefile` are updated to match the installed paths on the system if external libraries are used, e.g., Boost and Eigen.
 
 - **IntelliSense**: The [c_cpp_properties.json](https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference) file is used to configure (global level) include paths and other settings for IntelliSense in Visual Studio Code.
 
-### External Libraries
+#### External Libraries
 
 Some C++ solutions utilize both the [Boost](https://www.boost.org/) and [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page) libraries. The include paths flags in `task.json` are platform-specific:
 
@@ -52,7 +52,7 @@ Note: The directories `/opt/homebrew/include` and `/opt/homebrew/include/eigen3`
 $ brew install boost eigen
 ```
 
-##### Verifying Symlinked Paths
+#### Verifying Symlinked Paths
 
 To confirm that the symlinked paths:
 
@@ -66,13 +66,13 @@ $ ls -l /opt/homebrew/include/eigen3
 
 #### Debian GNU/Linux 12 (Bookworm)
 
-The include paths are set to `-I/usr/include` and `-I/usr/include/eigen3` in the `.vscode_debian/tasks.json` file.
+The include paths on Linux are set to `-I/usr/include` and `-I/usr/include/eigen3` in the `.vscode_debian/tasks.json` file.
 
 ```bash
 $ sudo apt-get install libboost-all-dev libeigen3-dev
 ```
 
-##### Verifying Installed Paths
+#### Verifying Installed Paths
 
 ```bash
 $ ls -l /usr/include/boost
