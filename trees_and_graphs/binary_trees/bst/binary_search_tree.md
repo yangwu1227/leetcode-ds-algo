@@ -34,15 +34,15 @@ Efficient performance of a basic binary search tree (BST) relies on the keys bei
 
 Searching for a key in a BST is done by comparing the key with the root node and recursively searching in either the left or right subtree, depending on whether the key is less than or greater than the root node's key.
 
-> Search hits, in which a key is found in the tree, in a BST built from $n$ random keys require ~ $2\ln n$ (about $1.39 \ln n$) comparisons on average.
+> Search hits, in which a key is found in the tree, in a BST built from $n$ random keys require ~ $2\ln(n)$ (about $1.39\ln n$) comparisons on average.
 
 Insertion in a BST is similar to searching: traverse the tree based on key comparisons until a null child position is found, and insert the new key there. Or, in the case of a duplicate key, update the value associated with the key (there are other strategies for handling duplicates but this is the simplest).
 
-> Insertions and search misses in a BST built from $n$ random keys also require ~ $2\ln n$ (about $1.39 \ln n$) comparisons on average.
+> Insertions and search misses in a BST built from $n$ random keys also require ~ $2\ln(n)$ (about $1.39\ln n$) comparisons on average.
 
 ### Cost of BST vs. Binary Search
 
-This means that we can expect the BST search cost for random keys to be about $39\%$ higher than that for binary search, which is $\ln n$ comparisons.
+This means that we can expect the BST search cost for random keys to be about $39$ percent higher than that for binary search, which is $\ln(n)$ comparisons.
 
 But this additional cost is worth it because the cost of inserting a new key is also logarithmic for BST. This is in contrast to binary search in an ordered array, in which case the number of array accesses required for insertion is **linear** in the number of keys in the array.
 
@@ -51,13 +51,13 @@ But this additional cost is worth it because the cost of inserting a new key is 
 In **asymptotic** bounds (Θ‑ or O‑notation) we simply write **log n** (implicitly base 2, but any constant‐factor change of base is absorbed) because  
 
 $$
-  \log_a n = \frac{\ln n}{\ln a} = Θ(\ln n)\quad\text{for any fixed }a>1.
+  \log_a n = \frac{\ln(n)}{\ln(a)} = Θ(\ln(n))\quad\text{for any fixed }a>1.
 $$
 
-We can use $\ln n$ only when we need the **exact** constant factors that arise in precise analyses; for example, the expected number of comparisons in a random BST is  
+We can use $\ln(n)$ only when we need the **exact** constant factors that arise in precise analyses; for example, the expected number of comparisons in a random BST is  
 
 $$
-  E[\text{number of comparisons}] = 2\ln n
+  E[\text{number of comparisons}] = 2\ln(n)
 $$
 
 because this derivation comes from continuous integrals yielding natural logarithms. In algorithm‑design discussions where we don’t care about that constant factor, we can revert to $Θ(log n)$, implying base 2.
@@ -68,7 +68,7 @@ because this derivation comes from continuous integrals yielding natural logarit
 
 Let *n* be the number of nodes, *h* the tree height ($h\approxΘ(log n)$ if balanced; $h=Θ(n - 1)=Θ(n)$ in the worst‑case degenerate tree):
 
-> [Reed 2003](https://dl.acm.org/doi/10.1145/765568.765571) If $n$ distinct keys are inserted into a binary search tree in random order, the expected height of the tree is $h \approx 4.311\ln n$.
+> [Reed 2003](https://dl.acm.org/doi/10.1145/765568.765571) If $n$ distinct keys are inserted into a binary search tree in random order, the expected height of the tree is $h \approx 4.311\ln(n)$.
 
 | Operation          | Time (expected)¹ | Time (worst)² | Aux. Space (recursion) |
 |--------------------|------------------|---------------|------------------------|
