@@ -41,6 +41,7 @@ public:
      * @brief Insert a new node with the given data
      *
      * @param data Reference to the data to insert into the tree
+     *
      * @return bool `true` if a new node was inserted, `false` if an existing node was updated
      */
     bool insert(const TreeNode::datatype &data);
@@ -49,6 +50,7 @@ public:
      * @brief Search for a node with the given data
      *
      * @param data Reference to the data to search for
+     *
      * @return const TreeNode* Non-owning raw pointer to the node containing the data, or nullptr if not found
      */
     const TreeNode *search(const TreeNode::datatype &data) const;
@@ -57,6 +59,7 @@ public:
      * @brief Remove a node with the given data using Hibbard deletion
      *
      * @param data Reference to the data to remove from the tree
+     *
      * @return bool `true` if a node was removed, `false` otherwise
      */
     bool remove(const TreeNode::datatype &data);
@@ -65,6 +68,7 @@ public:
      * @brief Check if the tree contains a node with the given data
      *
      * @param data Reference to the data to check for
+     *
      * @return bool `true` if the tree contains the data, `false` otherwise
      */
     bool contains(const TreeNode::datatype &data) const;
@@ -89,6 +93,7 @@ public:
      * @brief Find the largest key less than or equal to the given target
      *
      * @param target Reference to the target to find the floor of
+     *
      * @return std::optional<TreeNode::datatype> The floor value if found, or std::nullopt if none exists
      */
     std::optional<TreeNode::datatype> floor(const TreeNode::datatype &target) const;
@@ -106,6 +111,7 @@ public:
      * @brief Return the number of keys less than the given data (its rank)
      *
      * @param data Reference to the data to find the rank of
+     *
      * @return int The number of keys less than the given data
      */
     int rank(const TreeNode::datatype &data) const;
