@@ -1,12 +1,12 @@
 ## Big-O Notation
 
-> Definition: $f(n)=O(g(n))$ $\;$ ($f$ is Big-O of $g$) or ($f \preceq g$) if there exist constants $N$ and $c$ such that $\forall \; n \geq N, \; f(n) \leq c \cdot g(n)$.
+> Definition: $f(n)=O(g(n))$ ($f$ is Big-O of $g$) or ($f \preceq g$) if there exist constants $N$ and $c$ such that $\forall n \geq N, \lvert f(n) \rvert \leq c \cdot g(n)$.
 
 In words, this means that $f$ is bounded above by some constant multiple of $g$ for sufficiently large $n$. Two other ways to say this are:
 
 * $f$ grows no faster than $g$ asymptotically
 
-* $\frac{f(n)}{g(n)}$ is bounded as $n \rightarrow \infty$, meaning $\frac{f(n)}{g(n)}$ approaches a constant $c$ or remains less than or equal to a constant $c$ as $n$ increases
+* $\frac{f(n)}{g(n)}$ is bounded as $n \rightarrow \infty$ (it need not converge, only stay below some finite constant)
 
 ## Common Rules
 
@@ -28,19 +28,19 @@ If $n^a \prec n^b$ for $0 < a < b$, then $n^a = O(n^b)$.
 
 As $n$ gets large, the term with the larger power of $n$ will always grow faster.
 
-### Exponential 
+### Exponential
 
-If we have $n^a \prec b^n$ for $a > 0, \; b > 1$, then $n^a = O(b^n)$.
+If we have $n^a \prec b^n$ for $a > 0$ and a fixed constant $b > 1$, then $n^a = O(b^n)$.
 
-* $n^5 = O(\sqrt{2}^n)$
+* $n^5 = O((\sqrt{2})^n)$
 
-* $n^100 = O(1.1^n)$
+* $n^{100} = O(1.1^n)$
 
 As $n$ gets large, the exponential function will always grow faster than any polynomial function.
 
 ### Logarithmic
 
-If $(\log n)^a \prec n^b$ for $a > 0, \; b > 0$, then $(\log n)^a = O(n^b)$.
+If $(\log n)^a \prec n^b$ for $a > 0, b > 0$, then $(\log n)^a = O(n^b)$.
 
 * $(\log n)^3 = O(\sqrt{n})$
 
@@ -48,9 +48,9 @@ If $(\log n)^a \prec n^b$ for $a > 0, \; b > 0$, then $(\log n)^a = O(n^b)$.
 
 As $n$ gets large, any power of $\log n$ will grow slower than any power of $n$.
 
-### Summation 
+### Summation
 
-Smaller terms can be dropped in Big-O notation.
+Smaller (strictly lower-order) terms can be dropped in Big-O notation.
 
 * $n^2 + n = O(n^2)$
 
@@ -58,7 +58,7 @@ Smaller terms can be dropped in Big-O notation.
 
 ## Big-Omega & Big-Theta Notations
 
-For functions $f, \; g: \mathbb{N} \rightarrow \mathbb{R}^{+}$, we say that:
+For functions $f, g: \mathbb{N} \rightarrow \mathbb{R}^{+}$, we say that:
 
 > Big-Omega ($\Omega$): $f(n) = \Omega(g(n))$ (or $f \succeq g$) if there exists some constant $c > 0$ such that $f(n) \geq c \cdot g(n)$ for all sufficiently large $n$. In other words, $f$ grows **no slower** than $g$ asymptotically; it is bounded below by $g$.
 
@@ -66,7 +66,7 @@ For functions $f, \; g: \mathbb{N} \rightarrow \mathbb{R}^{+}$, we say that:
 
 ## Little-o Notation
 
-> Definition: For functions $f, \; g: \mathbb{N} \rightarrow \mathbb{R}^{+}$ we say that: $f(n)=o(g(n))$ or $(f \prec g)$ if $\frac{f(n)}{g(n)} \rightarrow 0$ as $n \rightarrow \infty$ ($f$ grows strictly slower than $g$).
+> Definition: For functions $f, g: \mathbb{N} \rightarrow \mathbb{R}^{+}$ with $g(n)>0$ for sufficiently large $n$, we say that $f(n)=o(g(n))$ or $(f \prec g)$ if $\frac{f(n)}{g(n)} \rightarrow 0$ as $n \rightarrow \infty$ ($f$ grows strictly slower than $g$).
 
 ## Other Examples
 
@@ -76,6 +76,6 @@ For functions $f, \; g: \mathbb{N} \rightarrow \mathbb{R}^{+}$, we say that:
 
 * $n^2 = O(5^{\log_2{n}}) = O(n^{\log_2{5}}) = O(n^{\sim2.32})$
 
-* $2^{3\log_2{n}} = n^{3\log_2{2}} = (n^{\log_2{2}})^3 = (n^1)^3 = O(n^5)$
+* $2^{3\log_2{n}} = n^{3\log_2{2}} = (n^{\log_2{2}})^3 = (n^1)^3 = \Theta(n^3)$
 
 * $2^n = O(2^{n + 1}) = O(2^1 \cdot 2^n) = O(2^n)$ since $2^1$ is a constant and can be dropped
