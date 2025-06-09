@@ -1,3 +1,44 @@
+# Height and Depth in Binary Trees
+
+## Node
+
+- **Depth of a Node:**
+
+  - The **depth** of a node is defined as the number of edges from that node **up** to the root node of the tree.
+  - The root node has a depth of `0`.
+
+- **Height of a Node:**
+
+  - The **height** of a node is the number of edges on the longest path from that node **down** to a leaf node.
+  - A leaf node has a height of `0`.
+
+## Tree
+
+- **Height of a Tree:**
+
+  - The height of a binary tree is equal to the height of its root node.
+  - Alternatively, the height of a tree is equal to the depth of the deepest leaf node.
+
+- **Diameter (Width) of a Tree:**
+
+  - The diameter of a tree is the number of nodes on the longest path between any two leaf nodes.
+  - The diameter reflects the "width" or maximum extent of the tree.
+
+## Visual Representation
+
+Consider the following binary tree illustration from [stackoverflow](https://stackoverflow.com/a/2603707/12923148):
+
+<div style="text-align: center;">
+    <img src="diagrams/bst_height_depth_width.png" width="35%">
+</div>
+
+In this diagram:
+
+- The root node has a depth of `0` and height of `3`.
+- The diameter (width) of this particular tree is `6` nodes.
+
+---
+
 # Range Sum of BST
 
 Given the `root` of a binary search tree (BST) and two integers `low` and `high`, return the sum of values of all nodes with a value in the range `[low, high]` (inclusive).

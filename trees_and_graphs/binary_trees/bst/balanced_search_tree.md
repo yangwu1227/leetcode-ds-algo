@@ -323,3 +323,125 @@ The 1-1 correspondence between 2-3 trees and red-black binary search trees durin
 <div style="text-align: center;">
     <img src="diagrams/red_black_construction.gif" width="50%">
 </div>
+
+## Propositions
+
+### Height Upper-Bound for Red-Black Binary Search Tree
+
+> The height of a red-black BST with N nodes is no more than $2\lg(N)$
+
+<center>
+
+| Symbol    | Meaning                                                                                                                           |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| $h$     | *Ordinary height* – number of links on the longest root-to-null path                                                              |
+| $b$     | *Black height* – number of **black** links on any root-to-null path (by perfect-black balance every such path has the same $b$) |
+| $\lg x$ | $\log_2 x$                                                                                                                     |
+
+</center>
+
+#### 2. Each black link at least doubles the subtree size $\Longrightarrow b \le \lg(N+1)$
+
+We prove by induction that a subtree whose root has **black-height** $t$ contains at least $2^{t}-1$ internal nodes.
+
+**Claim.** Let $n(t)$ be the minimum possible number of internal nodes in any red-black subtree whose root has black-height $t$. Then
+
+$$
+n(t) = 2^{t} - 1, \qquad t \ge 0
+$$
+
+*Base t = 0.* A black-height of 0 means the root is the single shared black *nil* sentinel, so the subtree contributes  
+
+$$
+0 = 2^{0}-1
+$$
+
+internal nodes.
+
+*Inductive hypothesis.* Assume that **every** subtree with black-height $t$ has at least  
+
+$$
+n(t) = 2^{t}-1
+$$
+
+internal nodes.
+
+*Inductive step (black-height t + 1).*  Take a subtree whose root $r$ satisfies $bh(r)= t + 1$, where $bh(r)$ is the number of black nodes (excluding $r$) on any path from $r$ down to a leaf sentinel.
+
+1. **Children’s black-heights.** Every internal node has two outgoing links (left and right). For a given child $c$ of $r$:
+
+    | Parent colour    | What the RB rules say about each child          | How many of the *t + 1* black nodes are "used up" between `r` and the child?                                                                                                                                  | Resulting $bh(\text{child})$                                             |
+    | ---------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+    | **`r` is black** | No color restriction on a child                | 1) If the link `r -> c` is **black**, that link itself is counted, so one of the *t + 1* blacks is already used <br> 2) If the link `r -> c` is **red**, the first black link comes **one step lower**; none have been used yet | Either way, exactly *t* black nodes still remain below `c`, so bh(c) = t |
+
+   Thus **both** child subtrees of $r$ with $t + 1$ black nodes have black-height $t$.
+
+2. **Lower bound for children.** By the inductive hypothesis each child subtree contains at least $n(t) = 2^{t}-1$ internal nodes.
+
+3. **Add the root itself and multiply by 2.** The entire subtree contains at least $1 + 2n(t)$ internal nodes:
+
+$$
+1 + 2n(t) = 1 + 2(2^{t}-1) = 2^{t+1}-1 = n(t+1)
+$$
+
+By induction the claim holds for all $t \ge 0$; in particular, a black-height of $b$ forces at least $2^{b}-1$ internal nodes.
+
+Letting $N$ be the total number of internal nodes in the tree,
+
+$$
+N \ge 2^{b}-1 \quad\Longrightarrow\quad b \le \lg(N+1)
+$$
+
+To see this:
+
+$$
+\begin{align*}
+N &\ge 2^{b}-1 \\
+N+1 &\ge 2^{b} \\
+\lg(N+1) &\ge b
+\end{align*}
+$$
+
+**Why “doubling” really happens**
+
+The lower-bound sequence for the minimum number of internal nodes is
+
+* level 0 (black-height 0) `2^0 - 1 = 0` nodes  
+* level 1 (black-height 1) `2^1 - 1 = 1` node  
+* level 2 (black-height 2) `2^2 - 1 = 3` nodes  
+* level 3 (black-height 3) `2^3 - 1 = 7` nodes  
+
+The recurrence behind these numbers is $2n(t)+1$. When the black-height increases from $t$ to $t + 1$, the minimal subtree size **doubles** the previous minimum and then adds 1. That is, one more mandatory black link forces at least a *doubling* of the minimal subtree size.
+
+#### 3. Combine $h \le 2b$ and $b \le \lg(N+1)$
+
+Substituting $b \le \lg(N+1)$ into $h \le 2b$ gives us the final result:
+
+$$
+\begin{align*}
+h &\le 2b           && \text{At most one red per black on any path} \\
+  &\le 2\lg(N+1)    && b\le\lg(N+1) \\
+  &= 2\lg(N \cdot (1+\tfrac1N)) && N + 1 = N(1 + \frac{1}{N}) \\
+  &= 2\Bigl[\lg N + \lg(1+\tfrac{1}{N})\Bigr] && \text{log-product rule} \\
+  &= 2\lg N + 2\lg(1+\tfrac{1}{N}) \\
+  &< 2\lg N + 2 && 0 < \lg(1+\tfrac{1}{N}) < 1
+\end{align*}
+$$
+
+Removing the additive constant, the height $h$ of a red-black binary search tree with $N$ nodes is at most $2\lg(N)$.
+
+### Average Height of Red-Black Binary Search Tree
+
+> The average length of a path from the root to a node in a red-black binary search tree is $\sim 1.00\lg(N)$
+
+The proof of this proposition is based on empirical data and simulations, even for trees built by inserting keys in increasing order.
+
+### Logarithmic Guarantees for Worst-Case
+
+> In a red- black binary search tree, search, insertion, finding minimum and maximum, floor, ceiling, rank, select, deleting minimum and maximum, deleting a node, and range counting operations are guaranteed to take logarithmic time in the worst case.
+
+This follows directly from the two propositions:
+
+> In a binary search tree, all operations take time proportional to the height of the tree, in the worst case
+
+> The height of a red-black BST with N nodes is no more than $2\lg(N)$

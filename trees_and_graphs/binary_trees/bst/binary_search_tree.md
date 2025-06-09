@@ -5,10 +5,6 @@ A **Binary Search Tree (BST)** is a binary tree that maintains the ordering prop
 - For every node, all keys in the left subtree are **strictly less** than the node’s key.
 - For every node, all keys in the right subtree are **strictly greater** than the node’s key.
 
-> All logarithms below are base 2 by convention; in Θ‑notation, the base is immaterial.
-
----
-
 ## Core Properties
 
 1. **Ordering (Search) Property** – defined above.
@@ -28,6 +24,72 @@ Consider the following keys `[5, 3, 7, 2, 4, 6, 8]`; the sorted order of these k
 
 Efficient performance of a basic binary search tree (BST) relies on the keys being sufficiently random, minimizing the likelihood of the tree developing many long, unbalanced paths.
 
+## Size
+
+The size of every node $x$ in a binary search tree is defined as follows:
+
+$$
+  \text{size}(x) = \text{size}(x.\text{left}) + \text{size}(x.\text{right}) + 1
+$$
+
+<div style="text-align: center;">
+    <img src="diagrams/bst_size.png" width="30%">
+</div>
+
+## Search
+
+<div style="text-align: center;">
+    <img src="diagrams/bst_search.png" width="70%">
+</div>
+
+## Insert
+
+<div style="text-align: center;">
+    <img src="diagrams/bst_insert.png" width="30%">
+</div>
+
+## Construction
+
+<div style="text-align: center;">
+    <img src="diagrams/bst_construction.png" width="70%">
+</div>
+
+## Delete
+
+**Delete Minimum**
+
+<div style="text-align: center;">
+    <img src="diagrams/bst_delete_minimum.png" width="30%">
+</div>
+
+**Delete**
+
+The following example illustrates the deletion of a node with two children, known as the **Hibbard deletion**. The node to be deleted is replaced by its in-order successor (the smallest key in the right subtree) (or in-order predecessor, the largest key in the left subtree). This ensures that the BST properties are maintained after deletion.
+
+- Save a link to the node to be deleted in `t`
+
+- Set `x` to point to its successor `min(t.right)`
+
+- Set the right link of `x` (which is supposed to point to the BST containing all the keys larger than `x.key`) to `deleteMin(t.right)`, the link to the BST containing all the keys that are larger than `x.key` after the deletion
+
+- Set the left link of `x` (which was null) to `t.left` (all the keys that are less than both the deleted key and its successor)
+
+<div style="text-align: center;">
+    <img src="diagrams/bst_delete.png" width="30%">
+</div>
+
+## Floor and Ceiling
+
+<div style="text-align: center;">
+    <img src="diagrams/bst_floor.png" width="30%">
+</div>
+
+## Select and Rank
+
+<div style="text-align: center;">
+    <img src="diagrams/bst_select_rank.png" width="30%">
+</div>
+
 ## Propositions
 
 ### Search and Insert
@@ -40,7 +102,12 @@ Insertion in a BST is similar to searching: traverse the tree based on key compa
 
 > Insertions and search misses in a BST built from $n$ random keys also require ~ $2\ln(n)$ (about $1.39\ln n$) comparisons on average.
 
-### Cost of BST vs. Binary Search
+Given a tree, its height determines the worst-case cost of all binary search tree operations except for range search, which has additional cost proportional to the number of keys returned.
+
+> In a BST, all operations take time proportional to the height of the
+tree, in the worst case. All of these methods go down one or two paths in the tree. The length of any path is no more than the height, by definition.
+
+### Cost of Binary Search Tree vs. Binary Search
 
 This means that we can expect the BST search cost for random keys to be about $39$ percent higher than that for binary search, which is $\ln(n)$ comparisons.
 
@@ -62,8 +129,6 @@ $$
 
 because this derivation comes from continuous integrals yielding natural logarithms. In algorithm‑design discussions where we don’t care about that constant factor, we can revert to $Θ(log n)$, implying base 2.
 
----
-
 ## Operations and Asymptotic Complexities
 
 Let *n* be the number of nodes, *h* the tree height ($h\approxΘ(log n)$ if balanced; $h=Θ(n - 1)=Θ(n)$ in the worst‑case degenerate tree):
@@ -83,60 +148,3 @@ Let *n* be the number of nodes, *h* the tree height ($h\approxΘ(log n)$ if bal
 1. Expected cost for all operations in a **plain BST** when keys are inserted in *random order*.  
 2. Worst‑case cost for all operations in a **plain BST** when the tree degenerates (e.g. sorted insertions).
 3. Hibbard deletion keeps each *individual* delete in **O(log n)** on the current tree, but a long sequence of random insertions and Hibbard deletions is known to *unbalance* the tree. After roughly $Θ(n)$ mixed operations, the expected height degrades to $Θ(\sqrt{n})$, so the average cost of **search/insert/delete** likewise rises to $Θ(\sqrt{n})$.
-
----
-
-## Comparison with Other Data Structures
-
-| Structure                      | Search       | Insert       | Delete       | Aux. Space stack | Maintains Order? |
-|--------------------------------|--------------|--------------|--------------|------------------|------------------|
-| **Self‑balancing BST** (AVL, RB‑tree, etc.)   | Θ(log n)     | Θ(log n)     | Θ(log n)         | Θ(log n) | ✔     |
-| **Plain BST (average)**        | Θ(log n) | Θ(log n) | Θ(log n) | Θ(log n) | ✔ |
-| **Plain BST (worst)**          | Θ(n) | Θ(n) | Θ(n) | Θ(n) | ✔ |
-| **Array (unsorted)**           | Θ(n) | Θ(1) | Θ(n) | Θ(1) | ✖ |
-| **Array (sorted)**             | Θ(log n) | Θ(n) | Θ(n) | Θ(1) | ✔ |
-| **Hash Table***                | Θ(1) | Θ(1) | Θ(1) | Θ(1) | ✖ |
-| **Linked List**                | Θ(n) | Θ(1) | Θ(n) | Θ(1) | ✖ |
-
-\* Average‑case with a good hash function; worst‑case Θ(n).
-
----
-
-## Height and Depth in Binary Trees
-
-### Node
-
-- **Depth of a Node:**
-
-  - The **depth** of a node is defined as the number of edges from that node **up** to the root node of the tree.
-  - The root node has a depth of `0`.
-
-- **Height of a Node:**
-
-  - The **height** of a node is the number of edges on the longest path from that node **down** to a leaf node.
-  - A leaf node has a height of `0`.
-
-### Tree
-
-- **Height of a Tree:**
-
-  - The height of a binary tree is equal to the height of its root node.
-  - Alternatively, the height of a tree is equal to the depth of the deepest leaf node.
-
-- **Diameter (Width) of a Tree:**
-
-  - The diameter of a tree is the number of nodes on the longest path between any two leaf nodes.
-  - The diameter reflects the "width" or maximum extent of the tree.
-
-### Visual Representation
-
-Consider the following binary tree illustration from [stackoverflow](https://stackoverflow.com/a/2603707/12923148):
-
-<div style="text-align: center;">
-    <img src="diagrams/bst_height_depth_width.png" width="35%">
-</div>
-
-In this diagram:
-
-- The root node has a depth of `0` and height of `3`.
-- The diameter (width) of this particular tree is `6` nodes.
