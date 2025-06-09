@@ -213,23 +213,13 @@ $$
 Putting (1) and (2) together, every 2–3 tree satisfies
 
 $$
-\boxed{
-\log_3(N+1)-1
-\le
-h
-\le
-\lg(N+1)-1
-}
+\boxed{\log_3(N+1)-1 \le h \le \lg(N+1)-1}
 $$
 
 or, using floors/ceilings for integer heights:
 
 $$
-\left\lceil\log_3(N+1)\right\rceil-1
-\le
-h
-\le
-\left\lceil\lg(N+1)\right\rceil-1
+\left\lceil\log_3(N+1)\right\rceil-1 \le h \le \left\lceil\lg(N+1)\right\rceil-1
 $$
 
 ### Asymptotics
@@ -243,3 +233,93 @@ $$
 $$
 
 Thus the height of any 2–3 tree with $N$ keys is bounded below by roughly $\lfloor\log_3 N\rfloor$ ($\approx0.63\lg N$) and above by $\lfloor\lg N\rfloor$.
+
+---
+
+# Red-Black Binary Search Tree
+
+A **red-black binary search tree** is a representation for a 2-3 tree. The core idea is to encode 2-3 tree starting with standard binary search tree, adding extra information to encode 3-nodes.
+
+We can define red-black binary search tree as a binary search tree with <span style="color: red;">red</span> and <span style="color: black;">black</span> links and satisfying the following restrictions:
+
+1. Red links lean left
+
+2. No node has two <span style="color: red;">red</span> links connected to it
+
+3. The binary search tree has **perfect black balance**, i.e., every path from the root to a leaf has the same number of <span style="color: black;">black</span> links
+
+A red-black binary search tree defined in this way has a 1-to-1 correspondence with a 2-3 tree.
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_correspondence.png" width="40%">
+</div>
+
+## Rotations
+
+### Left Rotation
+
+When we have a *temporarily* right-leaning red link that needs to be rotated to lean to the left, this is called a left rotation.
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_left_rotate.png" width="30%">
+</div>
+
+### Right Rotation
+
+Sometimes we need to rotate a left-leaning red link to lean to the right. This is called a right rotation.
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_right_rotate.png" width="30%">
+</div>
+
+## Color Flipping
+
+Another operation we can perform is color flipping, which is used to maintain the red-black properties of the tree.
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_color_flip.png" width="40%">
+</div>
+
+## Insert
+
+### Insert into a single 2-node
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_insert_2_node.png" width="30%">
+</div>
+
+### Insert into a 2-node at the bottom
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_insert_2_node_bottom.png" width="30%">
+</div>
+
+### Insert into a 3-node (three cases)
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_insert_3_node.png" width="70%">
+</div>
+
+### Insert into a 3-node at the bottom
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_insert_3_node_bottom.png" width="40%">
+</div>
+
+### Summary of Insert
+
+The 1-1 correspondence between 2-3 trees and red-black binary search trees during insertion can be maintained using the three simple operations: rotate, right rotate, and color flip.
+
+* If the right child is red and the left child is black, rotate left.
+* If both the left child and its left child are red, rotate right.
+* If both children are red, flip colors.
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_insert_summary.png" width="50%">
+</div>
+
+## Red-Black Tree Construction
+
+<div style="text-align: center;">
+    <img src="diagrams/red_black_construction.gif" width="50%">
+</div>
