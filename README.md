@@ -4,10 +4,34 @@ A collection of solutions to LeetCode problems, loosely grouped by concepts, tec
 
 ## Python
 
-The Python dependencies are managed using [uv](https://docs.astral.sh/uv/):
+The Python dependencies are managed using [uv](https://docs.astral.sh/uv/getting-started/installation/). The required python version in `pyproject.toml` is `>=3.13`. There are at least three simple ways to set up.
+
+### Python Interpreter managed by `uv`
 
 ```bash
-$ uv sync --frozen --all-groups
+uv sync --frozen --all-groups --managed-python
+```
+
+See documentions for [frozen](https://docs.astral.sh/uv/reference/cli/#uv-sync--frozen), [managed-python](https://docs.astral.sh/uv/reference/cli/#uv-sync--managed-python), and [all-groups](https://docs.astral.sh/uv/reference/cli/#uv-sync--all-groups).
+
+### Python Interpreter managed by `conda`
+
+```bash
+conda search python | grep " 3\.\(13\)\."
+conda create --name ds_algo -y python=3.13
+conda activate ds_algo
+uv sync --frozen --all-groups --no-managed-python
+```
+
+### Python Interpreter managed by `pyenv`
+
+```bash
+# List available Python versions
+pyenv install --list | grep " 3\.\(13\)\."
+# As an example, install Python 3.13.7
+pyenv install 3.13.7
+pyenv local 3.13.7
+uv sync --frozen --all-groups --no-managed-python
 ```
 
 ## C++
@@ -30,9 +54,9 @@ The C++ setup supports both ARM64 architecture on MacOS and x86_64 on Debian Lin
 
   - Debian: [gdb](https://sourceware.org/gdb/) with native VSCode debugging support
 
-- **Build Workflows**: 
+- **Build Workflows**:
 
-  - IDE: The build workflow involves the `tasks.json` and `launch.json` files in the respective `.vscode` and `.vscode_debian` directories. 
+  - IDE: The build workflow involves the `tasks.json` and `launch.json` files in the respective `.vscode` and `.vscode_debian` directories.
   
   - CLI: Each solution has a corresponding `Makefile` for compiling the code without debugging. Ensure that the include path flags in the `Makefile` are updated to match the installed paths on the system if external libraries are used, e.g., Boost and Eigen.
 
@@ -49,7 +73,7 @@ For consistency and flexibility across different build workflows, the include pa
 Note: The directories `/opt/homebrew/include` and `/opt/homebrew/include/eigen3` are Homebrew‑managed symlinks that point to the currently installed versions of Boost and Eigen, so upgrading those libraries should not require manually adjusting the include paths.
 
 ```bash
-$ brew install boost eigen
+brew install boost eigen
 ```
 
 #### Verifying Symlinked Paths
@@ -57,10 +81,10 @@ $ brew install boost eigen
 To confirm that the symlinked paths:
 
 ```bash
-$ ls -l /opt/homebrew/include/boost
+ls -l /opt/homebrew/include/boost
 # lrwxr-xr-x  1 user  admin  38 Nov  5 01:20 /opt/homebrew/include/boost -> ../Cellar/boost/1.86.0_2/include/boost
 
-$ ls -l /opt/homebrew/include/eigen3
+ls -l /opt/homebrew/include/eigen3
 # lrwxr-xr-x  1 user  admin  38 Jul 19 00:24 /opt/homebrew/include/eigen3 -> ../Cellar/eigen/3.4.0_1/include/eigen3
 ```
 
@@ -69,15 +93,15 @@ $ ls -l /opt/homebrew/include/eigen3
 The include paths on Linux are set to `-I/usr/include` and `-I/usr/include/eigen3` in the `.vscode_debian/tasks.json` file.
 
 ```bash
-$ sudo apt-get install libboost-all-dev libeigen3-dev
+sudo apt-get install libboost-all-dev libeigen3-dev
 ```
 
 #### Verifying Installed Paths
 
 ```bash
-$ ls -l /usr/include/boost
+ls -l /usr/include/boost
   readlink -f /usr/include/boost
 
-$ ls -l /usr/include/eigen3
+ls -l /usr/include/eigen3
   readlink -f /usr/include/eigen3
 ```
